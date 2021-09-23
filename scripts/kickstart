@@ -2,5 +2,18 @@
 #
 # script to kickstart a new desktop by installing git python ansible
 #
-timedatectl
 hostname -f
+#
+apt install -y python3 python-is-python3 python3-pip
+#
+apt install -y ansible ansible-base
+#
+apt install -y yamllint
+#
+apt install -y ansible-lint
+#
+echo -n "Installed versions:"
+python --version
+ansible --version
+yamllint --version
+ansible-lint --version
