@@ -33,7 +33,7 @@
   tags: dotfiles,bpic,ssh,ssh-keys,users
   authorized_key:
     user: bpic
-    key: {{ item }}
+    key: "{{ item }}"
   with_file:
     - "{{ lookup('file', 'users/bpic/ssh/id_ed25519_ubuntu.pub') }}"
 
@@ -109,7 +109,7 @@
   tags: dotfiles,bpic,users,vim
   copy:
     src: users/bpic/vim/{{ item.src }}
-    dest: {{ item.dest }}
+    dest: "{{ item.dest }}"
     owner: bpic
     group: users
     mode: 0700
@@ -120,8 +120,8 @@
   tags: git,users,bpic
   become: true
   git:
-    repo: {{ item.repo }}
-    dest: {{ item.dest }}
+    repo: "{{ item.repo }}"
+    dest: "{{ item.dest }}"
     force: true
   with_items:
     - { repo:'https://github.com/ctrlpvim/ctrlp.vim.git', dest:'/home/bpic/.vim/bundle/ctrlp.vim' }
