@@ -11,7 +11,7 @@
 - name: users | bpic | add sudoers file
   tags: bpic,ansible,sudo,system,users
   copy:
-    src: files/users/sudoers_bpic
+    src: users/sudoers_bpic
     dest: /etc/sudoers.d/bpic
     owner: root
     group: root
@@ -28,13 +28,13 @@
   with_items:
     - { dir: '/home/bpic/.ssh' }
 
-- name: users | bpic | add public key
-  tags: dotfiles,bpic,ssh,ssh-keys,users
-  authorized_key:
-    user: bpic
-    key: "{{ item }}"
-  with_file:
-    - file/users/bpic/ssh/id_ed25519_ubuntu.pub
+      #     - name: users | bpic | add public key
+      # tags: dotfiles,bpic,ssh,ssh-keys,users
+      # authorized_key:
+      # user: bpic
+      # key: "{{ item }}"
+      # with_file:
+      # - users/bpic/ssh/id_ed25519_ubuntu.pub
 
 - name: users | bpic | create config directories
   tags: dotfiles,bpic,users,vim
@@ -59,7 +59,7 @@
 - name: users | bpic | copy dotfiles
   tags: dotfiles,users,bpic,users,vim
   copy:
-    src: files/users/bpic/{{ item.src }}
+    src: users/bpic/{{ item.src }}
     dest: /home/bpic/{{ item.dest }}
     owner: bpic
     group: users
@@ -74,7 +74,7 @@
 - name: users | bpic | copy vim ftype files
   tags: dotfiles,bpic,users,vim
   copy:
-    src: files/users/bpic/vim/{{ item.src }}
+    src: users/bpic/vim/{{ item.src }}
     dest: /home/bpic/.vim/ftplugin/{{ item.src }}
     owner: bpic
     group: users
@@ -92,7 +92,7 @@
 - name: users | bpic | copy vim color files
   tags: dotfiles,bpic,users,vim
   copy:
-    src: files/users/bpic/vim/{{ item.src }}
+    src: users/bpic/vim/{{ item.src }}
     dest: /home/bpic/.vim/colors/{{ item.src }}
     owner: bpic
     group: users
@@ -107,7 +107,7 @@
 - name: users | bpic | install pathogen
   tags: dotfiles,bpic,users,vim
   copy:
-    src: files/users/bpic/vim/{{ item.src }}
+    src: users/bpic/vim/{{ item.src }}
     dest: "{{ item.dest }}"
     owner: bpic
     group: users
