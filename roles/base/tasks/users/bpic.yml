@@ -1,0 +1,134 @@
+- name: users | bpic | create user
+  tags: bpic,sudo,users
+  user:
+    name: bpic
+    group: users
+    groups: adm,ansible,sudo
+    state: present
+    comment: "Bernhard Picenoni"
+    shell: /bin/bash
+
+- name: users | bpic | add sudoers file
+  tags: bpic,ansible,sudo,system,users
+  copy:
+    src: users/sudoers_bpic
+    dest: /etc/sudoers.d/bpic
+    owner: root
+    group: root
+    mode: 0440
+
+- name: users | bpic | create .ssh directory
+  tags: dotfiles,bpic,ssh,users
+  file:
+    path: "{{ item.dir }}"
+    state: directory
+    owner: bpic
+    group: users
+    mode: 0700
+  with_items:
+    - { dir: '/home/bpic/.ssh' }
+
+- name: users | bpic | add public key
+  tags: dotfiles,bpic,ssh,ssh-keys,users
+  authorized_key:
+    user: bpic
+    key: "{{ item }}"
+  with_file:
+    - users/bpic/ssh/id_ed25519_ubuntu.pub
+
+- name: users | bpic | create config directories
+  tags: dotfiles,bpic,users,vim
+  file:
+    path: /home/bpic/{{ item.dir }}
+    state: directory
+    owner: bpic
+    group: users
+    mode: 0700
+  with_items:
+    - { dir: '.bash' }
+    - { dir: '.config' }
+    - { dir: '.config/htop' }
+    - { dir: '.config/terminator' }
+    - { dir: '.config/tilix' }
+    - { dir: '.vim' }
+    - { dir: '.vim/autoload' }
+    - { dir: '.vim/bundle' }
+    - { dir: '.vim/colors' }
+    - { dir: '.vim/ftplugin' }
+
+- name: users | bpic | copy dotfiles
+  tags: dotfiles,users,bpic,users,vim
+  copy:
+    src: users/bpic/{{ item.src }}
+    dest: /home/bpic/{{ item.dest }}
+    owner: bpic
+    group: users
+    mode: 0600
+  with_items:
+    - { src: 'bash/bash_aliases', dest: '.bash/bash_aliases' }
+    - { src: 'bash/bash_functions', dest: '.bash/bash_functions' }
+    - { src: 'bash/bashrc', dest: '.bashrc' }
+    - { src: 'git/gitconfig', dest: '.gitconfig' }
+    - { src: 'vim/vimrc', dest: '.vimrc' }
+
+- name: users | bpic | copy vim ftype files
+  tags: dotfiles,bpic,users,vim
+  copy:
+    src: users/bpic/vim/{{ item.src }}
+    dest: /home/bpic/.vim/ftplugin/{{ item.src }}
+    owner: bpic
+    group: users
+    mode: 0600
+  with_items:
+    - { src: 'cmake.vim' }
+    - { src: 'cpp.vim' }
+    - { src: 'html.vim' }
+    - { src: 'perl.vim' }
+    - { src: 'python.vim' }
+    - { src: 'ruby.vim' }
+    - { src: 'sql.vim' }
+    - { src: 'xml.vim' }
+
+- name: users | bpic | copy vim color files
+  tags: dotfiles,bpic,users,vim
+  copy:
+    src: users/bpic/vim/{{ item.src }}
+    dest: /home/bpic/.vim/colors/{{ item.src }}
+    owner: bpic
+    group: bpic
+    mode: 0600
+  with_items:
+    - { src: 'bubblegum-256-dark.vim' }
+    - { src: 'darktango.vim' }
+    - { src: 'jellybeans.vim' }
+    - { src: 'xoria256.vim' }
+    - { src: 'zenburn.vim' }
+
+- name: users | bpic | install pathogen
+  tags: dotfiles,bpic,users,vim
+  copy:
+    src: users/bpic/vim/{{ item.src }}
+    dest: "{{ item.dest }}"
+    owner: bpic
+    group: users
+    mode: 0700
+  with_items:
+    - { src: 'pathogen.vim', dest: '/home/bpic/.vim/autoload/pathogen.vim' }
+
+- name: users | bpic | checkout git repositories
+  tags: git,users,bpic
+  become: yes
+  git:
+    repo: "{{ item.repo }}"
+    dest: "{{ item.dest }}"
+    force: yes
+  with_items:
+    - { repo: 'https://github.com/ctrlpvim/ctrlp.vim.git', dest: '/home/bpic/.vim/bundle/ctrlp.vim' }
+    - { repo: 'https://github.com/davidhalter/jedi-vim.git', dest: '/home/bpic/.vim/bundle/jedi-vim' }
+    - { repo: 'https://github.com/pearofducks/ansible-vim', dest: '/home/bpic/.vim/bundle/ansible-vim' }
+    - { repo: 'https://github.com/rhysd/vim-grammarous.git', dest: '/home/bpic/.vim/bundle/vim-grammarous' }
+    - { repo: 'https://github.com/ron89/thesaurus_query.vim', dest: '/home/bpic/.vim/bundle/thesaurus_query' }
+    - { repo: 'https://github.com/scrooloose/nerdtree.git', dest: '/home/bpic/.vim/bundle/nerdtree' }
+    - { repo: 'https://github.com/tpope/vim-obsession.git', dest: '/home/bpic/.vim/bundle/vim-obsession' }
+    - { repo: 'https://github.com/vim-syntastic/syntastic.git', dest: '/home/bpic/.vim/bundle/syntastic' }
+  notify: update_vim_bundle_perms

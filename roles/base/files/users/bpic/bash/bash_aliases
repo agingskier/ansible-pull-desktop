@@ -1,0 +1,85 @@
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+#
+
+alias reload='source ~/.bashrc'
+
+alias egrep='egrep -E --color=auto'
+alias which='type -a'
+alias cp='cp -rfv'
+alias path='echo -e ${PATH//:/\\n}'
+alias libpath='echo -e ${LD_LIBRARY_PATH//:/\\n}'
+alias dist='cat /etc/os-release'
+alias glx='glxinfo | egrep OpenGL'
+alias xp='xprop | egrep CLASS'     						# Running application name of window
+alias pp='plank --preferences'
+alias btop='bpytop'			# bashtop in python
+
+#-------------------------------------------------------------
+# The 'ls' family (this assumes you use a recent GNU ls)
+#-------------------------------------------------------------
+
+alias lk='ls -lSFr --color=auto'                # sort by size, biggest last
+
+alias ll='ls -alCF --color=auto'
+alias la='ls -alF --color=always | more -d'     # show hidden files
+alias lav='ls -Al --color=always --format=vertical' # sort ignoring dot, include hidden files
+alias lu='ls -alFu --color=auto'                # details normal sort, include hidden files
+alias lt='ls -alFur --color=auto'				        # details reverse sort, include hidden files
+
+alias lsp='lspci | ccze -A'
+alias lsu='lsusb | ccze -A'
+alias lsb='lsblk -o NAME,FSTYPE,SIZE,MOUNTPOINT,LABEL,UUID | ccze -A'
+alias lsc='lscpu | ccze -A'
+alias lsi='sudo blkid | ccze -A'
+alias loc='mlocate -A -i'
+
+#-------------------------------------------------------------
+# Some alias to make life easier
+#-------------------------------------------------------------
+alias cls='tput clear'
+
+alias x='nemo .'            # open nemo in current directory
+alias h='fc -l'            # last 16 entries in history
+alias hs='history | egrep'    # search history for an entry
+alias j='jobs -l'
+alias nf='find * -type f | wc -l'		# number of files
+# display 15 biggest files in chosen directory
+alias bigf='tree -iasfFQ | egrep -v /$ | sort -k2nr | head --lines=15'
+
+alias dus='du -aS | sort -n -r | head --lines=15'
+alias ping='ping -c 5'
+alias sf='screenfetch'
+
+alias cputemp='sensors | egrep Core'
+alias pscpu='echo "USER       PID %CPU %MEM  SZ    RSS   TTY      STAT STIME   TIME COMMAND"; ps auxw | tail | sort -k 1.15,1.19nr | head'
+alias psmem='echo "USER       PID %CPU %MEM  SZ    RSS   TTY      STAT STIME   TIME COMMAND"; ps auxw | tail | sort -k 1.21,1.25nr | head'
+#
+alias logb='journalctl --boot --reverse --lines=50 | ccze -A'
+alias logk='journalctl --dmesg --reverse --lines=50 | ccze -A'
+#
+# mount media if not ok during start
+#
+alias mtmed='sudo mount -t nfs 192.168.1.2:/media /mnt/NAS/media'
+#
+# Start eclipse java
+#
+alias ej='/mnt/Data/eclipse-java/eclipse/eclipse'
+alias ecpp='/mnt/Data/eclipse-cpp/eclipse/eclipse'
+#
+# alias for Docker
+#
+alias dp='cd /mnt/Data/docker-projects'
+alias mh='cd /mnt/Data/hardway'
+#
+# alias for LXD
+#
+#------------------------------------------------------------- 
+# End Aliases
+#-------------------------------------------------------------
+
+
+
+
+

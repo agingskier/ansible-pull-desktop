@@ -1,0 +1,29 @@
+- name: system setup | utilities | install utility packages
+  tags: packages,system,settings
+  apt:
+    state: latest
+    pkg:
+      - at
+      - colordiff
+      - curl
+      - dnsutils
+      - htop
+      - iotop
+      - lm-sensors
+      - lsof
+      - mosh
+      - ncdu
+      - neofetch
+      - net-tools
+      - nfs-common
+      - nmap
+      - ranger
+      - rsync
+      - screen
+      - sshfs
+      - tmux
+      - traceroute
+      - vim-nox
+      - vim-gtk3
+      - wget
+      - whois

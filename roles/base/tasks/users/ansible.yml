@@ -1,0 +1,22 @@
+- name: Create ansible user
+  user:
+    name: ansible
+    system: yes
+
+- name: users | ansible | add public key
+  tags: dotfiles,ansible,ssh,ssh-keys,users
+  authorized_key:
+    user: ansible
+    key: "{{ item }}"
+  with_file:
+    - https://github.com/agingskier.keys
+#    - users/ansible/ssh/id_ed25519_ansible.pub (others possible)
+
+- name: users | ansible | add sudoers file
+  tags: ansible,sudo,system,users
+  copy:
+    src: users/sudoers_ansible
+    dest: /etc/sudoers.d/ansible
+    owner: root
+    group: root
+    mode: 0440

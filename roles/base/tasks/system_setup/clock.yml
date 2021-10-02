@@ -1,0 +1,18 @@
+- name: system setup | clock | install systemd-timesyncd (ubuntu)
+  tags: ntp,system setup
+  apt:wq
+  :
+    name: systemd-timesyncd
+    state: latest
+
+- name: system setup | clock | start and enable systemd-timesyncd
+  tags: ntp,system settings
+  service:
+    name: systemd-timesyncd
+    state: started
+    enabled: true
+
+- name: system setup | clock | set time zone
+  tags: ntp,timezone,system setup
+  timezone:
+    name: "Europe/Zurich"
