@@ -1,3 +1,4 @@
+---
 - name: users | bpic | create user
   tags: bpic,sudo,users
   user:
@@ -26,7 +27,7 @@
     group: users
     mode: 0700
   with_items:
-    - { dir: '/home/bpic/.ssh' }
+    - "{{ dir: '/home/bpic/.ssh' }}"
 
 - name: users | bpic | add public key
   tags: dotfiles,bpic,ssh,ssh-keys,users
@@ -108,27 +109,27 @@
   tags: dotfiles,bpic,users,vim
   copy:
     src: users/bpic/vim/{{ item.src }}
-    dest: "{{ item.dest }}"
+    dest: {{ item.dest }}
     owner: bpic
     group: users
     mode: 0700
   with_items:
-    - "{{ src: 'pathogen.vim', dest: '/home/bpic/.vim/autoload/pathogen.vim' }}"
+    - { src:'pathogen.vim', dest:'/home/bpic/.vim/autoload/pathogen.vim' }
 
 - name: users | bpic | checkout git repositories
   tags: git,users,bpic
   become: yes
   git:
-    repo: "{{ item.repo }}"
-    dest: "{{ item.dest }}"
+    repo: {{ item.repo }}
+    dest: {{ item.dest }}
     force: yes
   with_items:
-    - { repo: 'https://github.com/ctrlpvim/ctrlp.vim.git', dest: '/home/bpic/.vim/bundle/ctrlp.vim' }
-    - { repo: 'https://github.com/davidhalter/jedi-vim.git', dest: '/home/bpic/.vim/bundle/jedi-vim' }
-    - { repo: 'https://github.com/pearofducks/ansible-vim', dest: '/home/bpic/.vim/bundle/ansible-vim' }
-    - { repo: 'https://github.com/rhysd/vim-grammarous.git', dest: '/home/bpic/.vim/bundle/vim-grammarous' }
-    - { repo: 'https://github.com/ron89/thesaurus_query.vim', dest: '/home/bpic/.vim/bundle/thesaurus_query' }
-    - { repo: 'https://github.com/scrooloose/nerdtree.git', dest: '/home/bpic/.vim/bundle/nerdtree' }
-    - { repo: 'https://github.com/tpope/vim-obsession.git', dest: '/home/bpic/.vim/bundle/vim-obsession' }
-    - { repo: 'https://github.com/vim-syntastic/syntastic.git', dest: '/home/bpic/.vim/bundle/syntastic' }
+    - { repo:'https://github.com/ctrlpvim/ctrlp.vim.git', dest:'/home/bpic/.vim/bundle/ctrlp.vim' }
+    - { repo:'https://github.com/davidhalter/jedi-vim.git',dest:'/home/bpic/.vim/bundle/jedi-vim' }
+    - { repo:'https://github.com/pearofducks/ansible-vim', dest:'/home/bpic/.vim/bundle/ansible-vim' }
+    - { repo:'https://github.com/rhysd/vim-grammarous.git', dest:'/home/bpic/.vim/bundle/vim-grammarous' }
+    - { repo:'https://github.com/ron89/thesaurus_query.vim', dest:'/home/bpic/.vim/bundle/thesaurus_query' }
+    - { repo:'https://github.com/scrooloose/nerdtree.git', dest:'/home/bpic/.vim/bundle/nerdtree' }
+    - { repo:'https://github.com/tpope/vim-obsession.git', dest:'/home/bpic/.vim/bundle/vim-obsession' }
+    - { repo:'https://github.com/vim-syntastic/syntastic.git', dest:'/home/bpic/.vim/bundle/syntastic' }
   notify: update_vim_bundle_perms
