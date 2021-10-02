@@ -35,7 +35,7 @@
     user: bpic
     key: "{{ item }}"
   with_file:
-    - "{{ lookup('file', 'users/bpic/ssh/id_ed25519_ubuntu.pub') }}
+    - "{{ lookup('file', 'users/bpic/ssh/id_ed25519_ubuntu.pub') }}"
 
 - name: users | bpic | create config directories
   tags: dotfiles,bpic,users,vim
@@ -125,7 +125,7 @@
     force: yes
   with_items:
     - { repo:'https://github.com/ctrlpvim/ctrlp.vim.git', dest:'/home/bpic/.vim/bundle/ctrlp.vim' }
-    - { repo:'https://github.com/davidhalter/jedi-vim.git',dest:'/home/bpic/.vim/bundle/jedi-vim' }
+    - { repo:'https://github.com/davidhalter/jedi-vim.git', dest:'/home/bpic/.vim/bundle/jedi-vim' }
     - { repo:'https://github.com/pearofducks/ansible-vim', dest:'/home/bpic/.vim/bundle/ansible-vim' }
     - { repo:'https://github.com/rhysd/vim-grammarous.git', dest:'/home/bpic/.vim/bundle/vim-grammarous' }
     - { repo:'https://github.com/ron89/thesaurus_query.vim', dest:'/home/bpic/.vim/bundle/thesaurus_query' }
