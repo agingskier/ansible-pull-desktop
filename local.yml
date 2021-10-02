@@ -1,7 +1,7 @@
 ---
 # tasks to complete before running roles
 - name: Pre-run to update package cache
-  hosts: localhost
+  hosts: all
   connection: local
   tags: always
   become: true
@@ -13,7 +13,7 @@
 
 # run roles
 - name: Base role for all systems
-  hosts: localhost
+  hosts: all
   tags: base
   become: true
   roles:
@@ -36,7 +36,7 @@
 
 # end of run cleanup and reporting
 - name: Cleanup and reporting
-  hosts: localhost
+  hosts: all
   become: true
 
   tasks:

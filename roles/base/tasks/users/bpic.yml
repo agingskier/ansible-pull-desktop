@@ -33,7 +33,7 @@
   tags: dotfiles,bpic,ssh,ssh-keys,users
   authorized_key:
     user: bpic
-    key: "{{ item }}"
+    key: {{ item }}
   with_file:
     - "{{ lookup('file', 'users/bpic/ssh/id_ed25519_ubuntu.pub') }}"
 
@@ -114,7 +114,7 @@
     group: users
     mode: 0700
   with_items:
-    - "{{ src:'pathogen.vim', dest:'/home/bpic/.vim/autoload/pathogen.vim' }}"
+    - { src:'pathogen.vim', dest:'/home/bpic/.vim/autoload/pathogen.vim' }
 
 - name: users | bpic | checkout git repositories
   tags: git,users,bpic
