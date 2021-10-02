@@ -9,13 +9,13 @@
     user: ansible
     key: "{{ item }}"
   with_file:
-    - https://github.com/agingskier.keys
-#    - files/users/ansible/ssh/id_ed25519_ansible.pub (others possible)
+    - "{{ lookup('file', 'https://github.com/agingskier.keys') }}"
+#    - only with file and lookup public key (others possible)
 
 - name: users | ansible | add sudoers file
   tags: ansible,sudo,system,users
   copy:
-    src: files/users/sudoers_ansible
+    src: users/sudoers_ansible
     dest: /etc/sudoers.d/ansible
     owner: root
     group: root

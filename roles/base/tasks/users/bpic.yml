@@ -113,7 +113,7 @@
     group: users
     mode: 0700
   with_items:
-    - { src: 'pathogen.vim', dest: '/home/bpic/.vim/autoload/pathogen.vim' }
+    - "{{ src: 'pathogen.vim', dest: '/home/bpic/.vim/autoload/pathogen.vim' }}"
 
 - name: users | bpic | checkout git repositories
   tags: git,users,bpic
