@@ -10,12 +10,12 @@
     key: "{{ item }}"
   with_file:
     - https://github.com/agingskier.keys
-#    - users/ansible/ssh/id_ed25519_ansible.pub (others possible)
+#    - files/users/ansible/ssh/id_ed25519_ansible.pub (others possible)
 
 - name: users | ansible | add sudoers file
   tags: ansible,sudo,system,users
   copy:
-    src: users/sudoers_ansible
+    src: files/users/sudoers_ansible
     dest: /etc/sudoers.d/ansible
     owner: root
     group: root
