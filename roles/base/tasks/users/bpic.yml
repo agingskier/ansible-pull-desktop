@@ -28,13 +28,13 @@
   with_items:
     - { dir: '/home/bpic/.ssh' }
 
-      #     - name: users | bpic | add public key
-      # tags: dotfiles,bpic,ssh,ssh-keys,users
-      # authorized_key:
-      # user: bpic
-      # key: "{{ item }}"
-      # with_file:
-      # - users/bpic/ssh/id_ed25519_ubuntu.pub
+- name: users | bpic | add public key
+  tags: dotfiles,bpic,ssh,ssh-keys,users
+  authorized_key:
+    user: bpic
+    key: "{{ item }}"
+  with_file:
+    - "{{ lookup('file', 'users/bpic/ssh/id_ed25519_ubuntu.pub') }}
 
 - name: users | bpic | create config directories
   tags: dotfiles,bpic,users,vim
