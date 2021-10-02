@@ -118,11 +118,11 @@
 
 - name: users | bpic | checkout git repositories
   tags: git,users,bpic
-  become: yes
+  become: true
   git:
     repo: {{ item.repo }}
     dest: {{ item.dest }}
-    force: yes
+    force: true
   with_items:
     - { repo:'https://github.com/ctrlpvim/ctrlp.vim.git', dest:'/home/bpic/.vim/bundle/ctrlp.vim' }
     - { repo:'https://github.com/davidhalter/jedi-vim.git', dest:'/home/bpic/.vim/bundle/jedi-vim' }
