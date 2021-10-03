@@ -1,5 +1,5 @@
 [server]
-ssh-server.sibdata.ch
+sshServer.sibdata.ch
 
 [workstation]
 bequiet.sibdata.ch
