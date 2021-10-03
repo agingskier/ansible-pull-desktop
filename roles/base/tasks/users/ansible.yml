@@ -8,10 +8,7 @@
   tags: dotfiles,ansible,ssh,ssh-keys,users
   authorized_key:
     user: ansible
-    key: "{{ item }}"
-  with_file:
-    - "{{ lookup('file', 'https://github.com/agingskier.keys') }}"
-#    - only with file and lookup public key (others possible)
+    key: https://github.com/agingskier.keys
 
 - name: users | ansible | add sudoers file
   tags: ansible,sudo,system,users
