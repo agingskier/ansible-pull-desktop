@@ -16,8 +16,8 @@
 
   # Perform remaining tasks:
   - import_tasks: system_setup/clock.yml
+  - import_tasks: system_setup/cron.yml
   - import_tasks: system_setup/logging.yml
-  - import_tasks: system_setup/memory.yml
   - import_tasks: system_setup/microcode.yml
   - import_tasks: system_setup/openssh.yml
 

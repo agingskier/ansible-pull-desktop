@@ -9,9 +9,8 @@
   cron:
     name: "ansible provision"
     user: ansible
-    hour: "{{ ansible_cron_hour | default('*') }}"
-    minute: "{{ ansible_cron_minute | default('*/30') }}"
-    job: "/usr/local/bin/provision > /dev/null"
+    minute: "*/30"
+   job: "/usr/bin/ansible-pull -o -U https://github.com/jlacroix82/ansible_pull_tutorial.git > /dev/null"
 
 - name: system setup | cron | schedule ansible cleanup at boot
   tags: cron
