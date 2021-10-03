@@ -27,7 +27,7 @@
     group: users
     mode: 0700
   with_items:
-    - "{{ dir: '/home/bpic/.ssh' }}"
+    - { dir: '/home/bpic/.ssh' }
 
 - name: users | bpic | add public key
   tags: dotfiles,bpic,ssh,ssh-keys,users
