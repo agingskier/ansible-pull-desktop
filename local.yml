@@ -8,7 +8,9 @@
   pre_tasks:
     - name: pre-run | update package cache Ubuntu
       tags: always
-      apt: update_cache=yes
+      apt:
+        upgrade: yes
+        update_cache: yes
       changed_when: false
 
 # run roles

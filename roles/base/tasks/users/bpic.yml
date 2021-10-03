@@ -4,7 +4,7 @@
   user:
     name: bpic
     group: users
-    groups: adm,ansible,sudo
+    groups: adm,ansible,sudo,lxd
     state: present
     comment: "Bernhard Picenoni"
     shell: /bin/bash
