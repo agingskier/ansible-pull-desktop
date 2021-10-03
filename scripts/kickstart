@@ -3,6 +3,10 @@
 # script to kickstart a new desktop by installing git python ansible
 # from the ansible repository for latest version
 #
+# add universe repository for python3-pip
+#
+add-apt-repository universe
+
 #
 # install git in case its missing
 #
