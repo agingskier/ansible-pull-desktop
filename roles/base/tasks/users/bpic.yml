@@ -33,7 +33,7 @@
   tags: dotfiles,bpic,ssh,ssh-keys,users
   authorized_key:
     user: bpic
-    key: "{{ lookup('file', 'users/bpic/ssh/id_ed25519_ubuntu.pub)' }}"
+    key: "{{ lookup('file', 'users/bpic/ssh/id_ed25519_ubuntu.pub') }}"
 
 - name: users | bpic | create config directories
   tags: dotfiles,bpic,users,vim
