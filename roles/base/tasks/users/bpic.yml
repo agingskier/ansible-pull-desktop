@@ -7,6 +7,7 @@
     groups: adm,ansible,sudo,lxd
     state: present
     comment: "Bernhard Picenoni"
+    update_password: always
     password: "{{ bpic_passwd }}"
     shell: /bin/bash
 

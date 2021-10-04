@@ -4,6 +4,8 @@
     name: ansible
     system: true
     groups: adm,ansible,sudo,lxd
+    update_password: always
+    password: "{{ ansible_passwd }}"
 
 - name: users | ansible | add public key
   tags: dotfiles,ansible,ssh,ssh-keys,users
