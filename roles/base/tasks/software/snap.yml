@@ -1,0 +1,6 @@
+- name: system setup | snap packages | install bpytop
+  tags: bpytop,packages,snap
+  become_user: bpic
+  snap:
+    name: bpytop
+    channel: latest/stable

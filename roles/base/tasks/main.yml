@@ -11,7 +11,7 @@
   # install software
   - import_tasks: software/repositories.yml
   - import_tasks: software/development.yml
-  - import_tasks: software/pip.yml
+  - import_tasks: software/snap.yml
   - import_tasks: software/utilities.yml
 
   # Perform remaining tasks:

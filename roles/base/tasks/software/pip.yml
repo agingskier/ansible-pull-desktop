@@ -1,7 +1,0 @@
-- name: system setup | pip packages | install bpytop
-  tags: bpytop,packages,pip,python
-  become_user: bpic
-  pip:
-    executable: /usr/bin/pip3
-    state: latest
-    name: bpytop
