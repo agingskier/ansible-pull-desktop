@@ -1,7 +1,7 @@
 ---
 - name: system setup | snap packages | install bpytop
   tags: bpytop,packages,snap
-  become_user: bpic
+  become: true
   snap:
     name:
       - bpytop
