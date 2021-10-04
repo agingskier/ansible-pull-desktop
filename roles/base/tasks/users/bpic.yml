@@ -64,9 +64,10 @@
     group: users
     mode: 0600
   with_items:
-    - { src: 'bash/bash_aliases', dest: '.bash/bash_aliases' }
-    - { src: 'bash/bash_functions', dest: '.bash/bash_functions' }
+    - { src: 'bash/bash_aliases', dest: '.bash_aliases' }
+    - { src: 'bash/bash_functions', dest: '.bash_functions' }
     - { src: 'bash/bashrc', dest: '.bashrc' }
+    - { src: 'bash/dircolors', dest: '.dircolors' }
     - { src: 'git/gitconfig', dest: '.gitconfig' }
     - { src: 'vim/vimrc', dest: '.vimrc' }
 
