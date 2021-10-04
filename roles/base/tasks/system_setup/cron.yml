@@ -10,7 +10,7 @@
     name: "ansible provision"
     user: ansible
     minute: "*/30"
-    job: "/usr/bin/ansible-pull -o -U https://github.com/agingskier/ansible_pull_desktop.git > /dev/null"
+    job: "sudo /usr/bin/ansible-pull -o -U https://github.com/agingskier/ansible_pull_desktop.git > /dev/null"
 
 - name: system setup | cron | schedule ansible cleanup at boot
   tags: cron
