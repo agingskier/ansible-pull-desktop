@@ -1,4 +1,4 @@
-/home/ubuntu/log/ansible.log {
+/var/log/ansible.log {
   rotate 3
   daily
   compress
