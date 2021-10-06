@@ -1,5 +1,6 @@
 ---
 - name: Update ubuntu user's Password
+  tags: users,ubuntu,password
   user:
     name: root
     update_password: always

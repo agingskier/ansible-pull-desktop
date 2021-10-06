@@ -1,5 +1,6 @@
 ---
-- name: Create ansible user
+- name: Create ansible user | update password
+  tags: ansible,users,password
   user:
     name: ansible
     system: true

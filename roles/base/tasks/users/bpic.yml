@@ -1,6 +1,6 @@
 ---
-- name: users | bpic | create user
-  tags: bpic,sudo,users
+- name: users | create user bpic | update password
+  tags: bpic,sudo,users,password
   user:
     name: bpic
     group: users
