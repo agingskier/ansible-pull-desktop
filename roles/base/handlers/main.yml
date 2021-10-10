@@ -6,7 +6,7 @@
 
 - name: update_vim_bundle_perms
   file:
-    path: /home/bpic/.vim/bundle
+    path: /home/bernhard/.vim/bundle
     owner: bpic
     group: users
     recurse: true
