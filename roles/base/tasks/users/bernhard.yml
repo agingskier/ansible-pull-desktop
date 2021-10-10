@@ -1,6 +1,6 @@
 ---
 - name: users | create user bernhard | update password
-  tags: bpic,sudo,users,password
+  tags: bernhard,sudo,users,password
   user:
     name: bernhard
     group: users
