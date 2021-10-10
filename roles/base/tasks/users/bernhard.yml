@@ -1,0 +1,137 @@
+---
+- name: users | create user bernhard | update password
+  tags: bpic,sudo,users,password
+  user:
+    name: bernhard
+    group: users
+    groups: adm,ansible,sudo,lxd
+    uid: 10000
+    state: present
+    comment: "Bernhard Picenoni"
+    update_password: always
+    password: "{{ bernhard_passwd }}"
+    shell: /bin/bash
+
+- name: users | bernhard | add sudoers file
+  tags: bernhard,ansible,sudo,system,users
+  copy:
+    src: users/sudoers_bernhard
+    dest: /etc/sudoers.d/bernhard
+    owner: root
+    group: root
+    mode: 0440
+
+- name: users | bernhard | create .ssh directory
+  tags: dotfiles,bernhard,ssh,users
+  file:
+    path: "{{ item.dir }}"
+    state: directory
+    owner: bernhard
+    group: users
+    mode: 0700
+  with_items:
+    - { dir: '/home/bernhard/.ssh' }
+
+- name: users | bernhard | add public key
+  tags: dotfiles,bernhard,ssh,ssh-keys,users
+  authorized_key:
+    user: bernhard
+    key: "{{ lookup('file', 'users/bernhard/ssh/id_ed25519_ubuntu.pub') }}"
+
+- name: users | bernhard | create config directories
+  tags: dotfiles,bernhard,users,vim
+  file:
+    path: /home/bernhard/{{ item.dir }}
+    state: directory
+    owner: bernhard
+    group: users
+    mode: 0700
+  with_items:
+    - { dir: '.bash' }
+    - { dir: '.config' }
+    - { dir: '.config/htop' }
+    - { dir: '.config/terminator' }
+    - { dir: '.config/tilix' }
+    - { dir: '.vim' }
+    - { dir: '.vim/autoload' }
+    - { dir: '.vim/bundle' }
+    - { dir: '.vim/colors' }
+    - { dir: '.vim/ftplugin' }
+
+- name: users | bernhard | copy dotfiles
+  tags: dotfiles,users,bernhard,users,vim
+  copy:
+    src: users/bernhard/{{ item.src }}
+    dest: /home/bernhard/{{ item.dest }}
+    owner: bernhard
+    group: users
+    mode: 0600
+  with_items:
+    - { src: 'bash/bash_aliases', dest: '.bash_aliases' }
+    - { src: 'bash/bash_functions', dest: '.bash_functions' }
+    - { src: 'bash/bashrc', dest: '.bashrc' }
+    - { src: 'bash/dircolors', dest: '.dircolors' }
+    - { src: 'git/gitconfig', dest: '.gitconfig' }
+    - { src: 'vim/vimrc', dest: '.vimrc' }
+
+- name: users | bernhard | copy vim ftype files
+  tags: dotfiles,bernhard,users,vim
+  copy:
+    src: users/bernhard/vim/{{ item.src }}
+    dest: /home/bernhard/.vim/ftplugin/{{ item.src }}
+    owner: bernhard
+    group: users
+    mode: 0600
+  with_items:
+    - { src: 'cmake.vim' }
+    - { src: 'cpp.vim' }
+    - { src: 'html.vim' }
+    - { src: 'perl.vim' }
+    - { src: 'python.vim' }
+    - { src: 'ruby.vim' }
+    - { src: 'sql.vim' }
+    - { src: 'xml.vim' }
+
+- name: users | bernhard | copy vim color files
+  tags: dotfiles,bernhard,users,vim
+  copy:
+    src: users/bernhard/vim/{{ item.src }}
+    dest: /home/bernhard/.vim/colors/{{ item.src }}
+    owner: bernhard
+    group: users
+    mode: 0600
+  with_items:
+    - { src: 'bubblegum-256-dark.vim' }
+    - { src: 'darktango.vim' }
+    - { src: 'jellybeans.vim' }
+    - { src: 'xoria256.vim' }
+    - { src: 'zenburn.vim' }
+
+- name: users | bernhard | install pathogen
+  tags: dotfiles,bernhard,users,vim
+  copy:
+    src: users/bernhard/vim/{{ item.src }}
+    dest: /home/bernhard/.vim/autoload/{{ item.src }}
+    owner: bernhard
+    group: users
+    mode: 0700
+  with_items:
+    - { src: 'pathogen.vim' }
+
+- name: users | bernhard | checkout git repositories
+  tags: git,users,bernhard
+  become: true
+  git:
+    repo: "{{ item.repo }}"
+    dest: "{{ item.dest }}"
+    force: true
+  with_items:
+    - { repo: 'https://github.com/ctrlpvim/ctrlp.vim.git', dest: '/home/bernhard/.vim/bundle/ctrlp.vim' }
+    - { repo: 'https://github.com/davidhalter/jedi-vim.git', dest: '/home/bernhard/.vim/bundle/jedi-vim' }
+    - { repo: 'https://github.com/pearofducks/ansible-vim', dest: '/home/bernhard/.vim/bundle/ansible-vim' }
+    - { repo: 'https://github.com/rhysd/vim-grammarous.git', dest: '/home/bernhard/.vim/bundle/vim-grammarous' }
+    - { repo: 'https://github.com/ron89/thesaurus_query.vim', dest: '/home/bernhard/.vim/bundle/thesaurus_query' }
+    - { repo: 'https://github.com/scrooloose/nerdtree.git', dest: '/home/bernhard/.vim/bundle/nerdtree' }
+    - { repo: 'https://github.com/tpope/vim-obsession.git', dest: '/home/bernhard/.vim/bundle/vim-obsession' }
+    - { repo: 'https://github.com/vim-syntastic/syntastic.git', dest: '/home/bernhard/.vim/bundle/syntastic' }
+  notify: update_vim_bundle_perms
