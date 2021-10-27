@@ -1,0 +1,8 @@
+---
+- name: system setup | manamement | install package management tools
+  tags: packages,system,settings
+  apt:
+    pkg:
+      - aptitude
+      - software-properties-common
+    state: present

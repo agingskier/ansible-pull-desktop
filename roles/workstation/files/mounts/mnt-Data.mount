@@ -1,0 +1,12 @@
+[Unit]
+Desctiption=Data partition
+ConditionPathExists=/mnt/Data
+
+[Mount]
+What=/dev/disk/by-uuid/ea122f5a-e4db-4f40-83be-3b41ae648490
+Where=/mnt/Data
+Type=ext4
+Option=defaults,x-gvfs-show
+
+[Install]
+WantedBy=multi-user.target

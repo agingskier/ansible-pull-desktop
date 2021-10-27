@@ -1,0 +1,26 @@
+---
+- name: Software | topgrade | install latest topgrade binary
+  uri:
+    url: https://github.com/r-darwish/topgrade/releases/latest
+  register: topgrade_release
+  when:
+    - topgrade is defined
+    - topgrade == "yes"
+
+- name: set fact
+  set_fact:
+    top_release: "{{ topgrade_release | regex_search('(?<=tag/)[^\"]{6}') }}"
+  when:
+    - topgrade is defined
+    - topgrade == "yes"
+
+- name: software | topgrade | install latest topgrade binary
+  become: true
+  become_method: sudo
+  unarchive:
+    src: https://github.com/r-darwish/topgrade/releases/download/{{ top_release }}/topgrade-{{ top_release }}-x86_64-unknown-linux-gnu.tar.gz
+    dest: /usr/local/bin
+    remote_src: yes
+    mode: 0755
+    owner: root
+    group: root

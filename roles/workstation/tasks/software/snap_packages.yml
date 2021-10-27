@@ -1,0 +1,30 @@
+---
+- name: software | snap | install snap packages
+  tags: packages,snap,workstation-packages
+  become: true
+  become_method: sudo
+  snap:
+    name:
+      - gimp
+      - digikam
+      - keepassxc
+      - libreoffice
+      - firefox
+      - docfetcher
+      - signal-desktop
+      - ssh-audit
+      - android-file-transfer-linux
+
+- name: software | snap connect | allow access to NAS
+  tags: packages,snap,workstation-packages
+  become: true
+  become_method: sudo
+  command: 'snap connect {{ item.app }}:{{ item.plug }}'
+  register: connect_result
+  with_items:
+    - { app: 'gimp', plug: 'removable-media' }
+    - { app: 'digikam', plug: 'removable-media' }
+    - { app: 'keepassxc', plug: 'removable-media' }
+    - { app: 'libreoffice', plug: 'removable-media' }
+    - { app: 'docfetcher', plug: 'removable-media' }
+  changed_when: connect_result.rc == 0

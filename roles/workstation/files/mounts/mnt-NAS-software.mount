@@ -1,0 +1,12 @@
+[Unit]
+Description=NAS software share
+After=network.target
+
+[Mount]
+What=192.168.1.2:/software
+Where=/mnt/NAS/software
+Type=nfs
+Options=default,x-systemd.automount
+
+[Install]
+WantedBy=multi-user.target

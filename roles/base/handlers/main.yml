@@ -10,3 +10,8 @@
     owner: bpic
     group: users
     recurse: true
+
+- name: restart_journald
+  service:
+    name: systemd-journald
+    state: restarted

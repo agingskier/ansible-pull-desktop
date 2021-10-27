@@ -1,0 +1,13 @@
+---
+- name: software | snap | install multipass package
+  tags: packages,snap,workstation-packages
+  become: true
+  become_method: sudo
+  snap:
+    name:
+      - multipass
+      - ubuntu-cloud-image
+  when:
+    - multipass is defined
+    - multipass == "yes"
+

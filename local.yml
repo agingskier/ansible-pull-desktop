@@ -21,12 +21,12 @@
   roles:
     - base
 
-# - name: Workstation role
-#  hosts: workstation
-#  tags: workstation
-#  become: true
-#  roles:
-#    - workstation
+- name: Workstation role
+  hosts: workstation
+  tags: workstation
+  become: true
+  roles:
+    - workstation
 
 
 # - name: Server role
@@ -65,4 +65,4 @@
       tags: always
       when:
         - task_failed is defined
-        - task_failed == true
+#       - task_failed == true

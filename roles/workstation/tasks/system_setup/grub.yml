@@ -1,0 +1,16 @@
+---
+- name: grub | system-setup | install grub
+  apt:
+    pkg:
+      - grub-customizer
+      - grub2-splashimages
+    state: present
+
+- name: grub | system-setup | copy black hole file
+  tags: grub
+  copy:
+    src: grub/black-hole-blue.tga
+    dest: /usr/share/images/grub/black-hole-blue.tga
+    owner: root
+    group: root
+    mode: 0644

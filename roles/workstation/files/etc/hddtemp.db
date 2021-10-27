@@ -1,0 +1,31 @@
+#
+# Insert a regular expression for support of the model or the serie of your hard drive.
+# If you don't know what to put in the second field, put the number
+# that appears most often for your brand :o)
+# A value of zero meens that we know that the drive doesn't have
+# a temperature sensor (you can set the unit to C or F).
+#
+# The character string needs to be exactly the same as produced by:
+#  ==> sudo smartctl -a /dev/sdb
+# Check which field value could contain the temperature, usually either 194 or 190
+#
+############################################################################
+
+########################################
+#         Samsung drives
+########################################
+"Samsung SSD 850 PRO 256G B"        190  C  "Samsung SSD 850 PRO 256GB"
+"Samsung SSD 860 PRO 512G B"        190  C  "Samsung SSD 860 PRO 512GB"
+
+
+########################################
+#         Seagate drives
+########################################
+"ST1000DM010-2EP102"				194  C  "Seagate Barracude 3.5 1TB"
+
+########################################
+#       Western Digital drives
+########################################
+
+"WDC WD20EZRX-00D8PB0"				194  C "Western Digital Green 2TB"
+

@@ -1,24 +1,25 @@
+---
 - name: system setup | utilities | install utility packages
   tags: packages,system,settings
   apt:
-    state: latest
+    state: present
     pkg:
+      - apt-show-version
       - at
+      - ccze
       - colordiff
+      - conky-all
+      - dconf-editor
       - dnsutils
-      - htop
+      - etherape
       - iotop
-      - lm-sensors
+      - mlocate
       - mosh
       - ncdu
       - neofetch
-      - net-tools
       - nfs-common
       - nmap
-      - rsync
-      - tmux
       - traceroute
       - vim-nox
       - vim-gtk3
-      - wget
       - whois

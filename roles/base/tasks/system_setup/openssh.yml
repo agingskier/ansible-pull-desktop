@@ -1,8 +1,9 @@
+---
 - name: system setup | openssh | install or update daemon package
   tags: openssh,ssh,system,settings
   apt:
     name: openssh-server
-    state: latest
+    state: present
   notify: restart_sshd
 
 - name: system setup | openssh | enable daemon

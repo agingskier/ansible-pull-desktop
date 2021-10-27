@@ -1,9 +1,4 @@
-- name: system setup | clock | install systemd-timesyncd (ubuntu)
-  tags: ntp,system setup
-  apt:
-    name: systemd-timesyncd
-    state: latest
-
+---
 - name: system setup | clock | start and enable systemd-timesyncd
   tags: ntp,system settings
   service:

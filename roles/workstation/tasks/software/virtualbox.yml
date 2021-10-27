@@ -1,0 +1,33 @@
+---
+# For virtualbox, set up acceptance of virtualbox-ext-pack license before continuing
+# sudo debconf-show virtualbox-ext-pack --- (answers found in: /var/cache/debconf/config.dat)
+# * virtualbox-ext-pack/license: true
+# * virtaulbox-ext-pack/question: Yes
+- name: software | virtualbox-ext | confirm license info
+  become: true
+  become_method: sudo
+  debconf:
+    name: virtualbox-ext-pack
+    question: virtualbox-ext-pack/license
+    value: true
+    vtype: boolean
+
+- name: software | virtualbox | accept license
+  become: true
+  become_method: sudo
+  debconf:
+    name: virtualbox-ext-pack
+    question: virtualbox-ext-pack/question
+    value: Yes
+    vtype: select
+
+- name: software | virtualbox | install virtualbox
+  tags: virtualbox
+  become: true
+  become_method: sudo
+  apt:
+    pkg:
+      - virtualbox
+      - virtualbox-ext-pack
+      - virtualbox-guest-additions-iso
+    state: present

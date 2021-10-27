@@ -1,0 +1,36 @@
+---
+- name: system setup | sensors | install sensors packages
+  tags: packages,system,settings
+  apt:
+    state: present
+    pkg:
+      - lm-sensors
+      - psensor
+      - smartmontools
+
+- name: system_setup | sensors | copy etc files
+  tags: system_setup,sensors
+  copy:
+    src: etc/{{ item.src }}
+    dest: /etc{{ item.dest }}
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - { src: 'hddtemp.db', dest: 'hddtemp.db' }
+    - { src: 'sensors3.conf', dest: 'sensors3.conf' }
+    - { src: 'blacklist-edac.conf', dest: 'modeprobe.d/blacklist-edac.conf' }
+    - { src: 'sensors-modules', dest: 'modules' }
+
+- name: Run sensors-detect command | generate /etc/modules
+  tags: system_setup,sensors
+  become: true
+  become_method: sudo
+  command: sensors-detect --auto
+  register: expect_result
+
+- name: Print sensors-detect result
+  tags: system_setup,sensors
+  debug:
+    var: expect_result.stdout_lines[98:]
+  when: expect_result.rc == 0

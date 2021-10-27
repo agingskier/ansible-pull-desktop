@@ -1,0 +1,33 @@
+---
+- name: users | bernhard | copy personal config files
+  tags: dotfiles,dotfiles-bernhard
+  copy:
+    src: users/bernhard/{{ item.src }}
+    dest: /home/bernhard/{{ item.dest }}
+    owner: bernhard
+    group: users
+    mode: 0600
+  with_items:
+    - { src: 'nfs_bookmarks', dest: '.config/gtk-3.0/bookmarks' }
+    - { src: 'gvimrc', dest: '.gvimrc' }
+    - { src: 'ssh_client_config', dest: '.ssh/config' }
+    - { src: 'terminator_config', dest: '.config/terminator/config' }
+    - { src: 'tilix_schemes_homebrew', dest: '.config/tilix/schemes/homebrew.json' }
+
+- name: users | bernhard | copy profile image
+  tags: dotfiles,dotfiles-bernhard
+  copy:
+    src: users/bernhard/terminator_desktop
+    dest: /usr/share/applications/terminator.desktop
+    owner: root
+    group: root
+    mode: 0644
+
+- name: users | bernhard | copy profile image
+  tags: dotfiles,dotfiles-bernhard
+  copy:
+    src: users/bernhard/profile_image.jpg
+    dest: /var/lib/AccountsService/icons/bernhard.jpg
+    owner: root
+    group: root
+    mode: 0644

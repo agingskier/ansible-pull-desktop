@@ -47,7 +47,6 @@
     group: users
     mode: 0700
   with_items:
-    - { dir: '.bash' }
     - { dir: '.config' }
     - { dir: '.config/htop' }
     - { dir: '.config/terminator' }
@@ -71,6 +70,7 @@
     - { src: 'bash/bash_functions', dest: '.bash_functions' }
     - { src: 'bash/bashrc', dest: '.bashrc' }
     - { src: 'bash/dircolors', dest: '.dircolors' }
+    - { src: 'bash/conkyrc', dest: '.conkyrc' }
     - { src: 'git/gitconfig', dest: '.gitconfig' }
     - { src: 'vim/vimrc', dest: '.vimrc' }
 
@@ -124,6 +124,7 @@
   git:
     repo: "{{ item.repo }}"
     dest: "{{ item.dest }}"
+    version: master
     force: true
   with_items:
     - { repo: 'https://github.com/ctrlpvim/ctrlp.vim.git', dest: '/home/bernhard/.vim/bundle/ctrlp.vim' }

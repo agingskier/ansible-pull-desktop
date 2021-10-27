@@ -1,0 +1,16 @@
+---
+- name: software | install misc game packages
+  tags: gaming
+  apt:
+    pkg:
+      - chromium-bsu
+      - extremetuxracer
+      - frozen-bubble
+      - gnome-chess
+      - supertux
+      - supertuxkart
+      - wesnoth
+    status: present
+  when:
+    - games is defined
+    - games == "yes"

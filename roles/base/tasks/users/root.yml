@@ -19,7 +19,7 @@
 - name: users | root | copy dotfiles
   copy:
     src: users/root/{{ item.src }}
-    dest: /root/{{ item.dest}}
+    dest: /root/{{ item.dest }}
     owner: root
     group: root
     mode: 0600

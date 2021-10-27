@@ -1,0 +1,27 @@
+---
+- name: software | kvm | check system for kvm
+  command: kvm-ok
+  register: kvm_result
+  changed_when: "'KVM acceleration can be used' in kvm_result.stdout"
+
+- name: software | kvm | install kvm and dependencies
+  apt:
+    name:
+      - qemu
+      - qemu-kvm
+      - libvirt-daemon
+      - libvirt-clients
+      - virt-manager
+      - cpu-checker
+      - bridge-utils
+  when:
+    - kvm is defined
+    - kvm == "yes"
+    - "'KVM acceleration can be used' in kvm_result.stdout"
+
+- name: software | kvm | add user bernhard to groups
+  user:
+    name: bernhard
+    groups: libvirt,kvm
+    append: yes
+  become: yes

@@ -1,0 +1,9 @@
+---
+- name: software | remove unneeded workstation packages
+  tags: cleanup,packages,workstation-packages
+  package:
+    state: absent
+    name:
+      - firefox*
+      - libreoffice*
+      - thunderbird*

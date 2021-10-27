@@ -1,0 +1,5 @@
+#----cut here----
+# Chip drivers
+coretemp
+nct6775
+#----cut here----

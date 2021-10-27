@@ -1,0 +1,17 @@
+---
+- name: software | install multimedia codecs
+  tags: packages,system,system-packages,workstation-packages
+  apt:
+    pkg:
+      - pavucontrol
+      - gstreamer1.0-plugins-bad
+      - libdvd-pkg
+    status: present
+
+- name: software | Reconfigure libdvd-pkg
+  tags: packages,system,system-packages,workstation-packages
+  become: true
+  become_method: sudo
+  command: dpkg_reconfigure libdvd-pkg
+
+# https://github.com/ginsys/ansible-plugins/blob/devel/library/dpkg_reconfigure

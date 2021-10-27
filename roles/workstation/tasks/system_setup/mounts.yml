@@ -1,0 +1,48 @@
+---
+- name: system setup | systemd mount | create nfs mountpoint directories
+  tags: systemd
+  file:
+    path: /mnt/{{ item.dir }}
+    state: directory
+    owner: bernhard
+    group: users
+    mode: 0775
+  with_items:
+    - { dir: NAS }
+    - { dir: NAS/documents }
+    - { dir: NAS/backup }
+    - { dir: NAS/media }
+    - { dir: NAS/software }
+    - { dir: NAS/scan }
+    - { dir: NAS/steuern }
+
+- name: system_setup | systemd | copy mount files
+  tags: system_setup,systemd
+  copy:
+    src: mounts/{{ item.src }}
+    dest: /etc/systemd/system/{{ item.dest }}
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - { src: 'mnt-Data.mount', dest: 'mnt-Data.mount' }
+    - { src: 'mnt-Games.mount', dest: 'mnt-Games.mount' }
+    - { src: 'mnt-Digikam.mount', dest: 'mnt-Digikam.mount' }
+    - { src: 'mnt-NAS-backup.mount', dest: 'mnt-NAS-backup.mount' }
+    - { src: 'mnt-NAS-documents.mount', dest: 'mnt-NAS-documents.mount' }
+    - { src: 'mnt-NAS-media.mount', dest: 'mnt-NAS-media.mount' }
+    - { src: 'mnt-NAS-software.mount', dest: 'mnt-NAS-software.mount' }
+    - { src: 'mnt-NAS-scan.mount', dest: 'mnt-NAS-scan.mount' }
+    - { src: 'mnt-NAS-steuern.mount', dest: 'mnt-NAS-steuern.mount' }
+
+- name: system setup | fstab | add tmpfs line to fstab (only once)
+  tags: systemd,fstab,tmpfs
+  become: true
+  become_method: sudo
+  lineinfile:
+    path: /etc/fstab
+    line: "tmpfs                 /tmp       tmpfs    rw,nosuid,noatime,nodev,mode=1777,size=10%  0    1"
+
+- name: Just force systemd to reread configs
+  systemd:
+    daemon_reload: yes

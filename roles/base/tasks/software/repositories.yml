@@ -1,7 +1,0 @@
-- name: system setup | repositories | install package management tools Ubuntu
-  tags: packages,system,settings
-  package:
-    name:
-      - aptitude
-      - software-properties-common
-    state: latest
