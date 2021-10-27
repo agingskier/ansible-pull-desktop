@@ -9,9 +9,11 @@
     name:
       - qemu
       - qemu-kvm
+      - libvirt-bin
       - libvirt-daemon
       - libvirt-clients
       - virt-manager
+      - virt-viewer
       - cpu-checker
       - bridge-utils
   when:
