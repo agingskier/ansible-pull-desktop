@@ -51,6 +51,7 @@
     - { dir: '.config/htop' }
     - { dir: '.config/terminator' }
     - { dir: '.config/tilix' }
+    - { dir: '.config/fsearch' }
     - { dir: '.vim' }
     - { dir: '.vim/autoload' }
     - { dir: '.vim/bundle' }

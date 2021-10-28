@@ -16,6 +16,7 @@ gui_editor: gvim
 # application selection
 #
 
+filesearch: yes
 games: yes
 kvm: yes
 keepassxc: yes

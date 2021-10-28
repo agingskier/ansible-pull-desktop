@@ -1,9 +1,6 @@
 ---
 - name: run all tasks from workstation role
   block:
-    ## User configs
-    - import_tasks: users/bernhard.yml
-
     ## desktop environments
 
     - include_tasks: desktop_environments/desktop.yml
@@ -17,6 +14,7 @@
     ## install software
     - import_tasks: software/remove_software.yml
     - import_tasks: software/apt_update.yml
+    - import_tasks: software/filesearch.yml
     - import_tasks: software/kvm.yml
     - import_tasks: software/media.yml
     - import_tasks: software/misc_games.yml
@@ -27,6 +25,9 @@
     - import_tasks: software/vagrant.yml
     - import_tasks: software/virtualbox.yml
     - import_tasks: software/vlc.yml
+
+    ## User configs (replace defaults from software installs)
+    - import_tasks: users/bernhard.yml
 
   rescue:
     - name: set task failed variable
