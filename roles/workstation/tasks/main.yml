@@ -12,7 +12,7 @@
     - import_tasks: system_setup/sensors.yml
 
     ## install software
-    - import_tasks: software/remove_software.yml
+#    - import_tasks: software/remove_software.yml
     - import_tasks: software/apt_update.yml
     - import_tasks: software/filesearch.yml
     - import_tasks: software/kvm.yml

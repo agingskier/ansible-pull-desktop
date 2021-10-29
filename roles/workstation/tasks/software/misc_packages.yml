@@ -5,6 +5,7 @@
     pkg:
       - geany
       - gparted
+      - lilbrecad
       - p7zip-full
       - openvpn
       - sshpass

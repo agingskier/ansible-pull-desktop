@@ -14,6 +14,7 @@
     - { src: 'terminator_config', dest: '.config/terminator/config' }
     - { src: 'tilix_schemes_homebrew', dest: '.config/tilix/schemes/homebrew.json' }
     - { src: 'fsearch_config', dest: '.config/fsearch/fsearch.conf' }
+    - { src: 'librecad_config', dest: '.config/LibreCAD/LibreCAS.conf' }
 
 - name: users | bernhard | copy profile image
   tags: dotfiles,dotfiles-bernhard
@@ -27,7 +28,7 @@
 - name: users | bernhard | copy profile image
   tags: dotfiles,dotfiles-bernhard
   copy:
-    src: users/bernhard/profile_image.jpg
+    src: users/bernhard/bernhard.jpg
     dest: /var/lib/AccountsService/icons/bernhard.jpg
     owner: root
     group: root

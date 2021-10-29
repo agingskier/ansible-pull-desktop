@@ -49,6 +49,7 @@
   with_items:
     - { dir: '.config' }
     - { dir: '.config/htop' }
+    - { dir: '.config/LibreCAD' }
     - { dir: '.config/terminator' }
     - { dir: '.config/tilix' }
     - { dir: '.config/fsearch' }
