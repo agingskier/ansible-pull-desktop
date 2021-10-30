@@ -19,7 +19,7 @@
   with_items:
     - { src: 'hddtemp.db', dest: 'hddtemp.db' }
     - { src: 'sensors3.conf', dest: 'sensors3.conf' }
-    - { src: 'blacklist-edac.conf', dest: 'modeprobe.d/blacklist-edac.conf' }
+    - { src: 'blacklist-edac.conf', dest: 'modprobe.d/blacklist-edac.conf' }
     - { src: 'sensors-modules', dest: 'modules' }
 
 - name: Run sensors-detect command | generate /etc/modules
