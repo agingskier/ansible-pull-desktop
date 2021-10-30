@@ -11,14 +11,14 @@
 - name: gnome | desktop | set wallpaper
   tags: gnome,gnome-wallpaper
   become_user: bernhard
-  dconf:
+  community.general.dconf:
     key: "/org/gnome/desktop/background/picture-uri"
     value: "'file:///usr/share/backgrounds/budgie/saturn.png'"
 
 - name: gnome | desktop | set wallpaper position
   tags: gnome,gnome-wallpaper
   become_user: bernhard
-  dconf:
+  community.general.dconf:
     key: "/org/gnome/desktop/background/picture-options"
     value: "'zoom'"
 
@@ -34,21 +34,21 @@
 - name: gnome | desktop | set lock screen background
   tags: gnome,gnome-lockscreen
   become_user: bernhard
-  dconf:
+  community.general.dconf:
     key: "/org/gnome/desktop/screensaver/picture-uri"
     value: "'file:///usr/share/backgrounds/budgie/jupiter.jpg'"
 
 - name: gnome | desktop | set lock screen background position
   tags: gnome,gnome-lockscreen
   become_user: bernhard
-  dconf:
+  community.general.dconf:
     key: "/org/gnome/desktop/screensaver/picture-options"
     value: "'zoom'"
 
 - name: gnome | desktop | set interface values
   tags: gnome,gnome-interface
   become_user: bernhard
-  dconf:
+  community.general.dconf:
     key: "/org/gnome/desktop/interface/{{ item.key }}"
     value: "{{ item.value }}"
   with_items:
@@ -61,7 +61,7 @@
 - name: gnome | gedit | set editor values
   tags: gnome,gedit
   become_user: bernhard
-  dconf:
+  community.general.dconf:
     key: "/org/gnome/gedit/preferences/editor/{{ item.key }}"
     value: "{{ item.value }}"
   with_items:

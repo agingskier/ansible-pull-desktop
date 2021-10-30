@@ -2,28 +2,20 @@
 - name: gnome | plank | set alignment
   tags: gnome,plank
   become_user: bernhard
-  dconf:
+  community.general.dconf:
     key: "/net/launchpad/plank/docks/dock1/alignment"
     value: "'center'"
 
 - name: gnome | plank | set icon size
   tags: gnome,plank
   become_user: bernhard
-  dconf:
+  community.general.dconf:
     key: "/net/launchpad/plank/docks/dock1/icon-size"
     value: "70"
 
 - name: gnome | plank | set zoom percent
   tags: gnome,plank
   become_user: bernhard
-  dconf:
+  community.general.dconf:
     key: "/net/launchpad/plank/docks/dock1/zoom-percent"
     value: "160"
-
-- name: gnome | plank | set dock items
-  tags: gnome,plank
-  become_user: bernhard
-  dconf:
-    key: "/net/launchpad/plank/docks/dock1/dock-items"
-    value: "['org.gnome.Software.dockitem', 'rhythmbox.dockitem', 'variety.dockitem', 'applications.dockitem', 'gnome-system-monitor.dockitem', 'pdfsam.dockitem', 'digikam_digikam.dockitem', 'gimp_gimp.dockitem', 'simple-scan.dockitem', 'org.gnome.Screenshot.dockitem', 'libreoffice-writer.dockitem', 'libreoffice-calc.dockitem', 'firefox.dockitem', 'nemo.dockitem', 'com.gexperts.Tilix.dockitem', 'terminator.dockitem', 'org.gnome.gedit.dockitem', 'budgie-desktop-settings.dockitem', 'gnome-control-center.dockitem', 'org.gnome.Mahjongg.dockitem', 'org.keepassxc.KeePassXC.dockitem', 'trash.dockitem']"
-
