@@ -1,5 +1,11 @@
 ---
-- name: Create ansible user | update password
+- name: users | ansible | create ansible group
+  tags: groups,ansible,users
+  group:
+    name: ansible
+    state: present
+
+- name: users | ansible | create ansible user, update password
   tags: ansible,users,password
   user:
     name: ansible

@@ -5,7 +5,7 @@
     - import_tasks: users/ansible.yml
     - import_tasks: users/root.yml
     - import_tasks: users/bernhard.yml
-    - import_tasks: users/ubuntu.yml
+#    - import_tasks: users/ubuntu.yml
 
     # Set up the ansible environment
     - import_tasks: ansible_setup.yml
