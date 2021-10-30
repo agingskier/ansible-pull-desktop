@@ -1,10 +1,10 @@
 ---
-- name: system setup | utilities | install utility packages
+- name: software | utilities | install utility packages
   tags: packages,system,settings
   apt:
     state: present
     pkg:
-      - apt-show-version
+      - apt-show-versions
       - at
       - ccze
       - colordiff
