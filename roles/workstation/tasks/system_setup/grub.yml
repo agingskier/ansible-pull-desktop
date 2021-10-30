@@ -14,3 +14,12 @@
     owner: root
     group: root
     mode: 0644
+
+- name: grub | system-setup | saturn file
+  tags: grub
+  copy:
+    src: grub/saturn-wallpaper.jpg
+    dest: /usr/share/images/grub/saturn-wallpaper.jpg
+    owner: root
+    group: root
+    mode: 0644
