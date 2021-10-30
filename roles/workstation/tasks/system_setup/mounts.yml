@@ -25,15 +25,26 @@
     group: root
     mode: 0644
   with_items:
-    - { src: 'mnt-Data.mount', dest: 'mnt-Data.mount' }
-    - { src: 'mnt-Games.mount', dest: 'mnt-Games.mount' }
-    - { src: 'mnt-Digikam.mount', dest: 'mnt-Digikam.mount' }
     - { src: 'mnt-NAS-backup.mount', dest: 'mnt-NAS-backup.mount' }
     - { src: 'mnt-NAS-documents.mount', dest: 'mnt-NAS-documents.mount' }
     - { src: 'mnt-NAS-media.mount', dest: 'mnt-NAS-media.mount' }
     - { src: 'mnt-NAS-software.mount', dest: 'mnt-NAS-software.mount' }
     - { src: 'mnt-NAS-scan.mount', dest: 'mnt-NAS-scan.mount' }
     - { src: 'mnt-NAS-steuern.mount', dest: 'mnt-NAS-steuern.mount' }
+
+- name: system_setup | fstab | add x-gvfs-show to options
+  tags: systemd,fstab,swapfile
+  become: true
+  become_method: sudo
+  replace:
+    path: /etc/fstab
+    regexp: "{{ item.regexp }}"
+    replace: "{{ item.value }}"
+  with_items:
+    - { regexp: '^/swapfile ', value: '#/swapfile' }
+    - { regexp: '/mnt/Data       ext4    defaults', value: '/mnt/Data       ext4    defaults,x-gvfs-show' }
+    - { regexp: '/mnt/Digikam    ext4    defaults', value: '/mnt/Digikam    ext4    defaults,x-gvfs-show' }
+    - { regexp: '/mnt/Games      ext4    defaults', value: '/mnt/Games      ext4    defaults,x-gvfs-show' }
 
 - name: system setup | fstab | add tmpfs line to fstab (only once)
   tags: systemd,fstab,tmpfs

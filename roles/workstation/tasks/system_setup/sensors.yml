@@ -12,7 +12,7 @@
   tags: system_setup,sensors
   copy:
     src: etc/{{ item.src }}
-    dest: /etc{{ item.dest }}
+    dest: /etc/{{ item.dest }}
     owner: root
     group: root
     mode: 0644
