@@ -45,14 +45,14 @@
     - name: cleanup package cache Ubuntu
       tags: always
       apt:
-        autoclean: true
+        autoclean: yes
       changed_when: false
 
     - name: autoremove orphan packages Ubuntu
       tags: always
       apt:
-        autoremove: true
-        purge: true
+        autoremove: yes
+        purge: yes
 
     - name: send completion alert
       include_tasks: playbooks/send_completion_alert.yml
