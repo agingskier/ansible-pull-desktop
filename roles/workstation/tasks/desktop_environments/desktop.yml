@@ -53,9 +53,9 @@
     value: "{{ item.value }}"
   with_items:
     - { key: 'cursor-size', value: '48' }
-    - { key: 'cursor-theme', value: 'DMZ-White' }
-    - { key: 'gtk-theme', value: 'QogirBudgie-dark' }
-    - { key: 'icon-theme', value: 'Humanity-Dark' }
+    - { key: 'cursor-theme', value: "'DMZ-White'" }
+    - { key: 'gtk-theme', value: "'QogirBudgie-dark'" }
+    - { key: 'icon-theme', value: "'Humanity-Dark'" }
     - { key: 'text-scaling-factor', value: '1.3' }
 
 - name: gnome | gedit | set editor values
@@ -65,8 +65,8 @@
     key: "/org/gnome/gedit/preferences/editor/{{ item.key }}"
     value: "{{ item.value }}"
   with_items:
-    - { key: 'editor-font', value: 'Monospace 14' }
-    - { key: 'scheme', value: 'cobalt' }
-    - { key: 'tabs-size', value: 'uint32 4' }
-    - { key: 'use-default-font', value: 'false' }
-    - { key: 'wrap-last-split-mode', value: 'word' }
+    - { key: 'editor-font', value: "'Monospace 14'" }
+    - { key: 'scheme', value: "'cobalt'" }
+    - { key: 'tabs-size', value: "'uint32 4'" }
+    - { key: 'use-default-font', value: "'false'" }
+    - { key: 'wrap-last-split-mode', value: "'word'" }

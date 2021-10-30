@@ -1,5 +1,5 @@
 ---
-- name: system setup | install development packages
+- name: softwarep | install development packages
   tags: dev,development,packages,python,ruby,java
   apt:
     pkg:
@@ -11,7 +11,5 @@
       - python3-pip
       - python3-pyflakes
       - python3-virtualenv
-      - ruby
-      - rake
       - tig
     state: present

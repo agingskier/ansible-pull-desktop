@@ -1,5 +1,5 @@
 ---
-- name: system setup | snap packages | install bpytop
+- name: software | snap packages | install bpytop
   tags: bpytop,packages,snap
   become: true
   snap:

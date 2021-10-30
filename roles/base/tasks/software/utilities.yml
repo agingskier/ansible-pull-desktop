@@ -10,6 +10,7 @@
       - colordiff
       - conky-all
       - dconf-editor
+      - di
       - dnsutils
       - etherape
       - iotop

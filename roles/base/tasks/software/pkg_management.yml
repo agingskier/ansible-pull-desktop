@@ -1,6 +1,6 @@
 ---
-- name: system setup | manamement | install package management tools
-  tags: packages,system,settings
+- name: software | management | install package management tools
+  tags: packages,software,settings
   apt:
     pkg:
       - aptitude
