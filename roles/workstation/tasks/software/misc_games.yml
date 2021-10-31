@@ -3,7 +3,6 @@
   tags: gaming
   apt:
     pkg:
-      - chromium-bsu
       - extremetuxracer
       - frozen-bubble
       - gnome-chess

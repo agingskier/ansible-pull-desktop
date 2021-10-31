@@ -1,21 +1,13 @@
 ---
-- name: gnome | plank | set alignment
+- name: gnome | plank | set alignment, size, zoom
   tags: gnome,plank
-  become_user: bernhard
   community.general.dconf:
-    key: "/net/launchpad/plank/docks/dock1/alignment"
-    value: "'center'"
+    key: "/net/launchpad/plank/docks/dock1/{{ item.key }}"
+    value: "{{ item.value }}"
+  with_items:
+    - { key: 'alignment', value: "'center'" }
+    - { key: 'icon-size', value: '70' }
+    - { key: 'zoom-percent', value: '160' }
+    - { key: 'dock-items', value: "['applications.dockitem', 'budgie-desktop-settings.dockitem', 'com.gexperts.Tilix.dockitem', 'digikam_digikam.dockitem', 'firefox.dockitem', 'gimp_gimp.dockitem', 'gnome-control-center.dockitem', 'gnome-system-monitor.dockitem', 'libreoffice-calc.dockitem', 'libreoffice-writer.dockitem', 'nemo.dockitem', 'org.gnome.gedit.dockitem', 'org.gnome.Mahjongg.dockitem', 'org.gnome.Screenshot.dockitem', 'org.gnome.Sofware.dockitem', 'org.keepassxc.KeePassXC.dockitem', 'pdfsam.dockitem', 'rhythembox.dockitem', 'simple-scan.dockitem', 'terminator.dockitem', 'trash.dockitem', 'variety.dockitem', 'virt-manager.dockitem']" }
 
-- name: gnome | plank | set icon size
-  tags: gnome,plank
-  become_user: bernhard
-  community.general.dconf:
-    key: "/net/launchpad/plank/docks/dock1/icon-size"
-    value: "70"
 
-- name: gnome | plank | set zoom percent
-  tags: gnome,plank
-  become_user: bernhard
-  community.general.dconf:
-    key: "/net/launchpad/plank/docks/dock1/zoom-percent"
-    value: "160"

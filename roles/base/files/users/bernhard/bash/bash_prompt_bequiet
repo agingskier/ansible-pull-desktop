@@ -1,0 +1,9 @@
+#-------------------------------------------------------------
+# Shell Prompt
+#-------------------------------------------------------------
+
+#export PS1='\n\[$black $on_magenta\][\D{%F %T}]\[$black $on_yellow\][\u on \h]\[$black $on_red\][$PWD]$NC\n\[$cyan\]$(__docker_machine_ps1)--> \[$NC'
+
+# emoji copied from https://emojipedia.org
+export PS1='\n\[$black $on_magenta\][\D{%F %T}]\[$black $on_yellow\][\u on \h]\[$black $on_red\][$PWD]$NC\n\[$cyan\]😄==\$ \[$NC'
+export PS2='\[$cyan\]😄==\$ \[$NC'

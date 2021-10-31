@@ -4,7 +4,7 @@
   user:
     name: bernhard
     group: users
-    groups: adm,ansible,sudo,lxd
+    groups: adm,ansible,cdrom,sudo,dip,plugdev,lpadmin,lxd,sambashare
     uid: 10000
     state: present
     comment: "Bernhard Picenoni"
@@ -52,6 +52,7 @@
     - { dir: '.config/LibreCAD' }
     - { dir: '.config/terminator' }
     - { dir: '.config/tilix' }
+    - { dir: '.config/tilix/schemes' }
     - { dir: '.config/fsearch' }
     - { dir: '.vim' }
     - { dir: '.vim/autoload' }
@@ -71,6 +72,7 @@
     - { src: 'bash/bash_aliases', dest: '.bash_aliases' }
     - { src: 'bash/bash_functions', dest: '.bash_functions' }
     - { src: 'bash/bashrc', dest: '.bashrc' }
+    - { src: 'bash/bash_prompt_bequiet', dest: '.bash_prompt_bequiet'
     - { src: 'bash/dircolors', dest: '.dircolors' }
     - { src: 'bash/conkyrc', dest: '.conkyrc' }
     - { src: 'git/gitconfig', dest: '.gitconfig' }

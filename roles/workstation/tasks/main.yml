@@ -4,6 +4,7 @@
     ## desktop environments
 
     - include_tasks: desktop_environments/desktop.yml
+    - include_tasks: desktop_tilix.yml
     - include_tasks: desktop_environments/plank.yml
 
     ## system setup
@@ -12,13 +13,13 @@
     - import_tasks: system_setup/sensors.yml
 
     ## install software
-#    - import_tasks: software/remove_software.yml
+    - import_tasks: software/remove_software.yml
     - import_tasks: software/apt_update.yml
+    - import_tasks: software/misc_packages.yml
     - import_tasks: software/filesearch.yml
     - import_tasks: software/kvm.yml
     - import_tasks: software/media.yml
     - import_tasks: software/misc_games.yml
-    - import_tasks: software/misc_packages.yml
     - import_tasks: software/snap_packages.yml
     - import_tasks: software/steam.yml
     - import_tasks: software/topgrade.yml

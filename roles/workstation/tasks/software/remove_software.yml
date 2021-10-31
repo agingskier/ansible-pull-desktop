@@ -4,6 +4,4 @@
   package:
     state: absent
     name:
-      - firefox*
-      - libreoffice*
       - thunderbird*

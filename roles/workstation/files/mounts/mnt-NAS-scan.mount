@@ -6,7 +6,7 @@ After=network.target
 What=192.168.1.2:/scan
 Where=/mnt/NAS/scan
 Type=nfs
-Options=default,x-systemd.automount
+Options=_netdev
 
 [Install]
 WantedBy=multi-user.target

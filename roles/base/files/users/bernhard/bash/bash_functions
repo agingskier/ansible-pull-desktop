@@ -61,6 +61,7 @@ function colors ()
 	echo -e "${green}3 ${magenta}dircolors  	${yellow}--> ${green}colors for ls command (.dircolors file)"
 	echo -e "${green}4 ${magenta}ansi colors	${yellow}--> ${green}display ansi color values"
 	echo -e "${green}5 ${magenta}tput colors	${yellow}--> ${green}scheme for tput colors"
+    	echo -e "${green}6 ${magenta}Hex colors 	${yellow}--> ${green}Hex colors on hexcol.com"
 	echo "${NC}"
 	read -p "==>_" answer
 	echo " "
@@ -75,6 +76,8 @@ function colors ()
 		;;
 		5) tputcolors.sh
 		;;
+                6) firefox https://hexcol.com/color/b200b2
+                ;;
 	esac
 }
 
