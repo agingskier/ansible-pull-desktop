@@ -9,8 +9,15 @@
 
     ## system setup
     - import_tasks: system_setup/grub.yml
-    - import_tasks: system_setup/mounts.yml
     - import_tasks: system_setup/sensors.yml
+    
+    - name: Check if /mnt/NAS already created
+      stat:
+        path: /mnt/NAS
+      register: nas_status
+   
+    - import_tasks: system_setup/mounts.yml
+      when: nas_status.stat.exists == false
 
     ## install software
     - import_tasks: software/remove_software.yml
