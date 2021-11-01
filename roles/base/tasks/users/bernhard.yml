@@ -72,7 +72,7 @@
     - { src: 'bash/bash_aliases', dest: '.bash_aliases' }
     - { src: 'bash/bash_functions', dest: '.bash_functions' }
     - { src: 'bash/bashrc', dest: '.bashrc' }
-    - { src: 'bash/bash_prompt_bequiet', dest: '.bash_prompt_bequiet'
+    - { src: 'bash/bash_prompt_bequiet', dest: '.bash_prompt_bequiet' }
     - { src: 'bash/dircolors', dest: '.dircolors' }
     - { src: 'bash/conkyrc', dest: '.conkyrc' }
     - { src: 'git/gitconfig', dest: '.gitconfig' }
