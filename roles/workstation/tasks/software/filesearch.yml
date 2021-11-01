@@ -5,7 +5,7 @@
 
 - name: Add fsearch repository into sources list
   apt_repository:
-    repo: 'deb http://ppa.launchpad.net/christian-boxdoerfer/fsearch-stable/ubuntu {{ ansible_distribution_release }} main'
+    repo: 'deb http://ppa.launchpad.net/christian-boxdoerfer/fsearch-daily/ubuntu {{ ansible_distribution_release }} main'
     state: present
   when:
     - filesearch is defined
