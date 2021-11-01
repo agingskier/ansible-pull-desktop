@@ -9,7 +9,7 @@
     state: present
   when:
     - filesearch is defined
-    - filesearch == "yes"
+    - filesearch == true
 
 - name: software | install fsearch
   tags: packages,workstation-packages
@@ -20,4 +20,4 @@
     state: present
   when:
     - filesearch is defined
-    - filesearch  == "yes"
+    - filesearch  == true
