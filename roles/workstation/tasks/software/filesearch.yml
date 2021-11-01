@@ -1,4 +1,8 @@
 ---
+- name: print filesearch variable from host_vars
+  debug:
+    var: filesearch
+
 - name: Add fsearch repository into sources list
   become: true
   apt_repository:
