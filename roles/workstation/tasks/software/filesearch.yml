@@ -4,7 +4,6 @@
     var: filesearch
 
 - name: Add fsearch repository into sources list
-  become: true
   apt_repository:
     repo: 'deb http://ppa.launchpad.net/christian-boxdoerfer/fsearch-stable/ubuntu {{ ansible_distribution_release }} main'
     state: present
@@ -14,7 +13,6 @@
 
 - name: software | install fsearch
   tags: packages,workstation-packages
-  become: true
   apt:
     update_cache: true
     pkg:
