@@ -6,7 +6,7 @@ After=network.target
 What=192.168.1.2:/steuern
 Where=/mnt/NAS/steuern
 Type=nfs
-Options=_netdev
+Options=_netdev,auto
 
 [Install]
 WantedBy=multi-user.target

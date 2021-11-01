@@ -32,21 +32,7 @@
     - { src: 'mnt-NAS-scan.mount', dest: 'mnt-NAS-scan.mount' }
     - { src: 'mnt-NAS-steuern.mount', dest: 'mnt-NAS-steuern.mount' }
 
-- name: system_setup | fstab | add x-gvfs-show to options
-  tags: systemd,fstab,swapfile
-  become: true
-  become_method: sudo
-  replace:
-    path: /etc/fstab
-    regexp: "{{ item.regexp }}"
-    replace: "{{ item.value }}"
-  with_items:
-    - { regexp: '^/swapfile ', value: '#/swapfile' }
-    - { regexp: '/mnt/Data       ext4    defaults', value: '/mnt/Data       ext4    defaults,x-gvfs-show' }
-    - { regexp: '/mnt/Digikam    ext4    defaults', value: '/mnt/Digikam    ext4    defaults,x-gvfs-show' }
-    - { regexp: '/mnt/Games      ext4    defaults', value: '/mnt/Games      ext4    defaults,x-gvfs-show' }
-
-- name: system setup | fstab | add tmpfs line to fstab (only once)
+- name: system_setup | fstab | add tmpfs line to fstab (only once)
   tags: systemd,fstab,tmpfs
   become: true
   become_method: sudo
@@ -54,6 +40,19 @@
     path: /etc/fstab
     line: "tmpfs                 /tmp       tmpfs    rw,nosuid,noatime,nodev,mode=1777,size=10%  0    1"
 
-- name: Just force systemd to reread configs
+- name: system_setup | systemd | enable all mounts, reload daemon
+  tags: system_setup,systemd
+  become: yes
+  become_user: root
   systemd:
+    name: "{{ item }}"
+    enabled: yes
+    state: restarted
     daemon_reload: yes
+  with_items:
+    - 'mnt-NAS-backup.mount'
+    - 'mnt-NAS-documents.mount'
+    - 'mnt-NAS-media.mount'
+    - 'mnt-NAS-software.mount'
+    - 'mnt-NAS-scan.mount'
+    - 'mnt-NAS-steuern.mount'

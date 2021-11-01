@@ -88,7 +88,7 @@ shopt -s histappend
 shopt -s histverify
 shopt -s autocd
 shopt -s cdspell
-shopt -s dotglob  
+shopt -s dotglob
 shopt -s interactive_comments # default
 
 export ENV=$HOME/.bashrc
@@ -101,7 +101,11 @@ export TERM=xterm-256color
 
 export PATH_TO_FX=/opt/javafx-sdk-16/lib
 export CLASSPATH=.:/usr/lib/jvm/java-11-openjdk-amd64/jre/lib:$PATH_TO_FX
-#export PATH=$PATH
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
 
 #-------------------------------------------------------------
 # Color definitions, less definitions
@@ -109,19 +113,18 @@ export CLASSPATH=.:/usr/lib/jvm/java-11-openjdk-amd64/jre/lib:$PATH_TO_FX
 
 # Normal Colors
 black=$'\e[38;5;16m'
-red=$'\e[38;5;160m'          
-green=$'\e[38;5;46m'        
-yellow=$'\e[38;5;11m'      
-blue=$'\e[38;5;26m'     
+red=$'\e[38;5;160m'
+green=$'\e[38;5;46m'
+yellow=$'\e[38;5;11m'
+blue=$'\e[38;5;26m'
 purple=$'\e[38;5;211m'
-cyan=$'\e[38;5;45m'         
-white=$'\e[0;37m' 
-magenta=$'\e[38;5;165m' 
+cyan=$'\e[38;5;45m'
+white=$'\e[0;37m'
+magenta=$'\e[38;5;165m'
 
-WHITE=$'\e[1;37m'	
-
+WHITE=$'\e[1;37m'
 BOLD=$"$(tput bold)"
-NC=$'\e[0m'             # Color reset     
+NC=$'\e[0m'             # Color reset
 
 # To use bold colors prefix with BOLD variable
 
@@ -134,7 +137,7 @@ on_blue=$'\e[48;5;43m'        # Blue
 on_purple=$'\e[48;5;45m'      # Purple
 on_cyan=$'\e[48;5;45m'        # Cyan
 on_white=$'\e[48;5;255m'      # White
-on_magenta=$'\e[48;5;201m' 	# Magenta	
+on_magenta=$'\e[48;5;201m' 	  # Magenta
 
 ALERT=${WHITE}${on_red}   # Bold White on red background
 
@@ -145,15 +148,8 @@ ALERT=${WHITE}${on_red}   # Bold White on red background
 # Shell Prompt
 #-------------------------------------------------------------
 
-#source /etc/bash_completion.d/docker-machine-prompt.bash
-#source /etc/bash_completion.d/docker-machine-wrapper.bash
-#source /etc/bash_completion.d/docker-machine.bash
-
-# set a prompt that shows the date and time, user name
-# machine name, the current directory 
-
-if [ -f ~/.bash_prompt_bpic ]; then
-    . ~/.bash_prompt_bpic
+if [ -f ~/.bash_prompt_bequiet ]; then
+    . ~/.bash_prompt_bequiet
 fi
 
 #-------------------------------------------------------------
@@ -168,7 +164,7 @@ export LESS_TERMCAP_mb=$'\e[00;38;5;196m' # red, begin blinking
 export LESS_TERMCAP_md=$'\e[00;38;5;226m' # yellow, begin bold
 export LESS_TERMCAP_me=$'\e[0m'           # end mode
 export LESS_TERMCAP_se=$'\e[0m'           # end standout-mode
-export LESS_TERMCAP_so=$'\e[38;5;11m\e[48;5;33m' 
+export LESS_TERMCAP_so=$'\e[38;5;11m\e[48;5;33m'
 #					  # begin standout-mode - info box
 #					  # yellow on blue
 export LESS_TERMCAP_ue=$'\e[0m'           # end underline
@@ -181,7 +177,7 @@ export LESS_TERMCAP_us=$'\e[04;38;5;164m' # begin underline
 #
 # make less more friendly for non-text input files, see lesspipe(1)
 #[ -x /usr/bin/lesspipe ] && eval "$(lesspipe)"
-#  
+
 # Use this if lesspipe (link to *.sh) exists
 #export LESS='-i -N -w  -z-4 -g -e -M -X -F -R -P%t?f%f \
 #:stdin .?pb%pb\%:?lbLine %lb:?bbByte %bb:-...'

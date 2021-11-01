@@ -18,7 +18,7 @@
     mode: 0644
   with_items:
     - { src: 'hddtemp.db', dest: 'hddtemp.db' }
-    - { src: 'sensors3.conf', dest: 'sensors3.conf' }
+    - { src: 'sensors3.conf', dest: 'sensors.d/sensors3.conf' }
     - { src: 'blacklist-edac.conf', dest: 'modprobe.d/blacklist-edac.conf' }
     - { src: 'sensors-modules', dest: 'modules' }
 
