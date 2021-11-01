@@ -4,7 +4,7 @@
     ## desktop environments
 
     - include_tasks: desktop_environments/desktop.yml
-    - include_tasks: desktop_tilix.yml
+    - include_tasks: desktop_environments/tilix.yml
     - include_tasks: desktop_environments/plank.yml
 
     ## system setup
