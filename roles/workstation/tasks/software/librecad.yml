@@ -1,0 +1,24 @@
+---
+- name: software | librecad block
+  block:
+    - name: software | install librecad
+      tags: packages,workstation-packages
+      apt:
+        update_cache: true
+        pkg:
+          - librecad
+        state: present
+
+    - name: software | librecad | copy config file
+      copy:
+        src: users/bernhard/{{ item.src }}
+        dest: /home/bernhard/{{ item.dest }}
+        owner: bernhard
+        group: users
+        mode: 0600
+      with_items:
+        - { src: 'librecad_config', dest: '.config/LibreCAD/LibreCAS.conf' }
+  when:
+    - librecad is defined
+    - librecad
+

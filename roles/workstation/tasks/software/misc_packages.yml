@@ -5,10 +5,8 @@
     pkg:
       - geany
       - gparted
-      - librecad
       - p7zip-full
-      - openvpn
+      - pdfsam
       - sshpass
-      - terminator
       - variety
     state: present

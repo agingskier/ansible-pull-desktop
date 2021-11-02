@@ -5,3 +5,4 @@
     state: absent
     name:
       - thunderbird*
+      - htop

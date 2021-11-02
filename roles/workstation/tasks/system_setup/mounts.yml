@@ -56,3 +56,14 @@
     - 'mnt-NAS-software.mount'
     - 'mnt-NAS-scan.mount'
     - 'mnt-NAS-steuern.mount'
+
+- name: Add nfs NAS bookmarks
+  lineinfile:
+    dest: /home/bernhard/.config/gtk-3.0/bookmarks
+    line: "{{ item.line }}"
+    insertafter: EOF
+  with_items:
+    - { line: "file:///mnt/NAS NAS" }
+    - { line: "file:///mnt/Data Data" }
+    - { line: "file:///mnt/Games Games" }
+    - { line: "file:///mnt/Digikam Digikam" }

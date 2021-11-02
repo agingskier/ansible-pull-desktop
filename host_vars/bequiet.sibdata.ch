@@ -20,10 +20,12 @@ filesearch: yes
 games: yes
 kvm: yes
 keepassxc: yes
+librecad: yes
 multipass: yes
 protonvpn: yes
 signal: yes
 steam: yes
+terminator: yes
 vagrant: yes
 virtualbox: yes
 vlc: no

@@ -5,14 +5,14 @@
   register: topgrade_release
   when:
     - topgrade is defined
-    - topgrade == "yes"
+    - topgrade
 
 - name: set fact
   set_fact:
     top_release: "{{ topgrade_release | regex_search('(?<=tag/)[^\"]{6}') }}"
   when:
     - topgrade is defined
-    - topgrade == "yes"
+    - topgrade
 
 - name: software | topgrade | install latest topgrade binary
   become: true

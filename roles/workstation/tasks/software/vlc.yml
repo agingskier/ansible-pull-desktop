@@ -6,4 +6,4 @@
     name: vlc
   when:
     - vlc is defined
-    - vlc == "yes"
+    - vlc

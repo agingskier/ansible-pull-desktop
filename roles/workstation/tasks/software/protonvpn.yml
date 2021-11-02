@@ -1,36 +1,34 @@
 ---
-- name: software | protonvpn | install protonvpn
-  apt:
-    deb: https://protonvpn.com/download/protonvpn-stable-release_1.0.1-1_all.deb
+- name: software | protonvpn block
+  block:
+    - name: software | protonvpn | install protonvpn
+      apt:
+        deb: https://protonvpn.com/download/protonvpn-stable-release_1.0.1-1_all.deb
+
+    - name: software | protonvpn | select display-manager
+      become: true
+      become_method: sudo
+      debconf:
+        name: gnome-shell-extension-appindicator
+        question: shared/default-x-display-manager
+        value: lightdm
+        vtype: select
+
+    - name: software | protonvpn | confirm display-manager
+      become: true
+      become_method: sudo
+      debconf:
+        name: gnome-shell-extension-appindicator
+        question: shared/default-x-display-manager
+        value: true
+        vtype: boolean
+
+    - name: software | protonvpn | install openvpn and prerequisites
+      apt:
+        pkg:
+          - openvpn
+          - gnome-shell-extension-appindicator
+
   when:
     - protonvpn is defined
-    - protonvpn == "yes"
-
-- name: software | protonvpn | select display-manager
-  become: true
-  become_method: sudo
-  debconf:
-    name: gnome-shell-extension-appindicator
-    question: shared/default-x-display-manager
-    value: lightdm
-    vtype: select
-
-- name: software | protonvpn | confirm display-manager
-  become: true
-  become_method: sudo
-  debconf:
-    name: gnome-shell-extension-appindicator
-    question: shared/default-x-display-manager
-    value: true
-    vtype: boolean
-
-- name: software | protonvpn | install openvpn and prerequisites
-  apt:
-    pkg:
-      - openvpn
-      - gnome-shell-extension-appindicator
-      - gir1.2-appindicator3-0.1
-    state: present
-  when:
-    - protonvpn is defined
-    - protonvpn == "yes"
+    - protonvpn

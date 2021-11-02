@@ -9,5 +9,5 @@
       - ubuntu-cloud-image
   when:
     - multipass is defined
-    - multipass == "yes"
+    - multipass
 

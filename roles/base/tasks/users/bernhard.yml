@@ -21,24 +21,18 @@
     group: root
     mode: 0440
 
-- name: users | bernhard | create .ssh directory
-  tags: dotfiles,bernhard,ssh,users
+- name: users | yamllint | create config directory
+  tags: bernhard,yamllint,sudo,users
   file:
-    path: "{{ item.dir }}"
+    path: /home/bernhard/{{ item.dir }}
     state: directory
     owner: bernhard
     group: users
     mode: 0700
   with_items:
-    - { dir: '/home/bernhard/.ssh' }
+    - { dir: '.config/yamllint' }
 
-- name: users | bernhard | add public key
-  tags: dotfiles,bernhard,ssh,ssh-keys,users
-  authorized_key:
-    user: bernhard
-    key: "{{ lookup('file', 'users/bernhard/ssh/id_ed25519_ubuntu.pub') }}"
-
-- name: users | bernhard | create config directories
+- name: users | bernhard | create vim directories
   tags: dotfiles,bernhard,users,vim
   file:
     path: /home/bernhard/{{ item.dir }}
@@ -47,13 +41,6 @@
     group: users
     mode: 0700
   with_items:
-    - { dir: '.config' }
-    - { dir: '.config/htop' }
-    - { dir: '.config/LibreCAD' }
-    - { dir: '.config/terminator' }
-    - { dir: '.config/tilix' }
-    - { dir: '.config/tilix/schemes' }
-    - { dir: '.config/fsearch' }
     - { dir: '.vim' }
     - { dir: '.vim/autoload' }
     - { dir: '.vim/bundle' }
@@ -75,8 +62,10 @@
     - { src: 'bash/bash_prompt_bequiet', dest: '.bash_prompt_bequiet' }
     - { src: 'bash/dircolors', dest: '.dircolors' }
     - { src: 'bash/conkyrc', dest: '.conkyrc' }
-    - { src: 'git/gitconfig', dest: '.gitconfig' }
     - { src: 'vim/vimrc', dest: '.vimrc' }
+    - { src: 'vim/gvimrc', dest: '.gvimrc' }
+    - { src: 'yaml/yamllint_config', dest: '.config/yamllint/config' }
+    - { src: 'autostart/conky_autostart', dest: '.config/autostart/conky.desktop' }
 
 - name: users | bernhard | copy vim ftype files
   tags: dotfiles,bernhard,users,vim

@@ -8,8 +8,8 @@
       - gimp
       - digikam
       - keepassxc
-#      - libreoffice
-#      - firefox
+      - lxd
+      - htop
       - docfetcher
       - signal-desktop
       - ssh-audit
@@ -25,6 +25,6 @@
     - { app: 'gimp', plug: 'removable-media' }
     - { app: 'digikam', plug: 'removable-media' }
     - { app: 'keepassxc', plug: 'removable-media' }
-#    - { app: 'libreoffice', plug: 'removable-media' }
     - { app: 'docfetcher', plug: 'removable-media' }
+    - { app: 'htop', plug: ĥardware-observe' }
   changed_when: connect_result.rc == 0

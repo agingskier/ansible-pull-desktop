@@ -1,23 +1,29 @@
 ---
-- name: print filesearch variable from host_vars
-  debug:
-    var: filesearch
+- name: software | fsearch block
+  block:
+    - name: software | fsearch | add repository into sources list
+      apt_repository:
+        repo: 'deb http://ppa.launchpad.net/christian-boxdoerfer/fsearch-daily/ubuntu/ {{ ansible_distribution_release }} main'
+        state: present
 
-- name: Add fsearch repository into sources list
-  apt_repository:
-    repo: 'deb http://ppa.launchpad.net/christian-boxdoerfer/fsearch-daily/ubuntu {{ ansible_distribution_release }} main'
-    state: present
+    - name: software | install fsearch
+      tags: packages,workstation-packages
+      apt:
+        update_cache: true
+        pkg:
+          - fsearch
+        state: present
+
+    - name: software | fsearch | copy config file
+      copy:
+        src: users/bernhard/{{ item.src }}
+        dest: /home/bernhard/{{ item.dest }}
+        owner: bernhard
+        group: users
+        mode: 0600
+      with_items:
+        - { src: 'fsearch_config', dest: '.config/fsearch/fsearch.conf' }
   when:
     - filesearch is defined
-    - filesearch == true
+    - filesearch
 
-- name: software | install fsearch
-  tags: packages,workstation-packages
-  apt:
-    update_cache: true
-    pkg:
-      - fsearch
-    state: present
-  when:
-    - filesearch is defined
-    - filesearch  == true

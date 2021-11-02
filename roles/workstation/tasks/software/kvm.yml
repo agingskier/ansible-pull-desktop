@@ -1,4 +1,9 @@
 ---
+- name: software | kvm | install cpu-checker prerequisite
+  apt:
+    name:
+      - cpu-checker
+
 - name: software | kvm | check system for kvm
   command: kvm-ok
   register: kvm_result
@@ -14,16 +19,16 @@
       - libvirt-clients
       - virt-manager
       - virt-viewer
-      - cpu-checker
       - bridge-utils
   when:
     - kvm is defined
-    - kvm == "yes"
+    - kvm
     - "'KVM acceleration can be used' in kvm_result.stdout"
 
-- name: software | kvm | add user bernhard to groups
+- name: software | kvm | add groups to user bernhard
   user:
     name: bernhard
     groups: libvirt,kvm
     append: yes
   become: yes
+  become_method: sudo
