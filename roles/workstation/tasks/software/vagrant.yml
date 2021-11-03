@@ -1,18 +1,16 @@
 ---
 - name: software | vagrant block
   block:
+    - name: software | vagrant | add repository into sources list
+      apt_repository:
+        repo: 'deb [arch=amd64] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main'
+        state: present
+  
     - name: software | vagrant | update repositories and install vagrant
       apt:
         name: vagrant
         update_cache: true
 
-    - name: software | vagrant | add group to user bernhard
-      become: yes
-      become_method: sudo
-      user:
-        name: bernhard
-        groups: vagrant
-        append: yes
   when:
     - vagrant is defined
     - vagrant
