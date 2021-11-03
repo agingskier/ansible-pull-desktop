@@ -27,6 +27,7 @@ protonvpn: yes
 signal: yes
 steam: yes
 terminator: yes
+topgrade: yes
 vagrant: yes
 virtualbox: yes
 vlc: no
