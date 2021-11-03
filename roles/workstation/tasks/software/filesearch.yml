@@ -3,7 +3,8 @@
   block:
     - name: software | fsearch | add repository the old way
       become: yes
-      command: sudo add-apt-repository ppa:christian-boxdoerfer/fsearch-stable
+      become_method: sudo
+      command: add-apt-repository ppa:christian-boxdoerfer/fsearch-stable
 
 #    - name: software | fsearch | add repository into sources list
 #      apt_repository:

@@ -9,6 +9,17 @@
           - librecad
         state: present
 
+    - name: software | librecad | create config/librecad directory
+      tags: bernhard,yamllint,sudo,users
+      file:
+        path: /home/bernhard/{{ item.dir }}
+        state: directory
+        owner: bernhard
+        group: users
+        mode: 0700
+      with_items:
+        - { dir: '.config/LibreCAD' }
+
     - name: software | librecad | copy config file
       copy:
         src: users/bernhard/{{ item.src }}
@@ -17,7 +28,7 @@
         group: users
         mode: 0600
       with_items:
-        - { src: 'librecad_config', dest: '.config/LibreCAD/LibreCAS.conf' }
+        - { src: 'librecad_config', dest: '.config/LibreCAD/LibreCAD.conf' }
   when:
     - librecad is defined
     - librecad
