@@ -1,17 +1,7 @@
 ---
 - name: software | vagrant block
   block:
-    - name: software | vagrant | add apt signing key
-      apt_key:
-        file: https://apt.releases.hashicorp.com/gpg
-        state: present
-
-    - name: software | vagrant | add hashicorp apt repository
-      apt_repository:
-        repo: deb [arch=amd64] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main
-        state: present
-
-    - name: software | vagrant | update repositories and install vagrant
+     - name: software | vagrant | update repositories and install vagrant
       apt:
         name: vagrant
         update_cache: true
