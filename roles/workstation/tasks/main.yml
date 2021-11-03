@@ -16,7 +16,7 @@
     - name: Check if /mnt/NAS already created
       stat:
         path: /mnt/NAS
-        register: nas_status
+      register: nas_status
 
     - import_tasks: system_setup/mounts.yml
       when: not nas_status.stat.exists
