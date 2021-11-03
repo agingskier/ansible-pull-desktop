@@ -1,10 +1,14 @@
 ---
 - name: software | fsearch block
   block:
-    - name: software | fsearch | add repository into sources list
-      apt_repository:
-        repo: 'deb http://ppa.launchpad.net/christian-boxdoerfer/fsearch-stable/ubuntu/ {{ ansible_distribution_release }} main'
-        state: present
+    - name: software | fsearch | add repository the old way
+      become: yes
+      command: sudo add-apt-repository ppa:christian-boxdoerfer/fsearch-stable
+
+#    - name: software | fsearch | add repository into sources list
+#      apt_repository:
+#        repo: 'deb http://ppa.launchpad.net/christian-boxdoerfer/fsearch-stable/ubuntu/ {{ ansible_distribution_release }} main'
+#        state: present
 
     - name: software | install fsearch
       tags: packages,workstation-packages
