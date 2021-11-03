@@ -6,7 +6,7 @@
       - pavucontrol
       - gstreamer1.0-plugins-bad
       - libdvd-pkg
-    status: present
+    state: present
 
 - name: software | Reconfigure libdvd-pkg
   tags: packages,system,system-packages,workstation-packages

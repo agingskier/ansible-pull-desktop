@@ -9,7 +9,7 @@
       - supertux
       - supertuxkart
       - wesnoth
-    status: present
+    state: present
   when:
     - games is defined
     - games

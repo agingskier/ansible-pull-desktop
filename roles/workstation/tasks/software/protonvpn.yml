@@ -28,6 +28,7 @@
         pkg:
           - openvpn
           - gnome-shell-extension-appindicator
+        state: present
 
   when:
     - protonvpn is defined
