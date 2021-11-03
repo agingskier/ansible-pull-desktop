@@ -18,6 +18,17 @@
           - fsearch
         state: present
 
+    - name: software | fsearch | create config/fsearch directory
+      tags: bernhard,yamllint,sudo,users
+      file:
+        path: /home/bernhard/{{ item.dir }}
+        state: directory
+        owner: bernhard
+        group: users
+        mode: 0700
+      with_items:
+        - { dir: '.config/fsearch' }
+
     - name: software | fsearch | copy config file
       copy:
         src: users/bernhard/{{ item.src }}
