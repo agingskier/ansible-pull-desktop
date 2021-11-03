@@ -20,7 +20,7 @@
         pkg:
           - mesa-vulkan-drivers
           - libvulkan1
-          - vulkan-utils
+          - vulkan-tools
   when:
     - steam is defined
     - steam

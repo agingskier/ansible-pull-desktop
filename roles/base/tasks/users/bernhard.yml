@@ -128,21 +128,21 @@
   with_items:
     - { src: 'pathogen.vim' }
 
-- name: users | bernhard | checkout git repositories
-  tags: git,users,bernhard
-  become: true
-  git:
-    repo: "{{ item.repo }}"
-    dest: "{{ item.dest }}"
-    version: master
-    force: true
-  with_items:
-    - { repo: 'https://github.com/ctrlpvim/ctrlp.vim.git', dest: '/home/bernhard/.vim/bundle/ctrlp.vim' }
-    - { repo: 'https://github.com/davidhalter/jedi-vim.git', dest: '/home/bernhard/.vim/bundle/jedi-vim' }
-    - { repo: 'https://github.com/pearofducks/ansible-vim', dest: '/home/bernhard/.vim/bundle/ansible-vim' }
-    - { repo: 'https://github.com/rhysd/vim-grammarous.git', dest: '/home/bernhard/.vim/bundle/vim-grammarous' }
-    - { repo: 'https://github.com/ron89/thesaurus_query.vim', dest: '/home/bernhard/.vim/bundle/thesaurus_query' }
-    - { repo: 'https://github.com/scrooloose/nerdtree.git', dest: '/home/bernhard/.vim/bundle/nerdtree' }
-    - { repo: 'https://github.com/tpope/vim-obsession.git', dest: '/home/bernhard/.vim/bundle/vim-obsession' }
-    - { repo: 'https://github.com/vim-syntastic/syntastic.git', dest: '/home/bernhard/.vim/bundle/syntastic' }
-  notify: update_vim_bundle_perms
+#- name: users | bernhard | checkout git repositories
+#  tags: git,users,bernhard
+#  become: true
+#  git:
+#    repo: "{{ item.repo }}"
+#    dest: "{{ item.dest }}"
+#    version: master
+#    force: true
+#  with_items:
+#    - { repo: 'https://github.com/ctrlpvim/ctrlp.vim.git', dest: '/home/bernhard/.vim/bundle/ctrlp.vim' }
+#    - { repo: 'https://github.com/davidhalter/jedi-vim.git', dest: '/home/bernhard/.vim/bundle/jedi-vim' }
+#    - { repo: 'https://github.com/pearofducks/ansible-vim', dest: '/home/bernhard/.vim/bundle/ansible-vim' }
+#    - { repo: 'https://github.com/rhysd/vim-grammarous.git', dest: '/home/bernhard/.vim/bundle/vim-grammarous' }
+#    - { repo: 'https://github.com/ron89/thesaurus_query.vim', dest: '/home/bernhard/.vim/bundle/thesaurus_query' }
+#    - { repo: 'https://github.com/scrooloose/nerdtree.git', dest: '/home/bernhard/.vim/bundle/nerdtree' }
+#    - { repo: 'https://github.com/tpope/vim-obsession.git', dest: '/home/bernhard/.vim/bundle/vim-obsession' }
+#    - { repo: 'https://github.com/vim-syntastic/syntastic.git', dest: '/home/bernhard/.vim/bundle/syntastic' }
+#  notify: update_vim_bundle_perms
