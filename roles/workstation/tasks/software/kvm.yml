@@ -1,8 +1,7 @@
 ---
 - name: software | kvm | install cpu-checker prerequisite
   apt:
-    name:
-      - cpu-checker
+    name: cpu-checker
 
 - name: software | kvm | check system for kvm
   command: kvm-ok
@@ -11,10 +10,9 @@
 
 - name: software | kvm | install kvm and dependencies
   apt:
-    name:
+    pkg:
       - qemu
       - qemu-kvm
-      - libvirt-bin
       - libvirt-daemon
       - libvirt-clients
       - virt-manager
