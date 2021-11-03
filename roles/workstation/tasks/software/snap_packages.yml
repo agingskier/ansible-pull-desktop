@@ -26,5 +26,5 @@
     - { app: 'digikam', plug: 'removable-media' }
     - { app: 'keepassxc', plug: 'removable-media' }
     - { app: 'docfetcher', plug: 'removable-media' }
-    - { app: 'htop', plug: ĥardware-observe' }
+    - { app: 'htop', plug: 'ĥardware-observe' }
   changed_when: connect_result.rc == 0

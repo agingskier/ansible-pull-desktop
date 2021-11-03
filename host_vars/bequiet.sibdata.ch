@@ -21,6 +21,7 @@ games: yes
 kvm: yes
 keepassxc: yes
 librecad: yes
+media: no
 multipass: yes
 protonvpn: yes
 signal: yes
