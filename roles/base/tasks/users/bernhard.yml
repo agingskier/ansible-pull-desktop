@@ -21,6 +21,23 @@
     group: root
     mode: 0440
 
+- name: users | bernhard | create .ssh directory
+  tags: dotfiles,bernhard,ssh,users
+  file:
+    path: "{{ item.dir }}"
+    state: directory
+    owner: bernhard
+    group: users
+    mode: 0700
+  with_items:
+    - { dir: '/home/bernhard/.ssh' }
+
+- name: users | bernhard | add public key
+  tags: dotfiles,bernhard,ssh,ssh-keys,users
+  authorized_key:
+    user: bernhard
+    key: "{{ lookup('file', 'users/bernhard/ssh/id_ed25519_ubuntu.pub') }}"
+
 - name: users | yamllint | create config directory
   tags: bernhard,yamllint,sudo,users
   file:

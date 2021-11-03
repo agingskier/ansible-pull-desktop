@@ -31,7 +31,7 @@
 
     - name: software | terminator | copy desktop file
       become: yes
-      becom_method: sudo
+      become_method: sudo
       copy:
         src: users/bernhard/{{ item.src }}
         dest: /usr/share/applications/{{ item.dest }}
