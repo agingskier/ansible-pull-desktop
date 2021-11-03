@@ -28,7 +28,7 @@
     - import_tasks: software/filesearch.yml
     - import_tasks: software/kvm.yml
     - import_tasks: software/librecad.yml
-    - import_tasks: software/media.yml
+#    - import_tasks: software/media.yml
     - import_tasks: software/misc_games.yml
     - import_tasks: software/snap_packages.yml
     - import_tasks: software/steam.yml
