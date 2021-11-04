@@ -107,6 +107,8 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
+export -n SESSION_MANAGER   # required for Digikam
+
 #-------------------------------------------------------------
 # Color definitions, less definitions
 #-------------------------------------------------------------
