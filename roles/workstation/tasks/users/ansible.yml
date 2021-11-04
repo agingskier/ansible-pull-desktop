@@ -1,0 +1,31 @@
+---
+- name: users | ansible | create ansible group
+  tags: groups,ansible,users
+  group:
+    name: ansible
+    state: present
+
+- name: users | ansible | create ansible user, update password
+  tags: ansible,users,password
+  user:
+    name: ansible
+    system: true
+    groups: adm,ansible,sudo,lxd
+    update_password: always
+    password: "{{ ansible_passwd }}"
+    comment: "Ansible user"
+
+- name: users | ansible | add public key
+  tags: dotfiles,ansible,ssh,ssh-keys,users
+  authorized_key:
+    user: ansible
+    key: https://github.com/agingskier.keys
+
+- name: users | ansible | add sudoers file
+  tags: ansible,sudo,system,users
+  copy:
+    src: users/sudoers_ansible
+    dest: /etc/sudoers.d/ansible
+    owner: root
+    group: root
+    mode: 0440

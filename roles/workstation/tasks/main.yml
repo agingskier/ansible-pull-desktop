@@ -38,6 +38,9 @@
     - import_tasks: software/virtualbox.yml
     - import_tasks: software/vlc.yml
 
+##  after complete installation rsync bin, plank items and mozilla
+    - import_tasks: system_setup/wrap-up.yml
+
   rescue:
     - name: set task failed variable
       set_fact: task_failed=true
