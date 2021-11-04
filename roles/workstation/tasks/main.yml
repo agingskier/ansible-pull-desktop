@@ -1,4 +1,9 @@
 ---
+vars_prompt:
+  - name: usb_backup
+    prompt: "Insert and mount USB Backup stick; then answer y/n"
+    private: no
+
 - name: run all tasks from workstation role
   block:
     ## User configs
