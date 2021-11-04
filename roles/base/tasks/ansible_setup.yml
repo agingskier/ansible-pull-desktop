@@ -12,8 +12,8 @@
   tags: ansible,ansible-setup
   file:
     path: /var/log/ansible.log
-    owner: ansible
-    group: ansible
+    owner: bernhard
+    group: bernhard
     mode: 0664
     state: touch
   changed_when: False
