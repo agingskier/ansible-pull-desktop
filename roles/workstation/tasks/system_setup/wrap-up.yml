@@ -4,22 +4,21 @@ vars_prompt:
     prompt: "Insert and mount USB Backup stick; then answer y/n"
     private: no
 
-- name: wrap-up | rsync | copy block
-  block:
-    - name: wrap up | synchronize | copy bin and mozilla
-      tags: rsync
-      synchronize:
-        src: /media/bernhard/Backup/{{ item.src }}/
-        dest: /home/bernhard/{{ item.dest }}/
-        archive: yes
-      with_items:
-        - { src: 'bin', dest: 'bin' }
-        - { src: 'mozilla', dest: '.mozilla' }
+  - name: wrap up | synchronize | copy bin and mozilla
+    tags: rsync
+    synchronize:
+      src: /media/bernhard/Backup/{{ item.src }}/
+      dest: /home/bernhard/{{ item.dest }}/
+      archive: yes
+    with_items:
+      - { src: 'bin', dest: 'bin' }
+      - { src: 'mozilla', dest: '.mozilla' }
+    when: usb_backup == "y"
 
-    - name: wrap up | copy | copy plank dockitems
-      tags: rsync
-      synchronize:
-        src: /media/bernhard/Backup/.config/plank/dock1/launchers/
-        dest: /home/bernhard/.config/plank/dock1/launchers/
-        archive: yes
-  when: usb_backup == "y"
+  - name: wrap up | copy | copy plank dockitems
+    tags: rsync
+    synchronize:
+      src: /media/bernhard/Backup/.config/plank/dock1/launchers/
+      dest: /home/bernhard/.config/plank/dock1/launchers/
+      archive: yes
+    when: usb_backup == "y"
