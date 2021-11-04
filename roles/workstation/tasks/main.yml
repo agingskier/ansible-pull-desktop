@@ -1,9 +1,4 @@
 ---
-vars_prompt:
-  - name: usb_backup
-    prompt: "Insert and mount USB Backup stick; then answer y/n"
-    private: no
-
 - name: run all tasks from workstation role
   block:
     ## User configs
@@ -44,7 +39,7 @@ vars_prompt:
     - import_tasks: software/vlc.yml
 
 ##  after complete installation rsync bin, plank items and mozilla
-    - import_tasks: system_setup/wrap-up.yml
+#    - import_tasks: system_setup/wrap-up.yml
 
   rescue:
     - name: set task failed variable
