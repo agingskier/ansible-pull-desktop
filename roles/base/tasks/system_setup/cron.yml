@@ -2,7 +2,7 @@
 - name: system setup | cron | schedule automatic ansible provisioning
   tags: cron
   cron:
-    name: "ansible provision"
+    name: "ansible-pull provision"
     user: bernhard
     minute: "*/30"
     job: "sudo /usr/bin/ansible-pull -o -U https://github.com/agingskier/ansible_pull_desktop.git > /dev/null"
