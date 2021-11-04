@@ -25,12 +25,6 @@
   hosts: workstation
   tags: workstation
   become: true
-  
-  vars_prompt:
-    - name: usb_backup
-      prompt: "Insert and mount USB Backup stick; then answer y/n"
-      private: no
-  
   roles:
     - workstation
 
