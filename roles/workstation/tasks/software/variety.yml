@@ -1,0 +1,19 @@
+---
+- name: software | variety block
+  block:
+    - name: software | variety | install variety
+      tags: variety
+      apt:
+        name: variety
+      state: present
+
+    - name: software | variety | copy variety.conf file
+      tags: dotfiles,dotfiles-bernhard
+      copy:
+        src: users/bernhard/variety_config
+        dest: /home/bernhard/.config/variety/variety.conf
+
+  when:
+    - variety is defined
+    - variety
+

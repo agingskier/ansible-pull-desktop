@@ -29,5 +29,6 @@ steam: yes
 terminator: yes
 topgrade: yes
 vagrant: yes
+variety: yes
 virtualbox: yes
 vlc: no

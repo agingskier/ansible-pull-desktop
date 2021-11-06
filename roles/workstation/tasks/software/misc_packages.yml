@@ -8,5 +8,4 @@
       - p7zip-full
       - pdfsam
       - sshpass
-      - variety
     state: present
