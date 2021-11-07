@@ -9,14 +9,3 @@
     owner: root
     group: root
     mode: 0644
-
-- name: users | bernhard | copy keepassxc ini file
-  tags: dotfiles,dotfiles-bernhard
-  become: yes
-  become_method: sudo
-  copy:
-    src: users/bernhard/keepassxc_config
-    dest: /home/bernhard/snap/keepassxc/current/.config/keepassxc/keepassxc.ini
-    owner: bernhard
-    group: users
-    mode: 0644
