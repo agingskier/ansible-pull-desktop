@@ -5,7 +5,7 @@
       tags: variety
       apt:
         name: variety
-      state: present
+        state: present
 
     - name: software | variety | copy variety.conf file
       tags: dotfiles,dotfiles-bernhard
