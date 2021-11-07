@@ -5,9 +5,9 @@
     - import_tasks: users/bernhard.yml
 
     ## desktop environments
-    - include_tasks: desktop_environments/desktop.yml
-    - include_tasks: desktop_environments/tilix.yml
     - include_tasks: desktop_environments/plank.yml
+    - include_tasks: desktop_environments/tilix.yml
+    - include_tasks: desktop_environments/desktop.yml
 
     ## system setup
     - import_tasks: system_setup/grub.yml
