@@ -1,8 +1,9 @@
 ---
 - name: software | remove unneeded workstation packages
   tags: cleanup,packages,workstation-packages
-  package:
+  apt:
     state: absent
-    name:
+    autoremove: yes
+    pkg:
       - thunderbird*
       - htop

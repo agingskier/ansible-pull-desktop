@@ -14,7 +14,7 @@
         state: directory
         owner: bernhard
         group: users
-        mode: 0700
+        mode: 0740
       with_items:
         - { dir: '.config/variety' }
 

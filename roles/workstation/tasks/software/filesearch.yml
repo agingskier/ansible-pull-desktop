@@ -14,7 +14,6 @@
     - name: software | install fsearch
       tags: packages,workstation-packages
       apt:
-        update_cache: true
         pkg:
           - fsearch
         state: present
@@ -26,7 +25,7 @@
         state: directory
         owner: bernhard
         group: users
-        mode: 0700
+        mode: 0740
       with_items:
         - { dir: '.config/fsearch' }
 
@@ -36,7 +35,7 @@
         dest: /home/bernhard/{{ item.dest }}
         owner: bernhard
         group: users
-        mode: 0600
+        mode: 0640
       with_items:
         - { src: 'fsearch_config', dest: '.config/fsearch/fsearch.conf' }
   when:

@@ -92,8 +92,8 @@ shopt -s dotglob
 shopt -s interactive_comments # default
 
 export ENV=$HOME/.bashrc
-export EDITOR=gedit
-export VISUAL=gedit
+export EDITOR=geany
+export VISUAL=geany
 export NO_AT_BRIDGE=1	# to avoid dbind-warning messages with gedit
 
 export HOST=`hostname`

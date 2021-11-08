@@ -16,7 +16,7 @@
         state: directory
         owner: bernhard
         group: users
-        mode: 0700
+        mode: 0740
       with_items:
         - { dir: '.config/LibreCAD' }
 
@@ -26,7 +26,7 @@
         dest: /home/bernhard/{{ item.dest }}
         owner: bernhard
         group: users
-        mode: 0600
+        mode: 0640
       with_items:
         - { src: 'librecad_config', dest: '.config/LibreCAD/LibreCAD.conf' }
   when:
