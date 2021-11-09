@@ -4,7 +4,6 @@
     - name: software | install librecad
       tags: packages,workstation-packages
       apt:
-        update_cache: true
         pkg:
           - librecad
         state: present

@@ -4,6 +4,11 @@
     name: ssh
     state: restarted
 
+- name: restart_udisks2
+  service:
+    name: udisks2
+    state: restarted
+
 - name: update_vim_bundle_perms
   file:
     path: /home/bernhard/.vim/bundle

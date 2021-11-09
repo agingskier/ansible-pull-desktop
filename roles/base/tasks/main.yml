@@ -8,6 +8,9 @@
 
     # Set up the ansible environment
     - import_tasks: system_setup/ansible_setup.yml
+    - import_tasks: system_setup/mdraid.yml
+    - import_tasks: system_setup/idmapd.yml
+    - import_tasks: system_setup/bluetooth.yml
 
     # install software
     - import_tasks: software/pkg_management.yml

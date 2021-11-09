@@ -38,7 +38,7 @@
   become_method: sudo
   lineinfile:
     path: /etc/fstab
-    line: "tmpfs                 /tmp       tmpfs    rw,nosuid,noatime,nodev,mode=1777,size=10%  0    1"
+    line: "tmpfs                 /tmp       tmpfs    rw,nosuid,noatime,nodev,mode=1777,size=20%  0    1"
 
 - name: system_setup | systemd | enable all mounts, reload daemon
   tags: system_setup,systemd

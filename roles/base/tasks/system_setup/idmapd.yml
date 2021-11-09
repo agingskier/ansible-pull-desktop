@@ -1,0 +1,17 @@
+---
+- name: system setup | nfs | install nfs-common
+  tags: packages,system,settings
+  apt:
+    state: present
+    pkg:
+      - nfs-common
+      
+- name: Insert domain name into /etc/idmapd.conf
+  become_method: sudo
+  become: true
+  lineinfile:
+    path: /etc/idmapd.conf
+    insertafter: '^# Domain'
+    line: 'Domain = sibdata.ch'
+    firstmatch: yes
+    state: present

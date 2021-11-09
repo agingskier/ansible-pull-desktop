@@ -16,6 +16,7 @@ gui_editor: gvim
 # application selection
 #
 
+calibre: yes
 filesearch: yes
 games: yes
 kvm: yes
@@ -24,6 +25,7 @@ librecad: yes
 media: no
 multipass: yes
 protonvpn: yes
+raidar: yes
 signal: yes
 steam: yes
 terminator: yes
