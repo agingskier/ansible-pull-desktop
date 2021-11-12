@@ -1,7 +1,7 @@
 ---
 - name: software | snap | install multipass package
   tags: packages,snap,workstation-packages
-  become: true
+  become: yes
   become_method: sudo
   snap:
     name:

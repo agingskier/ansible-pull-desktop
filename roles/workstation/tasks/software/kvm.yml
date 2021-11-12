@@ -18,8 +18,6 @@
         pkg:
           - qemu
           - qemu-kvm
-          - libvirt-dev
-          - libvirt-daemon-system
           - libvirt-daemon
           - libvirt-clients
           - virt-manager
@@ -29,12 +27,12 @@
       when:
         - "'KVM acceleration can be used' in kvm_result.stdout"
         
-     - name: Insert vhost-net in /etc/modules
-       become_method: sudo
-       become: yes
-       lineinfile:
-         dest: /etc/modules
-         line: 'vhost-net'        
+#     - name: Insert vhost-net in /etc/modules
+#       become_method: sudo
+#       become: yes
+#       lineinfile:
+#         dest: /etc/modules
+#         line: 'vhost-net'        
 
     - name: software | kvm | add groups libvirt, kvm to user bernhard
       become: yes
