@@ -9,10 +9,21 @@
         repo: 'deb [arch=amd64] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main'
         state: present
   
-    - name: software | vagrant | update repositories and install vagrant
+    - name: software | vagrant | update repo and install vagrant & dependencies
       apt:
-        name: vagrant
+        pkg:
+          - vagrant
+          - vagrant-libvirt
+          - libxslt-dev
+          - libxml2-dev
+          - libvirt-dev
+          - zlib1g-dev
+          - ruby-dev
+        state: present
         update_cache: true
+        
+    - name: Install plugin vagrant-libvirt
+      command: 'vagrant plugin install vagrant-libvirt'
 
   when:
     - vagrant is defined

@@ -1,4 +1,16 @@
 ---
+ - name: system_setup | fstab | set swapfile as comment
+    tags: systemd,fstab,swapfile
+    become: true
+    become_method: sudo
+    replace:
+      path: /home/bernhard/fstab
+      regexp: "{{ item.regexp }}"
+      replace: "{{ item.value }}"
+    with_items:
+      - { regexp: '^/swapfile ', value: '#/swapfile' }
+
+
 - name: system setup | systemd mount | create nfs mountpoint directories
   tags: systemd
   file:
@@ -31,14 +43,6 @@
     - { src: 'mnt-NAS-software.mount', dest: 'mnt-NAS-software.mount' }
     - { src: 'mnt-NAS-scan.mount', dest: 'mnt-NAS-scan.mount' }
     - { src: 'mnt-NAS-steuern.mount', dest: 'mnt-NAS-steuern.mount' }
-
-- name: system_setup | fstab | add tmpfs line to fstab (only once)
-  tags: systemd,fstab,tmpfs
-  become: true
-  become_method: sudo
-  lineinfile:
-    path: /etc/fstab
-    line: "tmpfs                 /tmp       tmpfs    rw,nosuid,noatime,nodev,mode=1777,size=20%  0    1"
 
 - name: system_setup | systemd | enable all mounts, reload daemon
   tags: system_setup,systemd

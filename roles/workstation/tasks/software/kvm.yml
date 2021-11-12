@@ -1,32 +1,52 @@
 ---
-- name: software | kvm | install cpu-checker prerequisite
-  apt:
-    name: cpu-checker
+#
+#  install info from: https://computingforgeeks.com/install-kvm-centos-rhel-ubuntu-debian-sles-arch/
+#
+- name: software | kvm block
+  block:
+    - name: software | kvm | install cpu-checker prerequisite
+      apt:
+        name: cpu-checker
 
-- name: software | kvm | check system for kvm
-  command: kvm-ok
-  register: kvm_result
-  changed_when: "'KVM acceleration can be used' in kvm_result.stdout"
+    - name: software | kvm | check system for kvm
+      command: kvm-ok
+      register: kvm_result
+      changed_when: "'KVM acceleration can be used' in kvm_result.stdout"
 
-- name: software | kvm | install kvm and dependencies
-  apt:
-    pkg:
-      - qemu
-      - qemu-kvm
-      - libvirt-daemon
-      - libvirt-clients
-      - virt-manager
-      - virt-viewer
-      - bridge-utils
+    - name: software | kvm | install kvm and dependencies
+      apt:
+        pkg:
+          - qemu
+          - qemu-kvm
+          - libvirt-dev
+          - libvirt-daemon-system
+          - libvirt-daemon
+          - libvirt-clients
+          - virt-manager
+          - virt-viewer
+          - bridge-utils
+        state: present
+      when:
+        - "'KVM acceleration can be used' in kvm_result.stdout"
+        
+     - name: Insert vhost-net in /etc/modules
+       become_method: sudo
+       become: yes
+       lineinfile:
+         dest: /etc/modules
+         line: 'vhost-net'        
+
+    - name: software | kvm | add groups libvirt, kvm to user bernhard
+      become: yes
+      become_method: sudo
+      user:
+        name: bernhard
+        groups: libvirt,kvm
+        append: yes
+      when:
+        - "'KVM acceleration can be used' in kvm_result.stdout"
+
   when:
     - kvm is defined
     - kvm
-    - "'KVM acceleration can be used' in kvm_result.stdout"
 
-- name: software | kvm | add groups to user bernhard
-  user:
-    name: bernhard
-    groups: libvirt,kvm
-    append: yes
-  become: yes
-  become_method: sudo
