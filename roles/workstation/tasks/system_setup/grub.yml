@@ -1,25 +1,63 @@
 ---
-- name: grub | system-setup | install grub
-  apt:
-    pkg:
-      - grub-customizer
-      - grub2-splashimages
-    state: present
+#
+# fine the correct GFXMODE: grub welcome screen; enter 'c' for console
+# enter 'videoinfo' command to display a list of appropriate values
+#
 
-- name: grub | system-setup | copy black hole file
-  tags: grub
-  copy:
-    src: grub/black-hole-blue.tga
-    dest: /usr/share/images/grub/black-hole-blue.tga
-    owner: root
-    group: root
-    mode: 0644
+- name: system-setup grub block
+  block:
+    - name: system-setup | grub | install grub
+      apt:
+        pkg:
+          - grub-customizer
+          - grub2-splashimages
+        state: present
 
-- name: grub | system-setup | saturn file
-  tags: grub
-  copy:
-    src: grub/saturn-wallpaper.jpg
-    dest: /usr/share/images/grub/saturn-wallpaper.jpg
-    owner: root
-    group: root
-    mode: 0644
+    - name: system-setup | grub | copy black hole file
+      tags: grub
+      copy:
+        src: grub/black-hole-blue.tga
+        dest: /usr/share/images/grub/black-hole-blue.tga
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: system-setup | grub | saturn file
+      tags: grub
+      copy:
+        src: grub/saturn-wallpaper.jpg
+        dest: /usr/share/images/grub/saturn-wallpaper.jpg
+        owner: root
+        group: root
+        mode: 0644
+        
+    - name: system_setup | grub | checkout git dark-matter repository
+      tags: grub
+      git:
+        repo: https://github.com/vandalsoul/darkmatter-grub2-theme.git
+        dest: /tmp/grub-theme
+
+    - name: copy dark-matter directory
+      copy:
+        src: /tmp/grub-theme/dark-matter
+        dest: /boot/grub/themes
+
+    - name: Insert background line
+      lineinfile:
+        path: /etc/default/grub
+        insertafter: '^#GRUB_GFXMODE='
+        line: 'GRUB_GFXMODE=1024x768x32'
+
+    - name: add lines to grub
+      lineinfile: 
+        dest: /etc/default/grub
+        line: '{{ item }}'
+      with_items:
+        - 'export GRUB_MENU_PICTURE="/usr/share/images/grub/saturn-wallpaper.jpg"'
+        - 'export GRUB_THEME="/boot/grub/themes/dark-matter/theme.txt"'
+
+    - name: update grub configuration
+      command: update-grub
+   
+  become: yes
+  become_method: sudo

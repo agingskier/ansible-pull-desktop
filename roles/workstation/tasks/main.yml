@@ -1,6 +1,8 @@
 ---
 - name: run all tasks from workstation role
   block:
+    vars_files:
+      - vars/secret.yml
     ## desktop environments
     - include_tasks: desktop_environments/plank.yml
     - include_tasks: desktop_environments/tilix.yml
@@ -38,11 +40,9 @@
     - import_tasks: software/vlc.yml
 
     ## User configs
+    - import_tasks: system_setup/wifi.yml
     - import_tasks: users/bernhard.yml
     
-##  after complete installation rsync bin, plank items and mozilla
-#    - import_tasks: system_setup/wrap-up.yml
-
   rescue:
     - name: set task failed variable
       set_fact: task_failed=true
