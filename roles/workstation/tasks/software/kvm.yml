@@ -27,12 +27,12 @@
       when:
         - "'KVM acceleration can be used' in kvm_result.stdout"
         
-#     - name: Insert vhost-net in /etc/modules
-#       become_method: sudo
-#       become: yes
-#       lineinfile:
-#         dest: /etc/modules
-#         line: 'vhost-net'        
+     - name: Insert vhost-net in /etc/modules
+       become_method: sudo
+       become: yes
+       lineinfile:
+         dest: /etc/modules
+         line: 'vhost-net'        
 
     - name: software | kvm | add groups libvirt, kvm to user bernhard
       become: yes
@@ -43,6 +43,35 @@
         append: yes
       when:
         - "'KVM acceleration can be used' in kvm_result.stdout"
+
+    - name: software | kvm | create config/libvirt directory
+       file:
+        path: /home/bernhard/{{ item.dir }}
+        state: directory
+        owner: bernhard
+        group: users
+        mode: 0740
+      with_items:
+        - { dir: '.config/libvirt' }
+
+    - name: software | kvm | copy libvirt config file
+      copy:
+        src: users/bernhard/{{ item.src }}
+        dest: /home/bernhard/{{ item.dest }}
+        owner: bernhard
+        group: users
+        mode: 0640
+      with_items:
+        - { src: 'libvirt_config', dest: '.config/libvirt/libvirt.conf'
+
+    - name: system_setup | fstab | add x-gvfs-show to options
+      tags: systemd,fstab,swapfile
+      replace:
+        path: /home/bernhard/.config/libvirt/libvirt.conf
+        regexp: "{{ item.regexp }}"
+        replace: "{{ item.value }}"
+      with_items:
+        - { regexp: '#uri_default', value: 'uri_default' }
 
   when:
     - kvm is defined

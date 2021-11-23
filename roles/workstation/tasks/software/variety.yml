@@ -24,6 +24,8 @@
       copy:
         src: users/bernhard/variety_config
         dest: /home/bernhard/.config/variety/variety.conf
+        owner: bernhard
+        group: users
 
   when:
     - variety is defined

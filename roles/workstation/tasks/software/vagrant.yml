@@ -20,9 +20,15 @@
           - ruby-dev
           - ruby-libvirt
           - ebtables
+          - dnsmasq-base
         state: present
         update_cache: true
-        
+
+    - name: Remove old plugin directory
+      file:
+        path: /mnt/Data/vagrant
+        state: absent
+           
     - name: Install plugin vagrant-libvirt
       command: 'vagrant plugin install vagrant-libvirt'
 

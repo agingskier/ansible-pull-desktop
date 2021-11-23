@@ -108,6 +108,7 @@ if [ -d "$HOME/bin" ] ; then
 fi
 
 export -n SESSION_MANAGER   # required for Digikam
+export VAGRANT_HOME=/mnt/Data/vagrant
 
 #-------------------------------------------------------------
 # Color definitions, less definitions

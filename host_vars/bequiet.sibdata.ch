@@ -32,5 +32,5 @@ terminator: yes
 topgrade: yes
 vagrant: yes
 variety: yes
-virtualbox: yes
+virtualbox: no
 vlc: no
