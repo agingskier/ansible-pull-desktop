@@ -30,7 +30,7 @@
 
     - name: Replace all installed sources
       replace:
-        path: /home/bernhard/test/variety.conf
+        path: /home/bernhard/.config/variety/variety.conf
         regexp: "{{ item.regex }}"
         replace: "{{ item.repl }}"
       with_items:
@@ -47,7 +47,7 @@
 #
     - name: Insert background line
       lineinfile:
-        path: /home/bernhard/test/variety.conf
+        path: /home/bernhard/.config/variety/variety.conf
         regexp: '^src\d.'
         insertafter: '^src'
         line: 'src12 = True|folder|/mnt/NAS/media/Pictures/Weltreise'
