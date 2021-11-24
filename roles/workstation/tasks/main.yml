@@ -1,10 +1,7 @@
 ---
 - name: run all tasks from workstation role
   block:
-    - name: Include secrets vars file
-      include_vars:
-        dir: 'vars'
-        files_matching: secret.yml
+
     ## desktop environments
     - include_tasks: desktop_environments/plank.yml
     - include_tasks: desktop_environments/tilix.yml

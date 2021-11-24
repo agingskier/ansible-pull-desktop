@@ -1,10 +1,7 @@
 ---
 - name: run all tasks for base role
   block:
-    - name: Include secret variables
-      include_vars:
-        dir: 'vars'
-        files_matching: secret.yml
+
     # Make sure users exist on the system
     - import_tasks: users/root.yml
     - import_tasks: users/bernhard.yml
