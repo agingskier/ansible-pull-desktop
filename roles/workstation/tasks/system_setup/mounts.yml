@@ -4,7 +4,7 @@
   become: true
   become_method: sudo
   replace:
-    path: /home/bernhard/fstab
+    path: /etc/fstab
     regexp: "{{ item.regexp }}"
     replace: "{{ item.value }}"
   with_items:
