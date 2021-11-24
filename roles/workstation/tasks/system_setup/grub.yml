@@ -30,17 +30,30 @@
         owner: root
         group: root
         mode: 0644
-        
+
     - name: system_setup | grub | checkout git dark-matter repository
       tags: grub
       git:
         repo: https://github.com/vandalsoul/darkmatter-grub2-theme.git
         dest: /tmp/grub-theme
+        version: master
+
+    - name: system_setup | grub | create themes directory
+      tags: grub
+      file:
+        path: /boot/grub/themes
+        state: directory
+        owner: root
+        group: root
+        mode: 0755
 
     - name: copy dark-matter directory
       copy:
         src: /tmp/grub-theme/dark-matter
         dest: /boot/grub/themes
+        owner: root
+        group: root
+        mode: 0644
 
     - name: Insert background line
       lineinfile:
@@ -49,7 +62,7 @@
         line: 'GRUB_GFXMODE=1024x768x32'
 
     - name: add lines to grub
-      lineinfile: 
+      lineinfile:
         dest: /etc/default/grub
         line: '{{ item }}'
       with_items:
@@ -58,6 +71,6 @@
 
     - name: update grub configuration
       command: update-grub
-   
+
   become: yes
   become_method: sudo

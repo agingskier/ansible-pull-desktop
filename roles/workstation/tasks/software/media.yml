@@ -15,7 +15,7 @@
       become: true
       become_method: sudo
       command: dpkg-reconfigure libdvd-pkg
-  
+
   when:
     - media is defined
     - media

@@ -20,7 +20,7 @@
         mode: 0755
         owner: root
         group: root
-    
+
   when:
     - topgrade is defined
     - topgrade

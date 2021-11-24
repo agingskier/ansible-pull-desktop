@@ -42,7 +42,7 @@
     ## User configs
     - import_tasks: system_setup/wifi.yml
     - import_tasks: users/bernhard.yml
-    
+
   rescue:
     - name: set task failed variable
       set_fact: task_failed=true

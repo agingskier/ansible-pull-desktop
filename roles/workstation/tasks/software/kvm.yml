@@ -26,13 +26,13 @@
         state: present
       when:
         - "'KVM acceleration can be used' in kvm_result.stdout"
-        
-     - name: Insert vhost-net in /etc/modules
-       become_method: sudo
-       become: yes
-       lineinfile:
-         dest: /etc/modules
-         line: 'vhost-net'        
+
+    - name: Insert vhost-net in /etc/modules
+      become_method: sudo
+      become: yes
+      lineinfile:
+        dest: /etc/modules
+        line: 'vhost-net'
 
     - name: software | kvm | add groups libvirt, kvm to user bernhard
       become: yes
@@ -45,7 +45,7 @@
         - "'KVM acceleration can be used' in kvm_result.stdout"
 
     - name: software | kvm | create config/libvirt directory
-       file:
+      file:
         path: /home/bernhard/{{ item.dir }}
         state: directory
         owner: bernhard
@@ -62,7 +62,7 @@
         group: users
         mode: 0640
       with_items:
-        - { src: 'libvirt_config', dest: '.config/libvirt/libvirt.conf'
+        - { src: 'libvirt_config', dest: '.config/libvirt/libvirt.conf' }
 
     - name: system_setup | fstab | add x-gvfs-show to options
       tags: systemd,fstab,swapfile

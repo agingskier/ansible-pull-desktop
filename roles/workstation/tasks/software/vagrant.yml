@@ -3,12 +3,12 @@
   block:
     - name: add apt key
       shell: curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
-   
+
     - name: software | vagrant | add repository into sources list
       apt_repository:
         repo: 'deb [arch=amd64] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main'
         state: present
-  
+
     - name: software | vagrant | update repo and install vagrant & dependencies
       apt:
         pkg:
@@ -28,7 +28,7 @@
       file:
         path: /mnt/Data/vagrant
         state: absent
-           
+
     - name: Install plugin vagrant-libvirt
       command: 'vagrant plugin install vagrant-libvirt'
 

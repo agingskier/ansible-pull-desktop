@@ -26,6 +26,7 @@
         dest: /home/bernhard/.config/variety/variety.conf
         owner: bernhard
         group: users
+        mode: 0644
 
   when:
     - variety is defined

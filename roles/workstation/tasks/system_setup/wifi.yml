@@ -1,40 +1,40 @@
- ---
- - name: system-setup wifi block
-   block:
-     - name: system_setup | netplan | set fact with wifi name
-       shell: ls /sys/class/net | grep wlp
-       register: cmd_result
-    
-     - name: Print shell output
-       debug:
-         var: cmd_result.stdout
-         verbosity: 2
-      
-     - name: set fact
-       set_fact:
-         wifi_name: "{{ cmd_result.stdout }}"
-     
-     - name: system_setup | netplan | add wifi info & passwd
-       blockinfile:
-         path: /etc/netplan/01-network-manager-all.yaml
-         marker: "# <!-- {mark} ANSIBLE MANAGED BLOCK -->"
-         block: |2
-             wifis:
-                 {{ wifi_name }}:
-                     access-points:
-                         WiFi-bpic:
-                             password: "{{ wifi_passwd }}"
-                     dhcp4: yes
+---
+- name: system-setup wifi block
+  block:
+    - name: system_setup | netplan | set fact with wifi name
+      shell: ls /sys/class/net | grep wlp
+      register: cmd_result
 
-     - name: system_setup | netplan | apply netplan config
-       command: netplan apply
-       register: apply_result
-       notify: restart_network_manager
-    
-     - name: Print apply result
-       debug:
-         var: apply_result
-         verbosity: 2
- 
-   become: yes
-   become_user: root 
+    - name: Print shell output
+      debug:
+        var: cmd_result.stdout
+        verbosity: 2
+
+    - name: set fact
+      set_fact:
+        wifi_name: "{{ cmd_result.stdout }}"
+
+    - name: system_setup | netplan | add wifi info & passwd
+      blockinfile:
+        path: /etc/netplan/01-network-manager-all.yaml
+        marker: "# <!-- {mark} ANSIBLE MANAGED BLOCK -->"
+        block: |2
+            wifis:
+                {{ wifi_name }}:
+                    access-points:
+                        WiFi-bpic:
+                            password: "{{ wifi_passwd }}"
+                    dhcp4: yes
+
+    - name: system_setup | netplan | apply netplan config
+      command: netplan apply
+      register: apply_result
+      notify: restart_network_manager
+
+    - name: Print apply result
+      debug:
+        var: apply_result
+        verbosity: 2
+
+  become: yes
+  become_user: root

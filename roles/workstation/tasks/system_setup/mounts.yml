@@ -1,18 +1,18 @@
 ---
- - name: system_setup | fstab | set swapfile as comment
-    tags: systemd,fstab,swapfile
-    become: true
-    become_method: sudo
-    replace:
-      path: /home/bernhard/fstab
-      regexp: "{{ item.regexp }}"
-      replace: "{{ item.value }}"
-    with_items:
-      - { regexp: '^/swapfile ', value: '#/swapfile' }
+- name: system_setup | fstab | set swapfile as comment
+  tags: system_setup,fstab,swapfile
+  become: true
+  become_method: sudo
+  replace:
+    path: /home/bernhard/fstab
+    regexp: "{{ item.regexp }}"
+    replace: "{{ item.value }}"
+  with_items:
+    - { regexp: '^/swapfile ', value: '#/swapfile' }
 
 
-- name: system setup | systemd mount | create nfs mountpoint directories
-  tags: systemd
+- name: system_setup | systemd mount | create nfs mountpoint directories
+  tags: system_setup,systemd
   file:
     path: /mnt/{{ item.dir }}
     state: directory
