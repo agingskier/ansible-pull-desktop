@@ -9,7 +9,7 @@
     mode: 0755
     owner: bernhard
     group: users
-      
+
 - name: software | bluetooth | install missing firmware
   become: true
   become_method: sudo
