@@ -36,7 +36,6 @@
       git:
         repo: https://github.com/vandalsoul/darkmatter-grub2-theme.git
         dest: /tmp/grub-theme
-        version: master
 
     - name: system_setup | grub | create themes directory
       tags: grub
