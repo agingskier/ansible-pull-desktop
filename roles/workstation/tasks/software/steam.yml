@@ -12,7 +12,7 @@
         name: steam-devices
 
     - name: install vulkan drivers
-       apt:
+      apt:
         state: present
         pkg:
           - mesa-vulkan-drivers

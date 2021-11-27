@@ -19,7 +19,7 @@
       community.general.nmcli:
         type: wifi
         conn_name: WiFi-bpic
-        ifname: {{ wifi_name }}
+        ifname: "{{ wifi_name }}"
         ssid: WiFi-bpic
         wifi_sec:
           key-mgmt: wpa-psk
