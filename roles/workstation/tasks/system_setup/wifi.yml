@@ -14,7 +14,7 @@
     - name: system_setup | set fact | wifi name
       set_fact:
         wifi_name: "{{ cmd_result.stdout }}"
- 
+
     - name: Create the wifi connection
       community.general.nmcli:
         type: wifi
@@ -23,7 +23,7 @@
         ssid: WiFi-bpic
         wifi_sec:
           key-mgmt: wpa-psk
-          psk: {{ wifi_passwd }}
+          psk: "{{ wifi_passwd }}"
         autoconnect: true
         state: present
   become: yes

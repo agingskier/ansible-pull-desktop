@@ -3,7 +3,7 @@
   block:
 
     - name: include vars file
-      include_vars: vault_secrets.yml 
+      include_vars: vault_secrets.yml
 
     ## desktop environments
     - include_tasks: desktop_environments/plank.yml
