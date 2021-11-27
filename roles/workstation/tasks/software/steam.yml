@@ -2,20 +2,17 @@
 - name: software | steam block
   block:
     - name: software | steam | install package
-      tags: steam,steam
       apt:
         state: present
         name: steam
 
     - name: software | steam | install steam-devices package
-      tags: steam,steam
       apt:
         state: present
         name: steam-devices
 
     - name: install vulkan drivers
-      tags: drivers,steam
-      apt:
+       apt:
         state: present
         pkg:
           - mesa-vulkan-drivers

@@ -2,7 +2,6 @@
 - name: software | calibre e-book block
   block:
     - name: software | install librecad
-      tags: packages,workstation-packages
       apt:
         pkg:
           - calibre

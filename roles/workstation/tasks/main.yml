@@ -1,5 +1,8 @@
 ---
 - name: run all tasks from workstation role
+  vars_files:
+    - vars/vault-secrets.yml
+
   block:
 
     ## desktop environments
@@ -39,7 +42,7 @@
     - import_tasks: software/vlc.yml
 
     ## User configs
-    - import_tasks: system_setup/wifi.yml
+#    - import_tasks: system_setup/wifi.yml
     - import_tasks: users/bernhard.yml
 
   rescue:

@@ -1,6 +1,5 @@
 ---
 - name: software | install misc game packages
-  tags: gaming
   apt:
     pkg:
       - extremetuxracer

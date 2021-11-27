@@ -1,6 +1,5 @@
 ---
 - name: ansible setup | install required packages
-  tags: ansible,ansible-setup,packages
   apt:
     pkg:
       - acl
@@ -9,7 +8,6 @@
     state: present
 
 - name: ansible setup | create ansible log file
-  tags: ansible,ansible-setup
   file:
     path: /var/log/ansible.log
     owner: bernhard
@@ -19,7 +17,6 @@
   changed_when: False
 
 - name: ansible setup | add logrotate config for ansible log file
-  tags: ansible-setup
   copy:
     src: files/ansible_setup/logrotate
     dest: /etc/logrotate.d/ansible
@@ -28,7 +25,6 @@
     mode: 0644
 
 - name: ansible setup | remove default ansible directory (/etc/ansible) from host
-  tags: ansible,ansible-setup
   file:
     path: /etc/ansible
     state: absent

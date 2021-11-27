@@ -1,6 +1,5 @@
 ---
 - name: software | install workstation misc_packages
-  tags: packages,workstation-packages
   apt:
     pkg:
       - geany

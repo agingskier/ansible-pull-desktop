@@ -1,6 +1,5 @@
 ---
 - name: gnome | plank | set alignment, size, zoom
-  tags: gnome,plank
   become_user: bernhard
   community.general.dconf:
     key: "/net/launchpad/plank/docks/dock1/{{ item.key }}"

@@ -2,7 +2,6 @@
 - name: software | terminator block
   block:
     - name: software | terminator | create config directory
-      tags: software,packages
       file:
         path: /home/bernhard/{{ item.dir }}
         state: directory
@@ -13,7 +12,6 @@
         - { dir: '.config/terminator' }
 
     - name: software | install terminator
-      tags: software,packages
       apt:
         pkg:
           - terminator

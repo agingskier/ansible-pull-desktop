@@ -1,6 +1,5 @@
 ---
 - name: gnome | desktop | copy wallpaper file
-  tags: gnome,gnome-wallpaper
   copy:
     src: gnome/saturn.png
     dest: /usr/share/backgrounds/budgie/saturn.png
@@ -9,21 +8,18 @@
     mode: 0644
 
 - name: gnome | desktop | set wallpaper
-  tags: gnome,gnome-wallpaper
   become_user: bernhard
   community.general.dconf:
     key: "/org/gnome/desktop/background/picture-uri"
     value: "'file:///usr/share/backgrounds/budgie/saturn.png'"
 
 - name: gnome | desktop | set wallpaper position
-  tags: gnome,gnome-wallpaper
   become_user: bernhard
   community.general.dconf:
     key: "/org/gnome/desktop/background/picture-options"
     value: "'zoom'"
 
 - name: gnome | desktop | copy lock screen background file
-  tags: gnome,gnome-lockscreen
   copy:
     src: gnome/jupiter.jpg
     dest: /usr/share/backgrounds/budgie/jupiter.jpg
@@ -32,21 +28,18 @@
     mode: 0644
 
 - name: gnome | desktop | set lock screen background
-  tags: gnome,gnome-lockscreen
   become_user: bernhard
   community.general.dconf:
     key: "/org/gnome/desktop/screensaver/picture-uri"
     value: "'file:///usr/share/backgrounds/budgie/jupiter.jpg'"
 
 - name: gnome | desktop | set lock screen background position
-  tags: gnome,gnome-lockscreen
   become_user: bernhard
   community.general.dconf:
     key: "/org/gnome/desktop/screensaver/picture-options"
     value: "'zoom'"
 
 - name: gnome | desktop | set interface values
-  tags: gnome,gnome-interface
   become_user: bernhard
   community.general.dconf:
     key: "/org/gnome/desktop/interface/{{ item.key }}"
@@ -59,7 +52,6 @@
     - { key: 'text-scaling-factor', value: '1.3' }
 
 - name: gnome | gedit | set editor values
-  tags: gnome,gedit
   become_user: bernhard
   community.general.dconf:
     key: "/org/gnome/gedit/preferences/editor/{{ item.key }}"

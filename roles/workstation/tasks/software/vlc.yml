@@ -1,7 +1,6 @@
 ---
 - name: software | vlc | install package
-  tags: packages,snap,vlc,workstation-packages
-  become: true
+  become: yes
   snap:
     name: vlc
   when:

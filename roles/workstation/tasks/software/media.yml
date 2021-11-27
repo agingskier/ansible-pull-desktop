@@ -2,7 +2,6 @@
 - name: software multimedia block
   block:
     - name: software | install multimedia codecs
-      tags: packages,system,system-packages,workstation-packages
       apt:
         pkg:
           - pavucontrol
@@ -11,8 +10,7 @@
         state: present
 
     - name: software | Reconfigure libdvd-pkg
-      tags: packages,system,system-packages,workstation-packages
-      become: true
+      become: yes
       become_method: sudo
       command: dpkg-reconfigure libdvd-pkg
 

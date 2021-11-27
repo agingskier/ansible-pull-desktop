@@ -1,6 +1,5 @@
 ---
 - name: system_setup | fstab | set swapfile as comment
-  tags: system_setup,fstab,swapfile
   become: true
   become_method: sudo
   replace:
@@ -12,7 +11,6 @@
 
 
 - name: system_setup | systemd mount | create nfs mountpoint directories
-  tags: system_setup,systemd
   file:
     path: /mnt/{{ item.dir }}
     state: directory
@@ -29,7 +27,6 @@
     - { dir: NAS/steuern }
 
 - name: system_setup | systemd | copy mount files
-  tags: system_setup,systemd
   copy:
     src: mounts/{{ item.src }}
     dest: /etc/systemd/system/{{ item.dest }}
@@ -45,7 +42,6 @@
     - { src: 'mnt-NAS-steuern.mount', dest: 'mnt-NAS-steuern.mount' }
 
 - name: system_setup | systemd | enable all mounts, reload daemon
-  tags: system_setup,systemd
   become: yes
   become_user: root
   systemd:
@@ -61,7 +57,7 @@
     - 'mnt-NAS-scan.mount'
     - 'mnt-NAS-steuern.mount'
 
-- name: Add nfs NAS bookmarks
+- name: system_setup | Add nfs NAS bookmarks
   lineinfile:
     dest: /home/bernhard/.config/gtk-3.0/bookmarks
     line: "{{ item.line }}"

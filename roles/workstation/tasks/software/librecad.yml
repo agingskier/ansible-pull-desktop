@@ -2,14 +2,12 @@
 - name: software | librecad block
   block:
     - name: software | install librecad
-      tags: packages,workstation-packages
       apt:
         pkg:
           - librecad
         state: present
 
     - name: software | librecad | create config/librecad directory
-      tags: bernhard,yamllint,sudo,users
       file:
         path: /home/bernhard/{{ item.dir }}
         state: directory

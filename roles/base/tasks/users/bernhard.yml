@@ -1,6 +1,5 @@
 ---
 - name: users | add groups to user bernhard | update password
-  tags: bernhard,sudo,users,password
   user:
     name: bernhard
     group: users
@@ -13,7 +12,6 @@
     shell: /bin/bash
 
 - name: users | bernhard | add sudoers file
-  tags: bernhard,sudo,system,users
   copy:
     src: users/sudoers_bernhard
     dest: /etc/sudoers.d/bernhard
@@ -42,7 +40,6 @@
 #    key: "{{ lookup('file', 'users/bernhard/ssh/id_ed25519_ubuntu.pub') }}"
 
 - name: users | yamllint | create config directory
-  tags: bernhard,yamllint,sudo,users
   file:
     path: /home/bernhard/{{ item.dir }}
     state: directory
@@ -53,7 +50,6 @@
     - { dir: '.config/yamllint' }
 
 - name: users | bernhard | create vim directories
-  tags: dotfiles,bernhard,users,vim
   file:
     path: /home/bernhard/{{ item.dir }}
     state: directory
@@ -68,7 +64,6 @@
     - { dir: '.vim/ftplugin' }
 
 - name: users | bernhard | copy dotfiles
-  tags: dotfiles,users,bernhard,users,vim
   copy:
     src: users/bernhard/{{ item.src }}
     dest: /home/bernhard/{{ item.dest }}
@@ -88,7 +83,6 @@
     - { src: 'autostart/conky_autostart', dest: '.config/autostart/conky.desktop' }
 
 - name: users | bernhard | copy vim ftype files
-  tags: dotfiles,bernhard,users,vim
   copy:
     src: users/bernhard/vim/{{ item.src }}
     dest: /home/bernhard/.vim/ftplugin/{{ item.src }}
@@ -106,7 +100,6 @@
     - { src: 'xml.vim' }
 
 - name: users | bernhard | copy vim color files
-  tags: dotfiles,bernhard,users,vim
   copy:
     src: users/bernhard/vim/{{ item.src }}
     dest: /home/bernhard/.vim/colors/{{ item.src }}
@@ -121,7 +114,6 @@
     - { src: 'zenburn.vim' }
 
 - name: users | bernhard | install pathogen
-  tags: dotfiles,bernhard,users,vim
   copy:
     src: users/bernhard/vim/{{ item.src }}
     dest: /home/bernhard/.vim/autoload/{{ item.src }}
@@ -132,7 +124,6 @@
     - { src: 'pathogen.vim' }
 
 #- name: users | bernhard | checkout git repositories
-#  tags: git,users,bernhard
 #  become: true
 #  git:
 #    repo: "{{ item.repo }}"

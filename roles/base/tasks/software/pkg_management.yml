@@ -1,6 +1,5 @@
 ---
 - name: software | management | install package management tools
-  tags: packages,software,settings
   apt:
     pkg:
       - aptitude

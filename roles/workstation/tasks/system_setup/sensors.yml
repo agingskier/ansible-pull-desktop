@@ -1,6 +1,5 @@
 ---
 - name: system setup | sensors | install sensors packages
-  tags: packages,system,settings
   apt:
     state: present
     pkg:
@@ -9,7 +8,6 @@
       - smartmontools
 
 - name: system_setup | sensors | copy etc files
-  tags: system_setup,sensors
   copy:
     src: etc/{{ item.src }}
     dest: /etc/{{ item.dest }}
@@ -23,14 +21,13 @@
     - { src: 'sensors-modules', dest: 'modules' }
 
 - name: Run sensors-detect command | generate /etc/modules
-  tags: system_setup,sensors
   become: true
   become_method: sudo
   command: sensors-detect --auto
   register: expect_result
+  changed_when: expect_result.rc == 0
 
 - name: Print sensors-detect result
-  tags: system_setup,sensors
   debug:
     var: expect_result.stdout_lines[98:]
   when: expect_result.rc == 0

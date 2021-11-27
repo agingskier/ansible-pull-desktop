@@ -1,6 +1,5 @@
 ---
 - name: software | snap | install snap packages
-  tags: packages,snap,workstation-packages
   become: true
   become_method: sudo
   snap:
@@ -16,7 +15,6 @@
       - android-file-transfer-linux
 
 - name: software | snap connect | allow access to NAS
-  tags: packages,snap,workstation-packages
   become: true
   become_method: sudo
   command: 'snap connect {{ item.app }}:{{ item.plug }}'

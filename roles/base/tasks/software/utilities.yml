@@ -1,6 +1,5 @@
 ---
 - name: software | utilities | install utility packages
-  tags: packages,system,settings
   apt:
     state: present
     pkg:

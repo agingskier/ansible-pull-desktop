@@ -1,6 +1,5 @@
 ---
 - name: system setup | nfs | install nfs-common
-  tags: packages,system,settings
   apt:
     state: present
     pkg:

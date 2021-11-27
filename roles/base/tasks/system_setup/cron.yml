@@ -1,22 +1,19 @@
 ---
-#- name: system setup | cron | schedule automatic ansible provisioning
-#  tags: cron
-#  cron:
-#    name: "ansible-pull provision"
-#    user: bernhard
-#    minute: "*/30"
-#    job: "sudo /usr/bin/ansible-pull -o -U https://github.com/agingskier/ansible_pull_desktop.git > /dev/null"
+- name: system setup | cron | schedule automatic ansible provisioning
+  cron:
+    name: "ansible-pull provision"
+    user: ansible
+    minute: "*/30"
+    job: "sudo /usr/bin/ansible-pull -o -U https://github.com/agingskier/ansible_pull_desktop.git > /dev/null"
 
 - name: system setup | cron | schedule bernhard cleanup at boot
-  tags: cron
   cron:
     name: "ansible refresh at boot"
-    user: bernhard
+    user: ansible
     special_time: reboot
-    job: "/bin/rm -rf /home/bernhard/.ansible"
+    job: "/bin/rm -rf /home/ansible/.ansible"
 
 - name: system setup | cron | schedule log reduction
-  tags: cron
   cron:
     name: "logfile reduction"
     user: root
@@ -24,7 +21,6 @@
     job: "sleep 300 && journalctl --vacuum-time=5d"
 
 - name: system setup | cron | mlocate database
-  tags: cron
   cron:
     name: "mlocate database"
     user: root

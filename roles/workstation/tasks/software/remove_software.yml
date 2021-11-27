@@ -1,6 +1,5 @@
 ---
 - name: software | remove unneeded workstation packages
-  tags: cleanup,packages,workstation-packages
   apt:
     state: absent
     autoremove: yes

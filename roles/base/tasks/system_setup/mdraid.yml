@@ -1,6 +1,5 @@
 ---
 - name: system setup | patch mdraid error | install missing packages
-  tags: packages,system,settings
   apt:
     state: present
     pkg:

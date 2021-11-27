@@ -12,14 +12,12 @@
 #        state: present
 
     - name: software | install fsearch
-      tags: packages,workstation-packages
       apt:
         pkg:
           - fsearch
         state: present
 
     - name: software | fsearch | create config/fsearch directory
-      tags: bernhard,yamllint,sudo,users
       file:
         path: /home/bernhard/{{ item.dir }}
         state: directory

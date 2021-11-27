@@ -1,9 +1,8 @@
 ---
 - name: system setup | microcode | install package for intel
-  tags: cpu,intel,microcode,system setup
   apt:
     name: intel-microcode
     state: present
   when:
     - microcode_intel_install is defined
-    - microcode_intel_install == "yes"
+    - microcode_intel_install

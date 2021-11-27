@@ -65,7 +65,6 @@
         - { src: 'libvirt_config', dest: '.config/libvirt/libvirt.conf' }
 
     - name: system_setup | fstab | add x-gvfs-show to options
-      tags: systemd,fstab,swapfile
       replace:
         path: /home/bernhard/.config/libvirt/libvirt.conf
         regexp: "{{ item.regexp }}"

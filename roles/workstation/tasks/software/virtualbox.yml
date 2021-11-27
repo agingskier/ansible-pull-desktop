@@ -24,7 +24,6 @@
         vtype: select
 
     - name: software | virtualbox | install virtualbox
-      tags: virtualbox
       become: true
       become_method: sudo
       apt:

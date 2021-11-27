@@ -2,13 +2,11 @@
 - name: software | variety block
   block:
     - name: software | variety | install variety
-      tags: variety
       apt:
         name: variety
         state: present
 
     - name: software | terminator | create config directory
-      tags: software,packages
       file:
         path: /home/bernhard/{{ item.dir }}
         state: directory
@@ -20,7 +18,6 @@
 
 
     - name: software | variety | copy variety.conf file
-      tags: dotfiles,dotfiles-bernhard
       copy:
         src: /usr/share/variety/config/variety.conf
         dest: /home/bernhard/.config/variety/variety.conf

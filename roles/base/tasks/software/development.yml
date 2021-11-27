@@ -1,6 +1,5 @@
 ---
 - name: softwarep | install development packages
-  tags: dev,development,packages,python,ruby,java
   apt:
     pkg:
       - default-jdk
