@@ -1,9 +1,9 @@
 ---
 - name: run all tasks from workstation role
-  vars_files:
-    - vars/vault-secrets.yml
-
   block:
+
+    - name: include vars file
+      include_vars: vault_secrets.yml 
 
     ## desktop environments
     - include_tasks: desktop_environments/plank.yml
