@@ -43,7 +43,7 @@
     - import_tasks: software/vlc.yml
 
     ## User configs
-    - import_tasks: system_setup/wifi.yml
+#    - import_tasks: system_setup/wifi.yml
     - import_tasks: users/bernhard.yml
 
   rescue:
