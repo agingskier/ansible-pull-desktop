@@ -3,6 +3,7 @@
   block:
 
     - name: include vars file
+      tags: always
       include_vars: vault-secrets.yml
 
     ## desktop environments
