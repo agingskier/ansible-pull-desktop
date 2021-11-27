@@ -3,7 +3,7 @@
   block:
 
     - name: include vars file
-      include_vars: vault_secrets.yml
+      include_vars: vault-secrets.yml
 
     # Make sure users exist on the system
     - import_tasks: users/root.yml
