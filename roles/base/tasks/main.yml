@@ -1,10 +1,10 @@
 ---
-vars_files:
-  - vars/vault-secrets.yml
-
 - name: run all tasks for base role
   block:
-      
+    
+    - name: include vars file
+      include_vars: vault_secrets.yml 
+    
     # Make sure users exist on the system
     - import_tasks: users/root.yml
     - import_tasks: users/bernhard.yml
