@@ -1,5 +1,6 @@
 ---
 - name: software | variety block
+  tags: variety
   block:
     - name: software | variety | install variety
       apt:
@@ -16,7 +17,13 @@
         var: variety_result
         verbosity: 2
 
-    - name: Replace all installed sources
+    - name: Software | variety | Replace Change-Interval 1 minute line
+      lineinfile:
+        path: /home/bernhard/.config/variety/variety.conf
+        regexp: '^change_interval ='
+        line: 'change_interval = 60'
+
+    - name: software | variety | Replace all installed sources
       replace:
         path: /home/bernhard/.config/variety/variety.conf
         regexp: "{{ item.regex }}"
