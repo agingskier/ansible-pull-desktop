@@ -6,24 +6,15 @@
         name: variety
         state: present
 
-    - name: software | terminator | create config directory
-      file:
-        path: /home/bernhard/{{ item.dir }}
-        state: directory
-        owner: bernhard
-        group: users
-        mode: 0740
-      with_items:
-        - { dir: '.config/variety' }
-
-
-    - name: software | variety | copy variety.conf file
-      copy:
-        src: /usr/share/variety/config/variety.conf
-        dest: /home/bernhard/.config/variety/variety.conf
-        owner: bernhard
-        group: users
-        mode: 0644
+    - name: software | variety | command will create variety conf file
+      command: variety --quit
+      register: variety_result
+      changed_when: variety_result.rc == 0
+      
+    - name: software | variety | print result from command
+      debug:
+        var: variety_result
+        verbosity: 2
 
     - name: Replace all installed sources
       replace:
@@ -36,6 +27,9 @@
         - { regex: '^src3 = True', repl: 'src3 = False' }
         - { regex: '^src4 = True', repl: 'src4 = False' }
         - { regex: '^src5 = True', repl: 'src5 = False' }
+        - { regex: '^src6 = True', repl: 'src6 = False' }
+        - { regex: '^src7 = True', repl: 'src7 = False' }
+        - { regex: '^src8 = True', repl: 'src8 = False' }
         - { regex: '^src11 = True', repl: 'src11 = False' }
 #
 # If there are more than one matches in the file, ansible lineinfile

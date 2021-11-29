@@ -2,29 +2,18 @@
 - name: system-setup wifi block
   tags: wifi
   block:
-    - name: system_setup | nmcli | find wifi name
-      shell: ls /sys/class/net | grep wlp
-      register: cmd_result
 
-    - name: system_setup | print shell ls output
+    - name: connect to wlps130 with nmcli command
+      become: yes
+      become_method: sudo
+      command: nmcli dev wifi connect WiFi-bpic password "{{ wifi_passwd }}"
+      register: wifi_result
+      changed_when: wifi_result.rc == 0
+    
+    - name: print nmcli result
       debug:
-        var: cmd_result.stdout
+        var: wifi_result
         verbosity: 2
 
-    - name: system_setup | set fact | wifi name
-      set_fact:
-        wifi_name: "{{ cmd_result.stdout }}"
-
-    - name: Create the wifi connection
-      community.general.nmcli:
-        type: wifi
-        conn_name: WiFi-bpic
-        ifname: "{{ wifi_name }}"
-        ssid: WiFi-bpic
-        wifi_sec:
-          key-mgmt: wpa-psk
-          psk: "{{ wifi_passwd }}"
-        autoconnect: true
-        state: present
   become: yes
   become_user: root
