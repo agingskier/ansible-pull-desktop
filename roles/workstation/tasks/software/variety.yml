@@ -7,8 +7,10 @@
         name: variety
         state: present
 
-    - name: software | variety | command will create variety conf file
-      command: variety --quit
+    - name: software | variety | cmd starts config window expecting close, creates variety conf file
+      command: variety --preferences
+      timeout: 10
+      ignore_errors: yes
       register: variety_result
       changed_when: variety_result.rc == 0
       
@@ -46,7 +48,6 @@
     - name: Insert background line
       lineinfile:
         path: /home/bernhard/.config/variety/variety.conf
-        regexp: '^src\d.'
         insertafter: '^src'
         line: 'src12 = True|folder|/mnt/NAS/media/Pictures/Weltreise'
 
