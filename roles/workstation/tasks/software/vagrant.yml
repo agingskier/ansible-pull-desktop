@@ -1,26 +1,34 @@
 ---
 - name: software | vagrant block
   block:
-    - name: add apt key
-      shell: curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+#
+# Display keyid: curl -fsSL  https://apt.releases.hashicorp.com/gpg | tee vagrant.asc | gpg --keyid-format long
+# id: E8A032E094D8EB4EA189D270DA418C88A3219F7B
+#
+    - name: software | vagrant | add vagrant apt key to keyring file
+      apt_key:
+        id: E8A032E094D8EB4EA189D270DA418C88A3219F7B
+        url: https://apt.releases.hashicorp.com/gpg
+        keyring: /etc/apt/trusted.gpg.d/vagrant.gpg
 
-    - name: software | vagrant | add repository into sources list
+    - name: software | vagrant | add vagrant apt repository
       apt_repository:
+        filename: vagrant
         repo: 'deb [arch=amd64] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main'
         state: present
+        update_cache: yes
 
     - name: software | vagrant | update repo and install vagrant & dependencies
       apt:
         pkg:
           - vagrant
+          - vagrant-libvirt
           - libxslt-dev
           - libxml2-dev
           - libvirt-dev
           - zlib1g-dev
           - ruby-dev
           - ruby-libvirt
-          - ebtables
-          - dnsmasq-base
         state: present
         update_cache: true
 
@@ -29,9 +37,8 @@
         path: /mnt/Data/vagrant
         state: absent
 
-    - name: Install plugin vagrant-libvirt
-      command: 'vagrant plugin install vagrant-libvirt'
-
+  become: yes
+  become_method: sudo
   when:
     - vagrant is defined
     - vagrant

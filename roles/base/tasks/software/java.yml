@@ -1,0 +1,26 @@
+---
+- name: Software | java LTS | install java environment
+  apt:
+    pkg: 
+      - default-jdk
+      - openjdk-17-jdk
+
+- name: software | javafx LTS | Unzip javafx
+  become: yes
+  become_method: sudo
+  unarchive:
+    src: https://download2.gluonhq.com/openjfx/17.0.1/openjfx-17.0.1_linux-x64_bin-sdk.zip
+    dest: /opt
+    remote_src: yes
+    owner: root
+    group: root
+    mode: 0755
+
+- name: software | java & javafx | Replace export statements in .bashrc
+  lineinfile:
+    path: /home/bernhard/.bashrc
+    regexp: "{{ item.regex }}"
+    line: "{{ item.repl }}"
+  with_items:
+    - { regex: '^export PATH_TO_FX=', repl: 'export PATH_TO_FX=/opt/javafx-sdk-17.0.1/lib' }
+    - { regex: '^export CLASSPATH=',  repl: 'export CLASSPATH=.:/usr/lib/jvm/java-17-openjdk-amd64/lib:$PATH_TO_FX' }

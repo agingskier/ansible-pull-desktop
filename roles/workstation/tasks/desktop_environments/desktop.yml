@@ -27,18 +27,6 @@
     group: root
     mode: 0644
 
-- name: gnome | desktop | set lock screen background
-  become_user: bernhard
-  community.general.dconf:
-    key: "/org/gnome/desktop/screensaver/picture-uri"
-    value: "'file:///usr/share/backgrounds/budgie/jupiter.jpg'"
-
-- name: gnome | desktop | set lock screen background position
-  become_user: bernhard
-  community.general.dconf:
-    key: "/org/gnome/desktop/screensaver/picture-options"
-    value: "'zoom'"
-
 - name: gnome | desktop | set interface values
   become_user: bernhard
   community.general.dconf:

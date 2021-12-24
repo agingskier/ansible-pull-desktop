@@ -2,7 +2,6 @@
 - name: softwarep | install development packages
   apt:
     pkg:
-      - default-jdk
       - fabric
       - flake8
       - golang

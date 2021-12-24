@@ -3,17 +3,46 @@
   tags: wifi
   block:
 
-    - name: connect to wlps130 with nmcli command
-      become: yes
-      become_method: sudo
+    - name: system-setup | wifi | connect to wifi with nmcli command
       command: nmcli dev wifi connect WiFi-bpic password "{{ wifi_passwd }}"
       register: wifi_result
       changed_when: wifi_result.rc == 0
     
-    - name: print nmcli result
+    - name: system-setup | wifi | print nmcli result
       debug:
         var: wifi_result
         verbosity: 2
+
+#
+# iwd: Internet Wireless Daemon does not work at the moment
+#
+#    - name: system-setup | wifi | install iwd to replace wpa-supplicant
+#      apt:
+#        pkg:
+#          - iwd
+          
+#    - name: system-setup | iwd | create new iwd.conf file
+#      file:
+#        path: /etc/NetworkManager/conf.d/iwd.conf
+#        state: touch
+#        owner: root
+#        group: root
+#        mode: 0644
+
+#    - name: system-setup | iwd | write to iwd.conf file 
+#      copy:
+#        dest: /etc/NetworkManager/conf.d/iwd.conf
+#        content: |
+#          [device]
+#          wifi.backend=iwd
+#        owner: root
+#        group: root
+#        mode: 0644
+
+#    - name: system-setup | iwd | unmask wpa-supplicant
+#      systemd:
+#        name: wpa-supplicant
+#        masked: yes
 
   become: yes
   become_user: root

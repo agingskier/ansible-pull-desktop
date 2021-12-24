@@ -39,16 +39,6 @@
 #    user: bernhard
 #    key: "{{ lookup('file', 'users/bernhard/ssh/id_ed25519_ubuntu.pub') }}"
 
-- name: users | yamllint | create config directory
-  file:
-    path: /home/bernhard/{{ item.dir }}
-    state: directory
-    owner: bernhard
-    group: users
-    mode: 0700
-  with_items:
-    - { dir: '.config/yamllint' }
-
 - name: users | bernhard | create vim directories
   file:
     path: /home/bernhard/{{ item.dir }}
@@ -79,7 +69,6 @@
     - { src: 'bash/conkyrc', dest: '.conkyrc' }
     - { src: 'vim/vimrc', dest: '.vimrc' }
     - { src: 'vim/gvimrc', dest: '.gvimrc' }
-    - { src: 'yaml/yamllint_config', dest: '.config/yamllint/config' }
     - { src: 'autostart/conky_autostart', dest: '.config/autostart/conky.desktop' }
 
 - name: users | bernhard | copy vim ftype files

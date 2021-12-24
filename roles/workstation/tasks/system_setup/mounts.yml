@@ -41,6 +41,13 @@
     - { src: 'mnt-NAS-scan.mount', dest: 'mnt-NAS-scan.mount' }
     - { src: 'mnt-NAS-steuern.mount', dest: 'mnt-NAS-steuern.mount' }
 
+# Service NetworkManager-wait-online must be enabled, otherwise the
+# following mounts will fail (sometimes ok, sometimes not)
+- name: system_setup | service | enable NetworkManager-wait-online
+  service:
+    name: NetworkManager-wait-online
+    enabled: yes
+
 - name: system_setup | systemd | enable all mounts, reload daemon
   become: yes
   become_user: root
