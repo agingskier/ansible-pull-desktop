@@ -64,7 +64,6 @@
     - { src: 'bash/bash_aliases', dest: '.bash_aliases' }
     - { src: 'bash/bash_functions', dest: '.bash_functions' }
     - { src: 'bash/bashrc', dest: '.bashrc' }
-    - { src: 'bash/bash_prompt_bequiet', dest: '.bash_prompt_bequiet' }
     - { src: 'bash/dircolors', dest: '.dircolors' }
     - { src: 'bash/conkyrc', dest: '.conkyrc' }
     - { src: 'vim/vimrc', dest: '.vimrc' }
@@ -88,38 +87,28 @@
     - { src: 'sql.vim' }
     - { src: 'xml.vim' }
 
-- name: users | bernhard | copy vim color files
-  copy:
-    src: users/bernhard/vim/{{ item.src }}
-    dest: /home/bernhard/.vim/colors/{{ item.src }}
-    owner: bernhard
-    group: users
-    mode: 0600
+- name: users | bernhard | git checkout vim color schemes and pathogen
+  become: true
+  git:
+    repo: "{{ item.repo }}"
+    dest: "{{ item.dest }}"
+    version: master
+    force: true
   with_items:
-    - { src: 'bubblegum-256-dark.vim' }
-    - { src: 'darktango.vim' }
-    - { src: 'jellybeans.vim' }
-    - { src: 'xoria256.vim' }
-    - { src: 'zenburn.vim' }
+    - { repo: 'https://github.com/tpope/vim-pathogen.git', dest: '/home/bernhard/.vim/autoload/pathogen.vim'}
+    - { repo: 'https://github.com/nanotech/jellybeans.vim.git', dest: '/home/bernhard/.vim/colors/jellybeans.vim'}
+    - { repo: 'https://github.com/vim-scripts/xoria256.vim.git', dest: '/home/bernhard/.vim/colors/xoria256.vim'}
+    - { repo: 'https://github.com/jnurmine/Zenburn.git', dest: '/home/bernhard/.vim/colors/zenburn.vim'}
 
-- name: users | bernhard | install pathogen
-  copy:
-    src: users/bernhard/vim/{{ item.src }}
-    dest: /home/bernhard/.vim/autoload/{{ item.src }}
-    owner: bernhard
-    group: users
-    mode: 0700
+- name: users | bernhard | git checkout bundle repositories
+  become: true
+  git:
+    repo: "{{ item.repo }}"
+    dest: "{{ item.dest }}"
+    version: master
+    force: true
   with_items:
-    - { src: 'pathogen.vim' }
-
-#- name: users | bernhard | checkout git repositories
-#  become: true
-#  git:
-#    repo: "{{ item.repo }}"
-#    dest: "{{ item.dest }}"
-#    version: master
-#    force: true
-#  with_items:
+    - { repo: 'https://github.com/itchyny/lightline.vim.git', dest: '/home/bernhard/.vim/bundle/lightline.vim'}  # status line
 #    - { repo: 'https://github.com/ctrlpvim/ctrlp.vim.git', dest: '/home/bernhard/.vim/bundle/ctrlp.vim' }
 #    - { repo: 'https://github.com/davidhalter/jedi-vim.git', dest: '/home/bernhard/.vim/bundle/jedi-vim' }
 #    - { repo: 'https://github.com/pearofducks/ansible-vim', dest: '/home/bernhard/.vim/bundle/ansible-vim' }
@@ -128,4 +117,5 @@
 #    - { repo: 'https://github.com/scrooloose/nerdtree.git', dest: '/home/bernhard/.vim/bundle/nerdtree' }
 #    - { repo: 'https://github.com/tpope/vim-obsession.git', dest: '/home/bernhard/.vim/bundle/vim-obsession' }
 #    - { repo: 'https://github.com/vim-syntastic/syntastic.git', dest: '/home/bernhard/.vim/bundle/syntastic' }
-#  notify: update_vim_bundle_perms
+  notify: update_vim_bundle_perms
+

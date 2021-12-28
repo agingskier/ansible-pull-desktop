@@ -21,3 +21,4 @@
       - vim-nox
       - vim-gtk3
       - whois
+      - tmuxinator

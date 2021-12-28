@@ -1,7 +1,7 @@
 " Disable annoying beep sound
 set vb
 
-" Set color scheme. Other good ones are bubblegum-256-dark, sorcerer, and zenburn
+" Set color scheme. Other good ones are jellybeans, xoria256 or zenburn
 colorscheme xoria256
 
 " ansible-vim: set indent to 0 after two newlines in insert-mode
