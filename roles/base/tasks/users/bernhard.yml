@@ -66,9 +66,11 @@
     - { src: 'bash/bashrc', dest: '.bashrc' }
     - { src: 'bash/dircolors', dest: '.dircolors' }
     - { src: 'bash/conkyrc', dest: '.conkyrc' }
+    - { src: 'bash/tilix-split.json', dest: 'tilix-split.json' }
     - { src: 'vim/vimrc', dest: '.vimrc' }
     - { src: 'vim/gvimrc', dest: '.gvimrc' }
     - { src: 'autostart/conky_autostart', dest: '.config/autostart/conky.desktop' }
+    - { src: 'autostart/tilix_autostart', dest: '.config/autostart/tilix.desktop' }
 
 - name: users | bernhard | copy vim ftype files
   copy:

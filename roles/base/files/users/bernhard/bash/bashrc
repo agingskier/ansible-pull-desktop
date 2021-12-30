@@ -96,16 +96,16 @@ export EDITOR=geany
 export VISUAL=geany
 export NO_AT_BRIDGE=1	# to avoid dbind-warning messages with gedit
 
-export HOST=`hostname`
+export HOST=`hostname -s`
 export TERM=xterm-256color
 
-export PATH_TO_FX=/opt/javafx-sdk-16/lib
-export CLASSPATH=.:/usr/lib/jvm/java-11-openjdk-amd64/jre/lib:$PATH_TO_FX
+export PATH_TO_FX=/opt/javafx-sdk-17.0.1/lib
+export CLASSPATH=.:/usr/lib/jvm/java-17-openjdk-amd64/lib:$PATH_TO_FX
 
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
-fi
+# $HOME/bin is added to PATH in .profile, so not required in .bashrc
+#if [ -d "$HOME/bin" ] ; then
+#    PATH="$HOME/bin:$PATH"
+#fi
 
 export -n SESSION_MANAGER   # required for Digikam
 export VAGRANT_HOME=/mnt/Data/vagrant
@@ -148,12 +148,26 @@ ALERT=${WHITE}${on_red}   # Bold White on red background
 # - System: ${yellow}`uname -sr`${cyan} `unity --version`${NC}"
 
 #-------------------------------------------------------------
-# Shell Prompt
+# Shell Prompt for differenct users
+# emoji copied from https://emojipedia.org  ⛷️    🌡️  🧭  🎁
 #-------------------------------------------------------------
 
-if [ -f ~/.bash_prompt_bequiet ]; then
-    . ~/.bash_prompt_bequiet
-fi
+case ${USER} in
+  bernhard)
+    export PS1='\n\[$black $on_magenta\][\D{%F %T}]\[$black $on_yellow\][\u on \h]\[$black $on_red\][$PWD]$NC\n\[$cyan\]😄==\$ \[$NC'
+    export PS2='\[$cyan\]😄==\$ \[$NC'
+  ;;
+  ubuntu)
+    export PS1='\n\[$black $on_magenta\][🔥LXD]\[$black $on_yellow\][\u on \h]\[$black $on_green\][$PWD]$NC\n\[$cyan\]🔥==\$ \[$NC'
+    export PS2='\[$cyan\]🔥==\$ \[$NC'
+  ;;
+  root)
+    export PS1='\n\[$black $on_yellow\][\u on \h]\[$black $on_red\][$PWD]$NC\n\[$red\]⚠️ ‼️ ==\> \[$NC'
+  ;;
+  *)
+    export PS1='\n‼️\[$black $on_magenta\][\u]\[$black $on_yellow\][\s \v] => \[$NC'
+  ;;
+esac
 
 #-------------------------------------------------------------
 # tailoring 'less'
@@ -161,7 +175,6 @@ fi
 
 unset -v LESSCHARSET # Fix manpages looking funky
 export PAGER=less    #less
-export VAGRANT_HOME=/mnt/Data/vagrant
 
 export LESS_TERMCAP_mb=$'\e[00;38;5;196m' # red, begin blinking
 export LESS_TERMCAP_md=$'\e[00;38;5;226m' # yellow, begin bold

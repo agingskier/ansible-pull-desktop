@@ -28,7 +28,6 @@ protonvpn: yes
 raidar: yes
 signal: yes
 steam: yes
-terminator: yes
 topgrade: yes
 vagrant: yes
 variety: yes

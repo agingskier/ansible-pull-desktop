@@ -36,7 +36,6 @@
     - import_tasks: software/multipass.yml
     - import_tasks: software/snap_packages.yml
     - import_tasks: software/steam.yml
-    - import_tasks: software/terminator.yml
     - import_tasks: software/topgrade.yml
     - import_tasks: software/vagrant.yml
     - import_tasks: software/virtualbox.yml
