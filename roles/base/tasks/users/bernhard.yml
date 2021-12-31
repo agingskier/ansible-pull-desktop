@@ -71,6 +71,8 @@
     - { src: 'vim/gvimrc', dest: '.gvimrc' }
     - { src: 'autostart/conky_autostart', dest: '.config/autostart/conky.desktop' }
     - { src: 'autostart/tilix_autostart', dest: '.config/autostart/tilix.desktop' }
+    - { src: 'tmux/tmux_config', dest: '.tmux.conf' }
+    - { src: 'tmux/tmux_setup_config', dest: 'tmux-setup.conf'}
 
 - name: users | bernhard | copy vim ftype files
   copy:

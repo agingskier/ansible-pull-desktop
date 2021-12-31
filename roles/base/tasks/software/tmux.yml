@@ -1,0 +1,55 @@
+---
+- name: software | tmux | install tmux package
+  apt:
+    state: present
+    pkg:
+      - tmux
+
+- name: software | tmux | git checkout git tmux plugin manager
+  git:
+    repo: https://github.com/tmux-plugins/tpm
+    dest: /home/bernhard/.tmux/plugins/tpm
+    version: master
+
+- name: software | tmux | Download latest release gitmux info
+  uri:
+    url: https://github.com/arl/gitmux/releases/latest
+  register: gitmux_info
+
+- name: software | tmux | print gitmux_info
+  debug:
+    var: gitmux_info
+    verbosity: 2
+
+- name: software | tmux | set fact with extracted release
+  set_fact:
+    gitmux_release: "{{ gitmux_info | regex_search('(?<=tag/)[^\"]{6}') }}"
+
+- name: software | tmux | print gitmux-release number:q
+  debug:
+    var: gitmux_release
+    verbosity: 2
+
+- name: software | tmux | install binary gitmux
+  become: true
+  become_method: sudo
+  unarchive:
+    src: https://github.com/arl/gitmux/releases/download/{{ gitmux_release }}/gitmux_{{ gitmux_release | regex_search('(\d(.*))') }}_linux_amd64.tar.gz
+    dest: /usr/local/bin
+    remote_src: yes
+    mode: 0755
+    owner: root
+    group: root
+
+- name: software | tmux | create gitmux configuration file
+  command: gitmux -printcfg
+  register: gitmux_config
+  changed_when: gitmux_config.rc == 0
+
+- name: software | tmux | write gitmux.conf file
+  copy:
+    content: "{{ gitmux_config.stdout }}"
+    dest: /home/bernhard/.gitmux.conf
+    owner: bernhard
+    group: users
+    mode: 0644

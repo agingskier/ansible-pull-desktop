@@ -1,0 +1,109 @@
+# Set default terminal mode to 256colors
+set -g default-terminal "screen-256color"
+
+# Setting the prefix from C-b to C-a
+set -g prefix C-a
+
+# Free the original Ctrl-b prefix keybinding
+unbind C-b
+
+# mouse support - set to on if required
+set -g mouse on
+
+# Ensure that we can send Ctrl-A to other apps
+bind C-a send-prefix
+
+# Set the base index for windows and panes to 1 instead of 0
+set -g base-index 1
+setw -g pane-base-index 1
+
+# Relaod the file with Prefix r
+bind r source-file ~/.tmux.conf \; display "Configuration file .tmux.conf reloaded!"
+
+# Synchronize panes
+bind-key y set-window-option synchronize-panes\; display-message "synchronize mode toggled."
+
+# Split pane and retain the current directory of existing pane
+bind _ split-window -v -c "#{pane_current_path}"
+bind | split-window -h -c "#{pane_current_path}"
+
+# Moving betwenn panes with Prefix h,j,k,l
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
+
+# Quick window selection
+bind -r C-h select-window -t :-
+bind -r C-l select-window -t :+
+
+# Resizing panes with Prefix H,J,K,L
+bind -r H resize-pane -L 5
+bind -r J resize-pane -D 5
+bind -r K resize-pane -U 5
+bind -r L resize-pane -R 5
+
+# Lengthen the amount of time status messages are displayed
+set -g display-time 3000
+set -g display-panes-time 3000
+
+# Automatically set window title
+setw -g automatic-rename on
+set -g set-titles on
+
+#----------------------------
+# Theme
+#----------------------------
+
+# set the color for window list
+setw -g window-status-style fg=cyan,bg=black
+# set colors for the active window
+setw -g window-status-current-style fg=white,bold,bg=red
+
+# set colors for pane borders
+setw -g pane-border-style fg=green,bg=black
+setw -g pane-active-border-style fg=white,bg=blue
+
+# set Command / message line
+setw -g message-style fg=white,bold,bg=black
+
+#-----------------------------------
+# Status Bar
+#-----------------------------------
+
+# set color for status line
+set -g status-style fg=white,bg=black
+# Center the window list in the status line
+set -g status-justify centre
+# Update status line every sixty seconds
+set -g status-interval 60
+set -g status-left-length 50
+set -g status-left "#[bg=colour35]🖥️#[fg=colour234,bold] #H #[bg=colour234,nobold]#[fg=colour35] [#S] "
+#%if "#{==:#{window_name},git}"
+#set -g status-right "#{prefix_highlight} #[bg=colour35]#[fg=colour234] #(gitmux #{pane_current_path} ) 🕔 #[fg=colour234]%H:%M "
+#%else
+set -g status-right "#{prefix_highlight} #[bg=colour35]#[fg=colour234]📈 CPU:#{cpu_percentage} RAM:#{ram_percentage} TEMP:#{cpu_temp} 🕔 #[fg=colour234]%H:%M "
+#%endif
+
+# Second status bar line for Git window
+setw -g pane-border-status bottom
+setw -g pane-border-format "🌌 #(gitmux #{pane_current_path} )"
+
+#-------------------------------------------------------#
+# Install plugin manager
+#-------------------------------------------------------#
+
+# List of plugins
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-cpu'
+set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
+set -g @plugin 'tmux-plugins/tmux-yank'
+set -g @plugin 'tmux-plugins/tmux-sidebar'
+#set -g @plugin 'tmux-plugins/tmux-resurrect'
+#set -g @plugin 'tmux-plugins/tmux-continuum'
+
+#set -g @continuum-restore 'on'
+#set -g @continuum-boot 'on'
+
+# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+run -b '~/.tmux/plugins/tpm/tpm'
