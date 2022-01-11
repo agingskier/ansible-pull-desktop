@@ -2,7 +2,8 @@
 #
 #  install info from: https://computingforgeeks.com/install-kvm-centos-rhel-ubuntu-debian-sles-arch/
 #
-- name: software | kvm block
+- name: software | kvm, qemu, libvirt block
+  tags: kvm
   block:
     - name: software | kvm | install cpu-checker prerequisite
       apt:
@@ -18,11 +19,18 @@
         pkg:
           - qemu
           - qemu-kvm
+          - qemu-system
+          - libvirt-dev
           - libvirt-daemon
+          - libvirt-daemon-system
           - libvirt-clients
+          - virtinst
           - virt-manager
           - virt-viewer
           - bridge-utils
+          - libosinfo-bin
+          - libvirt-top
+          - libguestfs-tools
         state: present
       when:
         - "'KVM acceleration can be used' in kvm_result.stdout"
@@ -64,13 +72,25 @@
       with_items:
         - { src: 'libvirt_config', dest: '.config/libvirt/libvirt.conf' }
 
-    - name: system_setup | fstab | add x-gvfs-show to options
+    - name: software | kvm | remove hash from uri_default line
       replace:
         path: /home/bernhard/.config/libvirt/libvirt.conf
         regexp: "{{ item.regexp }}"
         replace: "{{ item.value }}"
       with_items:
         - { regexp: '#uri_default', value: 'uri_default' }
+
+    - name: software | kvm | insert log-filter line 
+      lineinfile:
+        path: /etc/libvirt/libvirtd.conf
+        insertafter: '^#log_filters='
+        line: 'log_filters="1:qemu"'
+
+    - name: software | kvm | insert log-output line 
+      lineinfile:
+        path: /etc/libvirt/libvirtd.conf
+        insertafter: '^#log_output='
+        line: 'log_filters="1:file:/var/log/libvirt/libvirtd.log"'
 
   when:
     - kvm is defined

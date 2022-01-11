@@ -1,5 +1,6 @@
 ---
 - name: software | vagrant block
+  tags: vagrant
   block:
 #
 # Display keyid: curl -fsSL  https://apt.releases.hashicorp.com/gpg | tee vagrant.asc | gpg --keyid-format long
@@ -23,6 +24,8 @@
         pkg:
           - vagrant
           - vagrant-libvirt
+          - ebtables
+          - dnsmasq-base
           - libxslt-dev
           - libxml2-dev
           - libvirt-dev

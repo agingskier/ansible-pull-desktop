@@ -4,6 +4,7 @@
 # * virtualbox-ext-pack/license: true
 # * virtaulbox-ext-pack/question: Yes
 - name: software | virtualbox block
+  tags: virtualbox
   block:
     - name: software | virtualbox-ext | confirm license info
       become: true

@@ -1,5 +1,6 @@
 ---
 - name: software | snap | install multipass package
+  tags: multipass
   become: yes
   become_method: sudo
   snap:

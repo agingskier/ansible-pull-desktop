@@ -90,20 +90,21 @@ setw -g pane-border-status bottom
 setw -g pane-border-format "🌌 #(gitmux #{pane_current_path} )"
 
 #-------------------------------------------------------#
-# Install plugin manager
+# Install plugins
 #-------------------------------------------------------#
 
-# List of plugins
-set -g @plugin 'tmux-plugins/tpm'
-set -g @plugin 'tmux-plugins/tmux-cpu'
-set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
-set -g @plugin 'tmux-plugins/tmux-yank'
-set -g @plugin 'tmux-plugins/tmux-sidebar'
-#set -g @plugin 'tmux-plugins/tmux-resurrect'
-#set -g @plugin 'tmux-plugins/tmux-continuum'
+#set -g @plugin 'tmux-plugins/tpm'
+#set -g @plugin 'tmux-plugins/tmux-cpu'
+#set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
+#set -g @plugin 'tmux-plugins/tmux-yank'
+#set -g @plugin 'tmux-plugins/tmux-sidebar'
+#set -g @plugin 'tmux-plugins/tmux-open'
 
-#set -g @continuum-restore 'on'
-#set -g @continuum-boot 'on'
+run-shell ~/.tmux/plugins/tmux-cpu/cpu.tmux
+run-shell ~/.tmux/plugins/tmux-prefix-highlight/prefix_highlight.tmux
+run-shell ~/.tmux/plugins/tmux-yank/yank.tmux
+run-shell ~/.tmux/plugins/tmux-sidebar/sidebar.tmux
+run-shell ~/.tmux/plugins/tmux-open/open.tmux
 
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
-run -b '~/.tmux/plugins/tpm/tpm'
+#run -b '~/.tmux/plugins/tpm/tpm'

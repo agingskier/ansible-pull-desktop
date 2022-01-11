@@ -13,4 +13,4 @@
 # This specifies the default location the client tries to connect to if no other
 # URI is provided by the application
 
-uri_default = "libvirtd:///system"
+#uri_default = "qemu:///system"

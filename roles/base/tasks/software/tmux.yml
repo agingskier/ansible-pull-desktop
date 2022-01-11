@@ -5,11 +5,36 @@
     pkg:
       - tmux
 
-- name: software | tmux | git checkout git tmux plugin manager
+- name: software | tmux | create .tmux directories
+  file:
+    path: /home/ubuntu/{{ item.dir }}
+    state: directory
+    owner: bernhard
+    group: users
+    mode: 0700
+  with_items:
+    - { dir: '.tmux' }
+    - { dir: '.tmux/plugins' }
+
+- name: software | tmux | git checkout git tmux plugins
   git:
-    repo: https://github.com/tmux-plugins/tpm
-    dest: /home/bernhard/.tmux/plugins/tpm
-    version: master
+    repo: https://github.com/tmux-plugins/{{ item.repo }}
+    dest: /home/ubuntu/.tmux/plugins/{{ item.plug }}
+    force: yes
+  with_items:
+    - { repo: 'tmux-cpu.git', plug: 'tmux-cpu' }
+    - { repo: 'tmux-prefix-highlight.git', plug: 'tmux-prefix-highlight' }
+    - { repo: 'tmux-yank.git', plug: 'tmux-yank' }
+    - { repo: 'tmux-sidebar.git', plug: 'tmux-sidebar' }
+    - { repo: 'tmux-open.git', plug: 'tmux-open' }
+
+- name: software | tmux | recursively chown all tmux plugins files
+  file:
+    path: /home/ubuntu/.tmux/plugins
+    state: directory
+    owner: bernhard
+    group: users
+    recurse: yes
 
 - name: software | tmux | Download latest release gitmux info
   uri:
@@ -25,11 +50,12 @@
   set_fact:
     gitmux_release: "{{ gitmux_info | regex_search('(?<=tag/)[^\"]{6}') }}"
 
-- name: software | tmux | print gitmux-release number:q
+- name: software | tmux | print gitmux-release number
   debug:
     var: gitmux_release
     verbosity: 2
 
+# extract version number without "v" from variable gitmux_release 
 - name: software | tmux | install binary gitmux
   become: true
   become_method: sudo

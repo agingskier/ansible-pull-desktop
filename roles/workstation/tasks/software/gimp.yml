@@ -1,0 +1,36 @@
+---
+- name: software | gimp block
+  tags: gimp
+  block:
+
+    - name: software | gimp | add gimp apt repository and update
+      apt_repository:
+        filename: gimp
+        repo: 'ppa:ubuntuhandbook1/gimp'
+        state: present
+        update_cache: yes
+
+    - name: software | gimp | install gimp & gegl
+      apt:
+        pkg:
+          - gimp
+          - gegl
+        state: present
+
+   - name: software | gimp | copy gimprc & text-tool files
+     copy:
+       src: gimp/{{ item.src }}
+       dest: /home/bernhard/.config/GIMP/2.10/{{ item.dest }}
+       owner: bernhard
+       group: users
+       mode: 0600
+     with_items:
+       - { src: 'gimprc', dest: 'gimprc' }
+       - { src: 'gimp-text-tool', dest: 'tool-options/gimp-text-tool' }
+
+  become: yes
+  become_method: sudo
+  when:
+    - gimp is defined
+    - gimp
+

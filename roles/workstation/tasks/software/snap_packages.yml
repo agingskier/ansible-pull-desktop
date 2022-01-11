@@ -4,7 +4,6 @@
   become_method: sudo
   snap:
     name:
-      - gimp
       - digikam
       - keepassxc
       - lxd
@@ -20,7 +19,6 @@
   command: 'snap connect {{ item.app }}:{{ item.plug }}'
   register: connect_result
   with_items:
-    - { app: 'gimp', plug: 'removable-media' }
     - { app: 'digikam', plug: 'removable-media' }
     - { app: 'keepassxc', plug: 'removable-media' }
     - { app: 'docfetcher', plug: 'removable-media' }
