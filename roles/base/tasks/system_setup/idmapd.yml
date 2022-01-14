@@ -5,7 +5,7 @@
     pkg:
       - nfs-common
 
-- name: Insert domain name into /etc/idmapd.conf
+- name: system_setup | nfs | Insert domain name into /etc/idmapd.conf
   become_method: sudo
   become: true
   lineinfile:

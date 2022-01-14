@@ -5,6 +5,7 @@
       - default-jdk
       - openjdk-17-jdk
 
+# Check: https://gluonhq.com/products/javafx/ for latest release
 - name: software | javafx LTS | Unzip javafx
   become: yes
   become_method: sudo
