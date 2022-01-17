@@ -2,9 +2,9 @@
 - name: run all tasks from workstation role
   block:
 
-#    - name: include vars file
-#      tags: always
-#      include_vars: vault-secrets.yml
+    - name: include vars file
+      tags: always
+      include_vars: vault-secrets.yml
 
     ## desktop environments
     - include_tasks: desktop_environments/plank.yml
@@ -42,7 +42,7 @@
     - import_tasks: software/vlc.yml
 
     ## User configs
-#    - import_tasks: system_setup/wifi.yml
+    - import_tasks: system_setup/wifi.yml
     - import_tasks: users/bernhard.yml
 
   rescue:
