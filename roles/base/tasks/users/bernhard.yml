@@ -1,12 +1,13 @@
 ---
-- name: users | add groups to user bernhard | update password
-  user:
-    name: bernhard
-    group: users
-    groups: adm,cdrom,sudo,dip,plugdev,lpadmin,lxd,sambashare
-    uid: 10000
-    state: present
-    comment: "Bernhard Picenoni"
+# remove this tasks after updateing seed-for-pull.yml 
+#- name: users | add groups to user bernhard | update password
+#  user:
+#    name: bernhard
+#    group: users
+#    groups: adm,cdrom,sudo,dip,plugdev,lpadmin,lxd,sambashare
+#    uid: 10000
+#    state: present
+#    comment: "Bernhard Picenoni"
 #    update_password: always
 #    password: "{{ bernhard_passwd }}"
 #    shell: /bin/bash
