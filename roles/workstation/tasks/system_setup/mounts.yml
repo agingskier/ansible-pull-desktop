@@ -1,4 +1,10 @@
 ---
+- name: system_setup | mounts | install nfs-common
+  apt:
+    pkg:
+      - nfs-common
+    state: present
+
 - name: system_setup | fstab | set swapfile as comment
   become: true
   become_method: sudo

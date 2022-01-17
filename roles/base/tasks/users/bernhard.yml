@@ -1,16 +1,4 @@
 ---
-# remove this tasks after updateing seed-for-pull.yml 
-#- name: users | add groups to user bernhard | update password
-#  user:
-#    name: bernhard
-#    group: users
-#    groups: adm,cdrom,sudo,dip,plugdev,lpadmin,lxd,sambashare
-#    uid: 10000
-#    state: present
-#    comment: "Bernhard Picenoni"
-#    update_password: always
-#    password: "{{ bernhard_passwd }}"
-#    shell: /bin/bash
 
 - name: users | bernhard | add sudoers file
   copy:
@@ -19,26 +7,6 @@
     owner: root
     group: root
     mode: 0440
-
-#
-# These two tasks are done in playbook "seed" prior to ansible-pull
-#
-#- name: users | bernhard | create .ssh directory
-#  tags: dotfiles,bernhard,ssh,users
-#  file:
-#    path: "{{ item.dir }}"
-#    state: directory
-#    owner: bernhard
-#    group: users
-#    mode: 0700
-#  with_items:
-#    - { dir: '/home/bernhard/.ssh' }
-
-#- name: users | bernhard | add public key
-#  tags: dotfiles,bernhard,ssh,ssh-keys,users
-#  authorized_key:
-#    user: bernhard
-#    key: "{{ lookup('file', 'users/bernhard/ssh/id_ed25519_ubuntu.pub') }}"
 
 - name: users | bernhard | create vim directories
   file:
