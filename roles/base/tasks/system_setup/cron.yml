@@ -2,16 +2,16 @@
 - name: system setup | cron | schedule automatic ansible provisioning
   cron:
     name: "ansible-pull provision"
-    user: ansible
+    user: bernhard
     minute: "*/30"
     job: "sudo /usr/bin/ansible-pull -o -U https://github.com/agingskier/ansible_pull_desktop.git > /dev/null"
 
 - name: system setup | cron | schedule bernhard cleanup at boot
   cron:
     name: "ansible refresh at boot"
-    user: ansible
+    user: bernhard
     special_time: reboot
-    job: "/bin/rm -rf /home/ansible/.ansible"
+    job: "/bin/rm -rf /home/bernhard/.ansible"
 
 - name: system setup | cron | schedule log reduction
   cron:

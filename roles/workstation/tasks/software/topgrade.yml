@@ -1,10 +1,11 @@
 ---
 - name: software | topgrade install block
   block:
-    - name: Software | topgrade | install latest topgrade binary
+    - name: Software | topgrade | get info about topgrade release
       uri:
         url: https://github.com/r-darwish/topgrade/releases/latest
       register: topgrade_release
+      changed_when: topgrade_release.rc == 0
 
     - name: set fact
       set_fact:
