@@ -7,7 +7,7 @@
       command: nmcli dev wifi connect WiFi-bpic password "{{ wifi_passwd }}"
       register: wifi_result
       changed_when: wifi_result.rc == 0
-    
+
     - name: system-setup | wifi | print nmcli result
       debug:
         var: wifi_result
@@ -20,7 +20,7 @@
 #      apt:
 #        pkg:
 #          - iwd
-          
+
 #    - name: system-setup | iwd | create new iwd.conf file
 #      file:
 #        path: /etc/NetworkManager/conf.d/iwd.conf

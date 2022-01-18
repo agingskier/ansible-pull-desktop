@@ -4,32 +4,33 @@
   block:
     - name: system_setup | mounts | install nfs-common
       apt:
-       	pkg:
+        pkg:
           - nfs-common
         state: present
 
-   - name: system_setup | fstab | set swapfile as comment
-     replace:
-       path: /etc/fstab
-       regexp: "{{ item.regexp }}"
-	   replace: "{{ item.value }}"
-     with_items:
-      - { regexp: '^/swapfile ', value: '#/swapfile' }
-   - name: system_setup | systemd mount | create nfs mountpoint directories
-     file:
-       path: /mnt/{{ item.dir }}
-       state: directory
-       owner: bernhard
-       group: users
-       mode: 0775
-     with_items:
-      - { dir: NAS }
-      - { dir: NAS/documents }
-      - { dir: NAS/backup }
-      - { dir: NAS/media }
-      - { dir: NAS/software }
-      - { dir: NAS/scan }
-      - { dir: NAS/steuern }
+    - name: system_setup | fstab | set swapfile as comment
+      replace:
+        path: /etc/fstab
+        regexp: "{{ item.regexp }}"
+        replace: "{{ item.value }}"
+      with_items:
+        - { regexp: '^/swapfile ', value: '#/swapfile' }
+
+    - name: system_setup | systemd mount | create nfs mountpoint directories
+      file:
+        path: /mnt/{{ item.dir }}
+        state: directory
+        owner: bernhard
+        group: users
+        mode: 0775
+      with_items:
+        - { dir: NAS }
+        - { dir: NAS/documents }
+        - { dir: NAS/backup }
+        - { dir: NAS/media }
+        - { dir: NAS/software }
+        - { dir: NAS/scan }
+        - { dir: NAS/steuern }
 
     - name: system_setup | systemd | copy mount files
       copy:

@@ -80,13 +80,13 @@
       with_items:
         - { regexp: '#uri_default', value: 'uri_default' }
 
-    - name: software | kvm | insert log-filter line 
+    - name: software | kvm | insert log-filter line
       lineinfile:
         path: /etc/libvirt/libvirtd.conf
         insertafter: '^#log_filters='
         line: 'log_filters="1:qemu"'
 
-    - name: software | kvm | insert log-output line 
+    - name: software | kvm | insert log-output line
       lineinfile:
         path: /etc/libvirt/libvirtd.conf
         insertafter: '^#log_output='

@@ -7,7 +7,7 @@
 
 - name: software | tmux | create .tmux directories
   file:
-    path: /home/ubuntu/{{ item.dir }}
+    path: /home/bernhard/{{ item.dir }}
     state: directory
     owner: bernhard
     group: users
@@ -19,7 +19,7 @@
 - name: software | tmux | git checkout git tmux plugins
   git:
     repo: https://github.com/tmux-plugins/{{ item.repo }}
-    dest: /home/ubuntu/.tmux/plugins/{{ item.plug }}
+    dest: /home/bernhard/.tmux/plugins/{{ item.plug }}
     force: yes
   with_items:
     - { repo: 'tmux-cpu.git', plug: 'tmux-cpu' }
@@ -30,7 +30,7 @@
 
 - name: software | tmux | recursively chown all tmux plugins files
   file:
-    path: /home/ubuntu/.tmux/plugins
+    path: /home/bernhard/.tmux/plugins
     state: directory
     owner: bernhard
     group: users

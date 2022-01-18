@@ -1,7 +1,7 @@
 ---
 - name: Software | java LTS | install java environment
   apt:
-    pkg: 
+    pkg:
       - default-jdk
       - openjdk-17-jdk
 

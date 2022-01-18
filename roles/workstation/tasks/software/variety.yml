@@ -15,7 +15,7 @@
       ignore_errors: yes
       register: variety_result
       changed_when: variety_result.rc == 0
-      
+
     - name: software | variety | print result from command
       debug:
         var: variety_result
