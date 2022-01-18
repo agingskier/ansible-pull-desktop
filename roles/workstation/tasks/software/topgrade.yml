@@ -5,7 +5,6 @@
       uri:
         url: https://github.com/r-darwish/topgrade/releases/latest
       register: topgrade_release
-      changed_when: topgrade_release.rc == 0
 
     - name: set fact
       set_fact:
