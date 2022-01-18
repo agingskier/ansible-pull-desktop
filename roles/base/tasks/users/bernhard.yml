@@ -60,18 +60,24 @@
     - { src: 'sql.vim' }
     - { src: 'xml.vim' }
 
-- name: users | bernhard | git checkout vim color schemes and pathogen
+# https://github.com/tpope/vim-pathogen.git
+# https://github.com/nanotech/jellybeans.vim.git
+# https://github.com/vim-scripts/xoria256.vim.git
+# https://github.com/jnurmine/Zenburn.git
+
+- name: users | bernhard | download pathogen & color vim files from github 
   become: true
-  git:
-    repo: "{{ item.repo }}"
-    dest: "{{ item.dest }}"
-    version: master
-    force: true
+  get_url:
+    url: "https://raw.githubusercontent.com/{{ item.url }}"
+    dest: "/home/bernhard/.vim/{{ item.dest }}"
+    owner: bernhard
+    group: users
+    mode: 0600
   with_items:
-    - { repo: 'https://github.com/tpope/vim-pathogen.git', dest: '/home/bernhard/.vim/autoload/pathogen.vim'}
-    - { repo: 'https://github.com/nanotech/jellybeans.vim.git', dest: '/home/bernhard/.vim/colors/jellybeans.vim'}
-    - { repo: 'https://github.com/vim-scripts/xoria256.vim.git', dest: '/home/bernhard/.vim/colors/xoria256.vim'}
-    - { repo: 'https://github.com/jnurmine/Zenburn.git', dest: '/home/bernhard/.vim/colors/zenburn.vim'}
+    - { url: 'vim-pathogen/master/autoload/pathogen.vim', dest: 'autoload/pathogen.vim'}
+    - { url: 'nanotech/jellybeans.vim/master/colors/jellybeans.vim', dest: 'colors/jellybeans.vim'}
+    - { url: 'vim-scripts/xoria256.vim/master/colors/xoria256.vim', dest: 'colors/xoria256.vim'}
+    - { url: 'jnurmine/Zenburn/master/colors/zenburn.vim', dest: 'colors/zenburn.vim'}
 
 - name: users | bernhard | git checkout bundle repositories
   become: true

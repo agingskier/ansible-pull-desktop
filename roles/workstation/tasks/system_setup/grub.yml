@@ -1,6 +1,6 @@
 ---
 #
-# fine the correct GFXMODE: grub welcome screen; enter 'c' for console
+# find the correct GFXMODE: grub welcome screen; enter 'c' for console
 # enter 'videoinfo' command to display a list of appropriate values
 #
 
@@ -42,10 +42,18 @@
         group: root
         mode: 0755
 
-    - name: copy dark-matter directory
+    - name: system_setup | grub | copy dark-matter themes
       copy:
         src: /tmp/grub-theme/dark-matter
         dest: /boot/grub/themes
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: system_setup | grub | copy png file ubuntu to background
+      copy:
+        src: /tmp/grub-theme/assets/backgrounds/ubuntu.png
+        dest: /boot/grub/themes/dark-matter/background.png
         owner: root
         group: root
         mode: 0644
@@ -56,13 +64,14 @@
         insertafter: '^#GRUB_GFXMODE='
         line: 'GRUB_GFXMODE=1024x768x32'
 
-    - name: add lines to grub
+    - name: system_setup | grub | lines for BACKGROUND, THEME, suppress hwmatch missing 
       lineinfile:
         dest: /etc/default/grub
         line: '{{ item }}'
       with_items:
         - 'GRUB_BACKGROUND="/usr/share/images/grub/saturn-wallpaper.jpg"'
         - 'GRUB_THEME="/boot/grub/themes/dark-matter/theme.txt"'
+        - 'GRUB_GFXPAYLOAD="keep"'
 
     - name: update grub configuration
       command: update-grub
