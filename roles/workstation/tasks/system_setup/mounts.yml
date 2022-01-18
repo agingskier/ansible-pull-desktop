@@ -1,82 +1,84 @@
 ---
-- name: system_setup | mounts | install nfs-common
-  apt:
-    pkg:
-      - nfs-common
-    state: present
+- name: system-setup nfs mounts block
+  tags: nfs
+  block:
+	- name: system_setup | mounts | install nfs-common
+	  apt:
+		pkg:
+		  - nfs-common
+		state: present
 
-- name: system_setup | fstab | set swapfile as comment
-  become: true
-  become_method: sudo
-  replace:
-    path: /etc/fstab
-    regexp: "{{ item.regexp }}"
-    replace: "{{ item.value }}"
-  with_items:
-    - { regexp: '^/swapfile ', value: '#/swapfile' }
+	- name: system_setup | fstab | set swapfile as comment
+	  replace:
+		path: /etc/fstab
+		regexp: "{{ item.regexp }}"
+		replace: "{{ item.value }}"
+	  with_items:
+		- { regexp: '^/swapfile ', value: '#/swapfile' }
 
 
-- name: system_setup | systemd mount | create nfs mountpoint directories
-  file:
-    path: /mnt/{{ item.dir }}
-    state: directory
-    owner: bernhard
-    group: users
-    mode: 0775
-  with_items:
-    - { dir: NAS }
-    - { dir: NAS/documents }
-    - { dir: NAS/backup }
-    - { dir: NAS/media }
-    - { dir: NAS/software }
-    - { dir: NAS/scan }
-    - { dir: NAS/steuern }
+	- name: system_setup | systemd mount | create nfs mountpoint directories
+	  file:
+		path: /mnt/{{ item.dir }}
+		state: directory
+		owner: bernhard
+		group: users
+		mode: 0775
+	  with_items:
+		- { dir: NAS }
+		- { dir: NAS/documents }
+		- { dir: NAS/backup }
+		- { dir: NAS/media }
+		- { dir: NAS/software }
+		- { dir: NAS/scan }
+		- { dir: NAS/steuern }
 
-- name: system_setup | systemd | copy mount files
-  copy:
-    src: mounts/{{ item.src }}
-    dest: /etc/systemd/system/{{ item.dest }}
-    owner: root
-    group: root
-    mode: 0644
-  with_items:
-    - { src: 'mnt-NAS-backup.mount', dest: 'mnt-NAS-backup.mount' }
-    - { src: 'mnt-NAS-documents.mount', dest: 'mnt-NAS-documents.mount' }
-    - { src: 'mnt-NAS-media.mount', dest: 'mnt-NAS-media.mount' }
-    - { src: 'mnt-NAS-software.mount', dest: 'mnt-NAS-software.mount' }
-    - { src: 'mnt-NAS-scan.mount', dest: 'mnt-NAS-scan.mount' }
-    - { src: 'mnt-NAS-steuern.mount', dest: 'mnt-NAS-steuern.mount' }
+	- name: system_setup | systemd | copy mount files
+	  copy:
+		src: mounts/{{ item.src }}
+		dest: /etc/systemd/system/{{ item.dest }}
+		owner: root
+		group: root
+		mode: 0644
+	  with_items:
+		- { src: 'mnt-NAS-backup.mount', dest: 'mnt-NAS-backup.mount' }
+		- { src: 'mnt-NAS-documents.mount', dest: 'mnt-NAS-documents.mount' }
+		- { src: 'mnt-NAS-media.mount', dest: 'mnt-NAS-media.mount' }
+		- { src: 'mnt-NAS-software.mount', dest: 'mnt-NAS-software.mount' }
+		- { src: 'mnt-NAS-scan.mount', dest: 'mnt-NAS-scan.mount' }
+		- { src: 'mnt-NAS-steuern.mount', dest: 'mnt-NAS-steuern.mount' }
 
 # Service NetworkManager-wait-online must be enabled, otherwise the
 # following mounts will fail (sometimes ok, sometimes not)
-- name: system_setup | service | enable NetworkManager-wait-online
-  service:
-    name: NetworkManager-wait-online
-    enabled: yes
+	- name: system_setup | service | enable NetworkManager-wait-online
+	  service:
+		name: NetworkManager-wait-online
+		enabled: yes
 
-- name: system_setup | systemd | enable all mounts, reload daemon
+	- name: system_setup | systemd | enable all mounts, reload daemon
+	  systemd:
+		name: "{{ item }}"
+		enabled: yes
+		state: restarted
+		daemon_reload: yes
+	  with_items:
+		- 'mnt-NAS-backup.mount'
+		- 'mnt-NAS-documents.mount'
+		- 'mnt-NAS-media.mount'
+		- 'mnt-NAS-software.mount'
+		- 'mnt-NAS-scan.mount'
+		- 'mnt-NAS-steuern.mount'
+
+	- name: system_setup | Add nfs NAS bookmarks
+	  lineinfile:
+		dest: /home/bernhard/.config/gtk-3.0/bookmarks
+		line: "{{ item.line }}"
+		insertafter: EOF
+	  with_items:
+		- { line: "file:///mnt/NAS NAS" }
+		- { line: "file:///mnt/Data Data" }
+		- { line: "file:///mnt/Games Games" }
+		- { line: "file:///mnt/Digikam Digikam" }
+ 
   become: yes
-  become_user: root
-  systemd:
-    name: "{{ item }}"
-    enabled: yes
-    state: restarted
-    daemon_reload: yes
-  with_items:
-    - 'mnt-NAS-backup.mount'
-    - 'mnt-NAS-documents.mount'
-    - 'mnt-NAS-media.mount'
-    - 'mnt-NAS-software.mount'
-    - 'mnt-NAS-scan.mount'
-    - 'mnt-NAS-steuern.mount'
-
-- name: system_setup | Add nfs NAS bookmarks
-  lineinfile:
-    dest: /home/bernhard/.config/gtk-3.0/bookmarks
-    line: "{{ item.line }}"
-    insertafter: EOF
-  with_items:
-    - { line: "file:///mnt/NAS NAS" }
-    - { line: "file:///mnt/Data Data" }
-    - { line: "file:///mnt/Games Games" }
-    - { line: "file:///mnt/Digikam Digikam" }
+  become_method: sudo
