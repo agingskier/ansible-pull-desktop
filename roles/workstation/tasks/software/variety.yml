@@ -8,6 +8,8 @@
         state: present
 
     - name: software | variety | cmd starts config window expecting close, creates variety conf file
+      become: yes
+      become_user: bernhard
       command: variety --preferences
       timeout: 10
       ignore_errors: yes
