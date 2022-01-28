@@ -1,0 +1,57 @@
+---
+- name: software | geany | install packages
+  apt:
+    pkg:
+      - geany
+      - geany-plugins
+    state: present
+
+- name: software |  geany | create .config/geany/colorschemes directories
+  file:
+    path: /home/bernhard/{{ item.dir }}
+    state: directory
+    owner: bernhard
+    group: users
+    mode: 0700
+  with_items:
+    - { dir: '.config/geany' }
+    - { dir: '.config/geany/colorschemes' }
+    - { dir: '.config/geany/filedefs' }
+
+- name: users | bernhard | download geany colorschemes from github
+  become: true
+  git:
+    repo: "https://github.com/geany/geany-themes.git"
+    dest: "/tmp/geany-themes"
+
+- name: software | geany | copy geany colorschemes to .config/geany/colorschemes
+  copy:
+    src: /tmp/geany-themes/colorschemes/
+    dest: /home/bernhard/.config/geany/colorschemes/
+    directory_mode:
+
+- name: software | geany | copy filetypes.yaml
+  copy:
+    src: /usr/share/geany/filedefs/filetypes.yaml
+    dest: /home/bernhard/.config/geany/filedefs/filetypes.yaml
+    owner: bernhard
+    group: users
+    mode: 0644
+
+- name: software | geany | Insert identifier=types in filetypes.yaml
+  lineinfile:
+    path: /home/bernhard/.config/geany/filedefs/filetypes.yaml
+    insertafter: '^operator=operator'
+    line: 'identifier=types'
+
+- name: software | geany | Modify cursor and indend guide values
+  become: yes
+  become_method: sudo
+  lineinfile:
+    path: /usr/share/geany/filedefs/filetypes.common
+    insertafter: "{{ item.src }}"
+    line: "{{ item.dest }}"
+  with_items:
+    - { src: '^caret=caret', dest: 'caret=0x00ff00;0x0;false;false' }
+    - { src: '^caret_width=1', dest: 'caret_width=3' }
+    - { src: '^indent_guide=indent_guide', dest: 'indent_guide=0xDAFB31;0xffffff;false;false' }

@@ -1,13 +1,13 @@
 ---
 - name: software | calibre e-book block
   block:
-    - name: software | install librecad
+    - name: software | install calibre
       apt:
         pkg:
           - calibre
         state: present
 
   when:
-    - librecad is defined
-    - librecad
+    - calibre is defined
+    - calibre
 

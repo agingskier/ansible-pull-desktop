@@ -2,8 +2,6 @@
 - name: software | install workstation misc_packages
   apt:
     pkg:
-      - geany
-      - geany-plugins
       - gparted
       - p7zip-full
       - pdfsam

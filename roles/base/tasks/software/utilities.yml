@@ -19,5 +19,4 @@
       - nmap
       - traceroute
       - vim-nox
-      - vim-gtk3
       - whois
