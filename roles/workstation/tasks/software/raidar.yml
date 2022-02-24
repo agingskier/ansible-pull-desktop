@@ -9,4 +9,3 @@
   when:
     - raidar is defined
     - raidar
-

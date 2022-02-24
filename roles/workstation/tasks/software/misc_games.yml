@@ -8,6 +8,7 @@
       - supertux
       - supertuxkart
       - wesnoth
+      - flightgear
     state: present
   when:
     - games is defined

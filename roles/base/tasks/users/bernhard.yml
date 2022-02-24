@@ -37,7 +37,6 @@
     - { src: 'bash/conkyrc', dest: '.conkyrc' }
     - { src: 'bash/tilix-split.json', dest: 'tilix-split.json' }
     - { src: 'vim/vimrc', dest: '.vimrc' }
-    - { src: 'vim/gvimrc', dest: '.gvimrc' }
     - { src: 'autostart/conky_autostart', dest: '.config/autostart/conky.desktop' }
     - { src: 'autostart/tilix_autostart', dest: '.config/autostart/tilix.desktop' }
     - { src: 'tmux/tmux_config', dest: '.tmux.conf' }
@@ -61,7 +60,7 @@
     - { src: 'xml.vim' }
     - { src: 'folding.vim' }  # open fold: zo | close fold zM
 
-- name: users | bernhard | download pathogen & color vim files from github 
+- name: users | bernhard | download pathogen & color vim files from github
   become: true
   get_url:
     url: "https://raw.githubusercontent.com/{{ item.url }}"
@@ -72,7 +71,7 @@
   with_items:
     - { url: 'tpope/vim-pathogen/master/autoload/pathogen.vim', dest: 'autoload/pathogen.vim' }
     - { url: 'nanotech/jellybeans.vim/master/colors/jellybeans.vim', dest: 'colors/jellybeans.vim' }
-    - { url: 'vim-scripts/xoria256.vim/master/colors/xoria256.vim', dest: 'colors/xoria256.vim' } 
+    - { url: 'vim-scripts/xoria256.vim/master/colors/xoria256.vim', dest: 'colors/xoria256.vim' }
     - { url: 'crusoexia/vim-monokai/blob/master/colors/monokai.vim', dest: 'colors/monokai.vim' }
     - { url: 'jaredgorski/SpaceCamp/master/colors/spacecamp.vim', dest: 'colors/spacecamp.vim' }
     - { url: 'dracula/vim/master/colors/dracula.vim', dest: 'colors/dracula.vim' }
@@ -92,8 +91,8 @@
     - { repo: 'https://github.com/vim-airline/vim-airline-themes.git', dest: '/home/bernhard/.vim/bundle/vim-airline-themes' }
     - { repo: 'https://github.com/pearofducks/ansible-vim', dest: '/home/bernhard/.vim/bundle/ansible-vim' }     # highlight syntax
     - { repo: 'https://github.com/Yggdroot/indentLine.git', dest: '/home/bernhard/.vim/bundle/indentLine' }
-    - { repo: 'https://github.com/vim-syntastic/syntastic.git', dest: '/home/bernhard/.vim/bundle/syntastic' } # syntax checker 
-    - { repo: 'https://github.com/frazrepo/vim-rainbow.git', dest: '/home/bernhard/.vim/bundle/vim-rainbow' } # colors for different brackets   
+    - { repo: 'https://github.com/vim-syntastic/syntastic.git', dest: '/home/bernhard/.vim/bundle/syntastic' } # syntax checker
+    - { repo: 'https://github.com/frazrepo/vim-rainbow.git', dest: '/home/bernhard/.vim/bundle/vim-rainbow' } # colors for different brackets
     - { repo: 'https://github.com/ryanoasis/vim-devicons.git', dest: '/home/bernhard/.vim/bundle/vim-devicons' } # Dev Icons
     - { repo: 'https://github.com/adelarsq/vim-emoji-icon-theme.git', dest: '/home/bernhard/.vim/bundle/vim-emoji-icon-theme' } # Emoji
 #    - { repo: 'https://github.com/rhysd/vim-grammarous.git', dest: '/home/bernhard/.vim/bundle/vim-grammarous' }
@@ -101,4 +100,3 @@
     - { repo: 'https://github.com/scrooloose/nerdtree.git', dest: '/home/bernhard/.vim/bundle/nerdtree' }
 #    - { repo: 'https://github.com/tpope/vim-obsession.git', dest: '/home/bernhard/.vim/bundle/vim-obsession' } # remember sessions
   notify: update_vim_bundle_perms
-

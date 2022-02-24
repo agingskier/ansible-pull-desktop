@@ -39,4 +39,3 @@
   when:
     - filesearch is defined
     - filesearch
-

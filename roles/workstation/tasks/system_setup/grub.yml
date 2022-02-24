@@ -33,6 +33,8 @@
       git:
         repo: https://github.com/vandalsoul/darkmatter-grub2-theme.git
         dest: /tmp/grub-theme
+        force: yes
+        version: master
 
     - name: system_setup | grub | create themes directory
       file:
@@ -64,7 +66,7 @@
         insertafter: '^#GRUB_GFXMODE='
         line: 'GRUB_GFXMODE=1024x768x32'
 
-    - name: system_setup | grub | lines for BACKGROUND, THEME, suppress hwmatch missing 
+    - name: system_setup | grub | lines for BACKGROUND, THEME, suppress hwmatch missing
       lineinfile:
         dest: /etc/default/grub
         line: '{{ item }}'

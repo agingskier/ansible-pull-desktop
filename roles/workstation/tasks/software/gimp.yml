@@ -34,4 +34,3 @@
   when:
     - gimp is defined
     - gimp
-

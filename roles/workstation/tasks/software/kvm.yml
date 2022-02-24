@@ -95,4 +95,3 @@
   when:
     - kvm is defined
     - kvm
-

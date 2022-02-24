@@ -23,12 +23,17 @@
   git:
     repo: "https://github.com/geany/geany-themes.git"
     dest: "/tmp/geany-themes"
+    force: yes
+    version: master
 
 - name: software | geany | copy geany colorschemes to .config/geany/colorschemes
   copy:
     src: /tmp/geany-themes/colorschemes/
     dest: /home/bernhard/.config/geany/colorschemes/
     directory_mode:
+    owner: bernhard
+    group: users
+    mode: 0644
 
 - name: software | geany | copy filetypes.yaml
   copy:

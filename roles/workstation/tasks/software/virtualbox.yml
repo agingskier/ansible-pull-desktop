@@ -7,8 +7,6 @@
   tags: virtualbox
   block:
     - name: software | virtualbox-ext | confirm license info
-      become: true
-      become_method: sudo
       debconf:
         name: virtualbox-ext-pack
         question: virtualbox-ext-pack/license
@@ -16,17 +14,13 @@
         vtype: boolean
 
     - name: software | virtualbox | accept license
-      become: true
-      become_method: sudo
       debconf:
         name: virtualbox-ext-pack
         question: virtualbox-ext-pack/question
-        value: Yes
+        value: true
         vtype: select
 
     - name: software | virtualbox | install virtualbox
-      become: true
-      become_method: sudo
       apt:
         pkg:
           - virtualbox
@@ -39,9 +33,8 @@
         name: bernhard
         groups: vboxusers
         append: yes
-      become: yes
-      become_method: sudo
-
+  become: yes
+  become_method: sudo
   when:
     - virtualbox is defined
     - virtualbox

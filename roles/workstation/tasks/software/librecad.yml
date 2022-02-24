@@ -29,4 +29,3 @@
   when:
     - librecad is defined
     - librecad
-
