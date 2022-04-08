@@ -1,0 +1,62 @@
+---
+- name: software | lsd | download latest release info
+  uri:
+    url: https://github.com/Peltoche/lsd/releases/latest
+  register: lsd_download
+
+- name: software | lsd | set fact extract release
+  set_fact:
+    lsd_release: "{{ lsd_download | regex_search('(?<=/tag/)[^\"]{6}') }}"
+
+- name: software | lsd | Print latest release
+  debug:
+    var: lsd_release
+    verbosity: 2
+
+- name: software | lsd | install fontconfig for lsd
+  apt:
+    pkg:
+      - fontconfig
+
+- name: software | lsd | install lsd program
+  apt:
+    deb: https://github.com/Peltoche/lsd/releases/download/{{ lsd_release }}/lsd_{{ lsd_release }}_amd64.deb
+
+- name: software | lsd | download latest release info for nerd fonts
+  uri:
+    url: https://github.com/ryanoasis/nerd-fonts/releases/latest
+  register: fonts_download
+
+- name: software | lsd | set fact extract release
+  set_fact:
+    fonts_release: "{{ fonts_download | regex_search('(?<=/tag/)[^\"]{6}') }}"
+
+- name: software | lsd | Print latest nerd fonts release
+  debug:
+    var: fonts_release
+    verbosity: 2
+
+- name: software | lsd | Creates directory for lsd fonts
+  file:
+    path: /usr/local/share/fonts/lsd
+    state: directory
+    owner: root
+    group: root
+    mode: 0775
+
+- name: software | lsd | download and install JetBrains and Ubuntu nerd fonts
+  become: true
+  become_method: sudo
+  unarchive:
+    src: https://github.com/ryanoasis/nerd-fonts/releases/download/{{ fonts_release }}/{{ item }}
+    dest: /usr/local/share/fonts/lsd
+    remote_src: yes
+    mode: 0644
+    owner: root
+    group: root
+  with_items:
+    - JetBrainsMono.zip
+    - Ubuntu.zip
+
+- name: software | lsd | create cache for new fonts
+  command: fc-cache -v -f
