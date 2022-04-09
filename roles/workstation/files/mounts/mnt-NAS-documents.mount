@@ -3,7 +3,7 @@ Description=NAS documents share
 After=network-online.target
 
 [Mount]
-What=192.168.1.2:/documents
+What=192.168.29.10:/documents
 Where=/mnt/NAS/documents
 Type=nfs
 Options=_netdev,auto

@@ -3,7 +3,7 @@ Description=NAS scan share
 After=network-online.target
 
 [Mount]
-What=192.168.1.2:/scan
+What=192.168.29.10:/scan
 Where=/mnt/NAS/scan
 Type=nfs
 Options=_netdev,auto

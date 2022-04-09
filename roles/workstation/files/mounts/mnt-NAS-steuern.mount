@@ -3,7 +3,7 @@ Description=NAS steuern share
 After=network-online.target
 
 [Mount]
-What=192.168.1.2:/steuern
+What=192.168.29.10:/steuern
 Where=/mnt/NAS/steuern
 Type=nfs
 Options=_netdev,auto
