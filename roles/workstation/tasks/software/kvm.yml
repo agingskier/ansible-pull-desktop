@@ -64,13 +64,13 @@
 
     - name: software | kvm | copy libvirt config file
       copy:
-        src: users/bernhard/{{ item.src }}
+        src: /etc/libvirt/{{ item.src }}
         dest: /home/bernhard/{{ item.dest }}
         owner: bernhard
         group: users
         mode: 0640
       with_items:
-        - { src: 'libvirt_config', dest: '.config/libvirt/libvirt.conf' }
+        - { src: 'libvirt.conf', dest: '.config/libvirt/libvirt.conf' }
 
     - name: software | kvm | remove hash from uri_default line
       replace:
