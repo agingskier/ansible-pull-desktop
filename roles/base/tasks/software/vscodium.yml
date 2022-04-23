@@ -1,0 +1,24 @@
+---
+- name: software | vscodium | download latest release info
+  command: curl https://github.com/VSCodium/vscodium/releases/latest
+  args:
+    warn: false
+  register: vs_download
+
+- name: print vs_download
+  debug:
+    var: vs_download
+    verbosity: 2
+
+- name: software | vscodium | set fact extract release
+  set_fact:
+    vs_release: "{{ vs_download | regex_search('(?<=/tag/)[^\"]*') }}"
+
+- name: software | vscodium | Print latest release
+  debug:
+    var: vs_release
+    verbosity: 2
+
+- name: software | vscodium | install vscodium program
+  apt:
+    deb: "https://github.com/VSCodium/vscodium/releases/download/{{ vs_release }}/codium_{{ vs_release }}-1649809017_amd64.deb"
