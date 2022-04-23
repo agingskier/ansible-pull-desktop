@@ -39,8 +39,9 @@
     recurse: yes
 
 - name: software | tmux | Download latest release gitmux info
-  uri:
-    url: https://github.com/arl/gitmux/releases/latest
+  command: curl https://github.com/arl/gitmux/releases/latest
+  args:
+    warn: false
   register: gitmux_info
 
 - name: software | tmux | print gitmux_info
@@ -50,14 +51,14 @@
 
 - name: software | tmux | set fact with extracted release
   set_fact:
-    gitmux_release: "{{ gitmux_info | regex_search('(?<=tag/)[^\"]{6}') }}"
+    gitmux_release: "{{ gitmux_info | regex_search('(?<=tag/)[^\"]*') }}"
 
 - name: software | tmux | print gitmux-release number
   debug:
     var: gitmux_release
     verbosity: 2
 
-# extract version number without "v" from variable gitmux_release 
+# extract version number without "v" from variable gitmux_release
 - name: software | tmux | install binary gitmux
   become: true
   become_method: sudo

@@ -1,12 +1,13 @@
 ---
 - name: software | lsd | download latest release info
-  uri:
-    url: https://github.com/Peltoche/lsd/releases/latest
+  command: curl https://github.com/Peltoche/lsd/releases/latest
+  args:
+    warn: false
   register: lsd_download
 
 - name: software | lsd | set fact extract release
   set_fact:
-    lsd_release: "{{ lsd_download | regex_search('(?<=/tag/)[^\"]{6}') }}"
+    lsd_release: "{{ lsd_download | regex_search('(?<=/tag/)[^\"]*') }}"
 
 - name: software | lsd | Print latest release
   debug:
@@ -23,13 +24,14 @@
     deb: https://github.com/Peltoche/lsd/releases/download/{{ lsd_release }}/lsd_{{ lsd_release }}_amd64.deb
 
 - name: software | lsd | download latest release info for nerd fonts
-  uri:
-    url: https://github.com/ryanoasis/nerd-fonts/releases/latest
+  command: curl https://github.com/ryanoasis/nerd-fonts/releases/latest
+  args:
+    warn: false
   register: fonts_download
 
 - name: software | lsd | set fact extract release
   set_fact:
-    fonts_release: "{{ fonts_download | regex_search('(?<=/tag/)[^\"]{6}') }}"
+    fonts_release: "{{ fonts_download | regex_search('(?<=/tag/)[^\"]*') }}"
 
 - name: software | lsd | Print latest nerd fonts release
   debug:

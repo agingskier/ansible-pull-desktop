@@ -45,7 +45,7 @@
     key: "/org/gnome/gedit/preferences/editor/{{ item.key }}"
     value: "{{ item.value }}"
   with_items:
-    - { key: 'editor-font', value: "'Monospace 16'" }
+    - { key: 'editor-font', value: "'Monospace Regular 16'" }
     - { key: 'scheme', value: "'cobalt'" }
     - { key: 'tabs-size', value: "'uint32 4'" }
     - { key: 'use-default-font', value: "'false'" }
