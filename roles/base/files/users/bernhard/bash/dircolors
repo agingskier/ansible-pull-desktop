@@ -40,29 +40,32 @@ TERM xterm-color
 
 ## Special files
 
-#NORMAL 		00;38;5;244 			# no color code at all
-FILE 			00;32 					# regular file: use no color at all
-RESET 			0 						# reset to "normal" color
-DIR 			00;38;5;125				# directory
-LINK			01;38;5;37 				# symbolic link. (If you set this to 'target' instead of a
+#NORMAL 		        00;38;5;244 			# no color code at all
+FILE 			        00;32 					# regular file: use no color at all
+RESET 			        0 						# reset to "normal" color
+DIR 			        00;38;5;125				# directory
+LINK			        01;38;5;37 				# symbolic link. (If you set this to 'target' instead of a
 # 										#numerical value, the color is as for the file pointed to.)
-MULTIHARDLINK 	00 						# regular file with more than one link
-FIFO 			48;5;230;38;5;136;01 	# pipe
-SOCK 			48;5;230;38;5;136;01 	# socket
-DOOR 			48;5;230;38;5;136;01 	# door
-BLK 			48;5;230;38;5;244;01 	# block device driver
-CHR 			48;5;230;38;5;244;01 	# character device driver
-ORPHAN			48;5;235;38;5;160 		# symlink to nonexistent file, or non-stat'able file
-MISSING 		48;5;235;38;5;160 		# ... and the files they point to
-SETUID 			48;5;160;38;5;230 		# file that is setuid (u+s)
-SETGID 			48;5;136;38;5;230 		# file that is setgid (g+s)
-CAPABILITY 		30;41 					# file with capability
-STICKY_OTHER_WRITABLE 48;5;64;38;5;230 	# dir that is sticky and other-writable (+t,o+w)
-OTHER_WRITABLE 	48;5;235;38;5;33 		# dir that is other-writable (o+w) and not sticky
-STICKY 	        48;5;33;38;5;230     	# dir with the sticky bit set (+t) and not other-writable
+MULTIHARDLINK 	        00 						# regular file with more than one link
+FIFO 			        48;5;230;38;5;136;01 	# pipe
+SOCK 			        48;5;230;38;5;136;01 	# socket
+DOOR 			        48;5;230;38;5;136;01 	# door
+BLK 			        48;5;230;38;5;244;01 	# block device driver
+CHR 			        48;5;230;38;5;244;01 	# character device driver
+ORPHAN			        48;5;235;38;5;160 		# symlink to nonexistent file, or non-stat'able file
+MISSING 		        48;5;235;38;5;160 		# ... and the files they point to
+SETUID 			        48;5;160;38;5;230 		# file that is setuid (u+s)
+SETGID 		        	48;5;136;38;5;230 		# file that is setgid (g+s)
+CAPABILITY 		        30;41 					# file with capability
+STICKY_OTHER_WRITABLE   48;5;64;38;5;230 	# dir that is sticky and other-writable (+t,o+w)
+OTHER_WRITABLE 	        48;5;235;38;5;33 		# dir that is other-writable (o+w) and not sticky
+STICKY 	                48;5;33;38;5;230     	# dir with the sticky bit set (+t) and not other-writable
 # This is for files with execute permission:
-EXEC 			01;38;5;207
+EXEC 			        01;38;5;207
 
+### Text formats
+
+# Source text
 # documents
 *README               38;5;220;1
 *README.rst           38;5;220;1
@@ -78,6 +81,69 @@ EXEC 			01;38;5;207
 *NOTICE               38;5;220;1
 *CHANGES              38;5;220;1
 .log                  38;5;190
+
+# Text that we can edit with a regular editor
+.txt 32
+
+# Languages source code
+.ahk                  38;5;41
+.py                   38;5;41               # Python
+.pl                   38;5;208              # perl
+.PL                   38;5;160
+.asm                  38;5;81
+.cl                   38;5;81
+.lisp                 38;5;81
+.lua                  38;5;81
+.moon                 38;5;81
+.go                   38;5;81
+.c                    38;5;81
+.cc                   38;5;81
+.cs                   38;5;81
+.cp                   38;5;81
+.C                    38;5;81
+.h                    38;5;110
+.H                    38;5;110
+.tcc                  38;5;110
+.c++                  38;5;81
+.cpp                  38;5;81
+.cxx                  38;5;81
+.h++                  38;5;110
+.hpp                  38;5;110
+.hxx                  38;5;110
+
+# html
+.css                  38;5;125;1
+.less                 38;5;125;1
+.sass                 38;5;125;1
+.scss                 38;5;125;1
+.htm                  38;5;125;1
+.html                 38;5;125;1
+.jhtm                 38;5;125;1
+.mht                  38;5;125;1
+.eml                  38;5;125;1
+.mustache             38;5;125;1
+
+# java
+.coffee               38;5;074;1
+.java                 38;5;074;1
+.js                   38;5;074;1
+.jsm                  38;5;074;1
+.jsm                  38;5;074;1
+.jsp                  38;5;074;1
+
+# php
+.php                  38;5;81
+.ctp                  38;5;81
+.twig                 38;5;81
+.vb                   38;5;81
+.vba                  38;5;81
+.vbs                  38;5;81
+
+# sql
+.msql                 38;5;222
+.mysql                38;5;222
+.pgsql                38;5;222
+.sql                  38;5;222
 
 # markup
 .etx                  38;5;184
@@ -102,13 +168,14 @@ EXEC 			01;38;5;207
 .RData                38;5;178
 .rdata                38;5;178
 
-# binary
+# binary documents
 .cbr                  38;5;141
 .cbz                  38;5;141
 .chm                  38;5;141
 .djvu                 38;5;141
 .pdf                  38;5;141
 .PDF                  38;5;141
+
 # words
 .docm                 38;5;111;4
 .doc                  38;5;111
@@ -119,21 +186,21 @@ EXEC 			01;38;5;207
 .odt                  38;5;111
 .rtf                  38;5;111
 .txt                  38;5;111
+
 # presentation 
 .odp                  38;5;166
 .pps                  38;5;166
 .ppt                  38;5;166
 .pptx                 38;5;166
-#   Powerpoint
 .ppts                 38;5;166
 .pptxm                38;5;166;4
 .pptsm                38;5;166;4
+
 # spreadsheet
-.csv                  38;5;78
-#   Open document spreadsheet
 .ods                  38;5;112
-.xla                  38;5;76
+
 #   Excel spreadsheet
+.xla                  38;5;76
 .xls                  38;5;112
 .xlsx                 38;5;112
 .xlsxm                38;5;112;4
@@ -146,12 +213,6 @@ EXEC 			01;38;5;207
 *rc                   1
 .ini                  1
 .plist                1
-#   vim
-.viminfo              1
-#   cisco VPN client configuration
-.pcf                  1
-#   adobe photoshop proof settings file
-.psf                  1
 
 # version control
 .git                  38;5;197
@@ -169,122 +230,11 @@ EXEC 			01;38;5;207
 .zsh                  38;5;172
 .vim                  38;5;172
 
-# interpreted
-.ahk                  38;5;41
-# python
-.py                   38;5;41
-# perl
-.pl                   38;5;208
-.PL                   38;5;160
-.t                    38;5;114
-# sql
-.msql                 38;5;222
-.mysql                38;5;222
-.pgsql                38;5;222
-.sql                  38;5;222
-#   Tool Command Language
-.tcl                  38;5;64;1
-# R language
-.r                    38;5;49
-.R                    38;5;49
-# GrADS script
-.gs                   38;5;81
-
-# compiled
-.asm                  38;5;81
-.cl                   38;5;81
-.lisp                 38;5;81
-.lua                  38;5;81
-.moon                 38;5;81
-.c                    38;5;81
-.C                    38;5;81
-.h                    38;5;110
-.H                    38;5;110
-.tcc                  38;5;110
-.c++                  38;5;81
-.h++                  38;5;110
-.hpp                  38;5;110
-.hxx                  38;5;110
-.ii                   38;5;110
-#   method file for Objective C
-.M                    38;5;110
-.m                    38;5;110
-#   Csharp
-.cc                   38;5;81
-.cs                   38;5;81
-.cp                   38;5;81
-.cpp                  38;5;81
-.cxx                  38;5;81
-#   Crystal
-.cr                   38;5;81
-#   Google golang
-.go                   38;5;81
-#   fortran
-.f                    38;5;81
-.for                  38;5;81
-.ftn                  38;5;81
-#   pascal
-.s                    38;5;110
-.S                    38;5;110
-#   Rust
-.rs                   38;5;81
-#   Swift
-.swift                38;5;219
-.sx                   38;5;81
-#   interface file in GHC - https://github.com/trapd00r/LS_COLORS/pull/9
-.hi                   38;5;110
-.hs                   38;5;81
-.lhs                  38;5;81
-
-# binaries
-# compiled apps for interpreted languages
-.pyc                  38;5;240
-# html
-.css                  38;5;125;1
-.less                 38;5;125;1
-.sass                 38;5;125;1
-.scss                 38;5;125;1
-.htm                  38;5;125;1
-.html                 38;5;125;1
-.jhtm                 38;5;125;1
-.mht                  38;5;125;1
-.eml                  38;5;125;1
-.mustache             38;5;125;1
-#
-# java
-.coffee               38;5;074;1
-.java                 38;5;074;1
-.js                   38;5;074;1
-.jsm                  38;5;074;1
-.jsm                  38;5;074;1
-.jsp                  38;5;074;1
-#
-# php
-.php                  38;5;81
-.ctp                  38;5;81
-.twig                 38;5;81
-.vb                   38;5;81
-.vba                  38;5;81
-.vbs                  38;5;81
-# Build stuff
-*Dockerfile           38;5;155
-.dockerignore         38;5;240
-*Makefile             38;5;155
-*MANIFEST             38;5;243
-*pm_to_blib           38;5;240
-# automake
-.am                   38;5;242
-.in                   38;5;242
-.hin                  38;5;242
-.scan                 38;5;242
-.m4                   38;5;242
-.old                  38;5;242
-.out                  38;5;242
-.SKIP                 38;5;244
 # patch
 .diff                 48;5;197;38;5;232
 .patch                48;5;197;38;5;232;1
-# graphics
+
+# multimedia graphics
 .bmp                  38;5;97
 .tiff                 38;5;97
 .tif                  38;5;97
@@ -299,6 +249,7 @@ EXEC 			01;38;5;207
 .png                  38;5;97
 .psd                  38;5;97
 .xpm                  38;5;97
+
 # vector
 .ai                   38;5;99
 .eps                  38;5;99
@@ -306,6 +257,7 @@ EXEC 			01;38;5;207
 .drw                  38;5;99
 .ps                   38;5;99
 .svg                  38;5;99
+
 # video
 .avi                  38;5;114
 .divx                 38;5;114
@@ -322,20 +274,11 @@ EXEC 			01;38;5;207
 .rmvb                 38;5;114
 .sample               38;5;114
 .wmv                  38;5;114
-# mobile/streaming
-.3g2                  38;5;115
-.3gp                  38;5;115
-.gp3                  38;5;115
-.webm                 38;5;115
-.gp4                  38;5;115
-.asf                  38;5;115
-.flv                  38;5;115
-.ts                   38;5;115
-.ogv                  38;5;115
-.f4v                  38;5;115
-# lossless
+
+# video lossless
 .VOB                  38;5;115;1
 .vob                  38;5;115;1
+
 # audio
 .3ga                  38;5;137;1
 .S3M                  38;5;137;1
@@ -345,10 +288,9 @@ EXEC 			01;38;5;207
 .dts                  38;5;137;1
 .fcm                  38;5;137;1
 .m4a                  38;5;137;1
-.mid                  38;5;137;1
-.midi                 38;5;137;1
 .mod                  38;5;137;1
 .mp3                  38;5;137;1
+.mpeg                 38;5;137;1
 .mp4a                 38;5;137;1
 .oga                  38;5;137;1
 .ogg                  38;5;137;1
@@ -356,12 +298,14 @@ EXEC 			01;38;5;207
 .s3m                  38;5;137;1
 .sid                  38;5;137;1
 .wma                  38;5;137;1
-# lossless
+
+# audio lossless
 .ape                  38;5;136;1
 .aiff                 38;5;136;1
 .cda                  38;5;136;1
 .flac                 38;5;136;1
 .alac                 38;5;136;1
+.mid                  38;5;136;1
 .midi                 38;5;136;1
 .pcm                  38;5;136;1
 .wav                  38;5;136;1
@@ -376,9 +320,11 @@ EXEC 			01;38;5;207
 .pfm                  38;5;66
 .ttf                  38;5;66
 .otf                  38;5;66
-#   postscript fonts
+
+# postscript fonts
 .PFA                  38;5;66
 .pfa                  38;5;66
+
 # archives
 .7z                   38;5;40
 .a                    38;5;40
@@ -403,6 +349,7 @@ EXEC 			01;38;5;207
 .zoo                  38;5;40
 .zpaq                 38;5;40
 .zz                   38;5;40
+
 # packaged apps
 .apk                  38;5;215
 .deb                  38;5;215
@@ -421,6 +368,7 @@ EXEC 			01;38;5;207
 .r[0-9]{0,2}          38;5;239
 .zx[0-9]{0,2}         38;5;239
 .z[0-9]{0,2}          38;5;239
+
 # partial files
 .part                 38;5;239
 
@@ -435,190 +383,28 @@ EXEC 			01;38;5;207
 .vcd                  38;5;124
 .vmdk                 38;5;124
 
-# databases
-.accdb                38;5;60
-.accde                38;5;60
-.accdr                38;5;60
-.accdt                38;5;60
-.db                   38;5;60
-.fmp12                38;5;60
-.fp7                  38;5;60
-.localstorage         38;5;60
-.mdb                  38;5;60
-.mde                  38;5;60
-.sqlite               38;5;60
-.typelib              38;5;60
-# NetCDF database
-.nc                   38;5;60
-# tempfiles
-# undo files
-.pacnew               38;5;33
-.un~                  38;5;241
-.orig                 38;5;241
 # backups
 .BUP                  38;5;241
 .bak                  38;5;241
-.o                    38;5;241 #   *nix Object file (shared libraries, core dumps etc)
-.rlib                 38;5;241 #   Static rust library
+
 # temporary files
 .swp                  38;5;244
 .swo                  38;5;244
 .tmp                  38;5;244
-.sassc                38;5;244
+
 # state files
 .pid                  38;5;248
 .state                38;5;248
 *lockfile             38;5;248
+
 # error logs
 .err                  38;5;160;1
 .error                38;5;160;1
 .stderr               38;5;160;1
+
 # state dumps
 .dump                 38;5;241
 .stackdump            38;5;241
 .zcompdump            38;5;241
-.zwc                  38;5;241
-# tcpdump, network traffic capture
-.pcap                 38;5;29
-.cap                  38;5;29
-.dmp                  38;5;29
-# macOS
-.DS_Store             38;5;239
-.localized            38;5;239
-.CFUserTextEncoding   38;5;239
-# }}}
-# hosts {{{1
-# /etc/hosts.{deny,allow}
-.allow                38;5;112
-.deny                 38;5;196
-# }}}
-# systemd {{{1
-# http://www.freedesktop.org/software/systemd/man/systemd.unit.html
-.service              38;5;45
-*@.service            38;5;45
-.socket               38;5;45
-.swap                 38;5;45
-.device               38;5;45
-.mount                38;5;45
-.automount            38;5;45
-.target               38;5;45
-.path                 38;5;45
-.timer                38;5;45
-.snapshot             38;5;45
-# metadata
-.application          38;5;116
-.cue                  38;5;116
-.description          38;5;116
-.directory            38;5;116
-.m3u                  38;5;116
-.m3u8                 38;5;116
-.md5                  38;5;116
-.properties           38;5;116
-.sfv                  38;5;116
-.srt                  38;5;116
-.theme                38;5;116
-.torrent              38;5;116
-.urlview              38;5;116
-# encrypted data
-.asc                  38;5;192;3
-.bfe                  38;5;192;3
-.enc                  38;5;192;3
-.gpg                  38;5;192;3
-.signature            38;5;192;3
-.sig                  38;5;192;3
-.p12                  38;5;192;3
-.pem                  38;5;192;3
-.pgp                  38;5;192;3
-.asc                  38;5;192;3
-.enc                  38;5;192;3
-.sig                  38;5;192;3
-# emulators
-.32x                  38;5;213
-.cdi                  38;5;213
-.fm2                  38;5;213
-.rom                  38;5;213
-.sav                  38;5;213
-.st                   38;5;213
-  # atari
-.a00                  38;5;213
-.a52                  38;5;213
-.A64                  38;5;213
-.a64                  38;5;213
-.a78                  38;5;213
-.adf                  38;5;213
-.atr                  38;5;213
-  # nintendo
-.gb                   38;5;213
-.gba                  38;5;213
-.gbc                  38;5;213
-.gel                  38;5;213
-.gg                   38;5;213
-.ggl                  38;5;213
-.ipk                  38;5;213 # Nintendo (DS Packed Images)
-.j64                  38;5;213
-.nds                  38;5;213
-.nes                  38;5;213
-  # Sega
-.sms                  38;5;213
-# unsorted
-#
-#   Portable Object Translation for GNU Gettext
-.pot                  38;5;7
-#   CAD files for printed circuit boards
-.pcb                  38;5;7
-#   groff (rendering app for texinfo)
-.mm                   38;5;7
-#   perldoc
-.pod                  38;5;7
-#   GIMP brush
-.gbr                  38;5;7
-# printer spool file
-.spl                  38;5;7
-#   GIMP project file
-.scm                  38;5;7
-# RStudio project file
-.Rproj                38;5;11
-#   Nokia Symbian OS files
-.sis                  38;5;7
 
-.1p                   38;5;7
-.3p                   38;5;7
-.cnc                  38;5;7
-.def                  38;5;7
-.ex                   38;5;7
-.example              38;5;7
-.feature              38;5;7
-.ger                  38;5;7
-.map                  38;5;7
-.mf                   38;5;7
-.mfasl                38;5;7
-.mi                   38;5;7
-.mtx                  38;5;7
-.pc                   38;5;7
-.pi                   38;5;7
-.plt                  38;5;7
-.pm                   38;5;7
-.rb                   38;5;7
-.rdf                  38;5;7
-.rst                  38;5;7
-.ru                   38;5;7
-.sch                  38;5;7
-.sty                  38;5;7
-.sug                  38;5;7
-.t                    38;5;7
-.tdy                  38;5;7
-.tfm                  38;5;7
-.tfnt                 38;5;7
-.tg                   38;5;7
-.vcard                38;5;7
-.vcf                  38;5;7
-.xln                  38;5;7
-#   AppCode files
-.iml                  38;5;166
-#   Xcode files
-.xcconfig             1
-.entitlements         1
-.strings              1
-.storyboard           38;5;196
-.xcsettings           1
-.xib                  38;5;208
+

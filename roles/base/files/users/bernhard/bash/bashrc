@@ -64,7 +64,7 @@ fi
 # for a sample.
 #---------------------------------------------------------------------
 
-eval $(dircolors -b ~/.dircolors &>/dev/null)
+eval `dircolors -b ~/.dircolors`
 
 #-------------------------------------------------------------
 # Some settings
