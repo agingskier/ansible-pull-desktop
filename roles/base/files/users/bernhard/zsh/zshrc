@@ -59,8 +59,6 @@ zsh_add_file "completion.zsh"
 zsh_add_file "vim-mode.zsh"
 zsh_add_file "aliases.zsh"
 zsh_add_file "prompt.zsh"
-#zsh_add_file "prompt.zsh"
-#zsh_add_file "agnoster-prompt.zsh"
 zsh_add_file "bash-functions.zsh"
 
 # Plugins
