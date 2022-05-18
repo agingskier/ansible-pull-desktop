@@ -1,4 +1,4 @@
-#=============================================================
+ #=============================================================
 #
 # PERSONAL $HOME/.bashrc FILE for bash-3.0 (or later)
 # By Emmanuel Rouat <no-email>
@@ -58,10 +58,13 @@ fi
 #fi
 
 #---------------------------------------------------------------------
-# use the ~/.dircolors files create with "dircolors -p > ~/.dircolors"
+# use the ~/.dircolors as input to dircolors command which will
+# create the LS_COLORS variable and exports it.
+# see https://github.com/seebi/dircolors-solarized/raw/master/dircolors.256dark
+# for a sample.
 #---------------------------------------------------------------------
 
-eval `dircolors -b ~/.dircolors`
+eval $(dircolors -b ~/.dircolors &>/dev/null)
 
 #-------------------------------------------------------------
 # Some settings
@@ -73,17 +76,16 @@ set -o noclobber
 set -o ignoreeof
 set -o nounset
 
-export TIMEFORMAT=$'\nreal %3R\tuser %3U\tsys %3S\tpcpu %P\n'
 export HOSTFILE=$HOME/.hosts    # Put list of remote hosts in ~/.hosts ...
 
 # optimize bash_history ($HISTFILE)
 # ignore duplicate lines in the history.
 # ignore commands that  start with space `ignorespace'.
-HISTCONTROL=ignoreboth:erasedups
-HISTSIZE=2000
-HISTFILESIZE=8000
-HISTIGNORE="free*:exit:clear:man*:mkdir*:rm*:mv*"
-HISTTIMEFORMAT='%F %A %T --> '	# Date, Weekday, Time
+export HISTCONTROL=ignoreboth:erasedups
+export HISTSIZE=2000
+export HISTFILESIZE=8000
+export HISTIGNORE="free*:exit:clear:man*:mkdir*:rm*:mv*"
+export HISTTIMEFORMAT="%F %T: "	# Date, Time
 shopt -s histappend
 shopt -s histverify
 shopt -s autocd
@@ -92,8 +94,8 @@ shopt -s dotglob
 shopt -s interactive_comments # default
 
 export ENV=$HOME/.bashrc
-export EDITOR=geany
-export VISUAL=geany
+export EDITOR=vim
+export VISUAL=vim
 export NO_AT_BRIDGE=1	# to avoid dbind-warning messages with gedit
 
 export HOST=`hostname -s`
@@ -109,6 +111,7 @@ export CLASSPATH=.:/usr/lib/jvm/java-17-openjdk-amd64/lib:$PATH_TO_FX
 
 export -n SESSION_MANAGER   # required for Digikam
 export VAGRANT_HOME=/mnt/Data/vagrant
+export KUBECONFIG=~/.kube/config
 
 #-------------------------------------------------------------
 # Color definitions, less definitions
@@ -147,13 +150,29 @@ ALERT=${WHITE}${on_red}   # Bold White on red background
 # echo -e "${cyan}This is BASH: ${yellow}${BASH_VERSION%%[^0-9.]*}${cyan}\
 # - System: ${yellow}`uname -sr`${cyan} `unity --version`${NC}"
 
+#---------------------------------------------------------------------
+# Replace the initial Title with the text in every xterm
+#---------------------------------------------------------------------
+
+SYS=`uname -r`
+EXTIP=`curl -4 ifconfig.so`
+
+case "$TERM" in
+  xterm*|rxvt*)
+    PROMPT_COMMAND='echo -ne "\e]0;${USER}@${HOSTNAME} - ${SYS} on ${EXTIP}\a"'
+#	PROMPT_COMMAND='echo -ne "${yellow}${USER}@${HOSTNAME}: : ${PWD/$HOME/~}\a"'
+    ;;
+  *)
+    ;;
+esac
+
 #-------------------------------------------------------------
 # Shell Prompt for differenct users
 # emoji copied from https://emojipedia.org  ⛷️    🌡️  🧭  🎁
 #-------------------------------------------------------------
 
 case ${USER} in
-  bernhard)
+  bernhard|marlies)
     export PS1='\n\[$black $on_magenta\][\D{%F %T}]\[$black $on_yellow\][\u on \h]\[$black $on_red\][$PWD]$NC\n\[$cyan\]😄==\$ \[$NC'
     export PS2='\[$cyan\]😄==\$ \[$NC'
   ;;

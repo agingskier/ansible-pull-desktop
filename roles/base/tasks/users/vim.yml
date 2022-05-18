@@ -1,0 +1,89 @@
+---
+# Create vim environment for user bernhard
+- name: users | vim | user name fact
+  set_fact:
+    user_name: 'bernhard'
+    group_name: 'users'
+
+- name: users | bernhard | create vim directories
+  file:
+    path: /home/bernhard/{{ item.dir }}
+    state: directory
+    owner: "{{ user_name }}"
+    group: "{{ group_name }}"
+    mode: 0700
+  with_items:
+    - { dir: '.vim' }
+    - { dir: '.vim/autoload' }
+    - { dir: '.vim/bundle' }
+    - { dir: '.vim/colors' }
+    - { dir: '.vim/ftplugin' }
+
+- name: users | bernhard | copy vim dotfile 
+  copy:
+    src: users/{{ user_name }}/{{ item.src }}
+    dest: /home/{{ user_name }}/{{ item.dest }}
+    owner: "{{ user_name }}"
+    group: "{{ group_name }}"
+    mode: 0600
+  with_items:
+    - { src: 'vim/vimrc', dest: '.vimrc' }
+
+- name: users | bernhard | copy vim ftype files
+  copy:
+    src: users/{{ user_name }}/vim/{{ item.src }}
+    dest: /home/{{ user_name }}/.vim/ftplugin/{{ item.src }}
+    owner: "{{ user_name }}"
+    group: "{{ group_name }}"
+    mode: 0600
+  with_items:
+    - { src: 'cmake.vim' }
+    - { src: 'cpp.vim' }
+    - { src: 'html.vim' }
+    - { src: 'perl.vim' }
+    - { src: 'python.vim' }
+    - { src: 'ruby.vim' }
+    - { src: 'sql.vim' }
+    - { src: 'xml.vim' }
+    - { src: 'folding.vim' }  # open fold: zo | close fold zM
+
+- name: users | bernhard | download pathogen & color vim files from github
+  become: true
+  get_url:
+    url: "https://raw.githubusercontent.com/{{ item.url }}"
+    dest: "/home/{{ user_name }}/.vim/{{ item.dest }}"
+    owner: "{{ user_name }}"
+    group: "{{ group_name }}"
+    mode: 0600
+  with_items:
+    - { url: 'tpope/vim-pathogen/master/autoload/pathogen.vim', dest: 'autoload/pathogen.vim' }
+    - { url: 'nanotech/jellybeans.vim/master/colors/jellybeans.vim', dest: 'colors/jellybeans.vim' }
+    - { url: 'vim-scripts/xoria256.vim/master/colors/xoria256.vim', dest: 'colors/xoria256.vim' }
+    - { url: 'crusoexia/vim-monokai/blob/master/colors/monokai.vim', dest: 'colors/monokai.vim' }
+    - { url: 'jaredgorski/SpaceCamp/master/colors/spacecamp.vim', dest: 'colors/spacecamp.vim' }
+    - { url: 'dracula/vim/master/colors/dracula.vim', dest: 'colors/dracula.vim' }
+    - { url: 'morhetz/gruvbox/master/colors/gruvbox.vim', dest: 'colors/gruvbox.vim' }
+    - { url: 'NLKNguyen/papercolor-theme/master/colors/PaperColor.vim', dest: 'colors/PaperColor.vim' }
+    - { url: 'rafalbromirski/vim-aurora/master/colors/aurora.vim', dest: 'colors/aurora.vim' }
+
+- name: users | bernhard | pathogen plug manager | git checkout bundle repositories
+  become: true
+  git:
+    repo: "{{ item.repo }}"
+    dest: "{{ item.dest }}"
+    version: master
+    force: true
+  with_items:
+    - { repo: 'https://github.com/vim-airline/vim-airline.git', dest: '/home/{{ user_name }}/.vim/bundle/vim-airline' }  # status line
+    - { repo: 'https://github.com/vim-airline/vim-airline-themes.git', dest: '/home/{{ user_name }}/.vim/bundle/vim-airline-themes' }
+    - { repo: 'https://github.com/pearofducks/ansible-vim', dest: '/home/{{ user_name }}/.vim/bundle/ansible-vim' }     # highlight syntax
+    - { repo: 'https://github.com/Yggdroot/indentLine.git', dest: '/home/{{ user_name }}/.vim/bundle/indentLine' }
+    - { repo: 'https://github.com/vim-syntastic/syntastic.git', dest: '/home/{{ user_name }}/.vim/bundle/syntastic' } # syntax checker
+    - { repo: 'https://github.com/frazrepo/vim-rainbow.git', dest: '/home/{{ user_name }}/.vim/bundle/vim-rainbow' } # colors for different brackets
+    - { repo: 'https://github.com/ryanoasis/vim-devicons.git', dest: '/home/{{ user_name }}/.vim/bundle/vim-devicons' } # Dev Icons
+    - { repo: 'https://github.com/adelarsq/vim-emoji-icon-theme.git', dest: '/home/{{ user_name }}/.vim/bundle/vim-emoji-icon-theme' } # Emoji
+#    - { repo: 'https://github.com/rhysd/vim-grammarous.git', dest: '/home/{{ user_name }}/.vim/bundle/vim-grammarous' }
+#    - { repo: 'https://github.com/ron89/thesaurus_query.vim', dest: '/home/{{ user_name }}/.vim/bundle/thesaurus_query.vim' }
+    - { repo: 'https://github.com/scrooloose/nerdtree.git', dest: '/home/{{ user_name }}/.vim/bundle/nerdtree' }
+#    - { repo: 'https://github.com/tpope/vim-obsession.git', dest: '/home/{{ user_name }}/.vim/bundle/vim-obsession' } # remember sessions
+  notify: update_vim_bundle_perms

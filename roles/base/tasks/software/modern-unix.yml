@@ -1,29 +1,66 @@
 ---
+# Install cool utilities specified under modern-unix plus zsh and nerd fonts
+#
+
 - name: software | modern-unix | install various utilities
   apt:
     pkg:
       - fontconfig
       - bat
       - duf
-      - lsd
       - ripgrep
+      - zsh
 
-- name: software | modern-unix | download latest release info for lsd nerd fonts
-  command: curl https://github.com/ryanoasis/nerd-fonts/releases/latest
+# Get latest release from Github api
+# get tag line
+# pluck JSON value 
+- name: software | lsd | download latest release info
+  shell: |
+    curl --silent "https://api.github.com/repos/Peltoche/lsd/releases/latest" |
+    grep '"tag_name":' |
+    sed -E 's/.*"([^"]+)".*/\1/'
   args:
     warn: false
-  register: fonts_download
+  register: lsd_release
 
-- name: software | modern-unix | set fact extract fonts release
-  set_fact:
-    fonts_release: "{{ fonts_download | regex_search('(?<=/tag/)[^\"]*') }}"
+- name: software | lsd | Print latest release
+  debug:
+    var: lsd_release.stdout
+    verbosity: 2
+
+- name: software | lsd | install lsd program
+  apt:
+    deb: https://github.com/Peltoche/lsd/releases/download/{{ lsd_release.stdout }}/lsd_{{ lsd_release.stdout }}_amd64.deb
+
+# Get latest release from Github api
+# get tag line
+# pluck JSON value 
+- name: software | modern-unix | download latest release info for lsd nerd fonts
+  shell: |
+    curl --silent https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest |
+    grep '"tag_name":' |
+    sed -E 's/.*"([^"]+)".*/\1/'
+  args:
+    warn: false
+  register: fonts_release
 
 - name: software | modern-unix | Print latest lsd nerd fonts release
   debug:
-    var: fonts_release
+    var: fonts_release.stdout
     verbosity: 2
 
-- name: software | modern-unix | Creates directory for lsd fonts
+- name: software | modern-unix | download and install fontawesome 6 for zsh
+  become: true
+  become_method: sudo
+  unarchive:
+    src: https://use.fontawesome.com/releases/v6.1.1/fontawesome-free-6.1.1-desktop.zip
+    dest: /usr/local/share/fonts/zsh
+    remote_src: yes
+    mode: 0644
+    owner: root
+    group: root
+
+- name: software | modern-unix | Creates directory for lsd nerd fonts
   file:
     path: /usr/local/share/fonts/lsd
     state: directory
@@ -31,19 +68,19 @@
     group: root
     mode: 0775
 
-- name: software | modern-unix | download and install JetBrains and Ubuntu nerd fonts for lsd
+- name: software | zsh | download and install JetBrains and FiraCode nerd fonts
   become: true
   become_method: sudo
   unarchive:
-    src: https://github.com/ryanoasis/nerd-fonts/releases/download/{{ fonts_release }}/{{ item }}
-    dest: /usr/local/share/fonts/lsd
+    src: https://github.com/ryanoasis/nerd-fonts/releases/download/{{ fonts_release.stdout }}/{{ item }}
+    dest: /usr/local/share/fonts/zsh
     remote_src: yes
     mode: 0644
     owner: root
     group: root
   with_items:
     - JetBrainsMono.zip
-    - Ubuntu.zip
+    - FiraCode.zip
 
 - name: software | modern-unix | create cache for new fonts
   command: fc-cache -v -f

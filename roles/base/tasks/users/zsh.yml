@@ -1,0 +1,45 @@
+---
+# Create zsh environment for user bernhard
+- name: users | zsh | user name fact
+  set_fact:
+    user_name: 'bernhard'
+    group_name: 'users'
+    
+- name: users | zsh | Creates zsh directory in .config
+  file:
+    path: /home/{{ user_name }}/.config/{{ item.dir }}
+    state: directory
+    owner: "{{ user_name }}"
+    group: "{{ group_name }}"
+    mode: 0775
+  with_items:
+    - { dir: 'zsh' }
+    - { dir: 'zsh/plugins' }
+
+- name: users | ubuntu | copy individual zsh config files
+  copy:
+    src: users/{{ user_name }}/zsh/{{ item.src }}
+    dest: /home/{{ user_name }}/.config/zsh/{{ item.dest }}
+    owner: "{{ user_name }}"
+    group: "{{ group_name }}"
+    mode: 0600
+  with_items:
+    - { src: 'shell-manager.zsh', dest: 'shell-manager.zsh' }
+    - { src: 'aliases.zsh', dest: 'aliases.zsh' }
+    - { src: 'completion.zsh', dest: 'completion.zsh' }
+    - { src: 'history.zsh', dest: 'history.zsh' }
+    - { src: 'vim-mode.zsh', dest: 'vim-mode.zsh' }
+    - { src: 'prompt.zsh', dest: 'prompt.zsh' }
+    - { src: 'bash-functions.zsh', dest: 'bash-functions.zsh' }
+    - { src: 'zshenv', dest: 'zshenv' }
+    - { src: 'zshrc', dest: '.zshrc' }
+
+- name: users | ubuntu | copy dotfiles
+  copy:
+    src: /home/{{ user_name }}/.config/zsh/{{ item.src }}
+    dest: /home/{{ user_name }}/{{ item.dest }}
+    owner: "{{ user_name }}"
+    group: "{{ group_name }}"
+    mode: 0600
+ with_items:
+   - { src: 'zshenv', dest: '.zshenv' }

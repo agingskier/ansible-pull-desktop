@@ -10,7 +10,9 @@
 # Term Section
 TERM color-xterm
 TERM console
+TERM gnome-256color
 TERM linux
+TERM tmux-256color
 TERM xterm
 TERM xterm-256color
 TERM xterm-color
@@ -41,8 +43,8 @@ TERM xterm-color
 #NORMAL 		00;38;5;244 			# no color code at all
 FILE 			00;32 					# regular file: use no color at all
 RESET 			0 						# reset to "normal" color
-DIR 			38;5;125				# directory 
-LINK			00;38;5;37 				# symbolic link. (If you set this to 'target' instead of a
+DIR 			00;38;5;125				# directory
+LINK			01;38;5;37 				# symbolic link. (If you set this to 'target' instead of a
 # 										#numerical value, the color is as for the file pointed to.)
 MULTIHARDLINK 	00 						# regular file with more than one link
 FIFO 			48;5;230;38;5;136;01 	# pipe
@@ -57,13 +59,11 @@ SETGID 			48;5;136;38;5;230 		# file that is setgid (g+s)
 CAPABILITY 		30;41 					# file with capability
 STICKY_OTHER_WRITABLE 48;5;64;38;5;230 	# dir that is sticky and other-writable (+t,o+w)
 OTHER_WRITABLE 	48;5;235;38;5;33 		# dir that is other-writable (o+w) and not sticky
-STICKY 	48;5;33;38;5;230 				# dir with the sticky bit set (+t) and not other-writable
+STICKY 	        48;5;33;38;5;230     	# dir with the sticky bit set (+t) and not other-writable
 # This is for files with execute permission:
-EXEC 			00;38;5;207
-#
-*LS_COLORS 48;5;89;38;5;197;1;3;4;7 # :-)
-# }}}
-# documents {{{1
+EXEC 			01;38;5;207
+
+# documents
 *README               38;5;220;1
 *README.rst           38;5;220;1
 *LICENSE              38;5;220;1
@@ -78,9 +78,8 @@ EXEC 			00;38;5;207
 *NOTICE               38;5;220;1
 *CHANGES              38;5;220;1
 .log                  38;5;190
-# plain-text {{{2
-.txt                  38;5;253
-# markup {{{2
+
+# markup
 .etx                  38;5;184
 .info                 38;5;184
 .markdown             38;5;184
@@ -91,7 +90,8 @@ EXEC 			00;38;5;207
 .rst                  38;5;184
 .tex                  38;5;184
 .textile              38;5;184
-# key-value, non-relational data {{{2
+
+# key-value, non-relational data
 .json                 38;5;178
 .msg                  38;5;178
 .pgn                  38;5;178
@@ -101,15 +101,15 @@ EXEC 			00;38;5;207
 .yml                  38;5;178
 .RData                38;5;178
 .rdata                38;5;178
-# }}}
-# binary {{{2
+
+# binary
 .cbr                  38;5;141
 .cbz                  38;5;141
 .chm                  38;5;141
 .djvu                 38;5;141
 .pdf                  38;5;141
 .PDF                  38;5;141
-# words {{{3
+# words
 .docm                 38;5;111;4
 .doc                  38;5;111
 .docx                 38;5;111
@@ -118,18 +118,17 @@ EXEC 			00;38;5;207
 .odb                  38;5;111
 .odt                  38;5;111
 .rtf                  38;5;111
-# presentation {{{3
+.txt                  38;5;111
+# presentation 
 .odp                  38;5;166
 .pps                  38;5;166
 .ppt                  38;5;166
 .pptx                 38;5;166
-#   Powerpoint show
+#   Powerpoint
 .ppts                 38;5;166
-#   Powerpoint with enabled macros
 .pptxm                38;5;166;4
-#   Powerpoint show with enabled macros
 .pptsm                38;5;166;4
-# spreadsheet {{{3
+# spreadsheet
 .csv                  38;5;78
 #   Open document spreadsheet
 .ods                  38;5;112
@@ -137,14 +136,11 @@ EXEC 			00;38;5;207
 #   Excel spreadsheet
 .xls                  38;5;112
 .xlsx                 38;5;112
-#   Excel spreadsheet with macros
 .xlsxm                38;5;112;4
-#   Excel module
 .xltm                 38;5;73;4
 .xltx                 38;5;73
-# }}}
-# }}}
-# configs {{{2
+
+# configs
 *cfg                  1
 *conf                 1
 *rc                   1
@@ -156,16 +152,14 @@ EXEC 			00;38;5;207
 .pcf                  1
 #   adobe photoshop proof settings file
 .psf                  1
-# }}}
-# }}}
-# code {{{1
-# version control {{{2
+
+# version control
 .git                  38;5;197
 .gitignore            38;5;240
 .gitattributes        38;5;240
 .gitmodules           38;5;240
 
-# shell {{{2
+# shell
 .awk                  38;5;172
 .bash                 38;5;172
 .bat                  38;5;172
@@ -175,7 +169,7 @@ EXEC 			00;38;5;207
 .zsh                  38;5;172
 .vim                  38;5;172
 
-# interpreted {{{2
+# interpreted
 .ahk                  38;5;41
 # python
 .py                   38;5;41
@@ -196,24 +190,17 @@ EXEC 			00;38;5;207
 # GrADS script
 .gs                   38;5;81
 
-# compiled {{{2
-#
-#   assembly language
+# compiled
 .asm                  38;5;81
-#   LISP
 .cl                   38;5;81
 .lisp                 38;5;81
-#   lua
 .lua                  38;5;81
-#   Moonscript
 .moon                 38;5;81
-#   C
 .c                    38;5;81
 .C                    38;5;81
 .h                    38;5;110
 .H                    38;5;110
 .tcc                  38;5;110
-#   C++
 .c++                  38;5;81
 .h++                  38;5;110
 .hpp                  38;5;110
@@ -243,19 +230,16 @@ EXEC 			00;38;5;207
 .rs                   38;5;81
 #   Swift
 .swift                38;5;219
-#   ?
 .sx                   38;5;81
 #   interface file in GHC - https://github.com/trapd00r/LS_COLORS/pull/9
 .hi                   38;5;110
-#   haskell
 .hs                   38;5;81
 .lhs                  38;5;81
 
-# binaries {{{2
+# binaries
 # compiled apps for interpreted languages
 .pyc                  38;5;240
-# }}}
-# html {{{2
+# html
 .css                  38;5;125;1
 .less                 38;5;125;1
 .sass                 38;5;125;1
@@ -266,28 +250,23 @@ EXEC 			00;38;5;207
 .mht                  38;5;125;1
 .eml                  38;5;125;1
 .mustache             38;5;125;1
-# }}}
-# java {{{2
+#
+# java
 .coffee               38;5;074;1
 .java                 38;5;074;1
 .js                   38;5;074;1
 .jsm                  38;5;074;1
 .jsm                  38;5;074;1
 .jsp                  38;5;074;1
-# }}}
-# php {{{2
+#
+# php
 .php                  38;5;81
-#   CakePHP view scripts and helpers
 .ctp                  38;5;81
-#   Twig template engine
 .twig                 38;5;81
-# }}}
-# vb/a {{{2
 .vb                   38;5;81
 .vba                  38;5;81
 .vbs                  38;5;81
-# 2}}}
-# Build stuff {{{2
+# Build stuff
 *Dockerfile           38;5;155
 .dockerignore         38;5;240
 *Makefile             38;5;155
@@ -302,12 +281,10 @@ EXEC 			00;38;5;207
 .old                  38;5;242
 .out                  38;5;242
 .SKIP                 38;5;244
-# }}}
-# patch files {{{2
+# patch
 .diff                 48;5;197;38;5;232
 .patch                48;5;197;38;5;232;1
-#}}}
-# graphics {{{1
+# graphics
 .bmp                  38;5;97
 .tiff                 38;5;97
 .tif                  38;5;97
@@ -322,16 +299,14 @@ EXEC 			00;38;5;207
 .png                  38;5;97
 .psd                  38;5;97
 .xpm                  38;5;97
-# }}}
-# vector {{{1
+# vector
 .ai                   38;5;99
 .eps                  38;5;99
 .epsf                 38;5;99
 .drw                  38;5;99
 .ps                   38;5;99
 .svg                  38;5;99
-# }}}
-# video {{{1
+# video
 .avi                  38;5;114
 .divx                 38;5;114
 .IFO                  38;5;114
@@ -347,7 +322,7 @@ EXEC 			00;38;5;207
 .rmvb                 38;5;114
 .sample               38;5;114
 .wmv                  38;5;114
-  # mobile/streaming {{{2
+# mobile/streaming
 .3g2                  38;5;115
 .3gp                  38;5;115
 .gp3                  38;5;115
@@ -358,12 +333,10 @@ EXEC 			00;38;5;207
 .ts                   38;5;115
 .ogv                  38;5;115
 .f4v                  38;5;115
-  # }}}
-  # lossless {{{2
+# lossless
 .VOB                  38;5;115;1
 .vob                  38;5;115;1
-# }}}
-# audio {{{1
+# audio
 .3ga                  38;5;137;1
 .S3M                  38;5;137;1
 .aac                  38;5;137;1
@@ -395,8 +368,7 @@ EXEC 			00;38;5;207
 .wv                   38;5;136;1
 .wvc                  38;5;136;1
 
-# }}}
-# fonts {{{1
+# fonts
 .afm                  38;5;66
 .fon                  38;5;66
 .fnt                  38;5;66
@@ -407,8 +379,7 @@ EXEC 			00;38;5;207
 #   postscript fonts
 .PFA                  38;5;66
 .pfa                  38;5;66
-# }}}
-# archives {{{1
+# archives
 .7z                   38;5;40
 .a                    38;5;40
 .arj                  38;5;40
@@ -432,7 +403,7 @@ EXEC 			00;38;5;207
 .zoo                  38;5;40
 .zpaq                 38;5;40
 .zz                   38;5;40
-  # packaged apps {{{2
+# packaged apps
 .apk                  38;5;215
 .deb                  38;5;215
 .rpm                  38;5;215
@@ -445,15 +416,15 @@ EXEC 			00;38;5;207
 .vpk                  38;5;215
 .bsp                  38;5;215
 .dmg                  38;5;215
-  # }}}
-  # segments from 0 to three digits after first extension letter {{{2
+
+# segments from 0 to three digits after first extension letter
 .r[0-9]{0,2}          38;5;239
 .zx[0-9]{0,2}         38;5;239
 .z[0-9]{0,2}          38;5;239
 # partial files
 .part                 38;5;239
-  # }}}
-# partition images {{{2
+
+# partition images
 .dmg                  38;5;124
 .iso                  38;5;124
 .bin                  38;5;124
@@ -463,8 +434,8 @@ EXEC 			00;38;5;207
 .toast                38;5;124
 .vcd                  38;5;124
 .vmdk                 38;5;124
-# }}}
-# databases {{{2
+
+# databases
 .accdb                38;5;60
 .accde                38;5;60
 .accdr                38;5;60
@@ -479,8 +450,7 @@ EXEC 			00;38;5;207
 .typelib              38;5;60
 # NetCDF database
 .nc                   38;5;60
-# }}}
-# tempfiles {{{1
+# tempfiles
 # undo files
 .pacnew               38;5;33
 .un~                  38;5;241
@@ -535,8 +505,7 @@ EXEC 			00;38;5;207
 .path                 38;5;45
 .timer                38;5;45
 .snapshot             38;5;45
-# }}}
-# metadata {{{1
+# metadata
 .application          38;5;116
 .cue                  38;5;116
 .description          38;5;116
@@ -550,8 +519,7 @@ EXEC 			00;38;5;207
 .theme                38;5;116
 .torrent              38;5;116
 .urlview              38;5;116
-# }}}
-# encrypted data {{{1
+# encrypted data
 .asc                  38;5;192;3
 .bfe                  38;5;192;3
 .enc                  38;5;192;3
@@ -564,8 +532,7 @@ EXEC 			00;38;5;207
 .asc                  38;5;192;3
 .enc                  38;5;192;3
 .sig                  38;5;192;3
-# 1}}}
-# emulators {{{1
+# emulators
 .32x                  38;5;213
 .cdi                  38;5;213
 .fm2                  38;5;213
@@ -593,8 +560,7 @@ EXEC 			00;38;5;207
 .nes                  38;5;213
   # Sega
 .sms                  38;5;213
-# }}}
-# unsorted {{{1
+# unsorted
 #
 #   Portable Object Translation for GNU Gettext
 .pot                  38;5;7
@@ -656,7 +622,3 @@ EXEC 			00;38;5;207
 .storyboard           38;5;196
 .xcsettings           1
 .xib                  38;5;208
-# }}}
-
-
-

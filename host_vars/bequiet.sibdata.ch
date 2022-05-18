@@ -1,5 +1,5 @@
 ---
-branch: master
+branch: main
 
 ansible_cron_minute: "*/5"
 ssh_port: 22

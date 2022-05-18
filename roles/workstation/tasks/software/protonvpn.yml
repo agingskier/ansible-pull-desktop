@@ -1,9 +1,26 @@
 ---
+#
+# See install doc: https://protonvpn.com/support/linux-ubuntu-vpn-setup/
+#
 - name: software | protonvpn block
   block:
-    - name: software | protonvpn | install protonvpn
+    - name: software | protonvpn | add protonvpn to apt cache
       apt:
         deb: https://protonvpn.com/download/protonvpn-stable-release_1.0.1-1_all.deb
+
+    - name: software | protonvpn | update apt cache if older 1 hour
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: software | protonvpn | install protonvpn, openvpn and prerequisites
+      apt:
+        pkg:
+          - protonvpn
+#          - openvpn     # maybe required, check without
+          - gnome-shell-extension-appindicator
+          - gir1.2-appindicator3-0.1
+        state: present
 
     - name: software | protonvpn | select display-manager
       become: true
@@ -22,13 +39,6 @@
         question: shared/default-x-display-manager
         value: true
         vtype: boolean
-
-    - name: software | protonvpn | install openvpn and prerequisites
-      apt:
-        pkg:
-          - openvpn
-          - gnome-shell-extension-appindicator
-        state: present
 
   when:
     - protonvpn is defined

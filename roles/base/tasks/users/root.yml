@@ -14,7 +14,6 @@
   with_items:
     - { dir: '.vim' }
     - { dir: '.vim/colors' }
-  tags: dotfiles
 
 - name: users | root | copy dotfiles
   copy:
@@ -30,4 +29,3 @@
     - { src: 'bash/dircolors', dest: '.dircolors' }
     - { src: 'vim/vimrc', dest: '.vimrc' }
     - { src: 'vim/xoria256.vim', dest: '.vim/colors/xoria256.vim' }
-  tags: dotfiles
