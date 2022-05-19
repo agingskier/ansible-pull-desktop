@@ -57,11 +57,16 @@ fi
 #        source /etc/profile.d/vte.sh
 #fi
 
-#---------------------------------------------------------------------
-# use the ~/.dircolors as input to dircolors command which will
-# create the LS_COLORS variable and exports it.
+# === Create DEFAULT LS_COLORS ENVIRONMENT VARIABLE ===========================
+# Adapt .dircolors file in $HOME directory (samples found in github)
+# the command eval `dircolors -b ~/.dircolors` takes the dotfile as input
+# and then runs these two commands:   
+#
+#   $ LS_COLORS=...     # <-- where this value is created from /etc/DIR_COLORS
+#   $ export LS_COLORS
+#
 # see https://github.com/seebi/dircolors-solarized/raw/master/dircolors.256dark
-# for a sample.
+# for a sample
 #---------------------------------------------------------------------
 
 eval `dircolors -b ~/.dircolors`

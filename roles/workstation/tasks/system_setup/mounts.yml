@@ -76,6 +76,7 @@
         insertafter: EOF
       with_items:
         - { line: "file:///mnt/NAS NAS" }
+        - { line: "file:///mnt/LXD LXD" }
         - { line: "file:///mnt/Data Data" }
         - { line: "file:///mnt/Games Games" }
         - { line: "file:///mnt/Digikam Digikam" }
