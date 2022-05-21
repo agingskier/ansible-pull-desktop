@@ -28,7 +28,6 @@
     - import_tasks: software/apt_update.yml
     - import_tasks: software/variety.yml
     - import_tasks: software/misc_packages.yml
-    - import_tasks: software/filesearch.yml
     - import_tasks: software/gimp.yml
     - import_tasks: software/kvm.yml
     - import_tasks: software/librecad.yml

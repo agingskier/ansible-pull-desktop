@@ -17,10 +17,9 @@ gui_editor: gvim
 #
 
 calibre: yes
-filesearch: yes
 games: yes
 gimp: yes
-kvm: no
+kvm: yes
 keepassxc: yes
 librecad: yes
 media: no
@@ -30,7 +29,7 @@ raidar: yes
 signal: yes
 steam: yes
 topgrade: yes
-vagrant: no
+vagrant: yes
 variety: yes
 virtualbox: no
 vlc: no

@@ -8,6 +8,7 @@
       - keepassxc
       - lxd
       - htop
+      - fsearch
       - docfetcher
       - signal-desktop
       - ssh-audit

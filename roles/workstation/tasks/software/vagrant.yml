@@ -3,19 +3,18 @@
   tags: vagrant
   block:
 #
-# Display keyid: curl -fsSL  https://apt.releases.hashicorp.com/gpg | tee vagrant.asc | gpg --keyid-format long
-# id: E8A032E094D8EB4EA189D270DA418C88A3219F7B
+# apt-key is deprecated - use curl to get the gpg key and write it to /usr/share/keyrings directory
 #
     - name: software | vagrant | add vagrant apt key to keyring file
-      apt_key:
-        id: E8A032E094D8EB4EA189D270DA418C88A3219F7B
-        url: https://apt.releases.hashicorp.com/gpg
-        keyring: /etc/apt/trusted.gpg.d/vagrant.gpg
+      shell: |
+        curl -fsSL https://apt.releases.hashicorp.com/gpg | \
+        gpg --dearmor | \
+        sudo tee /usr/share/keyrings/vagrant.gpg > /dev/null
 
     - name: software | vagrant | add vagrant apt repository
       apt_repository:
         filename: vagrant
-        repo: 'deb [arch=amd64] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main'
+        repo: 'deb [arch=amd64 signed-by=/usr/share/keyrings/vagrant.gpg] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main'
         state: present
         update_cache: yes
 
