@@ -1,0 +1,22 @@
+---
+- name: software | keepassxc block
+  tags: keepassxc
+  block:
+
+    - name: software | keepassxc | add keepassxc apt repository
+      apt_repository:
+        filename: keepassxc
+        repo: 'deb [arch=amd64] https://ppa.launchpadcontent.net/phoerious/keepassxc/ubuntu $(lsb_release -sc) main '
+        state: present
+        update_cache: yes
+
+    - name: software | keepassxc | install keepassxc
+      apt:
+        pkg:
+          - keepassxc
+
+  become: yes
+  become_method: sudo
+  when:
+    - keepassxc is defined
+    - keepassxc

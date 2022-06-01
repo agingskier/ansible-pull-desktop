@@ -28,9 +28,6 @@
         - { dir: NAS/documents }
         - { dir: NAS/backup }
         - { dir: NAS/media }
-        - { dir: NAS/software }
-        - { dir: NAS/scan }
-        - { dir: NAS/steuern }
 
     - name: system_setup | systemd | copy mount files
       copy:
@@ -44,7 +41,6 @@
         - { src: 'mnt-NAS-documents.mount', dest: 'mnt-NAS-documents.mount' }
         - { src: 'mnt-NAS-media.mount', dest: 'mnt-NAS-media.mount' }
         - { src: 'mnt-NAS-software.mount', dest: 'mnt-NAS-software.mount' }
-        - { src: 'mnt-NAS-scan.mount', dest: 'mnt-NAS-scan.mount' }
         - { src: 'mnt-NAS-steuern.mount', dest: 'mnt-NAS-steuern.mount' }
 
 # Service NetworkManager-wait-online must be enabled, otherwise the
@@ -66,7 +62,6 @@
         - 'mnt-NAS-documents.mount'
         - 'mnt-NAS-media.mount'
         - 'mnt-NAS-software.mount'
-        - 'mnt-NAS-scan.mount'
         - 'mnt-NAS-steuern.mount'
 
     - name: system_setup | Add nfs NAS bookmarks

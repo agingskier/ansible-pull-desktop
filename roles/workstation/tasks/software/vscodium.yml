@@ -1,0 +1,33 @@
+---
+- name: software | vscodium block
+  tags: vscodium
+  block:
+    #
+    # apt-key is deprecated - use curl to get the gpg key and write it to /usr/share/keyrings directory
+    #
+    - name: software | vscodium | add vscodium gpg key to keyring file
+      shell: |
+        curl -fsSL https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg | \
+        sudo gpg --dearmor | \
+        sudo tee /usr/share/keyrings/vscodium.gpg > /dev/null
+      args:
+        warn: false
+
+    - name: software | vscodium | add vscodium apt repository
+      apt_repository:
+        filename: vscodium
+        repo: 'deb [arch=amd64 signed-by=/usr/share/keyrings/vscodium.gpg] https://download.vscodium.com/debs vscodium main'
+        state: present
+        update_cache: yes
+
+    - name: software | vscodium | install codium
+      apt:
+        pkg:
+          - codium
+
+
+  become: yes
+  become_method: sudo
+  when:
+    - vscodium is defined
+    - vscodium

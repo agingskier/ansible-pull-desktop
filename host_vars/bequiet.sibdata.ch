@@ -30,6 +30,7 @@ signal: yes
 steam: yes
 topgrade: yes
 vagrant: yes
+vscodium: yes
 variety: yes
 virtualbox: no
 vlc: no
