@@ -6,7 +6,7 @@
     - name: software | keepassxc | add keepassxc apt repository
       apt_repository:
         filename: keepassxc
-        repo: 'deb [arch=amd64] https://ppa.launchpadcontent.net/phoerious/keepassxc/ubuntu $(lsb_release -sc) main '
+        repo: 'ppa:phoerious/keepassxc'
         state: present
         update_cache: yes
 
