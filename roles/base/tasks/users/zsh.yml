@@ -41,5 +41,5 @@
     owner: "{{ user_name }}"
     group: "{{ group_name }}"
     mode: 0600
- with_items:
-   - { src: 'zshenv', dest: '.zshenv' }
+  with_items:
+    - { src: 'zshenv', dest: '.zshenv' }
