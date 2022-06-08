@@ -7,7 +7,7 @@
 - name: system-setup grub block
   block:
     - name: system-setup | grub | add ppa repository
-      apt-repository:
+      apt_repository:
         filename: gurbcustomizer
         repo: ppa:danielrichter2007/grub-customizer
         state: present
