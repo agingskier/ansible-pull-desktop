@@ -6,6 +6,13 @@
 
 - name: system-setup grub block
   block:
+    - name: system-setup | grub | add ppa repository
+      apt-repository:
+        filename: gurbcustomizer
+        repo: ppa:danielrichter2007/grub-customizer
+        state: present
+        update_cache: yes
+        
     - name: system-setup | grub | install grub
       apt:
         pkg:
