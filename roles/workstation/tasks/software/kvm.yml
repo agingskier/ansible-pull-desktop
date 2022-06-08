@@ -29,7 +29,6 @@
           - virt-viewer
           - bridge-utils
           - libosinfo-bin
-          - libvirt-top
           - libguestfs-tools
         state: present
       when:
