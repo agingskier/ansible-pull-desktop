@@ -3,12 +3,12 @@
   tags: gimp
   block:
 
-    - name: software | gimp | add gimp apt repository and update
-      apt_repository:
-        filename: gimp
-        repo: 'ppa:ubuntuhandbook1/gimp'
-        state: present
-        update_cache: yes
+#    - name: software | gimp | add gimp apt repository and update | check if latest ubuntu release available
+#      apt_repository:
+#        filename: gimp
+#        repo: 'ppa:ubuntuhandbook1/gimp'
+#        state: present
+#        update_cache: yes
 
     - name: software | gimp | install gimp & gegl
       apt:
