@@ -40,8 +40,8 @@
       git:
         repo: https://github.com/vandalsoul/darkmatter-grub2-theme.git
         dest: /tmp/grub-theme
-        force: yes
-        version: master
+        force: true
+        version: main
 
     - name: system_setup | grub | create themes directory
       file:

@@ -9,8 +9,8 @@
     - name: pre-run | update package cache Ubuntu
       tags: always
       apt:
-        upgrade: true
-        update_cache: true
+        upgrade: yes
+        update_cache: yes
       changed_when: false
 
 # run roles
@@ -42,26 +42,13 @@
   become: true
 
   tasks:
-    - name: cleanup package cache Ubuntu
-      tags: always
-      apt:
-        autoclean: true
-      changed_when: false
-
-    - name: autoremove orphan packages Ubuntu
-      tags: always
-      apt:
-        autoremove: true
-        purge: true
-
-    - name: send completion alert
-      include_tasks: send_completion_alert.yml
+    - include_tasks: pre_post_tasks/cleanup.yml
+    - include_tasks: pre_post_tasks/send_completion_alert.yml
       tags: always
       when:
         - task_failed is not defined
 
-    - name: send failure alert
-      include_tasks: send_failure_alert.yml
+    - include_tasks: pre_post_tasks/send_failure_alert.yml
       tags: always
       when:
         - task_failed is defined
