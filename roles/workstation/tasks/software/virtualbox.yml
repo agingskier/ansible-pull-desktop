@@ -35,6 +35,3 @@
         append: yes
   become: yes
   become_method: sudo
-  when:
-    - virtualbox is defined
-    - virtualbox
