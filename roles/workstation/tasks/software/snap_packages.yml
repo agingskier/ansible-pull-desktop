@@ -11,7 +11,6 @@
       - docfetcher
       - signal-desktop
       - ssh-audit
-      - android-file-transfer-linux
 
 - name: software | snap connect | allow access to NAS
   become: true
