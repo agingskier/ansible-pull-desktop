@@ -1,0 +1,14 @@
+- name: notify healthchecks.io that the job ran
+  uri:
+    url: https://hc-ping.com/{{ healthcheck_uuid }}
+  changed_when: False
+  when: healthcheck_uuid is defined
+
+- name: send completion notification to syslogger
+  tags: always
+  syslogger:
+    msg: "✔️  Ansible provision finished on *{{ ansible_hostname }}*"
+    priority: "info"
+    facility: "syslog"
+    log_pid: true
+  changed_when: False

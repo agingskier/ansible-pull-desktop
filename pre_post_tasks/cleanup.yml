@@ -1,0 +1,11 @@
+- name: cleanup package cache Ubuntu
+  tags: always
+  apt:
+    autoclean: yes
+  changed_when: false
+
+- name: autoremove orphan packages Ubuntu
+  tags: always
+  apt:
+    autoremove: yes
+    purge: yes
