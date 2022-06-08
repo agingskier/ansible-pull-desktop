@@ -49,17 +49,6 @@
     var: fonts_release.stdout
     verbosity: 2
 
-- name: software | modern-unix | download and install fontawesome 6 for zsh
-  become: true
-  become_method: sudo
-  unarchive:
-    src: https://use.fontawesome.com/releases/v6.1.1/fontawesome-free-6.1.1-desktop.zip
-    dest: /usr/local/share/fonts/zsh
-    remote_src: yes
-    mode: 0644
-    owner: root
-    group: root
-
 - name: software | modern-unix | Creates directory for lsd nerd fonts
   file:
     path: /usr/local/share/fonts/lsd
@@ -68,12 +57,25 @@
     group: root
     mode: 0775
 
-- name: software | zsh | download and install JetBrains and FiraCode nerd fonts
+- name: software | modern-unix | download and install fontawesome 6
+  become: true
+  become_method: sudo
+  unarchive:
+    src: https://use.fontawesome.com/releases/v6.1.1/fontawesome-free-6.1.1-desktop.zip
+    dest: /usr/local/share/fonts/lsd
+    remote_src: yes
+    mode: 0644
+    owner: root
+    group: root
+
+
+
+- name: software | modern-unix | download and install JetBrains and FiraCode nerd fonts
   become: true
   become_method: sudo
   unarchive:
     src: https://github.com/ryanoasis/nerd-fonts/releases/download/{{ fonts_release.stdout }}/{{ item }}
-    dest: /usr/local/share/fonts/zsh
+    dest: /usr/local/share/fonts/lsd
     remote_src: yes
     mode: 0644
     owner: root
