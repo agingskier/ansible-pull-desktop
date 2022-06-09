@@ -39,11 +39,7 @@
     - import_tasks: software/steam.yml
     - import_tasks: software/topgrade.yml
     - import_tasks: software/vagrant.yml
-    - include_tasks: software/virtualbox.yml
-      when:
-       - virtualbox is defined
-       - virtualbox
-
+#    - import_tasks: software/virtualbox.yml
     - import_tasks: software/vlc.yml
 
     ## User configs
@@ -53,3 +49,6 @@
   rescue:
     - name: set task failed variable
       set_fact: task_failed=true
+
+  when:
+    - task_failed is not defined

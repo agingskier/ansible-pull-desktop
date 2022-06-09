@@ -13,7 +13,7 @@
 
 # Get latest release from Github api
 # get tag line
-# pluck JSON value 
+# pluck JSON value
 - name: software | lsd | download latest release info
   shell: |
     curl --silent "https://api.github.com/repos/Peltoche/lsd/releases/latest" |
@@ -34,7 +34,7 @@
 
 # Get latest release from Github api
 # get tag line
-# pluck JSON value 
+# pluck JSON value
 - name: software | modern-unix | download latest release info for lsd nerd fonts
   shell: |
     curl --silent https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest |
@@ -67,8 +67,6 @@
     mode: 0644
     owner: root
     group: root
-
-
 
 - name: software | modern-unix | download and install JetBrains and FiraCode nerd fonts
   become: true

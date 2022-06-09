@@ -24,6 +24,7 @@
     - import_tasks: software/modern-unix.yml
     - import_tasks: software/tilix.yml
     - import_tasks: software/java.yml
+    - import_tasks: software/vscodium.yml
     - import_tasks: software/pkg_management.yml
     - import_tasks: software/development.yml
     - import_tasks: software/snap.yml
@@ -38,3 +39,6 @@
   rescue:
     - name: set fact to true if tasks failed
       set_fact: task_failed=true
+      
+  when:
+    - task_failed is not defined

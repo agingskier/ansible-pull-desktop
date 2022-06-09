@@ -1,7 +1,6 @@
 ---
-- name: software | snap packages | install bpytop and dust from modern-unix
+- name: software | snap packages | install dust from modern-unix
   become: true
   snap:
     name:
-      - bpytop
       - dust
