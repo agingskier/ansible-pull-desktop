@@ -11,6 +11,8 @@
         sudo tee /usr/share/keyrings/vscodium.gpg > /dev/null
       args:
         warn: false
+      register: vscodium_gpgkey
+      changed_when: vscodium_gpgkey.rc == 0
 
     - name: software | vscodium | add vscodium apt repository
       apt_repository:

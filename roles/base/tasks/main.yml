@@ -19,6 +19,8 @@
     - import_tasks: system_setup/bluetooth.yml
 
     # install software
+    - import_tasks: software/firefox.yml
+    - import_tasks: software/brave.yml
     - import_tasks: software/utilities.yml
     - import_tasks: software/tmux.yml
     - import_tasks: software/modern-unix.yml

@@ -1,0 +1,43 @@
+---
+- name: software | firefox block
+  block:
+  
+    - name: software | firefox | remove snap firefox
+      snap:
+        name: firefox
+        state: absent
+
+    - name: software | firefox | add firefox apt repository
+      apt_repository:
+        filename: firefox
+        repo: 'ppa:mozillateam/ppa'
+        state: present
+        update_cache: yes
+
+    - name: software | firefox | create apt file to avoid reinstall of snap firefox
+      copy:
+        dest: "/etc/apt/preferences.d/mozilla-firefox"
+        owner: root
+        group: root
+        mode: 0644
+        content: |
+          Package: *
+          Pin: release o=LP-PPA-mozillateam
+          Pin-Priority: 1001
+
+    - name: software | firefox | ensure automatic updates of apt firefox
+      copy:
+        dest: "/etc/apt/apt.conf.d/51unattended-upgrades-firefox"
+        owner: root
+        group: root
+        mode: 0644
+        content: |
+          Unattended-Upgrade::Allowed-Origins:: "LP-PPA-mozillateam:${distro_codename}";
+
+    - name: software | firefox | install firefox
+      apt:
+        pkg:
+          - firefox
+
+  become: yes
+  become_method: sudo

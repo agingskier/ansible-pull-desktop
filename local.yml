@@ -4,7 +4,7 @@
   hosts: all
   connection: local
   tags: always
-  become: true
+  become: yes
   pre_tasks:
     - name: pre-run | update package cache Ubuntu
       tags: always
@@ -13,7 +13,7 @@
         update_cache: yes
       changed_when: false
 
-# run roles
+# run base roles, if task_failed not defined
 - name: Base role for all systems
   hosts: all
   tags: base
@@ -21,14 +21,14 @@
   roles:
     - base
 
+# run workstation roles, if task_failed not defined
 - name: Workstation role
   hosts: workstation
   tags: workstation
   become: true
   roles:
     - workstation
-
-
+ 
 # - name: Server role
 #  hosts: server
 #  tags: server
@@ -36,20 +36,29 @@
 #  roles:
 #    - server
 
-# end of run cleanup and reporting
-- name: Cleanup and reporting
+# end of run reporting
+- name: Reporting
   hosts: all
   become: true
 
   tasks:
-    - include_tasks: pre_post_tasks/cleanup.yml
-    - include_tasks: pre_post_tasks/send_completion_alert.yml
+
+    - name: End of Tasks | Print completion notification
       tags: always
+      debug:
+        msg: "✔️  Ansible provision finished on *{{ ansible_hostname }}*"
+      changed_when: False
       when:
         - task_failed is not defined
 
-    - include_tasks: pre_post_tasks/send_failure_alert.yml
+    - name: End of Tasks | Print failure notification
       tags: always
+      debug:
+        msg: "⚠️  Ansible provision failed on *{{ ansible_hostname }}*\n\n
+          *Task*:  {{ ansible_failed_task.name }}\n
+          *Action*: {{ ansible_failed_task.action }}\n
+          *Error Message*: \n ```{{ ansible_failed_result | to_nice_json }}```"
+      changed_when: False
       when:
         - task_failed is defined
-#       - task_failed == true
+        - task_failed == true

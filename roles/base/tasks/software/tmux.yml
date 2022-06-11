@@ -43,6 +43,7 @@
   args:
     warn: false
   register: gitmux_info
+  changed_when: gitmux_info.rc == 0
 
 - name: software | tmux | print gitmux_info
   debug:

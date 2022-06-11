@@ -1,0 +1,31 @@
+---
+- name: software | brave browser block
+  block:
+    #
+    # apt-key is deprecated - use curl to get the gpg key and write it to /usr/share/keyrings directory
+    #
+    - name: software | brave browser | add brave gpg key to keyring file
+      shell: |
+        curl -fsSL https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg | \
+        sudo gpg --dearmor | \
+        sudo tee /usr/share/keyrings/brave-browser-archive-keyring.gpg > /dev/null
+      args:
+        warn: false
+      register: brave_gpgkey
+      changed_when: brave_gpgkey.rc == 0
+
+    - name: software | brave browser | add brave apt repository
+      apt_repository:
+        filename: vscodium
+        repo: 'deb [arch=amd64 signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main'
+        state: present
+        update_cache: yes
+
+    - name: software | brave browser | install brave & prerequisite
+      apt:
+        pkg:
+          - gnupg2
+          - brave-browser
+
+  become: yes
+  become_method: sudo

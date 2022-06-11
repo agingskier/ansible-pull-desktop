@@ -10,6 +10,10 @@
         curl -fsSL https://apt.releases.hashicorp.com/gpg | \
         gpg --dearmor | \
         sudo tee /usr/share/keyrings/vagrant.gpg > /dev/null
+      args:
+        warn: false
+      register: vagrant_gpgkey
+      changed_when: vagrant_gpgkey.rc == 0
 
     - name: software | vagrant | add vagrant apt repository
       apt_repository:

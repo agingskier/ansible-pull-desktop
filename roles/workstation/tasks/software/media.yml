@@ -13,6 +13,8 @@
       become: yes
       become_method: sudo
       command: dpkg-reconfigure libdvd-pkg
+      register: media_cmd
+      changed_when: media_cmd.rc == 0
 
   when:
     - media is defined

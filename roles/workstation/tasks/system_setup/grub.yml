@@ -84,6 +84,8 @@
 
     - name: update grub configuration
       command: update-grub
+      register: grub_updcmd
+      changed_when: grub_updcmd.rc == 0
 
   become: yes
   become_method: sudo
