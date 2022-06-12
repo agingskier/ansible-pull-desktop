@@ -39,22 +39,17 @@
     recurse: yes
 
 - name: software | tmux | Download latest release gitmux info
-  command: curl https://github.com/arl/gitmux/releases/latest
+  shell: |
+    set -o pipefail &&
+    curl --silent "https://api.github.com/repos/arl/gitmux/releases/latest" |
+    grep '"tag_name":' |
+    sed -E 's/.*"([^"]+)".*/\1/'
   args:
     warn: false
-  register: gitmux_info
-  changed_when: gitmux_info.rc == 0
+  register: gitmux_release
+  changed_when: gitmux_release.rc == 0
 
-- name: software | tmux | print gitmux_info
-  debug:
-    var: gitmux_info
-    verbosity: 2
-
-- name: software | tmux | set fact with extracted release
-  set_fact:
-    gitmux_release: "{{ gitmux_info | regex_search('(?<=tag/)[^\"]*') }}"
-
-- name: software | tmux | print gitmux-release number
+- name: software | tmux | print gitmux_release
   debug:
     var: gitmux_release
     verbosity: 2
