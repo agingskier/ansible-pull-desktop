@@ -5,6 +5,11 @@
     user_name: 'bernhard'
     group_name: 'users'
 
+- name: users | bernhard | recursivebly remove .vim/bundle directory to enable re-runs
+  file:
+    path: /home/bernhard/.vim/bundle
+    state: absent
+
 - name: users | bernhard | create vim directories
   file:
     path: /home/bernhard/{{ item.dir }}

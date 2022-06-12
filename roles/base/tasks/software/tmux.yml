@@ -5,6 +5,11 @@
     pkg:
       - tmux
 
+- name: users | bernhard | recursivebly remove .tmux/plugins directory to enable re-runs
+  file:
+    path: /home/bernhard/.tmux/plugins
+    state: absent
+
 - name: software | tmux | create .tmux directories
   file:
     path: /home/bernhard/{{ item.dir }}
