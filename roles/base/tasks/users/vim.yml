@@ -59,7 +59,6 @@
     - { url: 'tpope/vim-pathogen/master/autoload/pathogen.vim', dest: 'autoload/pathogen.vim' }
     - { url: 'nanotech/jellybeans.vim/master/colors/jellybeans.vim', dest: 'colors/jellybeans.vim' }
     - { url: 'vim-scripts/xoria256.vim/master/colors/xoria256.vim', dest: 'colors/xoria256.vim' }
-    - { url: 'crusoexia/vim-monokai/blob/master/colors/monokai.vim', dest: 'colors/monokai.vim' }
     - { url: 'jaredgorski/SpaceCamp/master/colors/spacecamp.vim', dest: 'colors/spacecamp.vim' }
     - { url: 'dracula/vim/master/colors/dracula.vim', dest: 'colors/dracula.vim' }
     - { url: 'morhetz/gruvbox/master/colors/gruvbox.vim', dest: 'colors/gruvbox.vim' }
