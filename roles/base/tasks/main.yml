@@ -19,17 +19,16 @@
     - import_tasks: system_setup/bluetooth.yml
 
     # install software
-    - import_tasks: software/firefox.yml
-    - import_tasks: software/brave.yml
-    - import_tasks: software/utilities.yml
-    - import_tasks: software/tmux.yml
     - import_tasks: software/modern-unix.yml
     - import_tasks: software/tilix.yml
+    - import_tasks: software/tmux.yml
+    - import_tasks: software/utilities.yml
+    - import_tasks: software/firefox.yml
+    - import_tasks: software/brave.yml
     - import_tasks: software/java.yml
     - import_tasks: software/vscodium.yml
-    - import_tasks: software/pkg_management.yml
     - import_tasks: software/development.yml
-    - import_tasks: software/snap.yml
+    - import_tasks: software/pkg_management.yml
 
     # Perform remaining tasks:
     - import_tasks: system_setup/clock.yml

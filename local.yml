@@ -5,6 +5,7 @@
   connection: local
   tags: always
   become: yes
+  become_method: sudo
   pre_tasks:
     - name: pre-run | update package cache Ubuntu
       tags: always
@@ -18,6 +19,7 @@
   hosts: all
   tags: base
   become: true
+  become_method: sudo
   roles:
     - base
 
@@ -26,6 +28,7 @@
   hosts: workstation
   tags: workstation
   become: true
+  become_method: sudo
   roles:
     - workstation
  
@@ -40,13 +43,16 @@
 - name: Reporting
   hosts: all
   become: true
+  become_method: sudo
 
   tasks:
 
     - name: End of Tasks | Print completion notification
       tags: always
       debug:
-        msg: "✔️  Ansible provision finished on *{{ ansible_hostname }}*"
+        msg: "---------------------------------------------------\n
+          ✔️  Ansible provision finished on *{{ ansible_hostname }}*\n
+          -------------------------------------------------------"
       changed_when: False
       when:
         - task_failed is not defined

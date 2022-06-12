@@ -1,6 +1,0 @@
----
-- name: software | snap packages | install dust from modern-unix
-  become: true
-  snap:
-    name:
-      - dust
