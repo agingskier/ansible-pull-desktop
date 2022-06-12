@@ -16,7 +16,6 @@
 # pluck JSON value
 - name: software | lsd | download latest release info
   shell: |
-    set -o pipefail &&
     curl --silent "https://api.github.com/repos/Peltoche/lsd/releases/latest" |
     grep '"tag_name":' |
     sed -E 's/.*"([^"]+)".*/\1/'
@@ -39,7 +38,6 @@
 # pluck JSON value
 - name: software | modern-unix | download latest release info for lsd nerd fonts
   shell: |
-    set -o pipefail &&
     curl --silent https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest |
     grep '"tag_name":' |
     sed -E 's/.*"([^"]+)".*/\1/'

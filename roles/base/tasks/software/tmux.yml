@@ -40,7 +40,6 @@
 
 - name: software | tmux | Download latest release gitmux info
   shell: |
-    set -o pipefail &&
     curl --silent "https://api.github.com/repos/arl/gitmux/releases/latest" |
     grep '"tag_name":' |
     sed -E 's/.*"([^"]+)".*/\1/'
