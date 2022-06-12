@@ -50,7 +50,7 @@
 
 - name: software | tmux | print gitmux_release
   debug:
-    var: gitmux_release
+    var: gitmux_release.stdout
     verbosity: 2
 
 # extract version number without "v" from variable gitmux_release
@@ -58,7 +58,7 @@
   become: true
   become_method: sudo
   unarchive:
-    src: https://github.com/arl/gitmux/releases/download/{{ gitmux_release }}/gitmux_{{ gitmux_release | regex_search('(\d(.*))') }}_linux_amd64.tar.gz
+    src: https://github.com/arl/gitmux/releases/download/{{ gitmux_release.stdout }}/gitmux_{{ gitmux_release.stdout | regex_search('(\d(.*))') }}_linux_amd64.tar.gz
     dest: /usr/local/bin
     remote_src: yes
     mode: 0755
