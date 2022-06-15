@@ -7,8 +7,8 @@
     dest: /tmp
     remote_src: yes
     mode: 0755
-    owner: bernhard
-    group: users
+    owner: "{{ user_name }}"
+    group: "{{ group_name }}"
 
 - name: software | bluetooth | install missing firmware
   become: true

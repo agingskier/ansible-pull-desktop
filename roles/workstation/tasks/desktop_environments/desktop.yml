@@ -1,52 +1,53 @@
 ---
-- name: gnome | desktop | copy wallpaper file
-  copy:
-    src: gnome/saturn.png
-    dest: /usr/share/backgrounds/budgie/saturn.png
-    owner: root
-    group: root
-    mode: 0644
+- name: gnome | desktop block
+  block:
+    - name: gnome | desktop | copy wallpaper file
+      copy:
+        src: gnome/saturn.png
+        dest: /usr/share/backgrounds/budgie/saturn.png
+        owner: root
+        group: root
+        mode: 0644
 
-- name: gnome | desktop | set wallpaper
-  become_user: bernhard
-  community.general.dconf:
-    key: "/org/gnome/desktop/background/picture-uri"
-    value: "'file:///usr/share/backgrounds/budgie/saturn.png'"
+    - name: gnome | desktop | set wallpaper
+      community.general.dconf:
+        key: "/org/gnome/desktop/background/picture-uri"
+        value: "'file:///usr/share/backgrounds/budgie/saturn.png'"
 
-- name: gnome | desktop | set wallpaper position
-  become_user: bernhard
-  community.general.dconf:
-    key: "/org/gnome/desktop/background/picture-options"
-    value: "'zoom'"
+    - name: gnome | desktop | set wallpaper position
+      community.general.dconf:
+        key: "/org/gnome/desktop/background/picture-options"
+        value: "'zoom'"
 
-- name: gnome | desktop | copy lock screen background file
-  copy:
-    src: gnome/jupiter.jpg
-    dest: /usr/share/backgrounds/budgie/jupiter.jpg
-    owner: root
-    group: root
-    mode: 0644
+    - name: gnome | desktop | copy lock screen background file
+      copy:
+        src: gnome/jupiter.jpg
+        dest: /usr/share/backgrounds/budgie/jupiter.jpg
+        owner: root
+        group: root
+        mode: 0644
 
-- name: gnome | desktop | set interface values
-  become_user: bernhard
-  community.general.dconf:
-    key: "/org/gnome/desktop/interface/{{ item.key }}"
-    value: "{{ item.value }}"
-  with_items:
-    - { key: 'cursor-size', value: '48' }
-    - { key: 'cursor-theme', value: "'DMZ-White'" }
-    - { key: 'gtk-theme', value: "'QogirBudgie-dark'" }
-    - { key: 'icon-theme', value: "'Humanity-Dark'" }
-    - { key: 'text-scaling-factor', value: '1.3' }
+    - name: gnome | desktop | set interface values
+      community.general.dconf:
+        key: "/org/gnome/desktop/interface/{{ item.key }}"
+        value: "{{ item.value }}"
+      with_items:
+        - { key: 'cursor-size', value: '48' }
+        - { key: 'cursor-theme', value: "'DMZ-White'" }
+        - { key: 'gtk-theme', value: "'QogirBudgie-dark'" }
+        - { key: 'icon-theme', value: "'Humanity-Dark'" }
+        - { key: 'text-scaling-factor', value: '1.3' }
 
-- name: gnome | gedit | set editor values
-  become_user: bernhard
-  community.general.dconf:
-    key: "/org/gnome/gedit/preferences/editor/{{ item.key }}"
-    value: "{{ item.value }}"
-  with_items:
-    - { key: 'editor-font', value: "'Monospace Regular 16'" }
-    - { key: 'scheme', value: "'cobalt'" }
-    - { key: 'tabs-size', value: "'uint32 4'" }
-    - { key: 'use-default-font', value: "'false'" }
-    - { key: 'wrap-last-split-mode', value: "'word'" }
+    - name: gnome | gedit | set editor values
+      community.general.dconf:
+        key: "/org/gnome/gedit/preferences/editor/{{ item.key }}"
+        value: "{{ item.value }}"
+      with_items:
+        - { key: 'editor-font', value: "'Monospace Regular 16'" }
+        - { key: 'scheme', value: "'cobalt'" }
+        - { key: 'tabs-size', value: "'uint32 4'" }
+        - { key: 'use-default-font', value: "'false'" }
+        - { key: 'wrap-last-split-mode', value: "'word'" }
+        
+  become_user: "{{ user_name }}"
+  become_method: sudo

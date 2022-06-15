@@ -1,9 +1,9 @@
 ---
-# Create zsh environment for user bernhard
-- name: users | zsh | user name fact
-  set_fact:
-    user_name: 'bernhard'
-    group_name: 'users'
+# Create zsh environment for user bernhard - variables defined in host_vars
+#- name: users | zsh | user name fact
+#  set_fact:
+#    user_name: 'bernhard'
+#    group_name: 'users'
     
 - name: users | zsh | Creates zsh directory in .config
   file:
@@ -16,7 +16,7 @@
     - { dir: 'zsh' }
     - { dir: 'zsh/plugins' }
 
-- name: users | ubuntu | copy individual zsh config files
+- name: users | zsh | copy individual zsh config files
   copy:
     src: users/{{ user_name }}/zsh/{{ item.src }}
     dest: /home/{{ user_name }}/.config/zsh/{{ item.dest }}
@@ -34,7 +34,7 @@
     - { src: 'zshenv', dest: 'zshenv' }
     - { src: 'zshrc', dest: '.zshrc' }
 
-- name: users | ubuntu | copy dotfiles
+- name: users | zsh | copy dotfiles
   copy:
     src: /home/{{ user_name }}/.config/zsh/{{ item.src }}
     dest: /home/{{ user_name }}/{{ item.dest }}

@@ -50,9 +50,10 @@
     - name: End of Tasks | Print completion notification
       tags: always
       debug:
-        msg: "---------------------------------------------------\n
-          ✔️  Ansible provision finished on *{{ ansible_hostname }}*\n
-          -------------------------------------------------------"
+        msg: "\n
+          *-------------------------------------------------------\n
+          *Task*: ✔️  Ansible provision finished on *{{ ansible_hostname }}*\n
+          *-------------------------------------------------------"
       changed_when: False
       when:
         - task_failed is not defined
@@ -67,4 +68,4 @@
       changed_when: False
       when:
         - task_failed is defined
-        - task_failed == true
+        - task_failed

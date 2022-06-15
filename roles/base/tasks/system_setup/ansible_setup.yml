@@ -10,8 +10,8 @@
 - name: ansible setup | create ansible log file
   file:
     path: /var/log/ansible.log
-    owner: bernhard
-    group: users
+    owner: "{{ user_name }}"
+    group: "{{ group_name }}"
     mode: 0664
     state: touch
   changed_when: False

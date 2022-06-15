@@ -1,10 +1,15 @@
 ---
-- name: users | bernhard | copy profile image
-  become: yes
-  become_method: sudo
-  copy:
-    src: users/bernhard/bernhard.jpg
-    dest: /var/lib/AccountsService/icons/bernhard.jpg
-    owner: root
-    group: root
-    mode: 0644
+- name: users | bernhard block
+  block:
+    - name: users | bernhard | copy profile image
+      become: yes
+      become_method: sudo
+      copy:
+        src: users/bernhard/bernhard.jpg
+        dest: /var/lib/AccountsService/icons/bernhard.jpg
+        owner: root
+        group: root
+        mode: 0644
+  when:
+    - bernhard is defined
+    - bernhard

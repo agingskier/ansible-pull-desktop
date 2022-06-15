@@ -2,15 +2,11 @@
 - name: run all tasks for base role
   block:
 
-#    - name: include vars file
-#      tags: always
-#      include_vars: vault-secrets.yml
-
     # Make sure users exist on the system
     - import_tasks: users/root.yml
     - import_tasks: users/bernhard.yml
-#    - import_tasks: users/ansible.yml
-#    - import_tasks: users/ubuntu.yml
+    - import_tasks: users/marlies.yml
+    - import_tasks: users/ubuntu.yml
 
     # Set up the ansible environment
     - import_tasks: system_setup/ansible_setup.yml
@@ -21,7 +17,6 @@
     # install software
     - import_tasks: software/modern-unix.yml
     - import_tasks: software/tilix.yml
-    - import_tasks: software/tmux.yml
     - import_tasks: software/utilities.yml
     - import_tasks: software/firefox.yml
     - import_tasks: software/brave.yml
@@ -42,4 +37,4 @@
       set_fact: task_failed=true
       
   when:
-    - task_failed is not defined
+    - task_failed is not defined 

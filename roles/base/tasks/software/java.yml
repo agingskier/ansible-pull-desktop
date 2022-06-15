@@ -1,27 +1,32 @@
 ---
-- name: Software | java LTS | install java environment
-  apt:
-    pkg:
-      - default-jdk
-      - openjdk-18-jdk
+- name: software | java block
+  block:
+    - name: Software | java LTS | install java environment
+      apt:
+        pkg:
+          - default-jdk
+          - openjdk-18-jdk
 
 # Check: https://gluonhq.com/products/javafx/ for latest release
-- name: software | javafx LTS | Unzip javafx
-  become: yes
-  become_method: sudo
-  unarchive:
-    src: https://download2.gluonhq.com/openjfx/18.0.1/openjfx-18.0.1_linux-x64_bin-sdk.zip
-    dest: /opt
-    remote_src: yes
-    owner: root
-    group: root
-    mode: 0755
+    - name: software | javafx LTS | Unzip javafx
+      become: yes
+      become_method: sudo
+      unarchive:
+        src: https://download2.gluonhq.com/openjfx/18.0.1/openjfx-18.0.1_linux-x64_bin-sdk.zip
+        dest: /opt
+        remote_src: yes
+        owner: root
+        group: root
+        mode: 0755
 
-- name: software | java & javafx | Replace export statements in .bashrc
-  lineinfile:
-    path: /home/bernhard/.bashrc
-    regexp: "{{ item.regex }}"
-    line: "{{ item.repl }}"
-  with_items:
-    - { regex: '^export PATH_TO_FX=', repl: 'export PATH_TO_FX=/opt/javafx-sdk-18.0.1/lib' }
-    - { regex: '^export CLASSPATH=', repl: 'export CLASSPATH=.:/usr/lib/jvm/java-18-openjdk-amd64/lib:$PATH_TO_FX' }
+    - name: software | java & javafx | Replace export statements in .bashrc
+      lineinfile:
+        path: /home/{{ user_name }}/.bashrc
+        regexp: "{{ item.regex }}"
+        line: "{{ item.repl }}"
+      with_items:
+        - { regex: '^export PATH_TO_FX=', repl: 'export PATH_TO_FX=/opt/javafx-sdk-18.0.1/lib' }
+        - { regex: '^export CLASSPATH=', repl: 'export CLASSPATH=.:/usr/lib/jvm/java-18-openjdk-amd64/lib:$PATH_TO_FX' }
+  when:
+    - java is defined
+    - java

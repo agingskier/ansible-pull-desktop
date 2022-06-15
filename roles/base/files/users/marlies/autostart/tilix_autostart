@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=tilix --session ~/tilix-split.json
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_US]=Tilix
+Name=Tilix
+Comment[en_US]=Start Tilix with 4 windows
+Comment=Start Tilix with 4 windows

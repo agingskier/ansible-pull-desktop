@@ -1,10 +1,10 @@
 ---
 - name: gnome | desktop | create tilix schemes directory
   file:
-    path: /home/bernhard/{{ item.dir }}
+    path: /home/{{ user_name }}/{{ item.dir }}
     state: directory
-    owner: bernhard
-    group: users
+    owner: "{{ user_name }}"
+    group: "{{ group_name }}"
     mode: 0740
   with_items:
     - { dir: '.config/tilix' }
@@ -12,16 +12,16 @@
 
 - name: gnome | desktop | copy tilix homebrew color scheme
   copy:
-    src: users/bernhard/{{ item.src }}
-    dest: /home/bernhard/{{ item.dest }}
-    owner: bernhard
-    group: users
+    src: users/{{ user_name }}/{{ item.src }}
+    dest: /home/{{ user_name }}/{{ item.dest }}
+    owner: "{{ user_name }}"
+    group: "{{ group_name }}"
     mode: 0640
   with_items:
     - { src: 'tilix/tilix_schemes_homebrew', dest: '.config/tilix/schemes/homebrew.json' }
 
 - name: gnome | desktop | set tilix values
-  become_user: bernhard
+  become_user: "{{ user_name }}"
   community.general.dconf:
     key: "/com/gexperts/Tilix/profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d/{{ item.key }}"
     value: "{{ item.value }}"

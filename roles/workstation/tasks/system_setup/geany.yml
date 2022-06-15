@@ -8,17 +8,17 @@
 
 - name: software |  geany | create .config/geany/colorschemes directories
   file:
-    path: /home/bernhard/{{ item.dir }}
+    path: /home/{{ user_name }}/{{ item.dir }}
     state: directory
-    owner: bernhard
-    group: users
+    owner: "{{ user_name }}"
+    group: "{{ group_name }}"
     mode: 0700
   with_items:
     - { dir: '.config/geany' }
     - { dir: '.config/geany/colorschemes' }
     - { dir: '.config/geany/filedefs' }
 
-- name: users | bernhard | download geany colorschemes from github
+- name: users | {{ user_name }} | download geany colorschemes from github
   become: true
   git:
     repo: "https://github.com/geany/geany-themes.git"
@@ -29,23 +29,23 @@
 - name: software | geany | copy geany colorschemes to .config/geany/colorschemes
   copy:
     src: /tmp/geany-themes/colorschemes/
-    dest: /home/bernhard/.config/geany/colorschemes/
+    dest: /home/{{ user_name }}/.config/geany/colorschemes/
     directory_mode:
-    owner: bernhard
-    group: users
+    owner: "{{ user_name }}"
+    group: "{{ group_name }}"
     mode: 0644
 
 - name: software | geany | copy filetypes.yaml
   copy:
     src: /usr/share/geany/filedefs/filetypes.yaml
-    dest: /home/bernhard/.config/geany/filedefs/filetypes.yaml
-    owner: bernhard
-    group: users
+    dest: /home/{{ user_name }}/.config/geany/filedefs/filetypes.yaml
+    owner: "{{ user_name }}"
+    group: "{{ group_name }}"
     mode: 0644
 
 - name: software | geany | Insert identifier=types in filetypes.yaml
   lineinfile:
-    path: /home/bernhard/.config/geany/filedefs/filetypes.yaml
+    path: /home/{{ user_name }}/.config/geany/filedefs/filetypes.yaml
     insertafter: '^operator=operator'
     line: 'identifier=types'
 

@@ -3,9 +3,9 @@
 #
 # user specific vars
 #
-user_name: bernhard
+user_name: marlies
 group_name: users
-ssh_users: "bernhard"
+ssh_users: "marlies"
 
 #
 # platform-specific
@@ -16,33 +16,33 @@ microcode_intel_install: yes
 #
 # users
 #
-bernhard: yes
-marlies: no
+bernhard: no
+marlies: yes
 ubuntu: no
 
 #
 # development
 #
-java: yes
+java: no
 
 #
 # application selection
 #
 
-calibre: yes
-games: yes
-gimp: yes
-kvm: yes
+calibre: no
+games: no
+gimp: no
+kvm: no
 keepassxc: yes
-librecad: yes
+librecad: no
 media: no
-multipass: yes
+multipass: no
 protonvpn: yes
-raidar: yes
-signal: yes
-steam: yes
-topgrade: yes
-vagrant: yes
+raidar: no
+signal: no
+steam: no
+topgrade: no
+vagrant: no
 variety: yes
 virtualbox: no
 vlc: no

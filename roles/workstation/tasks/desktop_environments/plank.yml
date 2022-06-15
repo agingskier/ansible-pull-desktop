@@ -1,6 +1,6 @@
 ---
 - name: gnome | plank | set alignment, size, zoom
-  become_user: bernhard
+  become_user: "{{ user_name }}"
   community.general.dconf:
     key: "/net/launchpad/plank/docks/dock1/{{ item.key }}"
     value: "{{ item.value }}"

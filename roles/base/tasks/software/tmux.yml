@@ -5,17 +5,17 @@
     pkg:
       - tmux
 
-- name: users | bernhard | recursivebly remove .tmux/plugins directory to enable re-runs
+- name: users | {{ user_name }} | recursivebly remove .tmux/plugins directory to enable re-runs
   file:
-    path: /home/bernhard/.tmux/plugins
+    path: /home/{{ user_name }}/.tmux/plugins
     state: absent
 
 - name: software | tmux | create .tmux directories
   file:
-    path: /home/bernhard/{{ item.dir }}
+    path: /home/{{ user_name }}/{{ item.dir }}
     state: directory
-    owner: bernhard
-    group: users
+    owner: "{{ user_name }}"
+    group: "{{ group_name }}"
     mode: 0700
   with_items:
     - { dir: '.tmux' }
@@ -24,7 +24,7 @@
 - name: software | tmux | git checkout git tmux plugins
   git:
     repo: https://github.com/tmux-plugins/{{ item.repo }}
-    dest: /home/bernhard/.tmux/plugins/{{ item.plug }}
+    dest: /home/{{ user_name }}/.tmux/plugins/{{ item.plug }}
     force: yes
     version: master
   with_items:
@@ -36,15 +36,16 @@
 
 - name: software | tmux | recursively chown all tmux plugins files
   file:
-    path: /home/bernhard/.tmux/plugins
+    path: /home/{{ user_name }}/.tmux/plugins
     state: directory
-    owner: bernhard
-    group: users
+    owner: "{{ user_name }}"
+    group: "{{ group_name }}"
     mode: 0755
     recurse: yes
 
 - name: software | tmux | Download latest release gitmux info
   shell: |
+    set -o pipefail
     curl --silent "https://api.github.com/repos/arl/gitmux/releases/latest" |
     grep '"tag_name":' |
     sed -E 's/.*"([^"]+)".*/\1/'
@@ -78,7 +79,7 @@
 - name: software | tmux | write gitmux.conf file
   copy:
     content: "{{ gitmux_config.stdout }}"
-    dest: /home/bernhard/.gitmux.conf
-    owner: bernhard
-    group: users
+    dest: /home/{{ user_name }}/.gitmux.conf
+    owner: "{{ user_name }}"
+    group: "{{ group_name }}"
     mode: 0644

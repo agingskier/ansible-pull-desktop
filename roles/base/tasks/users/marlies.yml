@@ -1,21 +1,21 @@
 ---
-- name: users | bernhard block
+- name: users | marlies block
   block:
-# define these variables in host_vars
-#    - name: users | bernhard | user name fact
+#  define these variables in host_vars
+#    - name: users | marlies | user name fact
 #      set_fact:
-#        user_name: 'bernhard'
+#        user_name: 'marlies'
 #        group_name: 'users'
 
-    - name: users | bernhard | add sudoers file
+    - name: users | marlies | add sudoers file
       copy:
-        src: users/sudoers_bernhard
-        dest: /etc/sudoers.d/bernhard
+        src: users/sudoers_marlies
+        dest: /etc/sudoers.d/marlies
         owner: root
         group: root
         mode: 0440
 
-    - name: users | bernhard | copy dotfiles
+    - name: users | marlies | copy dotfiles
       copy:
         src: users/{{ user_name }}/{{ item.src }}
         dest: /home/{{ user_name }}/{{ item.dest }}
@@ -31,17 +31,7 @@
         - { src: 'bash/tilix-split.json', dest: 'tilix-split.json' }
         - { src: 'autostart/conky_autostart', dest: '.config/autostart/conky.desktop' }
         - { src: 'autostart/tilix_autostart', dest: '.config/autostart/tilix.desktop' }
-        - { src: 'tmux/tmux_config', dest: '.tmux.conf' }
-        - { src: 'tmux/tmux_setup_config', dest: 'tmux-setup.conf'}
 
-    - name: users | bernhard | import tasks for vim
-      import_tasks: software/vim.yml
-
-    - name: users | bernhard | import tasks for zsh
-      import_tasks: software/zsh.yml
-      
-    - name: users | bernhard | import tasks for tmux
-      import_tasks: software/tmux.yml
   when:
-    - bernhard is defined
-    - bernhard
+    - marlies is defined
+    - marlies

@@ -1,0 +1,28 @@
+source-file ~/.tmux.conf
+# create a new session named bpic with window editor and detach
+# window editor
+new-session -s bpic -n editor -d
+
+# sent the vim command to session bpic and window editor and press Enter
+send-keys -t bpic 'vim' C-m
+
+split-window -h -t bpic
+
+new-window -n console -t bpic
+send-keys -t bpic:2 'journalctl -b -0 -f' C-m
+
+new-window -n bpytop -t bpic
+send-keys -t bpic:3 'bpytop' C-m
+
+new-window -n git -t bpic
+send-keys -t bpic:4 'cd ~/deploy/ansible-pull-desktop' C-m
+
+new-window -n bash -t bpic
+split-window -h -t bpic
+
+select-layout -t bpic tiled
+split-window -h -t bpic
+
+# select git window
+select-window -t bpic:4
+

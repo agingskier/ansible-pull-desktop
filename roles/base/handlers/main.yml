@@ -9,13 +9,6 @@
     name: udisks2
     state: restarted
 
-- name: update_vim_bundle_perms
-  file:
-    path: /home/bernhard/.vim/bundle
-    owner: bernhard
-    group: users
-    recurse: true
-
 - name: restart_journald
   service:
     name: systemd-journald
