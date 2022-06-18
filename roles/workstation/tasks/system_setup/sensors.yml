@@ -7,27 +7,58 @@
       - psensor
       - smartmontools
 
-- name: system_setup | sensors | copy etc files
-  copy:
-    src: etc/{{ item.src }}
-    dest: /etc/{{ item.dest }}
-    owner: root
-    group: root
-    mode: 0644
-  with_items:
-    - { src: 'hddtemp.db', dest: 'hddtemp.db' }
-    - { src: 'sensors3.conf', dest: 'sensors.d/sensors3.conf' }
-    - { src: 'blacklist-edac.conf', dest: 'modprobe.d/blacklist-edac.conf' }
-    - { src: 'sensors-modules', dest: 'modules' }
+- name: system setup | sensors block for {{ inventory_hostname }}
+  block:
+    - name: system_setup | sensors | copy etc files
+      copy:
+        src: etc/{{ item.src }}
+        dest: /etc/{{ item.dest }}
+        owner: root
+        group: root
+        mode: 0644
+      with_items:
+        - { src: 'asus-rampage.conf', dest: 'sensors.d/asus-rampage.conf' }
+        - { src: 'blacklist-edac.conf', dest: 'modprobe.d/blacklist-edac.conf' }
+        - { src: 'sensors-modules-asus', dest: 'modules' }
 
-- name: Run sensors-detect command | generate /etc/modules
-  become: true
-  become_method: sudo
-  command: sensors-detect --auto
-  register: expect_result
-  changed_when: expect_result.rc == 0
+    - name: Run sensors-detect command | generate /etc/modules
+      become: true
+      become_method: sudo
+      command: sensors-detect --auto
+      register: expect_result
+      changed_when: expect_result.rc == 0
 
-- name: Print sensors-detect result
-  debug:
-    var: expect_result.stdout_lines[98:]
-  when: expect_result.rc == 0
+    - name: Print sensors-detect result
+      debug:
+        var: expect_result.stdout_lines[98:]
+      when: expect_result.rc == 0
+
+  when: "'bequiet' in inventory_hostname"
+
+- name: system setup | sensors block for {{ inventory_hostname }}
+  block:
+    - name: system_setup | sensors | copy etc files
+      copy:
+        src: etc/{{ item.src }}
+        dest: /etc/{{ item.dest }}
+        owner: root
+        group: root
+        mode: 0644
+      with_items:
+#        - { src: 'acer-rampage.conf', dest: 'sensors.d/acer-rampage.conf' }
+#        - { src: 'blacklist-edac.conf', dest: 'modprobe.d/blacklist-edac.conf' }
+        - { src: 'sensors-modules-acer', dest: 'modules' }
+
+    - name: Run sensors-detect command | generate /etc/modules
+      become: true
+      become_method: sudo
+      command: sensors-detect --auto
+      register: expect_result
+      changed_when: expect_result.rc == 0
+
+    - name: Print sensors-detect result
+      debug:
+        var: expect_result.stdout_lines[98:]
+      when: expect_result.rc == 0
+      
+  when: "'acermsch' in inventory_hostname"

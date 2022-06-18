@@ -4,22 +4,22 @@
 # enter 'videoinfo' command to display a list of appropriate values
 #
 
-- name: system-setup grub block
-  block:
-    - name: system-setup | grub | add ppa repository
-      apt_repository:
-        filename: gurbcustomizer
-        repo: ppa:danielrichter2007/grub-customizer
-        state: present
-        update_cache: yes
+- name: system-setup | grub | add ppa repository
+  apt_repository:
+    filename: gurbcustomizer
+    repo: ppa:danielrichter2007/grub-customizer
+    state: present
+    update_cache: yes
         
-    - name: system-setup | grub | install grub
-      apt:
-        pkg:
-          - grub-customizer
-          - grub2-splashimages
-        state: present
+- name: system-setup | grub | install grub
+  apt:
+    pkg:
+      - grub-customizer
+      - grub2-splashimages
+    state: present
 
+- name: system-setup | grub block for {{ inventory_hostname }}
+  block:
     - name: system-setup | grub | copy black hole file
       copy:
         src: grub/black-hole-blue.tga
@@ -89,3 +89,61 @@
 
   become: yes
   become_method: sudo
+  when: "'bequiet' in inventory_hostname"
+
+- name: system-setup | grub block for {{ inventory_hostname }}
+  block:
+    - name: system-setup | grub | copy black hole file
+      copy:
+        src: grub/black-hole-blue.tga
+        dest: /usr/share/images/grub/black-hole-blue.tga
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: system_setup | grub | checkout git distro-grub-themes repository
+      git:
+        repo: https://github.com/AdisonCavani/distro-grub-themes.git
+        dest: /tmp/grub-theme
+        force: true
+        version: master
+
+    - name: system_setup | grub | create themes directory
+      file:
+        path: /boot/grub/themes
+        state: directory
+        owner: root
+        group: root
+        mode: 0755
+
+    - name: system_setup | grub | copy distro-grub-themes for acer
+      copy:
+        src: /tmp/grub-theme/distro-grub-themes/customize/acer
+        dest: /boot/grub/themes
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: Insert background line
+      lineinfile:
+        path: /etc/default/grub
+        insertafter: '^#GRUB_GFXMODE='
+        line: 'GRUB_GFXMODE=1024x768x32'
+
+    - name: system_setup | grub | lines for BACKGROUND, THEME, suppress hwmatch missing
+      lineinfile:
+        dest: /etc/default/grub
+        line: '{{ item }}'
+      with_items:
+        - 'GRUB_BACKGROUND="/usr/share/images/grub/black-hole-blue.tga.jpg"'
+        - 'GRUB_THEME="/boot/grub/themes/distro-grub-themes/acer/theme.txt"'
+        - 'GRUB_GFXPAYLOAD="keep"'
+
+    - name: update grub configuration
+      command: update-grub
+      register: grub_updcmd
+      changed_when: grub_updcmd.rc == 0
+
+  become: yes
+  become_method: sudo
+  when: "'acermsch' in inventory_hostname"

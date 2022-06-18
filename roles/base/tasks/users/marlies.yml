@@ -27,10 +27,16 @@
         - { src: 'bash/bash_functions', dest: '.bash_functions' }
         - { src: 'bash/bashrc', dest: '.bashrc' }
         - { src: 'bash/dircolors', dest: '.dircolors' }
-        - { src: 'bash/conkyrc', dest: '.conkyrc' }
+#        - { src: 'bash/conkyrc', dest: '.conkyrc' }
         - { src: 'bash/tilix-split.json', dest: 'tilix-split.json' }
-        - { src: 'autostart/conky_autostart', dest: '.config/autostart/conky.desktop' }
-        - { src: 'autostart/tilix_autostart', dest: '.config/autostart/tilix.desktop' }
+#        - { src: 'autostart/conky_autostart', dest: '.config/autostart/conky.desktop' }
+#        - { src: 'autostart/tilix_autostart', dest: '.config/autostart/tilix.desktop' }
+
+#    - name: users | marlies | conky | synchronize with NAS backup
+#      ansible.posix.synchronize:
+#        src: /mnt/NAS/backup/bequiet/conky/
+#        dest: /home/marlies/conky/
+#        archive: yes
 
   when:
     - marlies is defined

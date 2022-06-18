@@ -34,14 +34,20 @@
         - { src: 'tmux/tmux_config', dest: '.tmux.conf' }
         - { src: 'tmux/tmux_setup_config', dest: 'tmux-setup.conf'}
 
+    - name: users | bernhard | conky | synchronize ~/conky directory with NAS backup
+      ansible.posix.synchronize:
+        src: /mnt/NAS/backup/bequiet/conky/
+        dest: /home/bernhard/conky/
+        archive: yes
+
     - name: users | bernhard | import tasks for vim
-      import_tasks: software/vim.yml
+      import_tasks: ../software/vim.yml
 
     - name: users | bernhard | import tasks for zsh
-      import_tasks: software/zsh.yml
+      import_tasks: ../software/zsh.yml
       
     - name: users | bernhard | import tasks for tmux
-      import_tasks: software/tmux.yml
+      import_tasks: ../software/tmux.yml
   when:
     - bernhard is defined
     - bernhard
