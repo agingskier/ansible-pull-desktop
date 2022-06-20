@@ -51,6 +51,7 @@
     sed -E 's/.*"([^"]+)".*/\1/'
   args:
     warn: false
+    executable: /bin/bash
   register: gitmux_release
   changed_when: gitmux_release.rc == 0
 

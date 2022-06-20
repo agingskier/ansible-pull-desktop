@@ -22,6 +22,7 @@
     sed -E 's/.*"([^"]+)".*/\1/'
   args:
     warn: false
+    executable: /bin/bash
   register: lsd_release
   changed_when: lsd_release.rc == 0
 
@@ -45,6 +46,7 @@
     sed -E 's/.*"([^"]+)".*/\1/'
   args:
     warn: false
+    executable: /bin/bash
   register: fonts_release
   changed_when: fonts_release.rc == 0
 
