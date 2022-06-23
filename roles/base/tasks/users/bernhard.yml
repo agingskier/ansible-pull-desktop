@@ -27,7 +27,6 @@
         - { src: 'bash/bash_functions', dest: '.bash_functions' }
         - { src: 'bash/bashrc', dest: '.bashrc' }
         - { src: 'bash/dircolors', dest: '.dircolors' }
-        - { src: 'bash/conkyrc', dest: '.conkyrc' }
         - { src: 'bash/tilix-split.json', dest: 'tilix-split.json' }
         - { src: 'autostart/conky_autostart', dest: '.config/autostart/conky.desktop' }
         - { src: 'autostart/tilix_autostart', dest: '.config/autostart/tilix.desktop' }
@@ -36,7 +35,7 @@
 
     - name: users | bernhard | conky | synchronize ~/conky directory with NAS backup
       ansible.posix.synchronize:
-        src: /mnt/NAS/backup/bequiet/conky/
+        src: /mnt/NAS/backup/{{ hostvars[inventory_hostname].ansible_hostname }}/conky/
         dest: /home/bernhard/conky/
         archive: yes
 
