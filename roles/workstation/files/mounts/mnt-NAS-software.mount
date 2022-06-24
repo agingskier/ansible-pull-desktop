@@ -3,7 +3,7 @@ Description=NAS software share
 After=network-online.target
 
 [Mount]
-What=192.168.29.10:/software
+What=192.168.29.10:/volume1/software
 Where=/mnt/NAS/software
 Type=nfs
 Options=_netdev,auto

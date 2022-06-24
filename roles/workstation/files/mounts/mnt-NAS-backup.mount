@@ -3,7 +3,7 @@ Description=NAS backup share
 After=network-online.target
 
 [Mount]
-What=192.168.29.10:/backup
+What=192.168.29.10:/volume1/backup
 Where=/mnt/NAS/backup
 Type=nfs
 Options=_netdev,auto
