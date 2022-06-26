@@ -38,7 +38,6 @@ librecad: no
 media: no
 multipass: no
 protonvpn: yes
-raidar: no
 signal: no
 steam: no
 topgrade: no
