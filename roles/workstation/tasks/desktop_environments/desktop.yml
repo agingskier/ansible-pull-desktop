@@ -49,5 +49,5 @@
         - { key: 'use-default-font', value: "'false'" }
         - { key: 'wrap-last-split-mode', value: "'word'" }
         
-  become_user: "{{ user_name }}"
+  become: yes
   become_method: sudo
