@@ -33,10 +33,10 @@
         - { src: 'tmux/tmux_config', dest: '.tmux.conf' }
         - { src: 'tmux/tmux_setup_config', dest: 'tmux-setup.conf'}
 
-    - name: users | bernhard | conky | synchronize ~/conky directory with NAS backup
+    - name: users | bernhard | conky | synchronize ~/conky directory with /media/{{ user_name }}/Backup
       ansible.posix.synchronize:
-        src: /mnt/NAS/backup/{{ hostvars[inventory_hostname].ansible_hostname }}/conky/
-        dest: /home/bernhard/conky/
+        src: /media/{{ user_name }}/Backup/conky/
+        dest: /home/{{ user_name }}/conky/
         archive: yes
 
     - name: users | bernhard | import tasks for vim
