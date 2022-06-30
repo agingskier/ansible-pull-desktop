@@ -106,8 +106,8 @@ export NO_AT_BRIDGE=1	# to avoid dbind-warning messages with gedit
 export HOST=`hostname -s`
 export TERM=xterm-256color
 
-export PATH_TO_FX=/opt/javafx-sdk-17.0.1/lib
-export CLASSPATH=.:/usr/lib/jvm/java-17-openjdk-amd64/lib:$PATH_TO_FX
+export PATH_TO_FX=/opt/javafx-sdk-18.0.1/lib
+export CLASSPATH=.:/usr/lib/jvm/java-18-openjdk-amd64/lib:$PATH_TO_FX
 
 # $HOME/bin is added to PATH in .profile, so not required in .bashrc
 #if [ -d "$HOME/bin" ] ; then

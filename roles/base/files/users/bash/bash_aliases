@@ -5,6 +5,11 @@
 
 alias reload='source ~/.bashrc'
 
+alias cd..='cd ..'
+alias ..='cd ../../'
+alias ...='cd ../../../'
+alias ....='cd ../../../../'
+
 alias egrep='egrep -E --color=auto'
 alias which='type -a'
 alias cp='cp -rfv'
@@ -29,8 +34,9 @@ alias lsu='lsusb | ccze -A'
 alias lsb='lsblk -o NAME,FSTYPE,SIZE,MOUNTPOINT,LABEL,UUID | ccze -A'
 alias lsc='lscpu | ccze -A'
 alias lsi='sudo blkid | ccze -A'
-alias loc='mlocate -A -i'
+alias loc='locate -A -i'
 alias lsppa='grep -rhE ^deb /etc/apt/sources.list*'
+alias lsmnt='mount | column -t'
 
 #-------------------------------------------------------------
 # Some alias to make life easier

@@ -32,22 +32,23 @@
         key: "/org/gnome/desktop/interface/{{ item.key }}"
         value: "{{ item.value }}"
       with_items:
+        - { key: 'color-scheme', value: "'prefer-dark'" }
         - { key: 'cursor-size', value: '48' }
-        - { key: 'cursor-theme', value: "'DMZ-White'" }
+        - { key: 'cursor-theme', value: "'DMZ-Black'" }
+        - { key: 'document-font-name', value: "'Sans 14'" }
+        . { key: 'font-name', value: "'Noto Sans 14'" }
         - { key: 'gtk-theme', value: "'QogirBudgie-dark'" }
         - { key: 'icon-theme', value: "'Humanity-Dark'" }
-        - { key: 'text-scaling-factor', value: '1.3' }
+        - { key: 'monospace-font-name', value: "'Ubuntu Mono 14'" }
+        - { key: 'text-scaling-factor', value: '1.20' }
 
     - name: gnome | gedit | set editor values
       community.general.dconf:
         key: "/org/gnome/gedit/preferences/editor/{{ item.key }}"
         value: "{{ item.value }}"
       with_items:
-        - { key: 'editor-font', value: "'Monospace Regular 16'" }
         - { key: 'scheme', value: "'cobalt'" }
         - { key: 'tabs-size', value: "'uint32 4'" }
-        - { key: 'use-default-font', value: "'false'" }
-        - { key: 'wrap-last-split-mode', value: "'word'" }
         
   become: yes
   become_method: sudo
