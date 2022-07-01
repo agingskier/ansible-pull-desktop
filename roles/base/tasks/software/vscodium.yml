@@ -6,11 +6,13 @@
     #
     - name: software | vscodium | add vscodium gpg key to keyring file
       shell: |
+        set -o pipefail
         curl -fsSL https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg | \
         sudo gpg --dearmor | \
         sudo tee /usr/share/keyrings/vscodium.gpg > /dev/null
       args:
         warn: false
+        executable: /bin/bash
       register: vscodium_gpgkey
       changed_when: vscodium_gpgkey.rc == 0
 

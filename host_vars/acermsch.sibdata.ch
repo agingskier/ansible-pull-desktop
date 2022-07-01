@@ -12,6 +12,7 @@ ssh_users: "marlies"
 #
 microcode_amd_install: no
 microcode_intel_install: yes
+nvidia: no
 
 #
 # users

@@ -15,7 +15,6 @@
       - dnsutils
       - etherape
       - plocate
-      - mosh
       - ncdu
       - neofetch
       - nmap
