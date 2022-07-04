@@ -6,7 +6,6 @@
   snap:
     name:
       - multipass
-      - ubuntu-cloud-image
   when:
     - multipass is defined
     - multipass

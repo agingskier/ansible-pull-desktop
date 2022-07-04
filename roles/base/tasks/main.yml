@@ -18,6 +18,7 @@
     - import_tasks: software/modern-unix.yml
     - import_tasks: software/tilix.yml
     - import_tasks: software/utilities.yml
+    - import_tasks: software/nvidia.yml
     - import_tasks: software/firefox.yml
     - import_tasks: software/brave.yml
     - import_tasks: software/java.yml

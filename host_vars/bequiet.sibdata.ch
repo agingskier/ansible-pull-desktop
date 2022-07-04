@@ -12,7 +12,10 @@ ssh_users: "bernhard"
 #
 microcode_amd_install: no
 microcode_intel_install: yes
-nvidia: yes
+
+# nvidia packages are required by conky but cause problems with 
+#  errors in "systemctl status nvidia-persistenced" (missing package, which is not available)
+nvidia: no
 
 #
 # users
@@ -33,7 +36,7 @@ java: yes
 calibre: yes
 games: yes
 gimp: yes
-kvm: yes
+kvm: no
 keepassxc: yes
 librecad: yes
 media: no
