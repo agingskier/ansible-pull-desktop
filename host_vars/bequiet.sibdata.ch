@@ -13,9 +13,8 @@ ssh_users: "bernhard"
 microcode_amd_install: no
 microcode_intel_install: yes
 
-# nvidia packages are required by conky but cause problems with 
-#  errors in "systemctl status nvidia-persistenced" (missing package, which is not available)
-nvidia: no
+# nvidia packages are required by conky
+nvidia: yes
 
 #
 # users

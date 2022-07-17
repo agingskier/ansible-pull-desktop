@@ -21,7 +21,6 @@
         verbosity: 2
       with_items:
         - "nvidia-utils-{{ nvidia_release }}"
-        - "nvidia-compute-utils-{{ nvidia_release }}"
 
     - name: software | nvidia | install nvidia utils
       become: true
@@ -29,8 +28,6 @@
       apt: 
         pkg:
           - nvidia-utils-{{ nvidia_release }}
-          - nvidia-compute-utils-{{ nvidia_release }}
-
   when:
     - nvidia is defined
     - nvidia
