@@ -28,4 +28,3 @@
     - { src: 'bash/bash_functions', dest: '.bash_functions' }
     - { src: 'bash/dircolors', dest: '.dircolors' }
     - { src: 'vim/vimrc', dest: '.vimrc' }
-    - { src: 'vim/xoria256.vim', dest: '.vim/colors/xoria256.vim' }
