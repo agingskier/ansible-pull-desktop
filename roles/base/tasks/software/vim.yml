@@ -5,7 +5,7 @@
 #    user_name: 'bernhard'
 #    group_name: 'users'
 
-- name: vim | {{ user_name }} | recursivebly remove .vim/bundle directory to enable re-runs
+- name: vim-task | {{ user_name }} | recursivebly remove .vim/bundle directory to enable re-runs
   file:
     path: /home/{{ user_name }}/.vim/bundle
     state: absent
