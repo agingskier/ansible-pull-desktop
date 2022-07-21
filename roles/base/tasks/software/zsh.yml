@@ -5,7 +5,7 @@
 #    user_name: 'bernhard'
 #    group_name: 'users'
     
-- name: users | zsh | Creates zsh directory in .config
+- name: zsh | {{ user_name }} | Creates zsh directory in .config
   file:
     path: /home/{{ user_name }}/.config/{{ item.dir }}
     state: directory
@@ -16,9 +16,9 @@
     - { dir: 'zsh' }
     - { dir: 'zsh/plugins' }
 
-- name: users | zsh | copy individual zsh config files
+- name: zsh | {{ user_name }} | copy individual zsh config files
   copy:
-    src: users/{{ user_name }}/zsh/{{ item.src }}
+    src: users/zsh/{{ item.src }}
     dest: /home/{{ user_name }}/.config/zsh/{{ item.dest }}
     owner: "{{ user_name }}"
     group: "{{ group_name }}"
@@ -34,8 +34,8 @@
     - { src: 'zshenv', dest: 'zshenv' }
     - { src: 'zshrc', dest: '.zshrc' }
 
-- name: users | zsh | copy dotfiles
-  copy:
+- name: zsh | {{ user_name }} | copy dotfiles
+  copy: 
     src: /home/{{ user_name }}/.config/zsh/{{ item.src }}
     dest: /home/{{ user_name }}/{{ item.dest }}
     owner: "{{ user_name }}"
