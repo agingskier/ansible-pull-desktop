@@ -28,10 +28,10 @@
         group: root
         mode: 0644
 
-    - name: system-setup | grub | Five Galaxies from JamesWebb
+    - name: system-setup | grub | Saturn wallpaper
       copy:
-        src: grub/JamesWebb-5-Galaxies.jpg
-        dest: /usr/share/images/grub/JamesWebb-5-Galaxies.jpg
+        src: grub/saturn-wallpaper.jpg
+        dest: /usr/share/images/grub/saturn.jpg
         owner: root
         group: root
         mode: 0644
@@ -78,7 +78,7 @@
         dest: /etc/default/grub
         line: '{{ item }}'
       with_items:
-        - 'GRUB_BACKGROUND="/usr/share/images/grub/JamesWebb-5-Galaxies.jpg"'
+        - 'GRUB_BACKGROUND="/usr/share/images/grub/saturn.jpg"'
         - 'GRUB_THEME="/boot/grub/themes/dark-matter/theme.txt"'
         - 'GRUB_GFXPAYLOAD="keep"'
 
