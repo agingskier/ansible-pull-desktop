@@ -36,7 +36,7 @@
         - { key: 'cursor-size', value: '48' }
         - { key: 'cursor-theme', value: "'DMZ-Black'" }
         - { key: 'document-font-name', value: "'Sans 14'" }
-        . { key: 'font-name', value: "'Noto Sans 14'" }
+        - { key: 'font-name', value: "'Noto Sans 14'" }
         - { key: 'gtk-theme', value: "'QogirBudgie-dark'" }
         - { key: 'icon-theme', value: "'Humanity-Dark'" }
         - { key: 'monospace-font-name', value: "'Ubuntu Mono 14'" }
