@@ -5,12 +5,12 @@
 #    user_name: 'bernhard'
 #    group_name: 'users'
 
-- name: users | {{ user_name }} | recursivebly remove .vim/bundle directory to enable re-runs
+- name: vim | {{ user_name }} | recursivebly remove .vim/bundle directory to enable re-runs
   file:
     path: /home/{{ user_name }}/.vim/bundle
     state: absent
 
-- name: users | {{ user_name }} | create vim directories
+- name: vim | {{ user_name }} | create vim directories
   file:
     path: /home/{{ user_name }}/{{ item.dir }}
     state: directory
@@ -24,19 +24,19 @@
     - { dir: '.vim/colors' }
     - { dir: '.vim/ftplugin' }
 
-- name: users | {{ user_name }} | copy vim dotfile 
+- name: vim | {{ user_name }} | copy vim dotfile 
   copy:
-    src: users/{{ item.src }}
+    src: users/vim/{{ item.src }}
     dest: /home/{{ user_name }}/{{ item.dest }}
     owner: "{{ user_name }}"
     group: "{{ group_name }}"
     mode: 0600
   with_items:
-    - { src: 'vim/vimrc', dest: '.vimrc' }
+    - { src: 'vimrc', dest: '.vimrc' }
 
-- name: users | {{ user_name }} | copy vim ftype files
+- name: vim | {{ user_name }} | copy vim ftype files
   copy:
-    src: users/{{ user_name }}/vim/{{ item.src }}
+    src: users/vim/{{ item.src }}
     dest: /home/{{ user_name }}/.vim/ftplugin/{{ item.src }}
     owner: "{{ user_name }}"
     group: "{{ group_name }}"
@@ -52,7 +52,7 @@
     - { src: 'xml.vim' }
     - { src: 'folding.vim' }  # open fold: zo | close fold zM
 
-- name: users | {{ user_name }} | download pathogen & color vim files from github
+- name: vim | {{ user_name }} | download pathogen & color vim files from github
   become: true
   get_url:
     url: "https://raw.githubusercontent.com/{{ item.url }}"
@@ -70,7 +70,7 @@
     - { url: 'NLKNguyen/papercolor-theme/master/colors/PaperColor.vim', dest: 'colors/PaperColor.vim' }
     - { url: 'rafalbromirski/vim-aurora/master/colors/aurora.vim', dest: 'colors/aurora.vim' }
 
-- name: users | {{ user_name }} | pathogen plug manager | git checkout bundle repositories
+- name: vim | {{ user_name }} | pathogen plug manager | git checkout bundle repositories
   become: true
   git:
     repo: "{{ item.repo }}"
@@ -91,7 +91,7 @@
     - { repo: 'https://github.com/scrooloose/nerdtree.git', dest: '/home/{{ user_name }}/.vim/bundle/nerdtree' }
 #    - { repo: 'https://github.com/tpope/vim-obsession.git', dest: '/home/{{ user_name }}/.vim/bundle/vim-obsession' } # remember sessions
 
-- name: users | {{ user_name }} | recursively chown all vim bundle files
+- name: vim | {{ user_name }} | recursively chown all vim bundle files
   file:
     path: /home/{{ user_name }}/.vim/bundle
     state: directory
