@@ -26,7 +26,7 @@
 
 - name: users | {{ user_name }} | copy vim dotfile 
   copy:
-    src: users/{{ user_name }}/{{ item.src }}
+    src: users/{{ item.src }}
     dest: /home/{{ user_name }}/{{ item.dest }}
     owner: "{{ user_name }}"
     group: "{{ group_name }}"
