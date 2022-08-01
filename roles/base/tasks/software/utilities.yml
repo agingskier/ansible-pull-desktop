@@ -5,7 +5,6 @@
     pkg:
       - apt-show-versions
       - at
-      - bpytop
       - ccze
       - colordiff
       - conky-all

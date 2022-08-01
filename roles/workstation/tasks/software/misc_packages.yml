@@ -5,7 +5,6 @@
       - gparted
       - p7zip-full
       - pdfsam
-      - bpytop
       - sshpass
       - libimage-exiftool-perl
     state: present

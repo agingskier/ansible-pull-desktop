@@ -11,6 +11,7 @@
     - include_tasks: desktop_environments/desktop.yml
 
     ## system setup
+    - import_tasks: system_setup/btop_plus_plus.yml
     - import_tasks: system_setup/geany.yml
     - import_tasks: system_setup/grub.yml
     - import_tasks: system_setup/sensors.yml
