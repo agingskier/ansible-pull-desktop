@@ -6,8 +6,9 @@
 # Most values can be set within GIMP by changing some options in the
 # Preferences dialog.
 
-(brush-path "/mnt/Data/gimp/brushes:${gimp_dir}/brushes:${gimp_data_dir}/brushes")
-(brush-path-writable "/mnt/Data/gimp/brushes:${gimp_data_dir}/brushes")
+(tile-cache-size 8G)
+(brush-path "/mnt/Data/gimp/brushes:${gimp_data_dir}/brushes")
+(undo-size 1024M)
 (import-raw-plug-in "${gimp_plug_in_dir}/plug-ins/file-raw-placeholder/file-raw-placeholder")
 (snap-distance 4)
 (monitor-xresolution 157)
@@ -33,7 +34,7 @@
     (dash-offset 0)
     (dash-info 0)
     (emulate-brush-dynamics no))
-(script-fu-path "/mnt/Data/gimp/scripts:${gimp_dir}/scripts:${gimp_data_dir}/scripts")
+(script-fu-path "/mnt/Data/gimp/scripts:${gimp_data_dir}/scripts")
 
 
 # end of gimprc

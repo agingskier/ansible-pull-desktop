@@ -17,16 +17,23 @@
           - gegl
         state: present
 
+   - name: software | gimp | start gimp with batch command to create GIMP dir in .config
+     command: gimp -b -
+     register: gimp_batch
+     changed_when: gimp_batch.rc == 0
+
 # these file can only be copied after GIMP has been started the first time
-#   - name: software | gimp | copy gimprc & text-tool files
-#     copy:
-#       src: gimp/{{ item.src }}
-#       dest: /home/bernhard/.config/GIMP/2.10/{{ item.dest }}
-#       owner: bernhard
-#       group: users
-#       mode: 0600
-#     with_items:
-#       - { src: 'gimprc', dest: 'gimprc' }
+# the gimp session needs to be closed to continue with installation
+
+   - name: software | gimp | copy gimprc & text-tool files
+     copy:
+       src: gimp/{{ item.src }}
+       dest: /home/bernhard/.config/GIMP/2.10/{{ item.dest }}
+       owner: bernhard
+       group: users
+       mode: 0664
+     with_items:
+       - { src: 'gimprc', dest: 'gimprc' }
 #       - { src: 'gimp-text-tool', dest: 'tool-options/gimp-text-tool' }
 
   become: yes
