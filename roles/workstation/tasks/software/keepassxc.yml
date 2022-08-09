@@ -10,6 +10,20 @@
         state: present
         update_cache: yes
 
+# run "sudo apt-key list" to find the full public gpg key
+# use the last 8 characters for the export command
+
+    - name: software | keepassxc | apt-key deprecated - convert trusted.gpg into member in tursted.gpg.d
+      shell: |
+        set -o pipefail
+        apt-key export 0068FCD6 | \
+        gpg --dearmour -o /etc/apt/trusted.gpg.d/keepassxc.gpg
+      args:
+        warn: false
+        executable: /bin/bash
+      register: gpg_convert
+      changed_when: gpg_convert.rc == 0
+
     - name: software | keepassxc | install keepassxc
       apt:
         pkg:

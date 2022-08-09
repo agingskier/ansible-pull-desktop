@@ -13,6 +13,21 @@
 #    repo: ppa:danielrichter2007/grub-customizer
 #    state: present
 #    update_cache: yes
+
+# run "sudo apt-key list" to find the full public gpg key
+# use the last 8 characters for the export command
+
+#    - name: software | grub | apt-key deprecated - convert trusted.gpg into member in tursted.gpg.d
+#      shell: |
+#        set -o pipelfail 
+#        apt-key export 3F055C03 | \
+#        gpg --dearmour -o /etc/apt/trusted.gpg.d/grub-customizer.gpg
+#      args:
+#        warn: false
+#        executalbe: /bin/bash
+#      register: gpg_convert
+#      changed_when: gpg_convert.rc == 0
+
         
 - name: system-setup | grub | install grub
   apt:
