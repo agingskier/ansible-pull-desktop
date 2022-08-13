@@ -17,11 +17,11 @@
 # run "sudo apt-key list" to find the full public gpg key
 # use the last 8 characters for the export command
 
-    - name: software | firefox | apt-key deprecated - convert trusted.gpg into member in tursted.gpg.d
+    - name: software | firefox | apt-key deprecated - convert trusted.gpg into a member in /usr/share/keyrings
       shell: |
         set -o pipefail
         apt-key export CE49EC21 | \
-        gpg --dearmour -o /etc/apt/trusted.gpg.d/mozilla.gpg
+        gpg --dearmour -o /usr/share/keyrings/mozilla.gpg
       args:
         warn: false
         executable: /bin/bash

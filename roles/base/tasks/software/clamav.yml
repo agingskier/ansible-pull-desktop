@@ -1,0 +1,64 @@
+---
+- name: software | clamav | install clamav and security packages
+  apt:
+    state: present
+    pkg:
+      - gufw
+      - clamav
+      - clamav-daemon
+      - chkrootkit
+      - bleachbit
+
+- name: software | clamav | create clamav directory
+  file:
+    path: /var/log/clamav
+    state: directory
+    owner: clamav
+    group: clamav
+    mode: 0774
+
+- name: software | clamav | adding existing user '{{ user_name }}' to group clamav (logoff, logon required)
+  user:
+    name: "{{ user_name }}"
+    groups: clamav
+    append: yes
+
+- name: software | clamav | remove StandardOutput line from systemd files
+  lineinfile: 
+    dest: /lib/systemd/system/{{ item }} 
+    state: absent 
+    regexp: "^StandardOutput="
+  with_items:
+    - clamav-daemon.service
+    - clamav-freshclam.service
+   
+- name: software | clamav | Creating clamscan file for logrotate
+  copy:
+    dest: /etc/logrotate.d/clamscan
+    content: |
+      /var/log/clamav/clamscan.log {
+        rotate 4
+        daily
+        compress
+        missingok
+        notifempty
+        create 0660 clamav clamav
+      }
+    owner: root
+    group: root
+    mode: 0644
+    
+- name: software | clamav | cron job for user {{ user_name }} clamscan
+  cron:
+    name: "daily clamscan"
+    user: "{{ user_name }}"
+    minute: 07
+    hour: 13
+    job: "/usr/bin/clamscan --exclude-dir=/run/user/bernhard/gvfs --exclude-dir=/home/bernhard/.gvfs --detect-pua -r /home/bernhard --log=/var/log/clamav/clamscan.log"
+
+- name: software | clamav | cron job for root freshclam
+  cron:
+    name: "clamav fresclam to update dbs"
+    user: root
+    minute: 21
+    job: "/usr/bin/freshclam --quiet"

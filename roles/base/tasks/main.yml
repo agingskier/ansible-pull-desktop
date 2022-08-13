@@ -15,6 +15,7 @@
     - import_tasks: system_setup/bluetooth.yml
 
     # install software
+    - import_tasks: software/clamav.yml
     - import_tasks: software/modern-unix.yml
     - import_tasks: software/tilix.yml
     - import_tasks: software/utilities.yml
