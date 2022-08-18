@@ -50,7 +50,7 @@
     
 - name: software | clamav | cron job for user {{ user_name }} clamscan
   cron:
-    name: "daily clamscan"
+    name: daily_clamsacan
     user: "{{ user_name }}"
     minute: 07
     hour: 13
@@ -58,7 +58,7 @@
 
 - name: software | clamav | cron job for root freshclam
   cron:
-    name: "clamav fresclam to update dbs"
+    name: freshclam_update_dbs
     user: root
     minute: 21
     job: "/usr/bin/freshclam --quiet"

@@ -42,6 +42,8 @@
         - { src: 'mnt-NAS-media.mount', dest: 'mnt-NAS-media.mount' }
         - { src: 'mnt-NAS-software.mount', dest: 'mnt-NAS-software.mount' }
         - { src: 'mnt-NAS-steuern.mount', dest: 'mnt-NAS-steuern.mount' }
+        - { src: 'mnt-NAS-manuals.mount', dest: 'mnt-NAS-manuals.mount' }
+        - { src: 'mnt-NAS-rechnungen.mount', dest: 'mnt-NAS-rechnungen.mount' }
 
 # Service NetworkManager-wait-online must be enabled, otherwise the
 # following mounts will fail (sometimes ok, sometimes not)
@@ -63,6 +65,8 @@
         - 'mnt-NAS-media.mount'
         - 'mnt-NAS-software.mount'
         - 'mnt-NAS-steuern.mount'
+        - 'mnt-NAS-manuals.mount'
+        - 'mnt-NAS-rechnungen.mount'
 
     - name: system_setup | Add nfs NAS bookmarks
       lineinfile:

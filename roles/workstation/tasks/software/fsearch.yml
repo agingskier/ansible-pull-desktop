@@ -1,0 +1,78 @@
+---
+- name: software | fsearch | add fsearch apt repository
+  apt_repository:
+    filename: fsearch
+    repo: 'ppa:christian-boxdoerfer/fsearch-stable'
+    state: present
+    update_cache: yes
+
+# run "sudo apt-key list" to find the full public gpg key
+# use the last 8 characters for the export command
+#
+# check: https://launchpad.net/~christian-boxdoerfer/+archive/ubuntu/fsearch-stable for Signing Key last 8 characters
+
+- name: software | fsearch | apt-key deprecated - convert trusted.gpg into a member in /usr/share/keyrings
+  shell: |
+    set -o pipefail
+    apt-key export DC496F40 | \
+    gpg --dearmour -o /usr/share/keyrings/fsearch.gpg
+  args:
+    warn: false
+    executable: /bin/bash
+  register: gpg_convert
+  changed_when: gpg_convert.rc == 0
+
+- name: software | fsearch | install fsearch
+  apt:
+    pkg:
+      - fsearch
+
+- name: software | fsearch | cmd starts config window expecting close, creates fsearch conf file
+  become: yes
+  become_user: "{{ user_name }}"
+  command: fsearch --preferences
+  timeout: 10
+  ignore_errors: yes
+  register: fsearch_result
+  changed_when: fsearch_result.rc == 0
+
+- name: software | fsearch | remove [Database] block from fsearch.conf file
+  replace:
+    path: /home/{{ user_name }}/.config/fsearch/fsearch.conf
+    regexp: '^\[Database\][^[]+'
+    replace: ""
+
+- name: software | fsearch | insert modified [Database] block into fsearch.conf file
+  blockinfile:
+    path: /home/{{ user_name }}/.config/fsearch/fsearch.conf
+    marker: "#<-- Inserted by fsearch.yml Ansible-Playbook  -->"
+    insertbefore: "^[Filters]"
+    block: |
+      
+      [Database]
+      update_database_on_launch=false
+      update_database_every=false
+      pdate_database_every_hours=0
+      update_database_every_minutes=15
+      exclude_hidden_files_and_folders=false
+      follow_symbolic_links=false
+      location_1=/home/bernhard
+      location_enabled_1=true
+      location_update_1=true
+      location_one_filesystem_1=false
+      location_2=/mnt/NAS/documents
+      location_enabled_2=true
+      location_update_2=true
+      location_one_filesystem_2=false
+      exclude_location_1=/proc
+      exclude_location_enabled_1=true
+      exclude_location_2=/sys
+      exclude_location_enabled_2=true
+      exclude_files=
+      
+- name: software | fsearch | add cron entry to update fsearch database
+  cron:
+    name: fsearch_update_db
+    user: "{{ user_name }}"
+    hour: "*/6"
+    job: "/bin/fsearch -u"

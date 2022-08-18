@@ -6,7 +6,6 @@
     name:
       - digikam
       - lxd
-      - fsearch
       - docfetcher
       - signal-desktop
       - ssh-audit
