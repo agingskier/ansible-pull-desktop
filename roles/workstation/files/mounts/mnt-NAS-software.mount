@@ -1,5 +1,5 @@
 [Unit]
-Description=NAS software share
+Description=Synology NAS software share on 192.168.29.10
 After=network-online.target
 
 [Mount]

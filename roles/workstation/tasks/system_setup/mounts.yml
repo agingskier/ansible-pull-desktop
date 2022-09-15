@@ -28,6 +28,8 @@
         - { dir: NAS/documents }
         - { dir: NAS/backup }
         - { dir: NAS/media }
+        - { dir: NAS/manuals }
+        - { dir: NAS/rechnungen }
 
     - name: system_setup | systemd | copy mount files
       copy:

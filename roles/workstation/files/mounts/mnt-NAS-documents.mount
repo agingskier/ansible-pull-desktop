@@ -1,5 +1,5 @@
 [Unit]
-Description=NAS documents share
+Description=Synology NAS documents share on 192.168.29.10
 After=network-online.target
 
 [Mount]

@@ -56,7 +56,7 @@
       update_database_every_minutes=15
       exclude_hidden_files_and_folders=false
       follow_symbolic_links=false
-      location_1=/home/bernhard
+      location_1=/home/{{ user_name }}
       location_enabled_1=true
       location_update_1=true
       location_one_filesystem_1=false
@@ -68,11 +68,13 @@
       exclude_location_enabled_1=true
       exclude_location_2=/sys
       exclude_location_enabled_2=true
+      exclude_location_3=/home/{{ user_name }}/.config/VSCodium
+      exclude_location_enabled_3=true     
       exclude_files=
       
 - name: software | fsearch | add cron entry to update fsearch database
   cron:
     name: fsearch_update_db
     user: "{{ user_name }}"
-    hour: "*/6"
+    minute: "36"
     job: "/bin/fsearch -u"
