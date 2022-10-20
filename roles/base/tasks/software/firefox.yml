@@ -2,11 +2,6 @@
 - name: software | firefox block
   block:
   
-    - name: software | firefox | remove snap firefox
-      snap:
-        name: firefox
-        state: absent
-
     - name: software | firefox | add firefox apt repository
       apt_repository:
         filename: firefox

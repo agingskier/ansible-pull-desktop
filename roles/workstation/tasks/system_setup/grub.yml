@@ -183,6 +183,16 @@
       register: grub_grep
       changed_when: grub_grep.rc == 0
 
+#
+# acpi stands for: "Advanded Configuration and Power Interface"
+# error messages in log: "EISA: cannot allocate resource for Mainboard"
+#
+    - name: system_setup | grub | Replace CMDLINE with acpi=off to supress error messages
+      replace:
+        path: /etc/default/grub
+        regexp: 'GRUB_CMDLINE_LINUX_DEFAULT=""'
+        replace: 'GRUB_CMDLINE_LINUX_DEFAULT="quiet splash acpi=off"'
+
     - name: system_setup | grub | Insert background line
       lineinfile:
         path: /etc/default/grub

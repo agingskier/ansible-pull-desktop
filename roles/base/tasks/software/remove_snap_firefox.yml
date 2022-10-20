@@ -1,0 +1,16 @@
+---
+- name: software | firefox | remove snap firefox
+  snap:
+    name: firefox
+    state: absent
+
+- name: software | firefox | create apt file to avoid reinstall of snap firefox
+  copy:
+    dest: "/etc/apt/preferences.d/mozilla-firefox"
+    owner: root
+    group: root
+    mode: 0644
+    content: |
+      Package: *
+      Pin: release o=LP-PPA-mozillateam
+      Pin-Priority: 1001

@@ -18,7 +18,7 @@
     name: "logfile reduction"
     user: root
     special_time: reboot
-    job: "sleep 300 && journalctl --vacuum-time=5d"
+    job: "sleep 300 && journalctl --vacuum-time=7days"
 
 - name: system setup | cron | mlocate database
   cron:
