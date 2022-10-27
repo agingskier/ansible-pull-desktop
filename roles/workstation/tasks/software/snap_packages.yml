@@ -7,7 +7,6 @@
       - digikam
       - lxd
       - docfetcher
-      - signal-desktop
       - ssh-audit
 
 - name: software | snap connect | allow access to NAS
