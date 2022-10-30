@@ -95,15 +95,15 @@
         group: root
         mode: 0644
 
-    - name: system_setup | grub | create custom.cfg file for Windows entry
-      shell: |
-        set -o pipefail
-        grep -A10 'menuentry.*Windows' /boot/grub/grub.cfg > /boot/grub/custom.cfg
-      args:
-        warn: false
-        executable: /bin/bash
-      register: grub_grep
-      changed_when: grub_grep.rc == 0
+#    - name: system_setup | grub | create custom.cfg file for Windows entry
+#      shell: |
+#        set -o pipefail
+#        grep -A10 'menuentry.*Windows' /boot/grub/grub.cfg > /boot/grub/custom.cfg
+#      args:
+#        warn: false
+#        executable: /bin/bash
+#      register: grub_grep
+#      changed_when: grub_grep.rc == 0
 
 #
 # acpi stands for: "Advanded Configuration and Power Interface"
@@ -129,7 +129,7 @@
         - 'GRUB_BACKGROUND="/usr/share/images/grub/saturn.jpg"'
         - 'GRUB_THEME="/boot/grub/themes/dark-matter/theme.txt"'
         - 'GRUB_GFXPAYLOAD_LINUX="keep"'
-        - 'GRUB_DISABLE_OS_PROBER="true"'
+        - 'GRUB_DISABLE_OS_PROBER="false"'
 
     - name: system_setup | grub | update grub configuration
       command: update-grub
@@ -173,15 +173,15 @@
         group: root
         mode: 0644
 
-    - name: system_setup | grub | create custom.cfg file for Windows entry
-      shell: |
-        set -o pipefail
-        grep -A5 'menuentry.*Windows' /boot/grub/grub.cfg > /boot/grub/custom.cfg
-      args:
-        warn: false
-        executable: /bin/bash
-      register: grub_grep
-      changed_when: grub_grep.rc == 0
+#    - name: system_setup | grub | create custom.cfg file for Windows entry
+#      shell: |
+#        set -o pipefail
+#        grep -A5 'menuentry.*Windows' /boot/grub/grub.cfg > /boot/grub/custom.cfg
+#      args:
+#        warn: false
+#        executable: /bin/bash
+#      register: grub_grep
+#      changed_when: grub_grep.rc == 0
 
 #
 # acpi stands for: "Advanded Configuration and Power Interface"
@@ -207,7 +207,7 @@
         - 'GRUB_BACKGROUND="/usr/share/images/grub/black-hole-blue.tga.jpg"'
         - 'GRUB_THEME="/boot/grub/themes/distro-grub-themes/acer/theme.txt"'
         - 'GRUB_GFXPAYLOAD_LINUX="keep"'
-        - 'GRUB_DISABLE_OS_PROBER="true"'
+        - 'GRUB_DISABLE_OS_PROBER="false"'
 
     - name: system_setup | grub | update grub configuration
       command: update-grub

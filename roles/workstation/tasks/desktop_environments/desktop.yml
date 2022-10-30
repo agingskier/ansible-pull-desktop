@@ -19,6 +19,13 @@
         key: "/org/gnome/desktop/background/picture-options"
         value: "'zoom'"
 
+    - name: gnome | desktop | disable touchpad
+      community.general.dconf:
+        key: "/org/gnome/desktop/peripherals/touchpad/{{ item.key }}"
+        value: "{{ item.value }}"
+      with_items:
+        - { key: 'send-events', value: "'disabled'" }
+
     - name: gnome | desktop | copy lock screen background file
       copy:
         src: gnome/jupiter.jpg
