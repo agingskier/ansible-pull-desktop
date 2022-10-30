@@ -9,7 +9,7 @@
 
 #- name: system-setup | grub | add ppa repository
 #  apt_repository:
-#    filename: gurbcustomizer
+#    filename: grubcustomizer
 #    repo: ppa:danielrichter2007/grub-customizer
 #    state: present
 #    update_cache: yes
@@ -167,7 +167,7 @@
 
     - name: system_setup | grub | copy distro-grub-themes for acer
       copy:
-        src: /tmp/grub-theme/distro-grub-themes/customize/acer
+        src: /tmp/grub-theme/customize/acer
         dest: /boot/grub/themes
         owner: root
         group: root
