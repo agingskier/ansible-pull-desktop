@@ -95,16 +95,6 @@
         group: root
         mode: 0644
 
-#    - name: system_setup | grub | create custom.cfg file for Windows entry
-#      shell: |
-#        set -o pipefail
-#        grep -A10 'menuentry.*Windows' /boot/grub/grub.cfg > /boot/grub/custom.cfg
-#      args:
-#        warn: false
-#        executable: /bin/bash
-#      register: grub_grep
-#      changed_when: grub_grep.rc == 0
-
 #
 # acpi stands for: "Advanded Configuration and Power Interface"
 # error messages in log: "EISA: cannot allocate resource for Mainboard"
@@ -172,16 +162,6 @@
         owner: root
         group: root
         mode: 0644
-
-#    - name: system_setup | grub | create custom.cfg file for Windows entry
-#      shell: |
-#        set -o pipefail
-#        grep -A5 'menuentry.*Windows' /boot/grub/grub.cfg > /boot/grub/custom.cfg
-#      args:
-#        warn: false
-#        executable: /bin/bash
-#      register: grub_grep
-#      changed_when: grub_grep.rc == 0
 
 #
 # acpi stands for: "Advanded Configuration and Power Interface"
