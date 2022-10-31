@@ -56,7 +56,7 @@
 
     - name: system_setup | grub | checkout git dark-matter repository
       git:
-        repo: https://gitlab.com/VandalByte/darkmatter-grub2-theme.git
+        repo: https://gitlab.com/VandalByte/darkmatter-grub-theme.git
         dest: /tmp/grub-darkmatter
         force: true
         version: main
