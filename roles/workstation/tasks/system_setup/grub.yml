@@ -89,7 +89,7 @@
 
     - name: system_setup | grub | copy png file ubuntu to background
       copy:
-        src: /tmp/grub-theme/assets/backgrounds/ubuntu.png
+        src: /tmp/grub-theme/assets/backgrounds/ubuntu-1440p.png
         dest: /boot/grub/themes/dark-matter/background.png
         owner: root
         group: root
