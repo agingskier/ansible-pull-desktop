@@ -77,7 +77,7 @@ function dis-colors ()
 		;;
 		05) tputcolors.sh
 		;;
-        06) firefox https://hexcol.com/color/b200b2
+		06) firefox https://hexcol.com/color/b200b2
         ;;
 	esac
 }
@@ -201,7 +201,7 @@ function desk ()
 		*)
 			;;
 	esac
-echo ${yellow}"Desktop: "${magenta}$TOP${yellow} "Version: "${magenta}$VER${NC}
+	echo ${yellow}"Desktop: "${magenta}$TOP${yellow} "Version: "${magenta}$VER${NC}
 }
 
 function ebook ()

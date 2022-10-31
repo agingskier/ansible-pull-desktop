@@ -47,6 +47,9 @@ alias loc='locate -A -i'
 alias lsppa='grep -rhE ^deb /etc/apt/sources.list*'
 alias lsmnt='mount | column -t'
 
+alias lsop='lsof -P -iTCP -sTCP:LISTEN'		# display all open ports
+alias lserr='journalctl -b -p err'
+
 #-------------------------------------------------------------
 # Some alias to make life easier
 #-------------------------------------------------------------

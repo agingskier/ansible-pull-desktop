@@ -105,6 +105,8 @@ export NO_AT_BRIDGE=1	# to avoid dbind-warning messages with gedit
 
 export HOST=`hostname -s`
 export TERM=xterm-256color
+export PAGER=less
+export LESS='-j4aR'
 
 export PATH_TO_FX=/opt/javafx-sdk-18.0.1/lib
 export CLASSPATH=.:/usr/lib/jvm/java-18-openjdk-amd64/lib:$PATH_TO_FX
