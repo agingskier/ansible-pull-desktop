@@ -61,12 +61,12 @@
         force: true
         version: main
 
-    - name: system_setup | grub | checkout git virtual-future repository
-      git:
-        repo: https://gitlab.com/deck451/virtual_future_grub_theme.git
-        dest: /tmp/grub-virtualfuture
-        force: true
-        version: main
+#    - name: system_setup | grub | checkout git virtual-future repository
+#      git:
+#        repo: https://gitlab.com/deck451/virtual_future_grub_theme.git
+#        dest: /tmp/grub-virtualfuture
+#        force: true
+#        version: main
 
     - name: system_setup | grub | create themes directory
       file:
@@ -85,7 +85,7 @@
         mode: 0644
       with_items:
         - 'grub-darkmatter/dark-matter'
-        - 'grub-virtualfuture/virtual-future'
+#        - 'grub-virtualfuture/virtual-future'
 
     - name: system_setup | grub | copy png file ubuntu to background
       copy:
