@@ -41,7 +41,7 @@
     - name: system-setup | grub | copy background images for grub
       copy:
         src: grub/{{ item.src }}
-        dest: /usr/share/images/{{ item.dest }}
+        dest: /usr/share/images/grub/{{ item.dest }}
         owner: root
         group: root
         mode: 0644
@@ -78,19 +78,19 @@
 
     - name: system_setup | grub | copy grub themes
       copy:
-        src: /tmp/{{ item }}
-        dest: /boot/grub/themes
+        src: /tmp/{{ item.src }}
+        dest: /boot/grub/themes/{{ item.dest }}
         owner: root
         group: root
         mode: 0644
       with_items:
-        - 'grub-darkmatter'
+        - { src: 'grub-darkmatter', dest: 'darkmatter' }
 #        - 'grub-virtualfuture/virtual-future'
 
     - name: system_setup | grub | copy png file ubuntu to background
       copy:
         src: /tmp/grub-darkmatter/assets/backgrounds/ubuntu-1440p.png
-        dest: /boot/grub/themes/grub-darkmatter/background.png
+        dest: /boot/grub/themes/darkmatter/background.png
         owner: root
         group: root
         mode: 0644
@@ -117,7 +117,7 @@
         line: '{{ item }}'
       with_items:
         - 'GRUB_BACKGROUND="/usr/share/images/grub/saturn.jpg"'
-        - 'GRUB_THEME="/boot/grub/themes/dark-matter/theme.txt"'
+        - 'GRUB_THEME="/boot/grub/themes/darkmatter/theme.txt"'
         - 'GRUB_GFXPAYLOAD_LINUX="keep"'
         - 'GRUB_DISABLE_OS_PROBER="false"'
 
@@ -143,7 +143,7 @@
     - name: system_setup | grub | checkout git distro-grub-themes repository
       git:
         repo: https://github.com/AdisonCavani/distro-grub-themes.git
-        dest: /tmp/grub-theme
+        dest: /tmp/grub-distro
         force: true
         version: master
 
@@ -157,7 +157,7 @@
 
     - name: system_setup | grub | copy distro-grub-themes for acer
       copy:
-        src: /tmp/grub-theme/customize/acer
+        src: /tmp/grub-distro/customize/acer
         dest: /boot/grub/themes
         owner: root
         group: root
@@ -185,7 +185,7 @@
         line: '{{ item }}'
       with_items:
         - 'GRUB_BACKGROUND="/usr/share/images/grub/black-hole-blue.tga.jpg"'
-        - 'GRUB_THEME="/boot/grub/themes/distro-grub-themes/acer/theme.txt"'
+        - 'GRUB_THEME="/boot/grub/themes/acer/theme.txt"'
         - 'GRUB_GFXPAYLOAD_LINUX="keep"'
         - 'GRUB_DISABLE_OS_PROBER="false"'
 

@@ -8,8 +8,7 @@
     - import_tasks: users/marlies.yml
     - import_tasks: users/ubuntu.yml
 
-    # Set up the ansible environment
-    - import_tasks: system_setup/ansible_setup.yml
+    # Fix some problems
     - import_tasks: system_setup/mdraid.yml
     - import_tasks: system_setup/idmapd.yml
     - import_tasks: system_setup/bluetooth.yml
@@ -20,9 +19,8 @@
     - import_tasks: software/tilix.yml
     - import_tasks: software/lynis.yml
     - import_tasks: software/utilities.yml
-#    - import_tasks: software/nvidia.yml
     - import_tasks: software/remove_snap_firefox.yml
-#    - import_tasks: software/firefox.yml
+    - import_tasks: software/firefox.yml
     - import_tasks: software/brave.yml
     - import_tasks: software/java.yml
     - import_tasks: software/vscodium.yml
