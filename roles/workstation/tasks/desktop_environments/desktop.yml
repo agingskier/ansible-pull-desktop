@@ -14,11 +14,6 @@
         key: "/org/gnome/desktop/background/picture-uri"
         value: "'file:///usr/share/backgrounds/budgie/saturn.png'"
 
-    - name: gnome | desktop | set wallpaper position
-      community.general.dconf:
-        key: "/org/gnome/desktop/background/picture-options"
-        value: "'zoom'"
-
     - name: gnome | desktop | disable touchpad
       community.general.dconf:
         key: "/org/gnome/desktop/peripherals/touchpad/{{ item.key }}"
@@ -42,11 +37,8 @@
         - { key: 'color-scheme', value: "'prefer-dark'" }
         - { key: 'cursor-size', value: '48' }
         - { key: 'cursor-theme', value: "'DMZ-Black'" }
-        - { key: 'document-font-name', value: "'Sans 14'" }
-        - { key: 'font-name', value: "'Noto Sans 14'" }
         - { key: 'gtk-theme', value: "'QogirBudgie-dark'" }
         - { key: 'icon-theme', value: "'Humanity-Dark'" }
-        - { key: 'monospace-font-name', value: "'Ubuntu Mono 14'" }
         - { key: 'text-scaling-factor', value: '1.20' }
 
     - name: gnome | gedit | set editor values

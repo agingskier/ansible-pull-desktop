@@ -17,8 +17,8 @@
           - gegl
         state: present
 
-    - name: software | gimp | start gimp with batch command to create GIMP dir in .config
-      command: gimp -b -
+    - name: software | gimp | start gimp command with image to create GIMP dir in .config
+      command: gimp /usr/share/images/grub/saturn.jpg
       register: gimp_batch
       changed_when: gimp_batch.rc == 0
 
