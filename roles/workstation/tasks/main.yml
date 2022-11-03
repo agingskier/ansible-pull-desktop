@@ -37,15 +37,14 @@
 #    - import_tasks: software/media.yml
     - import_tasks: software/misc_games.yml
     - import_tasks: software/steam.yml
-    - import_tasks: software/topgrade.yml
 #    - import_tasks: software/vagrant.yml
 #    - import_tasks: software/virtualbox.yml
     - import_tasks: software/snap_packages.yml
     - import_tasks: software/multipass.yml
     - import_tasks: software/vlc.yml
+#    - import_tasks: software/protonvpn.yml
 
     ## User configs
-    - import_tasks: system_setup/wifi.yml
     - import_tasks: users/bernhard.yml
 
   rescue:
