@@ -17,13 +17,16 @@
           - gegl
         state: present
 
-    - name: software | gimp | start gimp command with image to create GIMP dir in .config
-      command: gimp /usr/share/images/grub/saturn.jpg
-      register: gimp_batch
-      changed_when: gimp_batch.rc == 0
-
-# these file can only be copied after GIMP has been started the first time
-# the gimp session needs to be closed to continue with installation
+    - name: gnome | desktop | create gimp directories in .config
+      file:
+        path: /home/{{ user_name }}/{{ item.dir }}
+        state: directory
+        owner: "{{ user_name }}"
+        group: "{{ group_name }}"
+        mode: 0755
+      with_items:
+        - { dir: '.config/GIMP' }
+        - { dir: '.config/GIMP/2.10' }
 
     - name: software | gimp | copy gimprc & text-tool files
       copy:

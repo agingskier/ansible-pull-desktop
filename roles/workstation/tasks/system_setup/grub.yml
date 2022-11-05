@@ -61,12 +61,12 @@
         force: true
         version: main
 
-#    - name: system_setup | grub | checkout git virtual-future repository
-#      git:
-#        repo: https://gitlab.com/deck451/virtual_future_grub_theme.git
-#        dest: /tmp/grub-virtualfuture
-#        force: true
-#        version: main
+    - name: system_setup | grub | checkout git LordShenron repository
+      git:
+        repo: https://github.com/LordShenron/Grub-Themes.git
+        dest: /tmp/grub-LordShenron
+        force: true
+        version: griffin-grub-remix
 
     - name: system_setup | grub | create themes directory
       file:
@@ -76,16 +76,32 @@
         group: root
         mode: 0755
 
-    - name: system_setup | grub | copy grub themes
+    - name: system_setup | grub | copy grub darkmatter and LordShenron themes directory if inexistent
       copy:
-        src: /tmp/{{ item.src }}
-        dest: /boot/grub/themes/{{ item.dest }}
+        src: /tmp/{{ item.src }}/
+        dest: /boot/grub/themes/{{ item.dest }}/
         owner: root
         group: root
         mode: 0644
       with_items:
         - { src: 'grub-darkmatter', dest: 'darkmatter' }
-#        - 'grub-virtualfuture/virtual-future'
+        - { src: 'grub-LordShenron', dest: 'lordshenron' }
+
+    - name: system_setup | grub | copy all ubuntu base png files to darkmatter
+      copy:
+        src: /tmp/grub-darkmatter/base/1440p/
+        dest: /boot/grub/themes/darkmatter/
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: system_setup | grub | copy all ubuntu Griffin png files to darkmatter
+      copy:
+        src: /tmp/grub-LordShenron/Griffin/
+        dest: /boot/grub/themes/lordshenron/
+        owner: root
+        group: root
+        mode: 0644
 
     - name: system_setup | grub | copy png file ubuntu to background
       copy:
@@ -100,10 +116,11 @@
 # error messages in log: "EISA: cannot allocate resource for Mainboard"
 #
     - name: system_setup | grub | Replace CMDLINE with acpi=off to supress error messages
-      replace:
+      lineinfile:
         path: /etc/default/grub
-        regexp: 'GRUB_CMDLINE_LINUX_DEFAULT=""'
-        replace: 'GRUB_CMDLINE_LINUX_DEFAULT="acpi=off"'
+        regexp: 'GRUB_CMDLINE_LINUX_DEFAULT='
+        line: 'GRUB_CMDLINE_LINUX_DEFAULT="splash acpi=off"'
+        backrefs: yes
 
     - name: system_setup | grub | Insert background line in grub file
       lineinfile:
@@ -168,10 +185,11 @@
 # error messages in log: "EISA: cannot allocate resource for Mainboard"
 #
     - name: system_setup | grub | Replace CMDLINE with acpi=off to supress error messages
-      replace:
+      lineinfile: 
         path: /etc/default/grub
-        regexp: 'GRUB_CMDLINE_LINUX_DEFAULT=""'
-        replace: 'GRUB_CMDLINE_LINUX_DEFAULT="quiet splash acpi=off"'
+        regexp: '^GRUB_CMDLINE_LINUX_DEFAULT='
+        line: 'GRUB_CMDLINE_LINUX_DEFAULT="quiet splash acpi=off"'
+        backrefs: yes
 
     - name: system_setup | grub | Insert background line
       lineinfile:
