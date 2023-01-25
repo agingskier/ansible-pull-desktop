@@ -3,9 +3,3 @@
   service:
     name: NetworkManager
     state: restarted
-    
-- name: start_multpass
-  service:
-    name: snap start multipass
-    daemon_reload: true
-    state: started 

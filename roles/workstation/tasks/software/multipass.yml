@@ -28,8 +28,12 @@
     content: |
       [Service]
       Environment=MULTIPASS_STORAGE=/mnt/Multipass/multipass
-    notify:
-      - start_multipass
+ 
+  - name: software | multipass | reload daemon and start multipass
+    command: "{{ item }}"
+    with_items:
+      - "systemctl daemon-reload"
+      - "snap start multipass"
 
   become: yes
   become_method: sudo
