@@ -3,8 +3,8 @@
   apt:
     state: present
     pkg:
-      - apt-show-versions
       - at
+      - bat
       - ccze
       - colordiff
       - conky-all
@@ -12,12 +12,14 @@
       - dconf-editor
       - di
       - dnsutils
+      - duf
       - etherape
       - plocate
       - ncdu
       - neofetch
       - nmap
       - traceroute
+      - ripgrep
       - speedtest-cli
       - vim-nox
       - whois

@@ -1,9 +1,11 @@
 ---
 # Create zsh environment for user bernhard - variables defined in host_vars
-#- name: users | zsh | user name fact
-#  set_fact:
-#    user_name: 'bernhard'
-#    group_name: 'users'
+
+- name: zsh | software | install zsh packages
+  apt:
+    state: present
+    pkg:
+      - zsh
     
 - name: zsh | {{ user_name }} | Creates zsh directory in .config
   file:

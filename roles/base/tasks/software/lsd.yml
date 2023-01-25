@@ -2,15 +2,11 @@
 # Install cool utilities specified under modern-unix plus zsh and nerd fonts
 #
 
-- name: software | modern-unix | install various utilities
+- name: software | lsd | install fontconfig utilities
   apt:
     pkg:
       - fontconfig
-      - bat
-      - duf
-      - ripgrep
-      - zsh
-
+ 
 # Get latest release from Github api
 # get tag line
 # pluck JSON value
@@ -38,7 +34,7 @@
 # Get latest release from Github api
 # get tag line
 # pluck JSON value
-- name: software | modern-unix | download latest release info for lsd nerd fonts
+- name: software | lsd | download latest release info for lsd nerd fonts
   shell: |
     set -o pipefail
     curl --silent https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest |
@@ -50,12 +46,12 @@
   register: fonts_release
   changed_when: fonts_release.rc == 0
 
-- name: software | modern-unix | Print latest lsd nerd fonts release
+- name: software | lsd | Print latest lsd nerd fonts release
   debug:
     var: fonts_release.stdout
     verbosity: 2
 
-- name: software | modern-unix | Creates directory for lsd nerd fonts
+- name: software | lsd | Creates directory for lsd nerd fonts
   file:
     path: /usr/local/share/fonts/lsd
     state: directory
@@ -63,18 +59,7 @@
     group: root
     mode: 0775
 
-- name: software | modern-unix | download and install fontawesome 6 | check https://fontawesome.com/download for link
-  become: true
-  become_method: sudo
-  unarchive:
-    src: https://use.fontawesome.com/releases/v6.2.0/fontawesome-free-6.2.0-desktop.zip
-    dest: /usr/local/share/fonts/lsd
-    remote_src: yes
-    owner: root
-    group: root
-    mode: 0644
-
-- name: software | modern-unix | download and install JetBrains and FiraCode nerd fonts
+- name: software | lsd | download and install JetBrains and FiraCode nerd fonts
   become: true
   become_method: sudo
   unarchive:
@@ -88,7 +73,7 @@
     - JetBrainsMono.zip
     - FiraCode.zip
 
-- name: software | modern-unix | create cache for new fonts
+- name: software | lsd | create cache for new fonts
   command: fc-cache -v -f
   register: create_cache
   changed_when: create_cache.rc == 0

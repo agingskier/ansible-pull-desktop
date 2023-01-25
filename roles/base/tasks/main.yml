@@ -15,7 +15,7 @@
 
     # install software
     - import_tasks: software/clamav.yml
-    - import_tasks: software/modern-unix.yml
+    - import_tasks: software/lsd.yml
     - import_tasks: software/tilix.yml
     - import_tasks: software/lynis.yml
     - import_tasks: software/utilities.yml
