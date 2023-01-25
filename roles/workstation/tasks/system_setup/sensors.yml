@@ -19,7 +19,7 @@
       with_items:
         - { src: 'asus-rampage.conf', dest: 'sensors.d/asus-rampage.conf' }
         - { src: 'blacklist-edac.conf', dest: 'modprobe.d/blacklist-edac.conf' }
-        - { src: 'sensors-modules-asus', dest: 'modules' }
+        - { src: 'sensors-modules-asus', dest: 'modules-load.d/sensors.conf' }
 
     - name: Run sensors-detect command | generate /etc/modules
       become: true
@@ -47,7 +47,7 @@
       with_items:
 #        - { src: 'acer-rampage.conf', dest: 'sensors.d/acer-rampage.conf' }
 #        - { src: 'blacklist-edac.conf', dest: 'modprobe.d/blacklist-edac.conf' }
-        - { src: 'sensors-modules-acer', dest: 'modules' }
+        - { src: 'sensors-modules-acer', dest: 'modules-load.d/sensors.confq' }
 
     - name: Run sensors-detect command | generate /etc/modules
       become: true
