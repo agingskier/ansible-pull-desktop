@@ -46,3 +46,4 @@ vagrant: no
 variety: yes
 virtualbox: no
 vlc: no
+vscodium: no

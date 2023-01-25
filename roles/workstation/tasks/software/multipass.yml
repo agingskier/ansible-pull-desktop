@@ -1,11 +1,38 @@
 ---
-- name: software | snap | install multipass package
+- name: software | multipass block
   tags: multipass
+  block:
+  - name: software | snap | install multipass package
+    tags: multipass
+    snap:
+      name:
+        - multipass
+
+  - name: software | multipass | stop multipass daemon
+    command: snap stop multipass
+    changed_when: xx.rc==0
+    
+  - name: 'software | multipass | Create target directory for multipass: /mnt/Multipass/multipass'
+    file:
+      path: /mnt/Multipass/multipass
+      state: directory
+
+  - name: software | multipass | Create directory for override.conf
+    file:
+      path: "/etc/systemd/system/snap.multipass.multipass.service.d"
+      state: directory
+
+  - name: software | multipass | Create override.conf file with path entry
+    copy:
+      dest: "/etc/systemd/system/snap.multipass.multipass.service.d/override.conf"
+    content: |
+      [Service]
+      Environment=MULTIPASS_STORAGE=/mnt/Multipass/multipass
+    notify:
+      - start_multipass
+
   become: yes
   become_method: sudo
-  snap:
-    name:
-      - multipass
   when:
     - multipass is defined
     - multipass
