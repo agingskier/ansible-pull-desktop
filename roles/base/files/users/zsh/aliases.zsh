@@ -68,7 +68,7 @@ alias lsb='lsblk -o NAME,FSTYPE,SIZE,MOUNTPOINT,LABEL,UUID | ccze -A'
 alias lsc='lscpu | ccze -A'
 alias lsi='sudo blkid | ccze -A'
 alias lsppa='grep -rhE ^deb /etc/apt/sources.list*'
-alias loc='mlocate -A -i'
+alias loc='plocate -A -i'
 
 # +----+
 # | cp |

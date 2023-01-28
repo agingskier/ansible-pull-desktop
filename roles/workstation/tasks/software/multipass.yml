@@ -31,9 +31,11 @@
  
   - name: software | multipass | reload daemon and start multipass
     command: "{{ item }}"
-    with_items:
+        with_items:
       - "systemctl daemon-reload"
       - "snap start multipass"
+    register: start_daemon
+    changed_when: start_daemon.rc == 0
 
   become: yes
   become_method: sudo

@@ -22,7 +22,7 @@
 
 - name: system setup | cron | mlocate database
   cron:
-    name: "mlocate database"
+    name: "plocate database"
     user: root
     special_time: reboot
     job: "sleep 200 && updatedb"
