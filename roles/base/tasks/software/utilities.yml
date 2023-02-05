@@ -17,6 +17,7 @@
       - plocate
       - ncdu
       - neofetch
+      - net-tools
       - nmap
       - traceroute
       - ripgrep

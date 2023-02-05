@@ -16,20 +16,10 @@
       register: variety_result
       changed_when: variety_result.rc == 0
 
-    - name: software | variety | find PID of variety task
-      shell: |
-        set -o pipefail
-        ps -eo pid,fname | grep variety | awk '{ print $1 }'
-      args:
-        warn: false
-        executable: /bin/bash
-      register: variety_pid
-      changed_when: variety_pid.rc == 0
-
     - name: software | variety | kill running variety task
       become: yes
       become_user: "{{ user_name }}"
-      command: kill {{ variety_pid.stdout }}
+      command: killall variety
       register: variety_kill
       changed_when: variety_kill == 0
 
