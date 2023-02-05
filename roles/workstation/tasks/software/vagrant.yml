@@ -7,6 +7,7 @@
 #
     - name: software | vagrant | add vagrant apt key to keyring file
       shell: |
+        set -o pipefail
         curl -fsSL https://apt.releases.hashicorp.com/gpg | \
         gpg --dearmor | \
         sudo tee /usr/share/keyrings/vagrant.gpg > /dev/null
@@ -17,10 +18,15 @@
 
     - name: software | vagrant | add vagrant apt repository
       apt_repository:
-        filename: vagrant
         repo: 'deb [arch=amd64 signed-by=/usr/share/keyrings/vagrant.gpg] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main'
         state: present
         update_cache: yes
+
+   - name: software | vagrant | create file vagrant.list in /etc/apt/sources.list.d
+     copy:
+       dest: "/etc/apt/sources.list.d/vagrant.list"
+       content: |
+         deb [arch=amd64 signed-by=/usr/share/keyrings/vagrant.gpg] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main
 
     - name: software | vagrant | update repo and install vagrant & dependencies
       apt:

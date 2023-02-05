@@ -22,6 +22,12 @@
   register: gpg_convert
   changed_when: gpg_convert.rc == 0
 
+- name: software | fsearch | create file fsearch.list in /etc/apt/sources.list.d
+  copy:
+    dest: "/etc/apt/sources.list.d/fsearch.list"
+    content: |
+      deb [arch=amd64 signed-by=/usr/share/keyrings/fsearch.gpg]  http://ppa.launchpad.net/christian-boxdoerfer/fsearch-stable/ubuntu {{ ansible_distribution_release }} main
+
 - name: software | fsearch | install fsearch
   apt:
     pkg:

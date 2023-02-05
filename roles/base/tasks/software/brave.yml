@@ -6,9 +6,10 @@
     #
     - name: software | brave browser | add brave gpg key to keyring file
       shell: |
+        set -o pipefail
         curl -fsSL https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg | \
-        sudo gpg --dearmor | \
-        sudo tee /usr/share/keyrings/brave-browser-archive-keyring.gpg > /dev/null
+        gpg --dearmor | \
+        tee /usr/share/keyrings/brave-browser-archive-keyring.gpg > /dev/null
       args:
         warn: false
       register: brave_gpgkey

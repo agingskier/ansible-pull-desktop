@@ -4,7 +4,6 @@
   
     - name: software | firefox | add firefox apt repository
       apt_repository:
-        filename: firefox
         repo: 'ppa:mozillateam/ppa'
         state: present
         update_cache: yes
@@ -16,12 +15,18 @@
       shell: |
         set -o pipefail
         apt-key export CE49EC21 | \
-        gpg --dearmour -o /usr/share/keyrings/mozilla.gpg
+        gpg --dearmour -o /usr/share/keyrings/firefox.gpg
       args:
         warn: false
         executable: /bin/bash
       register: gpg_convert
       changed_when: gpg_convert.rc == 0
+
+    - name: software | firefox | create file firefox.list in /etc/apt/sources.list.d
+      copy:
+        dest: "/etc/apt/sources.list.d/firefox.list"
+        content: |
+          deb [arch=amd64 signed-by=/usr/share/keyrings/firefox.gpg]  http://ppa.launchpad.net/mozillateam/ppa/ubuntu kinetic main
 
     - name: software | firefox | create apt file to avoid reinstall of snap firefox
       copy:
