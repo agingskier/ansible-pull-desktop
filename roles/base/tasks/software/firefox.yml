@@ -6,6 +6,7 @@
       apt_repository:
         repo: 'ppa:mozillateam/ppa'
         state: present
+        filename: firefox
         update_cache: yes
 
 # run "sudo apt-key list" to find the full public gpg key
@@ -21,12 +22,6 @@
         executable: /bin/bash
       register: gpg_convert
       changed_when: gpg_convert.rc == 0
-
-    - name: software | firefox | create file firefox.list in /etc/apt/sources.list.d
-      copy:
-        dest: "/etc/apt/sources.list.d/firefox.list"
-        content: |
-          deb [arch=amd64 signed-by=/usr/share/keyrings/firefox.gpg]  http://ppa.launchpad.net/mozillateam/ppa/ubuntu kinetic main
 
     - name: software | firefox | create apt file to avoid reinstall of snap firefox
       copy:
