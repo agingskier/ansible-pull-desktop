@@ -13,20 +13,16 @@
         sudo tee /usr/share/keyrings/vagrant.gpg > /dev/null
       args:
         warn: false
+        executable: /bin/bash
       register: vagrant_gpgkey
       changed_when: vagrant_gpgkey.rc == 0
 
-    - name: software | vagrant | add vagrant apt repository
+    - name: software | vagrant | add vagrant apt_repository, filename creates vagrant.list in /etc/apt/sources.list.d
       apt_repository:
         repo: 'deb [arch=amd64 signed-by=/usr/share/keyrings/vagrant.gpg] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main'
+        filename: vagrant
         state: present
         update_cache: yes
-
-   - name: software | vagrant | create file vagrant.list in /etc/apt/sources.list.d
-     copy:
-       dest: "/etc/apt/sources.list.d/vagrant.list"
-       content: |
-         deb [arch=amd64 signed-by=/usr/share/keyrings/vagrant.gpg] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main
 
     - name: software | vagrant | update repo and install vagrant & dependencies
       apt:

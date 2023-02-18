@@ -5,9 +5,9 @@
 
     - name: software | keepassxc | add keepassxc apt repository
       apt_repository:
-        filename: keepassxc
         repo: 'ppa:phoerious/keepassxc'
         state: present
+        filename: keepassxc
         update_cache: yes
 
 # run "sudo apt-key list" to find the full public gpg key
@@ -23,13 +23,6 @@
         executable: /bin/bash
       register: gpg_convert
       changed_when: gpg_convert.rc == 0
-
-   - name: software | keepassxc | create file keepassxc.list in /etc/apt/sources.list.d
-     copy:
-       dest: "/etc/apt/sources.list.d/keepassxc.list"
-       content: |
-         deb [arch=amd64 signed-by=/usr/share/keyrings/keepassxc.gpg]  http://ppa.launchpad.net/phoerious/keepassxc/ubuntu {{ ansible_distribution_release }} main
-
 
     - name: software | keepassxc | install keepassxc
       apt:

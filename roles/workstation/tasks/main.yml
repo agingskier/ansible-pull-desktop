@@ -1,4 +1,4 @@
----
+0---
 - name: run all tasks from workstation role
   block:
 
@@ -15,6 +15,7 @@
     - import_tasks: system_setup/geany.yml
     - import_tasks: system_setup/grub.yml
     - import_tasks: system_setup/sensors.yml
+    - import_tasks: system_setup/ipscan.yml
 
     - name: Check if /mnt/NAS already created
       stat:

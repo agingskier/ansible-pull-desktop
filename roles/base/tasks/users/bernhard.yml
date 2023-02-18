@@ -1,6 +1,12 @@
 ---
 - name: users | bernhard block
   block:
+    - name: users | bernhard | create inxi.conf file with VIRT_TERM_COLOR_SCHEME line
+      copy:
+        dest: "/home/{{ user_name }}/.config/inxi.conf"
+        content: |
+          VIRT_TERM_COLOR_SCHEME=29
+  
     - name: users | bernhard | add sudoers file
       copy:
         src: users/sudoers_bernhard

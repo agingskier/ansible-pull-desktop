@@ -75,21 +75,19 @@
   git:
     repo: "{{ item.repo }}"
     dest: "{{ item.dest }}"
-    version: master
+    version: "{{ item.branch }}"
     force: true
   with_items:
-    - { repo: 'https://github.com/vim-airline/vim-airline.git', dest: '/home/{{ user_name }}/.vim/bundle/vim-airline' }  # status line
-    - { repo: 'https://github.com/vim-airline/vim-airline-themes.git', dest: '/home/{{ user_name }}/.vim/bundle/vim-airline-themes' }
-    - { repo: 'https://github.com/pearofducks/ansible-vim', dest: '/home/{{ user_name }}/.vim/bundle/ansible-vim' }     # highlight syntax
-    - { repo: 'https://github.com/Yggdroot/indentLine.git', dest: '/home/{{ user_name }}/.vim/bundle/indentLine' }
-    - { repo: 'https://github.com/vim-syntastic/syntastic.git', dest: '/home/{{ user_name }}/.vim/bundle/syntastic' } # syntax checker
-    - { repo: 'https://github.com/frazrepo/vim-rainbow.git', dest: '/home/{{ user_name }}/.vim/bundle/vim-rainbow' } # colors for different brackets
-    - { repo: 'https://github.com/ryanoasis/vim-devicons.git', dest: '/home/{{ user_name }}/.vim/bundle/vim-devicons' } # Dev Icons
-    - { repo: 'https://github.com/adelarsq/vim-emoji-icon-theme.git', dest: '/home/{{ user_name }}/.vim/bundle/vim-emoji-icon-theme' } # Emoji
-#    - { repo: 'https://github.com/rhysd/vim-grammarous.git', dest: '/home/{{ user_name }}/.vim/bundle/vim-grammarous' }
-#    - { repo: 'https://github.com/ron89/thesaurus_query.vim', dest: '/home/{{ user_name }}/.vim/bundle/thesaurus_query.vim' }
-    - { repo: 'https://github.com/scrooloose/nerdtree.git', dest: '/home/{{ user_name }}/.vim/bundle/nerdtree' }
-#    - { repo: 'https://github.com/tpope/vim-obsession.git', dest: '/home/{{ user_name }}/.vim/bundle/vim-obsession' } # remember sessions
+    - { repo: 'https://github.com/adelarsq/neoline.vim.git', branch: 'master', dest: '/home/{{ user_name }}/.vim/bundle/neoline-vim' } # status line and tabline
+    - { repo: 'https://github.com/lornix/vim-scrollbar.git', branch: 'master', dest: 'home/{{ user_name }}/.vim/bundle/vim-scrollbar' }   # scrollbar
+    - { repo: 'https://github.com/pearofducks/ansible-vim', branch: 'master', dest: '/home/{{ user_name }}/.vim/bundle/ansible-vim' }     # highlight syntax
+    - { repo: 'https://github.com/Yggdroot/indentLine.git', branch: 'master', dest: '/home/{{ user_name }}/.vim/bundle/indentLine' } # line indentation
+    - { repo: 'https://github.com/vim-syntastic/syntastic.git', branch: 'master', dest: '/home/{{ user_name }}/.vim/bundle/syntastic' } # syntax checker
+    - { repo: 'https://github.com/frazrepo/vim-rainbow.git', branch: 'master', dest: '/home/{{ user_name }}/.vim/bundle/vim-rainbow' } # colors for different brackets
+    - { repo: 'https://github.com/ryanoasis/vim-devicons.git', branch: 'master', dest: '/home/{{ user_name }}/.vim/bundle/vim-devicons' } # Dev Icons
+    - { repo: 'https://github.com/adelarsq/vim-emoji-icon-theme.git', branch: 'master', dest: '/home/{{ user_name }}/.vim/bundle/vim-emoji-icon-theme' } # Emoji
+    - { repo: 'https://github.com/preservim/nerdtree.git', branch: 'master', dest: '/home/{{ user_name }}/.vim/bundle/nerdtree' } # file system explorer for vim
+    - { repo: 'https://github.com/Joorem/vim-haproxy.git', branch: 'master', dest: '/home/{{ user_name }}/.vim/bundle/vim-haproxy' }  # haproxy syntax highlighting
 
 - name: vim | {{ user_name }} | recursively chown all vim bundle files
   file:

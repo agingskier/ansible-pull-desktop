@@ -181,6 +181,18 @@ let g:ansible_normal_keywords_highlight = 'Constant'
 let g:ansible_with_keywords_highlight = 'Constant'     
 
 "|
+"| vim-scrollbar
+"|
+
+" Default characters to use in the scrollbar.
+let g:scrollbar_thumb='#'
+let g:scrollbar_clear='|'
+
+" Color settings.
+highlight Scrollbar_Clear ctermfg=green ctermbg=black guifg=green guibg=black cterm=none
+highlight Scrollbar_Thumb ctermfg=darkgreen ctermbg=darkgreen guifg=darkgreen guibg=darkgreen cterm=reverse
+
+"|
 "| NERDTree
 "|
 
@@ -226,19 +238,6 @@ let g:syntastic_mode_map = { 'mode': 'active',
         \ 'passive_filetypes': ['make','cpp','c'] }
 
 "|
-"| Airline (status line)
-"|
-
-set laststatus=2
-
-" Show buffer numbers in a line at the top
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#buffer_nr_show = 1
-
-" How the path should be formatted
-let g:airline#extensions#tabline#formatter = 'unique_tail'
-
-"|
 "| IndentLine
 "|
 
@@ -250,6 +249,12 @@ let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 
 let g:rainbow_active = 1
 let g:rainbow_ctermfgs = ['green', 'magenta', 'yellow', 'red', 'cyan']
+
+"|
+"| vim-devicon (set vim font to a nerd font)
+"|
+
+set guifont=DroidSansMono\ Nerd\ Font\ 11
 
 "|----------------------------------------------------------------------------|
 "|          End Plugin Settings                                               |

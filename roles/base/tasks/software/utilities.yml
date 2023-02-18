@@ -14,13 +14,16 @@
       - dnsutils
       - duf
       - etherape
-      - plocate
+      - libjson-xs-perl
+      - libxml-dumper-perl
       - ncdu
       - neofetch
       - net-tools
       - nmap
+      - plocate
       - traceroute
       - ripgrep
       - speedtest-cli
       - vim-nox
       - whois
+     
