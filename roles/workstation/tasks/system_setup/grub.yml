@@ -114,12 +114,13 @@
 #
 # acpi stands for: "Advanded Configuration and Power Interface"
 # error messages in log: "EISA: cannot allocate resource for Mainboard"
+# with lxd apparmor produces lots of journalctl entries. Suppress with "apparmor.audit=quiet"
 #
     - name: system_setup | grub | Replace CMDLINE with acpi=off to supress error messages
       lineinfile:
         path: /etc/default/grub
         regexp: 'GRUB_CMDLINE_LINUX_DEFAULT='
-        line: 'GRUB_CMDLINE_LINUX_DEFAULT="splash acpi=off"'
+        line: 'GRUB_CMDLINE_LINUX_DEFAULT="splash acpi=off apparmor.audit=quiet"'
         backrefs: yes
 
     - name: system_setup | grub | Insert background line in grub file

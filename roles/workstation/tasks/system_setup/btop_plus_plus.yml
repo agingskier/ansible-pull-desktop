@@ -3,8 +3,7 @@
   shell: |
     set -o pipefail
     curl --silent "https://api.github.com/repos/aristocratos/btop/releases/latest" |
-    grep '"tag_name":' |
-    sed -E 's/.*"([^"]+)".*/\1/'
+    jq -r .tag_name
   args:
     warn: false
     executable: /bin/bash

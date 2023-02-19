@@ -14,8 +14,7 @@
   shell: |
     set -o pipefail
     curl --silent "https://api.github.com/repos/Peltoche/lsd/releases/latest" |
-    grep '"tag_name":' |
-    sed -E 's/.*"([^"]+)".*/\1/'
+    jq -r .tag_name
   args:
     warn: false
     executable: /bin/bash
@@ -38,8 +37,7 @@
   shell: |
     set -o pipefail
     curl --silent https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest |
-    grep '"tag_name":' |
-    sed -E 's/.*"([^"]+)".*/\1/'
+    jq -r .tag_name
   args:
     warn: false
     executable: /bin/bash

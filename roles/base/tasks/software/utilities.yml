@@ -8,6 +8,7 @@
       - ccze
       - colordiff
       - conky-all
+      - cpulimit
       - stacer
       - dconf-editor
       - di
@@ -17,7 +18,6 @@
       - libjson-xs-perl
       - libxml-dumper-perl
       - ncdu
-      - neofetch
       - net-tools
       - nmap
       - plocate
