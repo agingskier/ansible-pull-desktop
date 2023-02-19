@@ -27,4 +27,4 @@
     - { src: 'bash/bash_aliases', dest: '.bash_aliases' }
     - { src: 'bash/bash_functions', dest: '.bash_functions' }
     - { src: 'bash/dircolors', dest: '.dircolors' }
-    - { src: 'vim/vimrc', dest: '.vimrc' }
+    - { src: 'vim/vimrc-root', dest: '.vimrc' }
