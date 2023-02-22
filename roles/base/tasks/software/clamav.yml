@@ -8,6 +8,7 @@
       - clamav-daemon
       - chkrootkit
       - bleachbit
+      - cpulimit
 
 - name: software | clamav | create clamav directory
   file:
@@ -55,6 +56,15 @@
     minute: 07
     hour: 13
     job: "/usr/bin/clamscan --exclude-dir=/run/user/bernhard/gvfs --exclude-dir=/home/bernhard/.gvfs --detect-pua -r /home/bernhard --log=/var/log/clamav/clamscan.log"
+
+# clamscan must be running for cpulimit to take effect. Limit cpu usage to 30%
+- name: software | clamav | cron job for user {{ user_name }} clamscan limit cpu usage
+  cron:
+    name: daily_clamsacan_cpulimit
+    user: "{{ user_name }}"
+    minute: 08
+    hour: 13
+    job: "cpulimit -e clamscan -l 30"
 
 - name: software | clamav | cron job for root freshclam
   cron:

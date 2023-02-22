@@ -20,7 +20,7 @@
     special_time: reboot
     job: "sleep 300 && journalctl --vacuum-time=7days"
 
-- name: system setup | cron | mlocate database
+- name: system setup | cron | plocate database
   cron:
     name: "plocate database"
     user: root
