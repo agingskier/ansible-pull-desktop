@@ -25,9 +25,9 @@
   - name: software | multipass | Create override.conf file with path entry
     copy:
       dest: "/etc/systemd/system/snap.multipass.multipass.service.d/override.conf"
-    content: |
-      [Service]
-      Environment=MULTIPASS_STORAGE=/mnt/Multipass/multipass
+      content: |
+        [Service]
+        Environment=MULTIPASS_STORAGE=/mnt/Multipass/multipass
  
   - name: software | multipass | reload daemon and start multipass
     command: "{{ item }}"
