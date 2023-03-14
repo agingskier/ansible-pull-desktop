@@ -15,6 +15,15 @@
         group: root
         mode: 0440
 
+    - name: users | bernhard | change Exec= line for Tilix New Window in com.gexperts.Tilix.
+desktop
+      become: yes
+      become_method: sudo
+      lineinfile:
+        path: /usr/share/applications/com.gexperts.Tilix.desktop
+        regexp: '^Exec=tilix --action=app-new-window'
+        line: 'Exec=tilix --title=wide --action=app-new-window --geometry=180x24+100+200 --session=~/.config/tilix/wide.json'
+
     - name: users | marlies | copy dotfiles
       copy:
         src: users/{{ item.src }}
@@ -27,7 +36,8 @@
         - { src: 'bash/bash_functions', dest: '.bash_functions' }
         - { src: 'bash/bashrc', dest: '.bashrc' }
         - { src: 'bash/dircolors', dest: '.dircolors' }
-        - { src: 'bash/tilix-split.json', dest: 'tilix-split.json' }
+        - { src: 'tilix/split.json', dest: '.config/tilix/split.json' }
+        - { src: 'tilix/wide.json', dest: '.config/tilix/wide.json' }
 #        - { src: 'autostart/conky_autostart', dest: '.config/autostart/conky.desktop' }
 #        - { src: 'autostart/tilix_autostart', dest: '.config/autostart/tilix.desktop' }
 
