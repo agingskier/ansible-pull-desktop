@@ -18,7 +18,7 @@
     group: "{{ group_name }}"
     mode: 0640
   with_items:
-    - { src: 'tilix_schemes_homebrew', dest: '.config/tilix/schemes/homebrew.json' }
+    - { src: 'schemes_homebrew.json', dest: '.config/tilix/schemes/homebrew.json' }
 
 - name: gnome | desktop | set tilix values
   become_user: "{{ user_name }}"
