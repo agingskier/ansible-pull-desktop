@@ -11,11 +11,11 @@
     - include_tasks: desktop_environments/desktop.yml
 
     ## system setup
-#    - import_tasks: system_setup/btop_plus_plus.yml
+#    - import_tasks: system_setup/btop_plus_plus.yml (make does not work)
     - import_tasks: system_setup/geany.yml
     - import_tasks: system_setup/grub.yml
     - import_tasks: system_setup/sensors.yml
-    - import_tasks: system_setup/ipscan.yml
+#    - import_tasks: system_setup/ipscan.yml  (needs java fix dependency)
 
     - name: Check if /mnt/NAS already created
       stat:
