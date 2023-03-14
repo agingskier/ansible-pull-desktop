@@ -15,9 +15,8 @@
         group: root
         mode: 0440
 
-    - name: users | bernhard | change Exec= line for Tilix New Window in com.gexperts.Tilix.
-desktop
-      become: yes
+    - name: "users | bernhard | change Exec= line for Tilix New Window in com.gexperts.Tilix.desktop"
+      become: true
       become_method: sudo
       lineinfile:
         path: /usr/share/applications/com.gexperts.Tilix.desktop
