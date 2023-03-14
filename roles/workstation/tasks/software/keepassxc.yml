@@ -19,7 +19,6 @@
         apt-key export 0068FCD6 | \
         gpg --dearmour -o /usr/share/keyrings/keepassxc.gpg
       args:
-        warn: false
         executable: /bin/bash
       register: gpg_convert
       changed_when: gpg_convert.rc == 0

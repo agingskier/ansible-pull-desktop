@@ -18,7 +18,6 @@
         apt-key export CE49EC21 | \
         gpg --dearmour -o /usr/share/keyrings/firefox.gpg
       args:
-        warn: false
         executable: /bin/bash
       register: gpg_convert
       changed_when: gpg_convert.rc == 0

@@ -16,7 +16,6 @@
     curl --silent "https://api.github.com/repos/Peltoche/lsd/releases/latest" |
     jq -r .tag_name
   args:
-    warn: false
     executable: /bin/bash
   register: lsd_release
   changed_when: lsd_release.rc == 0
@@ -39,7 +38,6 @@
     curl --silent https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest |
     jq -r .tag_name
   args:
-    warn: false
     executable: /bin/bash
   register: fonts_release
   changed_when: fonts_release.rc == 0

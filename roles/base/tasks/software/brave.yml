@@ -11,7 +11,7 @@
         gpg --dearmor | \
         tee /usr/share/keyrings/brave-browser-archive-keyring.gpg > /dev/null
       args:
-        warn: false
+        executable: /bin/bash
       register: brave_gpgkey
       changed_when: brave_gpgkey.rc == 0
 

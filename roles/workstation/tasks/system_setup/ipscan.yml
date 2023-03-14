@@ -5,7 +5,6 @@
     curl --silent https://api.github.com/repos/angryip/ipscan/releases/latest | \
     jq -r .tag_name
   args:
-    warn: false
     executable: /bin/bash
   register: ipscan_version
   changed_when: ipscan_version.rc == 0

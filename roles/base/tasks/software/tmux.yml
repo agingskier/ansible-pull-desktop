@@ -49,7 +49,6 @@
     curl --silent "https://api.github.com/repos/arl/gitmux/releases/latest" |
     jq -r .tag_name
   args:
-    warn: false
     executable: /bin/bash
   register: gitmux_release
   changed_when: gitmux_release.rc == 0

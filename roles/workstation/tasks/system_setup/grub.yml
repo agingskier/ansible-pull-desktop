@@ -23,7 +23,6 @@
 #        apt-key export 3F055C03 | \
 #        gpg --dearmour -o /etc/apt/trusted.gpg.d/grub-customizer.gpg
 #      args:
-#        warn: false
 #        executalbe: /bin/bash
 #      register: gpg_convert
 #      changed_when: gpg_convert.rc == 0
