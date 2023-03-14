@@ -36,5 +36,4 @@
     target: install
     params:
       PREFIX: /usr/local
-  become: yes
-
+  become: true
