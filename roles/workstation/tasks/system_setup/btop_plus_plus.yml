@@ -1,39 +1,39 @@
 ---
-- name: system_setup | btop++ | download latest release info
-  shell: |
-    set -o pipefail
-    curl --silent "https://api.github.com/repos/aristocratos/btop/releases/latest" |
-    jq -r .tag_name
-  args:
-    executable: /bin/bash
-  register: btop_release
-  changed_when: btop_release.rc == 0
+- name: btop block
+  block:
+    - name: system_setup | btop++ | download latest release info
+      shell: |
+        set -o pipefail
+        curl --silent "https://api.github.com/repos/aristocratos/btop/releases/latest" |
+        jq -r .tag_name
+      args:
+        executable: /bin/bash
+      register: btop_release
+      changed_when: btop_release.rc == 0
 
-- name: system-setup | btop++ | create dir path in /tmp
+    - name: system-setup | btop++ | create dir path in /tmp
+      file:
+        path: /tmp/btop
+        state: directory
+        owner: root
+        group: root
+        mode: 0755
+
+    - name: system_setup | btop++ | install latest btop++ binary
+      unarchive:
+        src: https://github.com/aristocratos/btop/releases/download/{{ btop_release.stdout }}/btop-x86_64-linux-musl.tbz
+        dest: /tmp/btop
+        remote_src: yes
+        mode: 0755
+        owner: root
+        group: root
+
+    - name: system_setup | btop++ | Run 'install' to /usr/local
+      community.general.make:
+        chdir: /tmp/btop
+        target: install
+        params:
+          PREFIX: /usr/local
+
   become: true
   become_method: sudo
-  file:
-    path: /tmp/btop
-    state: directory
-    owner: root
-    group: root
-    mode: 0755
-
-- name: system_setup | btop++ | install latest btop++ binary
-  become: true
-  become_method: sudo
-  unarchive:
-    src: https://github.com/aristocratos/btop/releases/download/{{ btop_release.stdout }}/btop-x86_64-linux-musl.tbz
-    dest: /tmp/btop
-    remote_src: yes
-    mode: 0755
-    owner: root
-    group: root
-
-- name: system_setup | btop++ | Run 'install' to /usr/local
-  community.general.make:
-    chdir: /tmp/btop
-    target: install
-    params:
-      PREFIX: /usr/local
-  become: true

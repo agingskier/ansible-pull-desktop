@@ -12,7 +12,7 @@
       become: yes
       become_method: sudo
       unarchive:
-        src: https://download2.gluonhq.com/openjfx/18.0.2/openjfx-18.0.2_linux-x64_bin-sdk.zip
+        src: https://download2.gluonhq.com/openjfx/19.0.2.1/openjfx-19.0.2.1_linux-x64_bin-sdk.zip
         dest: /opt
         remote_src: yes
         owner: root

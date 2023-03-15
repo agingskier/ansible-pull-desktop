@@ -22,9 +22,9 @@ marlies: yes
 ubuntu: no
 
 #
-# development
+# development (required for ipscan)
 #
-java: no
+java: yes
 
 #
 # application selection

@@ -14,6 +14,16 @@
     var: ipscan_version.stdout
     verbosity: 2
 
+- name: system_setup | ipscan | configure java
+  command: update-alternatives --list java
+  register: java_version
+  changed_when: java_version.rc == 0
+  
+- name: system_setup | ipscan | display java version
+  debug:
+    var: java_version.stdout
+    verbosity: 2
+
 - name: system_setup | ipscan | install the ipscan deb package
   become: true
   become_method: sudo
