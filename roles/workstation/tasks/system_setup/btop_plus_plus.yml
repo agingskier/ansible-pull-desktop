@@ -11,29 +11,14 @@
       register: btop_release
       changed_when: btop_release.rc == 0
 
-    - name: system-setup | btop++ | create dir path in /tmp
-      file:
-        path: /tmp/btop
-        state: directory
-        owner: root
-        group: root
-        mode: 0755
-
     - name: system_setup | btop++ | install latest btop++ binary
-      unarchive:
+      ansible.builtin.unarchive:
         src: https://github.com/aristocratos/btop/releases/download/{{ btop_release.stdout }}/btop-x86_64-linux-musl.tbz
-        dest: /tmp/btop
+        dest: /usr/local/bin/btop
         remote_src: yes
         mode: 0755
         owner: root
         group: root
-
-    - name: system_setup | btop++ | Run 'install' to /usr/local
-      community.general.make:
-        chdir: /tmp/btop
-        target: install
-        params:
-          PREFIX: /usr/local
 
   become: true
   become_method: sudo
