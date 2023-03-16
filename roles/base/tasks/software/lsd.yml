@@ -13,7 +13,7 @@
 - name: software | lsd | download latest release info
   shell: |
     set -o pipefail
-    curl --silent "https://api.github.com/repos/Peltoche/lsd/releases/latest" |
+    curl --silent "https://api.github.com/repos/lsd-rs/lsd/releases/latest" |
     jq -r .tag_name
   args:
     executable: /bin/bash
@@ -27,7 +27,7 @@
 
 - name: software | lsd | install lsd program
   apt:
-    deb: https://github.com/Peltoche/lsd/releases/download/{{ lsd_release.stdout }}/lsd_{{ lsd_release.stdout }}_amd64.deb
+    deb: https://github.com/lsd-rs/lsd/releases/download/{{ lsd_release.stdout }}/lsd_{{ lsd_release.stdout }}_amd64.deb
 
 # Get latest release from Github api
 # get tag line
