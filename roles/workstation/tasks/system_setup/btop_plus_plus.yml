@@ -14,7 +14,7 @@
     - name: system_setup | btop++ | install latest btop++ binary
       ansible.builtin.unarchive:
         src: https://github.com/aristocratos/btop/releases/download/{{ btop_release.stdout }}/btop-x86_64-linux-musl.tbz
-        dest: /usr/local/bin/btop
+        dest: /usr/local/bin
         remote_src: yes
         mode: 0755
         owner: root
