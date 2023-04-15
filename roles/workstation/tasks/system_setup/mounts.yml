@@ -25,11 +25,13 @@
         mode: 0775
       with_items:
         - { dir: NAS }
-        - { dir: NAS/documents }
         - { dir: NAS/backup }
-        - { dir: NAS/media }
+        - { dir: NAS/documents }
         - { dir: NAS/manuals }
+        - { dir: NAS/media }
         - { dir: NAS/rechnungen }
+        - { dir: NAS/software }
+        - { dir: NAS/steuern }
 
     - name: system_setup | systemd | copy mount files
       copy:
@@ -41,11 +43,11 @@
       with_items:
         - { src: 'mnt-NAS-backup.mount', dest: 'mnt-NAS-backup.mount' }
         - { src: 'mnt-NAS-documents.mount', dest: 'mnt-NAS-documents.mount' }
+        - { src: 'mnt-NAS-manuals.mount', dest: 'mnt-NAS-manuals.mount' }
         - { src: 'mnt-NAS-media.mount', dest: 'mnt-NAS-media.mount' }
+        - { src: 'mnt-NAS-rechnungen.mount', dest: 'mnt-NAS-rechnungen.mount' }
         - { src: 'mnt-NAS-software.mount', dest: 'mnt-NAS-software.mount' }
         - { src: 'mnt-NAS-steuern.mount', dest: 'mnt-NAS-steuern.mount' }
-        - { src: 'mnt-NAS-manuals.mount', dest: 'mnt-NAS-manuals.mount' }
-        - { src: 'mnt-NAS-rechnungen.mount', dest: 'mnt-NAS-rechnungen.mount' }
 
 # Service NetworkManager-wait-online must be enabled, otherwise the
 # following mounts will fail (sometimes ok, sometimes not)
@@ -64,11 +66,11 @@
       with_items:
         - 'mnt-NAS-backup.mount'
         - 'mnt-NAS-documents.mount'
+        - 'mnt-NAS-manuals.mount'
         - 'mnt-NAS-media.mount'
+        - 'mnt-NAS-rechnungen.mount'
         - 'mnt-NAS-software.mount'
         - 'mnt-NAS-steuern.mount'
-        - 'mnt-NAS-manuals.mount'
-        - 'mnt-NAS-rechnungen.mount'
 
     - name: system_setup | Add nfs NAS bookmarks
       lineinfile:
@@ -77,9 +79,9 @@
         insertafter: EOF
       with_items:
         - { line: "file:///mnt/NAS NAS" }
-        - { line: "file:///mnt/LXD LXD" }
+        - { line: "file:///mnt/k8s K8S" }
         - { line: "file:///mnt/Data Data" }
-        - { line: "file:///mnt/Games Games" }
+        - { line: "file:///mnt/Storage Storage" }
         - { line: "file:///mnt/Digikam Digikam" }
 
   become: yes
