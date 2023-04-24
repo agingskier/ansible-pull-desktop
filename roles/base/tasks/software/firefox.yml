@@ -49,6 +49,9 @@
 
     - name: software | firefox | create private profile bpic
       command: firefox -CreateProfile bpic
+      
+    - name: software | firefox | start ProfileManager and delete default profile
+      command: firefox -ProfileManager  
 
   become: yes
   become_method: sudo
