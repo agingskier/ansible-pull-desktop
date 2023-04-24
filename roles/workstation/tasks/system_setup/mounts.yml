@@ -83,6 +83,7 @@
         - { line: "file:///mnt/Data Data" }
         - { line: "file:///mnt/Storage Storage" }
         - { line: "file:///mnt/Digikam Digikam" }
+        - { line: "file:///mnt/Games Games" }
 
   become: yes
   become_method: sudo

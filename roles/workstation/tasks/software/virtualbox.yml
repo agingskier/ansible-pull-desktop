@@ -1,39 +1,55 @@
 ---
-# For virtualbox, set up acceptance of virtualbox-ext-pack license before continuing
-# sudo debconf-show virtualbox-ext-pack --- (answers found in: /var/cache/debconf/config.dat)
-# * virtualbox-ext-pack/license: true
-# * virtaulbox-ext-pack/question: Yes
+#
+# VirtualBox V7.0.8:    https://download.virtualbox.org/virtualbox/7.0.8/virtualbox-7.0_7.0.8-156879~Ubuntu~jammy_amd64.deb
+# VirtualBox Extension: https://download.virtualbox.org/virtualbox/7.0.8/Oracle_VM_VirtualBox_Extension_Pack-7.0.8.vbox-extpack
+#
 - name: software | virtualbox block
-  tags: virtualbox
   block:
-    - name: software | virtualbox-ext | confirm license info
-      debconf:
-        name: virtualbox-ext-pack
-        question: virtualbox-ext-pack/license
-        value: true
-        vtype: boolean
+  
+    - name: software | virtualbox | set fact data set names
+      set_fact:
+        vbox_ext: "Oracle_VM_VirtualBox_Extension_Pack-7.0.8.vbox-extpack"
+        vbox_deb: "virtualbox-7.0_7.0.8-156879~Ubuntu~jammy_amd64.deb"
+ 
+    - name: software | virtualbox | install virtualbox deb package
+      ansible.builtin.apt:
+        deb: https://download.virtualbox.org/virtualbox/7.0.8/{{ vbox_deb }}
 
-    - name: software | virtualbox | accept license
-      debconf:
-        name: virtualbox-ext-pack
-        question: virtualbox-ext-pack/question
-        value: true
-        vtype: select
+    - name: software | virtualbox | download virtualbox extension package
+      shell: |
+        set -o pipefail
+        wget -P /tmp -q --show-progress --https-only --timestamping \
+              https://download.virtualbox.org/virtualbox/7.0.8/{{ vbox_ext }}
+      args:
+        executable: /bin/bash
+      register: vbox_extpack
+      changed_when: vbox_extpack.rc == 0
 
-    - name: software | virtualbox | install virtualbox
-      apt:
-        pkg:
-          - virtualbox
-          - virtualbox-ext-pack
-          - virtualbox-guest-additions-iso
-        state: present
+    - name: software | virtualbox | install extension pack
+      shell: |
+        set -o pipefail
+        vboxmanage extpack install --replace --accept-license=sh256  /tmp/{{ vbox_ext }}
+      args:
+        executable: /bin/bash
+      register: install_extpack
+      changed_when: install_extpack.rc == 0
 
     - name: software | virtualbox | add vboxusers group to user bernhard
       user:
         name: bernhard
         groups: vboxusers
         append: yes
-  become: yes
+    
+    - name: software | virtualbox | change location for VirtualBox VMs
+      shell: |
+        set -o pipefail
+        vboxmanage setproperty machinefolder /mnt/Storage/VirtualBox
+      args:
+        executable: /bin/bash
+      register: vm_location
+      changed_when: vm_location.rc == 0
+
+  become: true
   become_method: sudo
   when:
     - virtualbox is defined
