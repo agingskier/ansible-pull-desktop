@@ -6,6 +6,7 @@
   tags: always
   become: yes
   become_method: sudo
+
   pre_tasks:
     - name: pre-run | update package cache Ubuntu
       tags: always
@@ -20,6 +21,7 @@
   tags: base
   become: true
   become_method: sudo
+
   roles:
     - base
 
@@ -29,9 +31,10 @@
   tags: workstation
   become: true
   become_method: sudo
+
   roles:
     - workstation
- 
+
 # - name: Server role
 #  hosts: server
 #  tags: server

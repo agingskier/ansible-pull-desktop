@@ -26,12 +26,12 @@
         mode: 0755
       with_items:
         - { dir: '.config/GIMP' }
-        - { dir: '.config/GIMP/2.10' }
+        - { dir: '.config/GIMP/{{ gimp_subdir_version }}' }
 
     - name: software | gimp | copy gimprc & text-tool files
       copy:
         src: gimp/{{ item.src }}
-        dest: /home/bernhard/.config/GIMP/2.10/{{ item.dest }}
+        dest: /home/bernhard/.config/GIMP/{{ gimp_subdir_version }}/{{ item.dest }}
         owner: bernhard
         group: users
         mode: 0664

@@ -6,7 +6,7 @@
   block:
     - name: software | protonvpn | add protonvpn to apt cache
       apt:
-        deb: https://protonvpn.com/download/protonvpn-stable-release_1.0.1-1_all.deb
+        deb: https://protonvpn.com/download/protonvpn-stable-release_{{ protonvpn_version }}.deb
 
     - name: software | protonvpn | update apt cache if older 1 hour
       apt:
