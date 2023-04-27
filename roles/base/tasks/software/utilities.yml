@@ -3,6 +3,7 @@
   apt:
     state: present
     pkg:
+      - aptitude
       - at
       - bat
       - ccze
@@ -15,15 +16,30 @@
       - dnsutils
       - duf
       - etherape
+      - gparted
+      - libimage-exiftool-perl
       - libjson-xs-perl
       - libxml-dumper-perl
       - ncdu
       - net-tools
       - nmap
+      - p7zip-full
+      - pdfsam
       - plocate
       - traceroute
       - ripgrep
+      - software-propterties-common
+      - solaar
       - speedtest-cli
+      - sshpass
       - vim-nox
       - whois
-     
+
+- name: software | utilities | remove thunderbird and htop packages
+  apt:
+    state: absent
+    autoremove: yes
+    pkg:
+      - thunderbird*
+      - htop
+

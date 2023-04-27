@@ -11,11 +11,8 @@
     - include_tasks: desktop_environments/desktop.yml
 
     ## system setup
-    - import_tasks: system_setup/btop_plus_plus.yml
-    - import_tasks: system_setup/geany.yml
-    - import_tasks: system_setup/grub.yml
+
     - import_tasks: system_setup/sensors.yml
-    - import_tasks: system_setup/ipscan.yml
     - name: Check if /mnt/NAS already created
       stat:
         path: /mnt/NAS
@@ -24,25 +21,32 @@
     - import_tasks: system_setup/mounts.yml
       when: not nas_status.stat.exists
 
+    ## Development
+    - import_tasks: development/geany.yml
+    - import_tasks: development/java.yml
+    - import_tasks: development/vscodium.yml
+    - import_tasks: development/development.yml
+
     ## install software
-    - import_tasks: software/remove_software.yml
-    - import_tasks: software/apt_update.yml
+#    - import_tasks: software/calibre.yml
     - import_tasks: software/keepassxc.yml
     - import_tasks: software/variety.yml
     - import_tasks: software/fsearch.yml
-    - import_tasks: software/misc_packages.yml
     - import_tasks: software/gimp.yml
-    - import_tasks: software/kvm.yml
+    - import_tasks: software/ipscan.yml
     - import_tasks: software/librecad.yml
-#    - import_tasks: software/media.yml
-    - import_tasks: software/misc_games.yml
+    - import_tasks: software/media.yml
+    - import_tasks: software/games.yml
     - import_tasks: software/steam.yml
-    - import_tasks: software/vagrant.yml
-    - import_tasks: software/virtualbox.yml
     - import_tasks: software/snap_packages.yml  (produces errors in marlies, required?)
-    - import_tasks: software/multipass.yml
     - import_tasks: software/vlc.yml
     - import_tasks: software/protonvpn.yml
+
+    ## Virtualization
+    - import_tasks: virtualization/kvm.yml
+    - import_tasks: virtualization/vagrant.yml
+    - import_tasks: virtualization/virtualbox.yml
+    - import_tasks: virtualization/multipass.yml
 
     ## User configs
     - import_tasks: users/bernhard.yml

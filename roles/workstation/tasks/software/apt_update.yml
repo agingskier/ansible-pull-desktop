@@ -1,9 +1,0 @@
----
-- name: Update Repository cache and upgrade
-  become: yes
-  apt:
-    upgrade: yes
-    update_cache: yes
-    autoclean: yes
-    autoremove: yes
-    cache_valid_time: 86400 # One day

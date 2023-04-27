@@ -32,16 +32,15 @@ java: yes
 # application selection
 #
 
-calibre: yes
+calibre: no
 games: yes
 gimp: yes
 kvm: yes
 keepassxc: yes
 librecad: yes
-media: no
+media: yes
 multipass: yes
 protonvpn: yes
-signal: yes
 steam: yes
 vagrant: yes
 variety: yes

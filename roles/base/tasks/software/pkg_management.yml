@@ -1,7 +1,0 @@
----
-- name: software | management | install package management tools
-  apt:
-    pkg:
-      - aptitude
-      - software-properties-common
-    state: present

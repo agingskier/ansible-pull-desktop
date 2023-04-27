@@ -2,6 +2,22 @@
 - name: software | firefox block
   block:
 
+    - name: software | firefox | remove snap firefox
+      snap:
+        name: firefox
+        state: absent
+
+    - name: software | firefox | create apt file to avoid reinstall of snap firefox
+      copy:
+        dest: "/etc/apt/preferences.d/mozilla-firefox"
+        owner: root
+        group: root
+        mode: 0644
+        content: |
+          Package: *
+          Pin: release o=LP-PPA-mozillateam
+          Pin-Priority: 1001
+
     - name: software | firefox | add firefox apt repository
       apt_repository:
         repo: 'ppa:mozillateam/ppa'
@@ -21,17 +37,6 @@
         executable: /bin/bash
       register: gpg_convert
       changed_when: gpg_convert.rc == 0
-
-    - name: software | firefox | create apt file to avoid reinstall of snap firefox
-      copy:
-        dest: "/etc/apt/preferences.d/mozilla-firefox"
-        owner: root
-        group: root
-        mode: 0644
-        content: |
-          Package: *
-          Pin: release o=LP-PPA-mozillateam
-          Pin-Priority: 1001
 
     - name: software | firefox | ensure automatic updates of apt firefox
       copy:

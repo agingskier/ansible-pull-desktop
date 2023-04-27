@@ -18,18 +18,15 @@
     - import_tasks: system_setup/bluetooth.yml
 
     # install software
+    - import_tasks: software/firefox.yml
+    - import_tasks: software/brave.yml
     - import_tasks: software/clamav.yml
     - import_tasks: software/lynis.yml
     - import_tasks: software/utilities.yml
-    - import_tasks: software/remove_snap_firefox.yml
-    - import_tasks: software/firefox.yml
-    - import_tasks: software/brave.yml
-    - import_tasks: software/java.yml
-    - import_tasks: software/vscodium.yml
-    - import_tasks: software/development.yml
-    - import_tasks: software/pkg_management.yml
+    - import_tasks: software/btop_plus_plus.yml
 
-    # Perform remaining tasks:
+    # Perform remaining tasks
+    - import_tasks: system_setup/grub.yml
     - import_tasks: system_setup/clock.yml
     - import_tasks: system_setup/cron.yml
     - import_tasks: system_setup/logging.yml

@@ -39,7 +39,6 @@ librecad: no
 media: no
 multipass: no
 protonvpn: yes
-signal: no
 steam: no
 vagrant: no
 variety: yes
