@@ -35,7 +35,7 @@ java: yes
 calibre: yes
 games: yes
 gimp: yes
-kvm: no
+kvm: yes
 keepassxc: yes
 librecad: yes
 media: no
@@ -43,9 +43,8 @@ multipass: yes
 protonvpn: yes
 signal: yes
 steam: yes
-topgrade: yes
 vagrant: yes
 variety: yes
-virtualbox: no
+virtualbox: yes
 vlc: no
 vscodium: yes

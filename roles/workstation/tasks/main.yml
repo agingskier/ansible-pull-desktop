@@ -37,12 +37,12 @@
 #    - import_tasks: software/media.yml
     - import_tasks: software/misc_games.yml
     - import_tasks: software/steam.yml
-#    - import_tasks: software/vagrant.yml
-#    - import_tasks: software/virtualbox.yml
-#    - import_tasks: software/snap_packages.yml  (produces errors in marlies, required?)
+    - import_tasks: software/vagrant.yml
+    - import_tasks: software/virtualbox.yml
+    - import_tasks: software/snap_packages.yml  (produces errors in marlies, required?)
     - import_tasks: software/multipass.yml
     - import_tasks: software/vlc.yml
-#    - import_tasks: software/protonvpn.yml
+    - import_tasks: software/protonvpn.yml
 
     ## User configs
     - import_tasks: users/bernhard.yml

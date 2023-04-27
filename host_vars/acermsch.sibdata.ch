@@ -41,7 +41,6 @@ multipass: no
 protonvpn: yes
 signal: no
 steam: no
-topgrade: no
 vagrant: no
 variety: yes
 virtualbox: no

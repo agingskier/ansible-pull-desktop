@@ -1,12 +1,15 @@
 [Unit]
 Description=Synology NAS rechnungen share on 192.168.29.10
-After=network-online.target
+DefaultDependencies=no
+Conflicts=umount.target
+After=network-online.target remote-fs.target
+Before=umount.target
 
 [Mount]
 What=192.168.29.10:/volume1/rechnungen
 Where=/mnt/NAS/rechnungen
 Type=nfs
-Options=_netdev,auto
+Options=defaults
 
 [Install]
 WantedBy=multi-user.target

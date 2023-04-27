@@ -48,9 +48,12 @@
         - { src: 'mnt-NAS-rechnungen.mount', dest: 'mnt-NAS-rechnungen.mount' }
         - { src: 'mnt-NAS-software.mount', dest: 'mnt-NAS-software.mount' }
         - { src: 'mnt-NAS-steuern.mount', dest: 'mnt-NAS-steuern.mount' }
-
+#
 # Service NetworkManager-wait-online must be enabled, otherwise the
 # following mounts will fail (sometimes ok, sometimes not)
+#
+# The explanation for the unit section can be found in file
+# mnt-NAS-software.mount
 #
     - name: system_setup | service | enable NetworkManager-wait-online
       service:
