@@ -1,6 +1,6 @@
 ---
 - name: system_setup | ipscan | get the latest version of ipscan software
-  shell: |
+  ansible.legacy.shell: |
     set -o pipefail
     curl --silent https://api.github.com/repos/angryip/ipscan/releases/latest | \
     jq -r .tag_name

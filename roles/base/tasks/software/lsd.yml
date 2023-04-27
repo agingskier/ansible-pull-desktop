@@ -11,7 +11,7 @@
 # get tag line
 # pluck JSON value
 - name: software | lsd | download latest release info
-  shell: |
+  ansible.legacy.shell: |
     set -o pipefail
     curl --silent "https://api.github.com/repos/lsd-rs/lsd/releases/latest" |
     jq -r .tag_name
@@ -33,7 +33,7 @@
 # get tag line
 # pluck JSON value
 - name: software | lsd | download latest release info for lsd nerd fonts
-  shell: |
+  ansible.legacy.shell: |
     set -o pipefail
     curl --silent https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest |
     jq -r .tag_name

@@ -18,7 +18,7 @@
 # use the last 8 characters for the export command
 
 #    - name: software | grub | apt-key deprecated - convert trusted.gpg into member in tursted.gpg.d
-#      shell: |
+#      ansible.legacy.shell: |
 #        set -o pipelfail 
 #        apt-key export 3F055C03 | \
 #        gpg --dearmour -o /etc/apt/trusted.gpg.d/grub-customizer.gpg

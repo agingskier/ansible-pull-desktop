@@ -38,7 +38,7 @@
     - import_tasks: software/media.yml
     - import_tasks: software/games.yml
     - import_tasks: software/steam.yml
-    - import_tasks: software/snap_packages.yml  (produces errors in marlies, required?)
+    - import_tasks: software/snap_packages.yml
     - import_tasks: software/vlc.yml
     - import_tasks: software/protonvpn.yml
 

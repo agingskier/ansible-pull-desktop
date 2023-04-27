@@ -6,6 +6,9 @@
         dest: "/home/{{ user_name }}/.config/inxi.conf"
         content: |
           VIRT_TERM_COLOR_SCHEME=29
+        owner: "{{ user_name }}"
+        group: "{{ group_name }}"
+        mode: 0644
   
     - name: users | bernhard | add sudoers file
       copy:

@@ -2,7 +2,7 @@
 - name: btop block
   block:
     - name: system_setup | btop++ | download latest release info
-      shell: |
+      ansible.legacy.shell: |
         set -o pipefail
         curl --silent "https://api.github.com/repos/aristocratos/btop/releases/latest" |
         jq -r .tag_name

@@ -6,7 +6,7 @@
 # apt-key is deprecated - use curl to get the gpg key and write it to /usr/share/keyrings directory
 #
     - name: software | vagrant | add vagrant apt key to keyring file
-      shell: |
+      ansible.legacy.shell: |
         set -o pipefail
         curl -fsSL https://apt.releases.hashicorp.com/gpg | \
         gpg --dearmor | \
@@ -40,7 +40,7 @@
         state: present
 
     - name: software | vagrant | activate all deb-src entries in /etc/apt/sources.list
-      shell: |
+      ansible.legacy.shell: |
         set -o pipefail
         cp /etc/apt/sources.list /etc/apt/sources.list~
         sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list
@@ -68,7 +68,7 @@
         state: build-dep
 
     - name: software | vagrant | install vagrant-libvirt plugin
-      shell: |
+      ansible.legacy.shell: |
         set -o pipefail
         vagrant plugin install vagrant-libvirt
       args:

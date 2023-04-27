@@ -5,7 +5,7 @@
     # apt-key is deprecated - use curl to get the gpg key and write it to /usr/share/keyrings directory
     #
     - name: software | vscodium | add vscodium gpg key to keyring file
-      shell: |
+      ansible.legacy.shell: |
         set -o pipefail
         curl -fsSL https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg | \
         sudo gpg --dearmor | \

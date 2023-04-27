@@ -14,7 +14,7 @@
 # use the last 8 characters for the export command
 
     - name: software | keepassxc | apt-key deprecated - convert trusted.gpg into member in tursted.gpg.d
-      shell: |
+      ansible.legacy.shell: |
         set -o pipefail
         apt-key export 0068FCD6 | \
         gpg --dearmour -o /usr/share/keyrings/keepassxc.gpg

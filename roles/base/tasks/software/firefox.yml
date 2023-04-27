@@ -29,7 +29,7 @@
 # use the last 8 characters for the export command
 
     - name: software | firefox | apt-key deprecated - convert trusted.gpg into a member in /usr/share/keyrings
-      shell: |
+      ansible.legacy.shell: |
         set -o pipefail
         apt-key export CE49EC21 | \
         gpg --dearmour -o /usr/share/keyrings/firefox.gpg
@@ -41,11 +41,11 @@
     - name: software | firefox | ensure automatic updates of apt firefox
       copy:
         dest: "/etc/apt/apt.conf.d/51unattended-upgrades-firefox"
+        content: |
+          Unattended-Upgrade::Allowed-Origins:: "LP-PPA-mozillateam:${distro_codename}";
         owner: root
         group: root
         mode: 0644
-        content: |
-          Unattended-Upgrade::Allowed-Origins:: "LP-PPA-mozillateam:${distro_codename}";
 
     - name: software | firefox | install firefox
       apt:
@@ -53,10 +53,10 @@
           - firefox
 
     - name: software | firefox | create private profile bpic
-      command: firefox -CreateProfile bpic
+      ansible.legacy.shell: firefox -CreateProfile bpic
       
     - name: software | firefox | start ProfileManager and delete default profile
-      command: firefox -ProfileManager  
+      ansible.legacy.shell: firefox -ProfileManager  
 
   become: yes
   become_method: sudo

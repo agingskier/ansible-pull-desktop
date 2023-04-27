@@ -12,7 +12,7 @@
 # check: https://launchpad.net/~christian-boxdoerfer/+archive/ubuntu/fsearch-stable for Signing Key last 8 characters
 
 - name: software | fsearch | apt-key deprecated - convert trusted.gpg into a member in /usr/share/keyrings
-  shell: |
+  ansible.legacy.shell: |
     set -o pipefail
     apt-key export DC496F40 | \
     gpg --dearmour -o /usr/share/keyrings/fsearch.gpg

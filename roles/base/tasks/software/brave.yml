@@ -5,7 +5,7 @@
     # apt-key is deprecated - use curl to get the gpg key and write it to /usr/share/keyrings directory
     #
     - name: software | brave browser | add brave gpg key to keyring file
-      shell: |
+      ansible.legacy.shell: |
         set -o pipefail
         curl -fsSL https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg | \
         gpg --dearmor | \
