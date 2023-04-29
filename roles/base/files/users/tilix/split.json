@@ -12,7 +12,7 @@
                 "width": 1389
             },
             "child2": {
-                "directory": "",
+                "directory": "/mnt/Data/ansible-test",
                 "height": 830,
                 "profile": "2b7c4080-0ddd-46c5-8f23-563fd3ba789d",
                 "readOnly": false,
@@ -28,7 +28,7 @@
         },
         "child2": {
             "child1": {
-                "directory": "",
+                "directory": "/home/bernhard/deploy/ansible-pull-desktop",
                 "height": 831,
                 "profile": "2b7c4080-0ddd-46c5-8f23-563fd3ba789d",
                 "readOnly": false,
@@ -38,7 +38,7 @@
                 "width": 1391
             },
             "child2": {
-                "directory": "",
+                "directory": "/mnt/Data/src/k8s-hardway-lxd",
                 "height": 830,
                 "profile": "2b7c4080-0ddd-46c5-8f23-563fd3ba789d",
                 "readOnly": false,

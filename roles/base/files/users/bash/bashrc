@@ -49,14 +49,6 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases		# --> Read /$HOME/.bash_aliases if present
 fi
 
-#-------------------------------------------------------------
-# Temporary fix for Tilix terminal (hopefully)
-#-------------------------------------------------------------
-
-#if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
-#        source /etc/profile.d/vte.sh
-#fi
-
 # === Create DEFAULT LS_COLORS ENVIRONMENT VARIABLE ===========================
 # Adapt .dircolors file in $HOME directory (samples found in github)
 # the command eval `dircolors -b ~/.dircolors` takes the dotfile as input
@@ -108,8 +100,8 @@ export TERM=xterm-256color
 export PAGER=less
 export LESS='-j4aR'
 
-export PATH_TO_FX=/opt/javafx-sdk-18.0.1/lib
-export CLASSPATH=.:/usr/lib/jvm/java-18-openjdk-amd64/lib:$PATH_TO_FX
+export PATH_TO_FX=/opt/javafx-sdk-18.0.2/lib
+export CLASSPATH=.:/usr/lib/jvm/java-19-openjdk-amd64/lib:$PATH_TO_FX
 
 # $HOME/bin is added to PATH in .profile, so not required in .bashrc
 #if [ -d "$HOME/bin" ] ; then
@@ -118,7 +110,6 @@ export CLASSPATH=.:/usr/lib/jvm/java-18-openjdk-amd64/lib:$PATH_TO_FX
 
 export -n SESSION_MANAGER   # required for Digikam
 export VAGRANT_HOME=/mnt/Data/vagrant
-export KUBECONFIG=~/.kube/config
 
 #-------------------------------------------------------------
 # Color definitions, less definitions
@@ -162,11 +153,11 @@ ALERT=${WHITE}${on_red}   # Bold White on red background
 #---------------------------------------------------------------------
 
 SYS=`uname -r`
-EXTIP=`curl -4 ifconfig.so`
+EXTIP=`curl -s -4 ifconfig.so`
 
 case "$TERM" in
   xterm*|rxvt*)
-    PROMPT_COMMAND='echo -ne "\e]0;${USER}@${HOSTNAME} - ${SYS} on ${EXTIP}\a"'
+    PROMPT_COMMAND='echo -ne "\e]0; - ${USER}@${HOSTNAME} - ${SYS} on ${EXTIP}\a"'
 #	PROMPT_COMMAND='echo -ne "${yellow}${USER}@${HOSTNAME}: : ${PWD/$HOME/~}\a"'
     ;;
   *)
@@ -237,6 +228,14 @@ export LESS_TERMCAP_us=$'\e[04;38;5;164m' # begin underline
 if [ -f ~/.bash_functions ]; then
     . ~/.bash_functions
 fi
+
+#--------------------------------------------------------------
+# vte.sh is installed by Tilix terminal (not working properly)  
+#--------------------------------------------------------------
+
+# if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
+#        source /etc/profile.d/vte.sh
+# fi
 
 #--------------------------------------------------------------
 # end of .bashrc

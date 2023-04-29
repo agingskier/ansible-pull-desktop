@@ -13,11 +13,10 @@
         update_cache: yes
         cache_valid_time: 3600
 
-    - name: software | protonvpn | install protonvpn, openvpn and prerequisites
+    - name: software | protonvpn | install protonvpn and prerequisites
       apt:
         pkg:
           - protonvpn
-#          - openvpn     # maybe required, check without
           - gnome-shell-extension-appindicator
           - gir1.2-appindicator3-0.1
         state: present

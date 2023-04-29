@@ -15,7 +15,7 @@ alias ...='cd ../../../'
 alias ....='cd ../../../../'
 
 alias cdp='cd /mnt/Data/docker-projects'
-alias cdh='cd /mnt/Data/hardway'
+alias cds='cd /mnt/Data/src'
 alias cdc='cd /mnt/Data/clone'
 alias cda='cd /mnt/NAS/software/ansible-test'
 alias cdd='cd ~/deploy/ansible-pull-desktop'
@@ -43,8 +43,8 @@ alias lsu='lsusb | ccze -A'
 alias lsb='lsblk -o NAME,FSTYPE,SIZE,MOUNTPOINT,LABEL,UUID | ccze -A'
 alias lsc='lscpu | ccze -A'
 alias lsi='sudo blkid | ccze -A'
-alias loc='locate -A -i'
-alias lsppa='grep -rhE ^deb /etc/apt/sources.list*'
+alias loc='plocate -A -i'
+alias lsppa='egrep -rh ^deb /etc/apt/sources.list /etc/apt/sources.list.d'
 alias lsmnt='mount | column -t'
 
 alias lsop='lsof -P -iTCP -sTCP:LISTEN'		# display all open ports
@@ -66,17 +66,24 @@ alias bigf='tree -iasfFQ | egrep -v /$ | sort -k2nr | head --lines=15'
 
 alias dus='du -aS | sort -n -r | head --lines=15'
 alias ping='ping -c 5'
-alias sf='screenfetch'
+alias sf='bash <(curl -sL nf.hydev.org)'
+# limit cpu for very demaning clamscan to 30% - clamscan must be running
+alias clamlim='cpulimit -e clamscan -l 30'
 
 alias cputemp='sensors | egrep Core'
 alias pscpu='echo "USER       PID %CPU %MEM  SZ    RSS   TTY      STAT STIME   TIME COMMAND"; ps auxw | tail | sort -k 1.15,1.19nr | head'
 alias psmem='echo "USER       PID %CPU %MEM  SZ    RSS   TTY      STAT STIME   TIME COMMAND"; ps auxw | tail | sort -k 1.21,1.25nr | head'
 #
-alias logb='journalctl --boot --reverse --lines=50 | ccze -A'
-alias logk='journalctl --dmesg --reverse --lines=50 | ccze -A'
+alias logb='journalctl --boot --reverse --lines=150 | ccze -A'
+alias logk='journalctl --dmesg --reverse --lines=150 | ccze -A'
 #
 # alias for LXD
 #
+
+#
+# alias for Kubernetes
+#
+alias k=kubectl
 #------------------------------------------------------------- 
 # End Aliases
 #-------------------------------------------------------------
