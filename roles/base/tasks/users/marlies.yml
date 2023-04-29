@@ -15,13 +15,13 @@
         group: root
         mode: 0440
 
-    - name: "users | bernhard | change Exec= line for Tilix New Window in com.gexperts.Tilix.desktop"
+    - name: "users | marlies | change Exec= line for Tilix New Window in com.gexperts.Tilix.desktop"
       become: true
       become_method: sudo
       lineinfile:
         path: /usr/share/applications/com.gexperts.Tilix.desktop
         regexp: '^Exec=tilix --action=app-new-window'
-        line: 'Exec=tilix --title=wide --action=app-new-window --geometry=180x24+100+200 --session=~/.config/tilix/wide.json'
+        line: 'Exec=tilix --action=app-new-window --geometry=180x24+100+200 --session=~/.config/tilix/wide.json'
 
     - name: users | marlies | copy dotfiles
       copy:
@@ -37,14 +37,6 @@
         - { src: 'bash/dircolors', dest: '.dircolors' }
         - { src: 'tilix/split.json', dest: '.config/tilix/split.json' }
         - { src: 'tilix/wide.json', dest: '.config/tilix/wide.json' }
-#        - { src: 'autostart/conky_autostart', dest: '.config/autostart/conky.desktop' }
-#        - { src: 'autostart/tilix_autostart', dest: '.config/autostart/tilix.desktop' }
-
-#    - name: users | marlies | conky | synchronize with NAS backup
-#      ansible.posix.synchronize:
-#        src: /mnt/NAS/backup/{{ hostvars[inventory_hostname].ansible_hostname }}/conky/
-#        dest: /home/marlies/conky/
-#        archive: yes
 
   when:
     - marlies is defined

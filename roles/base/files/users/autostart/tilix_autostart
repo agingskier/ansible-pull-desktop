@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Exec=tilix --title=4Split  --action=app-new-window --geometry=80x24+100+200 --session /home/bernhard/.config/tilix/split.json
+Exec=tilix --action=app-new-window --geometry=80x24+100+200 --session /home/bernhard/.config/tilix/split.json
 Hidden=false
 NoDisplay=false
 X-GNOME-Autostart-enabled=true
