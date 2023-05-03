@@ -22,7 +22,7 @@
     - { dir: '.vim/autoload' }
     - { dir: '.vim/colors' }
     - { dir: '.vim/ftplugin' }
-    - { dir: '.vim/plugged
+    - { dir: '.vim/plugged' }
 
 - name: vim | {{ user_name }} | copy vim dotfile 
   copy:
