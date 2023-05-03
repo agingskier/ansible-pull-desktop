@@ -17,7 +17,7 @@ alias ....='cd ../../../../'
 alias cdp='cd /mnt/Data/docker-projects'
 alias cds='cd /mnt/Data/src'
 alias cdc='cd /mnt/Data/clone'
-alias cda='cd /mnt/NAS/software/ansible-test'
+alias cda='cd /mnt/Data/ansible-test'
 alias cdd='cd ~/deploy/ansible-pull-desktop'
 
 alias egrep='egrep -E --color=auto'

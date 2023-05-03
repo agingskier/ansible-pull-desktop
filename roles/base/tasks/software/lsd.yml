@@ -47,9 +47,9 @@
     var: fonts_release.stdout
     verbosity: 2
 
-- name: software | lsd | Creates directory for lsd nerd fonts
+- name: software | lsd | Creates nerd fonts directory used by lsd
   file:
-    path: /usr/local/share/fonts/lsd
+    path: /usr/local/share/fonts/nerd
     state: directory
     owner: root
     group: root
@@ -60,7 +60,7 @@
   become_method: sudo
   unarchive:
     src: https://github.com/ryanoasis/nerd-fonts/releases/download/{{ fonts_release.stdout }}/{{ item }}
-    dest: /usr/local/share/fonts/lsd
+    dest: /usr/local/share/fonts/nerd
     remote_src: yes
     owner: root
     group: root

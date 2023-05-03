@@ -1,4 +1,4 @@
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""               
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""               
 "               
 "               ██╗   ██╗██╗███╗   ███╗██████╗  ██████╗
 "               ██║   ██║██║████╗ ████║██╔══██╗██╔════╝
@@ -10,33 +10,80 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""   
 
 "|----------------------------------------------------------------------------|
-"|          Vim Settings                                                      |
+"|          Basic Vim Settings                                                |
 "|----------------------------------------------------------------------------|"
-
 " Disable compatibility with vi which can cause unexpected issues.
 set nocompatible
-       
-" Disable annoying bell.
-set noerrorbells visualbell t_vb=   
 
-" Set color scheme. See .vim/colors directory for installed colorschemes                         
-colorscheme spacecamp     
+" Enable type file detection. Vim will be able to try to detect the type of file in use.
+filetype on
 
-" Use comma as Leader
-let mapleader = ','                 
+" Enable plugins and load plugin for the detected file type.
+filetype plugin on
 
-" Required: Enable filetype: detection, specific scripts, and indent scripts.
-filetype plugin indent on    
+" Load an indent file for the detected file type.
+filetype indent on
 
-" Turn backup off                                                                                 
-set nobackup                                                                                      
-set nowb                                                                                          
-set noswapfile       
+" Turn syntax highlighting on.
+syntax on
 
-" Fix tmux background color                                                                       
-if &term =~ '256color'                                                                            
-    set t_ut=                                                                                     
-endif  
+" Add numbers to each line on the left-hand side.
+set number
+
+" Show file stats
+set ruler
+
+" Blink cursor on error instead of beeping (grr)
+set visualbell
+
+" Highlight cursor line underneath the cursor horizontally.
+set cursorline
+
+" Highlight cursor line underneath the cursor vertically.
+set cursorcolumn
+
+" Set shift width to 4 spaces.
+set shiftwidth=4
+
+" Set tab width to 4 columns.
+set tabstop=4
+
+" Use space characters instead of tabs.
+set expandtab
+
+" Do not save backup files.
+set nobackup
+
+" Do not let cursor scroll below or above N number of lines when scrolling.
+set scrolloff=10
+
+" Do not wrap lines. Allow long lines to extend as far as the line goes.
+set nowrap
+
+" While searching though a file incrementally highlight matching characters as you type.
+set incsearch
+
+" Ignore capital letters during search.
+set ignorecase
+
+" Override the ignorecase option if searching for capital letters.
+" This will allow you to search specifically for capital letters.
+set smartcase
+
+" Show partial command you type in the last line of the screen.
+set showcmd
+
+" Show the mode you are on the last line.
+set showmode
+
+" Show matching words during a search.
+set showmatch
+
+" Use highlighting when doing a search.
+set hlsearch
+
+" Set the commands to save in history default number is 20.
+set history=1000
 
 " Enable auto completion menu after pressing TAB.
 set wildmenu
@@ -48,200 +95,76 @@ set wildmode=list:longest
 " Wildmenu will ignore files with these extensions.
 set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
 
-" Set utf8 as standard encoding                          
-set encoding=utf8
+" Fold by indent
+set foldmethod=indent   
+set foldnestmax=10
+set nofoldenable
+set foldlevel=2
 
-" Set keyboard shortcut for paste toggle.                                                       
-set pastetoggle=<F10>                                                                           
+" PLUGINS ---------------------------------------------------------------- {{{
+"|------------------------------------------------------------------------|
+"|         Plugins Settings                                               |
+"|------------------------------------------------------------------------|
 
-" this turns off physical line wrapping (ie: automatic insertion of newlines)                   
-set textwidth=0 wrapmargin=0 
+call plug#begin('~/.vim/plugged')
 
-" Remember info about open buffers on close                                                     
-set viminfo^=% 
+  Plug 'dense-analysis/ale'
+  Plug 'preservim/nerdtree'
+  Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
+  Plug 'Yggdroot/indentLine'
+  Plug 'frazrepo/vim-rainbow'
+  Plug 'ryanoasis/vim-devicons'
+  Plug 'pearofducks/ansible-vim'
+  Plug 'pedrohdz/vim-yaml-folds'
+  Plug 'tpope/vim-fugitive'
 
-"|----------------------------------------------------------------------------|
-"|         End Vim Settings                                                   |
-"|----------------------------------------------------------------------------|
+call plug#end()
 
+" }}}
 
-"|----------------------------------------------------------------------------|
-"|         Search                                                             |
-"|----------------------------------------------------------------------------|
+" MAPPINGS --------------------------------------------------------------- {{{
+"|------------------------------------------------------------------------|
+"|        Mappings                                                        |
+"|------------------------------------------------------------------------|
 
-" Ignore case while searching
-set ignorecase
+"The backslash key is the default leader key but we change it to a comma
+let mapleader = ','
 
-" Use highlighting when doing a search.
-set hlsearch                    
+" Type jj to exit insert mode quickly.
+inoremap jj <Esc>
 
-" While searching though a file incrementally highlight matching characters as you type.
-set incsearch                      
+" Press ,\ to jump back to the last cursor position.
+nnoremap <leader>\ ``
 
-" Show partial command you type in the last line of the screen.
-set showcmd
+" Press the space bar to type the : character in command mode.
+nnoremap <space> :
 
-" Show the mode you are on the last line.
-set showmode
+" You can split the window in Vim by typing :split or :vsplit.
+" Navigate the split view easier by pressing CTRL+j, CTRL+k, CTRL+h, or CTRL+l.
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
 
-" Show matching words during a search.
-set showmatch
+" Resize split windows using arrow keys by pressing:
+" CTRL+UP, CTRL+DOWN, CTRL+LEFT, or CTRL+RIGHT.
+noremap <c-up> <c-w>+
+noremap <c-down> <c-w>-
+noremap <c-left> <c-w>>
+noremap <c-right> <c-w><
 
-" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)                              
-map <space> /                                                                                     
-map <c-space> ?    
-
-" Clear search highlight with ctrl-l                                                                 
-noremap <silent> <c-l> :nohls<cr><c-l>    
-
-"|----------------------------------------------------------------------------|
-"|         End Search                                                         |
-"|----------------------------------------------------------------------------|
-
-
-"|----------------------------------------------------------------------------|
-"|          Styling                                                           |
-"|----------------------------------------------------------------------------|
-
-" Switch on syntax highlighting.
-syntax on                       
-
-" Add numbers to each line on the left-hand side.
-set number
-
-" Set font size. Howerver, font-family is determined by the relevant terminal.
-set guifont=Monospace\ 12
-
-" Remove split borders
-hi vertsplit guifg=bg guibg=bg
-
-" Show (partial) command in the last line of the screen. 
-set showcmd 
-
-" Necessary to show Unicode glyphs
-set encoding=utf-8 
-
-" Highlight trailing whitespace in red                                                            
-match ErrorMsg /\s\+\%#\@<!$/ 
-
-"|----------------------------------------------------------------------------|
-"|          End Styling                                                       |
-"|----------------------------------------------------------------------------|
-
-
-"|----------------------------------------------------------------------------|
-"|          Formatting                                                        |
-"|----------------------------------------------------------------------------|
-
-" Insert 4 spaces for a tab.
-set tabstop=4                   
-
-" Insert 4 spaces for an indentation.
-set shiftwidth=4                
-
-" Insert spaces whenever the tab key is pressed.
-set expandtab                   
-
-" Use spaces instead of tabs                                                                      
-set expandtab                                                                                     
-                                                                                                  
-" Be smart when using tabs                                                                        
-set smarttab
-
-" Highlight cursor line underneath the cursor horizontally.
-set cursorline
-
-" Highlight cursor line underneath the cursor vertically.
-set cursorcolumn               
-
-"|----------------------------------------------------------------------------|
-"|           End Formatting                                                   |
-"|----------------------------------------------------------------------------|
-
-
-"|----------------------------------------------------------------------------|
-"|         Plugins Settings                                                   |
-"|----------------------------------------------------------------------------|
-
-" Enable pathogen                                                                                 
-execute pathogen#infect()
+" Refresh vim config with F5                                                                      
+noremap <silent> <F5> :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
 
 "|
-"| ansible-vim
+"| ALE (Asynchronous Lint Engine)
 "|
 
-" ansible-vim: set indent to 0 after two newlines in insert-mode                                  
-let g:ansible_unindent_after_newline = 1                                                          
-                                                                                                  
-" ansible-vim settings                                                                            
-let g:ansible_attribute_highlight = "od"                                                          
-let g:ansible_name_highlight = 'b'                                                                
-let g:ansible_extra_keywords_highlight = 1                                                        
-let g:ansible_normal_keywords_highlight = 'Constant'                                              
-let g:ansible_with_keywords_highlight = 'Constant'     
-
-"|
-"| vim-scrollbar
-"|
-
-" Default characters to use in the scrollbar.
-let g:scrollbar_thumb='#'
-let g:scrollbar_clear='|'
-
-" Color settings.
-highlight Scrollbar_Clear ctermfg=green ctermbg=black guifg=green guibg=black cterm=none
-highlight Scrollbar_Thumb ctermfg=darkgreen ctermbg=darkgreen guifg=darkgreen guibg=darkgreen cterm=reverse
-
-"|
-"| NERDTree
-"|
-
-" Show hidden files. E.g. .gitignore
-let NERDTreeShowHidden = 1
-
-" Prevent NERDTree from hijacking directory browsing from Netrw
-let NERDTreeHijackNetrw = 0
-
-" Have NERDTree ignore certain files and directories.
-let NERDTreeIgnore=['\.git$', '\.jpg$', '\.mp4$', '\.ogg$', '\.iso$', '\.pdf$', '\.pyc$', '\.odt$', '\.png$', '\.gif$', '\.db$']
-
-"|
-"| Syntastic
-"|
-
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_enable_signs = 1
-let g:syntastic_enable_highlighting = 1
-let g:syntastic_loc_list_height = 5
-
-" Enable checking of yaml files.
-let g:syntastic_yaml_checkers = ['yamllint']
-
-" Enable checking of python files.
-let g:syntastic_python_checkers = ['flake8', 'pyflakes']
-" Disable E501(over 79 chars), W191(tabs instead of space), W391(blank line at end of file
-let g:syntastic_python_flake8_args='--ignore=E501'
-
-" Enable checking of perl files.
-let g:syntastic_perl_checkers = ['perl']
-let g:syntastic_enable_perl_checker = 1
-
-let g:syntastic_mode_map = { 'mode': 'active',
-        \ 'active_filetypes': ['python', 'javascript', 'css', 'html', 'yaml'],
-        \ 'passive_filetypes': ['make','cpp','c'] }
-
-"|
-"| IndentLine
-"|
-
-let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+let g:ale_sign_error = '✘'
+let g:ale_sign_warning = '⚠'
+let g:ale_lint_on_text_changed = 'never'
 
 "|
 "| Rainbow (bracket colors)
@@ -251,84 +174,110 @@ let g:rainbow_active = 1
 let g:rainbow_ctermfgs = ['green', 'magenta', 'yellow', 'red', 'cyan']
 
 "|
-"| vim-devicon (set vim font to a nerd font)
+"| IndentLine
 "|
 
-set guifont=DroidSansMono\ Nerd\ Font\ 11
+let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 
-"|----------------------------------------------------------------------------|
-"|          End Plugin Settings                                               |
-"|----------------------------------------------------------------------------|
+" let g:indentLine_color_term = 239
+" Specify terminal vim indent line color.
+"    e.g.  let g:indentLine_color_term = 239
 
+" let g:indentLine_bgcolor_term = 202
+" Specify terminal vim indent line background color.
+"    e.g.  let g:indentLine_bgcolor_term = 202
 
-"|----------------------------------------------------------------------------|
-"|        Mappings                                                            |
-"|----------------------------------------------------------------------------|
+let g:indentLine_indentLevel = 6
+" Specify how much indent level do you want to use for
+" indentLine. Most program will not has bigger indent level than
 
-" Use comma as Leader
-let mapleader = ','
+let g:indentLine_leadingSpaceChar = '·'
+" Specify a character to show for leading spaces.
+" You also can use other characters: specified 'middle dot'
+
+"|
+"| Airline (status line)
+"|
+
+set laststatus=2
+let g:airline_theme='dark'
+" If vim-airline-themes are installed ...
+" themes are automatically selected based on the matching colorscheme.
+" This can be overridden by defining a value like above - 'dark' is the default theme.
+
+" Show buffer numbers in a line at the top
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
+
+" How the path should be formatted
+let g:airline#extensions#tabline#formatter = 'unique_tail'
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+
+" unicode symbols
+let g:airline_left_sep = '▶'
+let g:airline_left_alt_sep = '»'
+let g:airline_right_sep = '◀'
+let g:airline_right_alt_sep = '«'
+let g:airline_symbols.readonly = '🔒'
+let g:airline_symbols.linenr = ' ␤:'
+let g:airline_symbols.maxlinenr = ' ☰ '
+
+"|
+"| NERDTree Specific mappings
+"|
+
+" Show hidden files. E.g. .gitignore
+let NERDTreeShowHidden = 1
+
+" Prevent NERDTree from hijacking directory browsing from Netrw
+let NERDTreeHijackNetrw = 0
+
+nnoremap <C-f> :NERDTreeFocus<CR>
+nnoremap <C-n> :NERDTree<CR>
+nnoremap <C-t> :NERDTreeToggle<CR>
 
 " NERDTree Shortcuts  F2 to toggle open and close. F3 to find
-silent! map <F2> :NERDTreeToggle<CR>                                                            
-silent! map <F3> :NERDTreeFind<CR>       
+"silent! map <F2> :NERDTreeToggle<CR>                                                            
+"silent! map <F3> :NERDTreeFind<CR>       
 
-" Switch buffers using F4                                                                       
-nnoremap <F4> :buffers<CR>:buffer<Space>         
+" Have NERDTree ignore certain files and directories.f
+let NERDTreeIgnore=['\.git$', '\.jpg$', '\.mp4$', '\.ogg$', '\.iso$', '\.pdf$', '\.pyc$', '\.odt$', '\.png$', '\.gif$', '\.db$']
 
-" Refresh vim config with F5                                                                      
-noremap <silent> <F5> :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
+"|
+"| vim-yaml-folds
+"|
 
-" Escape to normal mode
-inoremap jj <esc> 
+set foldlevelstart=20
 
-" You can split the window in Vim by typing :split or :vsplit.
-" Navigate the split view easier by pressing leader+j, leader+k, leader+h, or leader+l.
-" leader = ','
-noremap <leader>k :wincmd k<CR>                                                                 
-noremap <leader>j :wincmd j<CR>                                                                 
-noremap <leader>h :wincmd h<CR>                                                                 
-noremap <leader>l :wincmd l<CR> 
+" }}}
 
-" Resize split windows using arrow keys by pressing:
-" leader+UP, leader+DOWN, leader+LEFT, or leader+RIGHT; leader = ','.
-noremap <leader><up> :wincmd k<CR>                                                              
-noremap <leader><down> :wincmd j<CR>                                                            
-noremap <leader><left> :wincmd h<CR>                                                            
-noremap <leader><right> :wincmd l<CR>   
+" VIMSCRIPT -------------------------------------------------------------- {{{
 
+autocmd FileType yaml setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 
-"|----------------------------------------------------------------------------|
-"|        Vim Scripts                                                         |
-"|----------------------------------------------------------------------------|
+" This will enable code folding.
+" Use the marker method of folding.
+augroup filetype_vim
+    autocmd!
+    autocmd FileType vim setlocal foldmethod=marker
+augroup END
 
 " You can split a window into sections by typing `:split` or `:vsplit`.
-" Display cursorline and cursorcolumn ONLY in active window.                                                                       
-augroup CursorlineOnlyInActiveWindow                                                              
-    autocmd!                                                                                      
-    autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline cursorcolumn                                  
-    autocmd WinLeave * setlocal nocursorline nocursorcolumn                                                     
-augroup END     
+" Display cursorline and cursorcolumn ONLY in active window.
+augroup cursor_off
+    autocmd!
+    autocmd WinLeave * set nocursorline nocursorcolumn
+    autocmd WinEnter * set cursorline cursorcolumn
+augroup END
 
-" Return to the last edit position when opening files.                                            
-augroup vimrcEx                                                                                   
-    autocmd!                                                                                      
-    autocmd BufReadPost *                                                                          
-        \ if line("'\"") > 0 && line("'\"") <= line("$") |                                        
-        \   exe "normal g`\"" |                                                                   
-        \ endif                                                                                   
-augroup END           
+" }}}
 
-" Returns true if paste mode is enabled                                                           
-function! HasPaste()                                                                              
-    if &paste                                                                                     
-        return 'PASTE MODE  '                                                                     
-    en                                                                                            
-    return ''                                                                                     
-endfunction   
 
-" Ensure cursor is at the top of the file, if editing a git commit message:                     
-autocmd FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])    
+" STATUS LINE ------------------------------------------------------------ {{{
 
-"|----------------------------------------------------------------------------|
-"|        End Vim Scripts                                                     |
-"|----------------------------------------------------------------------------|
+" Status bar code goes here.
+
+" }}}

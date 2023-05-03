@@ -20,9 +20,9 @@
   with_items:
     - { dir: '.vim' }
     - { dir: '.vim/autoload' }
-    - { dir: '.vim/bundle' }
     - { dir: '.vim/colors' }
     - { dir: '.vim/ftplugin' }
+    - { dir: '.vim/plugged
 
 - name: vim | {{ user_name }} | copy vim dotfile 
   copy:
@@ -34,25 +34,37 @@
   with_items:
     - { src: 'vimrc', dest: '.vimrc' }
 
-- name: vim | {{ user_name }} | copy vim ftype files
-  copy:
-    src: users/vim/{{ item.src }}
-    dest: /home/{{ user_name }}/.vim/ftplugin/{{ item.src }}
+- name: vim | {{ user_name }} | download filetype ftplugin vim files from github
+  become: true
+  get_url:
+    url: "https://raw.githubusercontent.com/vim/vim/master/runtime/ftplugin/{{ item.url }}"
+    dest: "/home/{{ user_name }}/.vim/{{ item.src }}"
     owner: "{{ user_name }}"
     group: "{{ group_name }}"
     mode: 0600
   with_items:
-    - { src: 'cmake.vim' }
+    - { src: 'bash.vim' }
+    - { src: 'conf.vim' }
+    - { src: 'config.vim' }
     - { src: 'cpp.vim' }
+    - { src: 'dircolors.vim' }
+    - { src: 'fstab.vim' }
+    - { src: 'gitconfig.vim' }
+    - { src: 'gitignore.vim' }
+    - { src: 'go.vim' }
     - { src: 'html.vim' }
-    - { src: 'perl.vim' }
+    - { src: 'java.vim' }
+    - { src: 'json.vim' }
+    - { src: 'lynx.vim' }
+    - { src: 'markdown.vim' }
     - { src: 'python.vim' }
     - { src: 'ruby.vim' }
+    - { src: 'sh.vim' }
     - { src: 'sql.vim' }
-    - { src: 'xml.vim' }
-    - { src: 'folding.vim' }  # open fold: zo | close fold zM
+    - { src: 'vim.vim' }
+    - { src: 'yaml.vim' }
 
-- name: vim | {{ user_name }} | download pathogen & color vim files from github
+- name: vim | {{ user_name }} | download plug.vim & color vim files from github
   become: true
   get_url:
     url: "https://raw.githubusercontent.com/{{ item.url }}"
@@ -61,39 +73,12 @@
     group: "{{ group_name }}"
     mode: 0600
   with_items:
-    - { url: 'tpope/vim-pathogen/master/autoload/pathogen.vim', dest: 'autoload/pathogen.vim' }
+    - { url: 'junegunn/vim-plug/master/plug.vim', dest: 'autoload/plug.vim' }
     - { url: 'nanotech/jellybeans.vim/master/colors/jellybeans.vim', dest: 'colors/jellybeans.vim' }
-    - { url: 'vim-scripts/xoria256.vim/master/colors/xoria256.vim', dest: 'colors/xoria256.vim' }
     - { url: 'jaredgorski/SpaceCamp/master/colors/spacecamp.vim', dest: 'colors/spacecamp.vim' }
-    - { url: 'dracula/vim/master/colors/dracula.vim', dest: 'colors/dracula.vim' }
     - { url: 'morhetz/gruvbox/master/colors/gruvbox.vim', dest: 'colors/gruvbox.vim' }
     - { url: 'NLKNguyen/papercolor-theme/master/colors/PaperColor.vim', dest: 'colors/PaperColor.vim' }
     - { url: 'rafalbromirski/vim-aurora/master/colors/aurora.vim', dest: 'colors/aurora.vim' }
+# see this website for colors: https://vimcolorschemes.com/?ref=linuxhandbook.com 
 
-- name: vim | {{ user_name }} | pathogen plug manager | git checkout bundle repositories
-  become: true
-  git:
-    repo: "{{ item.repo }}"
-    dest: "{{ item.dest }}"
-    version: "{{ item.branch }}"
-    force: true
-  with_items:
-    - { repo: 'https://github.com/adelarsq/neoline.vim.git', branch: 'master', dest: '/home/{{ user_name }}/.vim/bundle/neoline-vim' } # status line and tabline
-    - { repo: 'https://github.com/lornix/vim-scrollbar.git', branch: 'master', dest: 'home/{{ user_name }}/.vim/bundle/vim-scrollbar' }   # scrollbar
-    - { repo: 'https://github.com/pearofducks/ansible-vim', branch: 'master', dest: '/home/{{ user_name }}/.vim/bundle/ansible-vim' }     # highlight syntax
-    - { repo: 'https://github.com/Yggdroot/indentLine.git', branch: 'master', dest: '/home/{{ user_name }}/.vim/bundle/indentLine' } # line indentation
-    - { repo: 'https://github.com/vim-syntastic/syntastic.git', branch: 'master', dest: '/home/{{ user_name }}/.vim/bundle/syntastic' } # syntax checker
-    - { repo: 'https://github.com/frazrepo/vim-rainbow.git', branch: 'master', dest: '/home/{{ user_name }}/.vim/bundle/vim-rainbow' } # colors for different brackets
-    - { repo: 'https://github.com/ryanoasis/vim-devicons.git', branch: 'master', dest: '/home/{{ user_name }}/.vim/bundle/vim-devicons' } # Dev Icons
-    - { repo: 'https://github.com/adelarsq/vim-emoji-icon-theme.git', branch: 'master', dest: '/home/{{ user_name }}/.vim/bundle/vim-emoji-icon-theme' } # Emoji
-    - { repo: 'https://github.com/preservim/nerdtree.git', branch: 'master', dest: '/home/{{ user_name }}/.vim/bundle/nerdtree' } # file system explorer for vim
-    - { repo: 'https://github.com/Joorem/vim-haproxy.git', branch: 'master', dest: '/home/{{ user_name }}/.vim/bundle/vim-haproxy' }  # haproxy syntax highlighting
 
-- name: vim | {{ user_name }} | recursively chown all vim bundle files
-  file:
-    path: /home/{{ user_name }}/.vim/bundle
-    state: directory
-    owner: "{{ user_name }}"
-    group: "{{ group_name }}"
-    mode: 0755
-    recurse: yes
