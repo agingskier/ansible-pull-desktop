@@ -1,30 +1,28 @@
 # Set default terminal mode to 256colors
 set -g default-terminal "screen-256color"
 
-# Setting the prefix from C-b to C-a
-set -g prefix C-a
-
-# Free the original Ctrl-b prefix keybinding
-unbind C-b
+set -g prefix C-a               # Setting the prefix from C-b to C-a
+unbind C-b                      # Free the original Ctrl-b prefix keybinding
+bind-key C-a send-prefix        # Ensure that we can send Ctrl-A to other apps
 
 # mouse support - set to on if required
 set -g mouse on
 
-# Ensure that we can send Ctrl-A to other apps
-bind C-a send-prefix
-
 # Set the base index for windows and panes to 1 instead of 0
 set -g base-index 1
-setw -g pane-base-index 1
+set -g pane-base-index 1
 
 # Relaod the file with Prefix r
-bind r source-file ~/.tmux.conf \; display "Configuration file .tmux.conf reloaded!"
+unbind r
+bind r source-file ~/.config/tmux/tmux.conf \; display "Configuration file ~/.config/tmux/tmux.conf reloaded!"
 
 # Synchronize panes
 bind-key y set-window-option synchronize-panes\; display-message "synchronize mode toggled."
 
 # Split pane and retain the current directory of existing pane
-bind _ split-window -v -c "#{pane_current_path}"
+unbind '"'
+bind - split-window -v -c "#{pane_current_path}"
+unbind %
 bind | split-window -h -c "#{pane_current_path}"
 
 # Moving betwenn panes with Prefix h,j,k,l
@@ -37,11 +35,21 @@ bind l select-pane -R
 bind -r C-h select-window -t :-
 bind -r C-l select-window -t :+
 
-# Resizing panes with Prefix H,J,K,L
-bind -r H resize-pane -L 5
-bind -r J resize-pane -D 5
-bind -r K resize-pane -U 5
-bind -r L resize-pane -R 5
+# Resizing panes with Prefix h,j,k,l
+bind -r h resize-pane -L 5
+bind -r j resize-pane -D 5
+bind -r k resize-pane -U 5
+bind -r l resize-pane -R 5
+
+# Maximise a tmux pane
+bind -r m resize-pane -Z
+
+set-window-option -g mode-keys vi
+
+bind-key -T copy-mode-vi 'v' send -X begin-selection # start selecting text with "v"
+bind-key -T copy-mode-vi 'y' send -X copy-selection # copy text with "y"
+
+unbind -T copy-mode-vi MouseDragEnd1Pane # don't exit copy mode when dragging with mouse
 
 # Lengthen the amount of time status messages are displayed
 set -g display-time 3000
@@ -56,16 +64,25 @@ set -g set-titles on
 #----------------------------
 
 # set the color for window list
-setw -g window-status-style fg=cyan,bg=black
+#setw -g window-status-style fg=cyan,bg=black
+
+setw -g window-status-style 'fg=colour9 bg=colour18'
+setw -g window-status-format ' #I#[fg=colour237]:#[fg=colour250]#W#[fg=colour244]#F '
+
 # set colors for the active window
-setw -g window-status-current-style fg=white,bold,bg=red
+
+setw -g window-status-current-style 'fg=yellow,bg=magenta,bold'
+setw -g window-status-current-format ' #I#[fg=colour16]:#[fg=cyan]#W#[fg=colour255,bold]#F '
+
+#setw -g window-status-current-style 'fg=colour1 bg=colour19 bold'
+#setw -g window-status-current-format ' #I#[fg=colour249]:#[fg=colour255]#W#[fg=colour249]#F '
 
 # set colors for pane borders
 setw -g pane-border-style fg=green,bg=black
 setw -g pane-active-border-style fg=white,bg=blue
 
 # set Command / message line
-setw -g message-style fg=white,bold,bg=black
+setw -g message-style fg=yellow,bold,bg=black
 
 #-----------------------------------
 # Status Bar
@@ -73,12 +90,16 @@ setw -g message-style fg=white,bold,bg=black
 
 # set color for status line
 set -g status-style fg=white,bg=black
+
 # Center the window list in the status line
 set -g status-justify centre
+
 # Update status line every sixty seconds
 set -g status-interval 60
 set -g status-left-length 50
 set -g status-left "#[bg=colour35]🖥️#[fg=colour234,bold] #H #[bg=colour234,nobold]#[fg=colour35] [#S] "
+
+# Create Status-right for GIT
 #%if "#{==:#{window_name},git}"
 #set -g status-right "#{prefix_highlight} #[bg=colour35]#[fg=colour234] #(gitmux #{pane_current_path} ) 🕔 #[fg=colour234]%H:%M "
 #%else
@@ -89,22 +110,22 @@ set -g status-right "#{prefix_highlight} #[bg=colour35]#[fg=colour234]📈 CPU:#
 setw -g pane-border-status bottom
 setw -g pane-border-format "🌌 #(gitmux #{pane_current_path} )"
 
-#-------------------------------------------------------#
-# Install plugins
-#-------------------------------------------------------#
+#---------------------------------------------------------------#
+# Add and configure tmux plugins with tpm (Tmux Plugin Manager)
+#---------------------------------------------------------------#
 
-#set -g @plugin 'tmux-plugins/tpm'
-#set -g @plugin 'tmux-plugins/tmux-cpu'
-#set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
-#set -g @plugin 'tmux-plugins/tmux-yank'
-#set -g @plugin 'tmux-plugins/tmux-sidebar'
-#set -g @plugin 'tmux-plugins/tmux-open'
+set -g @plugin 'tmux-plugins/tpm'
 
-run-shell ~/.tmux/plugins/tmux-cpu/cpu.tmux
-run-shell ~/.tmux/plugins/tmux-prefix-highlight/prefix_highlight.tmux
-run-shell ~/.tmux/plugins/tmux-yank/yank.tmux
-run-shell ~/.tmux/plugins/tmux-sidebar/sidebar.tmux
-run-shell ~/.tmux/plugins/tmux-open/open.tmux
+# list of tmux plugins
+set -g @plugin 'christoomey/vim-tmux-navigator'   # for navigating panes and vim/nvim with Ctrl-hjkl
+set -g @plugin 'jimeh/tmux-themepack'             # to configure tmux theme
+set -g @plugin 'tmux-plugins/tmux-resurrect'      # persist tmux sessions after computer restart
+set -g @plugin 'tmux-plugins/tmux-continuum'      # automatically saves sessions for you every 15 minutes
+
+set -g @themepack 'powerline/default/cyan'        # use this theme for tmux
+
+set -g @resurrect-capture-pane-contents 'on'      # allow tmux-ressurect to capture pane contents
+set -g @continuum-restore 'on'                    # enable tmux-continuum functionality
 
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
-#run -b '~/.tmux/plugins/tpm/tpm'
+run -b '~/.config/tmux/plugins/tpm/tpm'

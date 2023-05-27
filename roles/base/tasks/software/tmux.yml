@@ -10,21 +10,21 @@
     path: /home/{{ user_name }}/.tmux/plugins
     state: absent
 
-- name: software | tmux | create .tmux directories
+- name: software | tmux | create .config/tmux directories
   file:
-    path: /home/{{ user_name }}/{{ item.dir }}
+    path: /home/{{ user_name }}/.config/{{ item.dir }}
     state: directory
     owner: "{{ user_name }}"
     group: "{{ group_name }}"
     mode: 0700
   with_items:
-    - { dir: '.tmux' }
-    - { dir: '.tmux/plugins' }
+    - { dir: 'tmux' }
+    - { dir: 'tmux/plugins' }
 
 - name: software | tmux | git checkout git tmux plugins
   git:
     repo: https://github.com/tmux-plugins/{{ item.repo }}
-    dest: /home/{{ user_name }}/.tmux/plugins/{{ item.plug }}
+    dest: /home/{{ user_name }}/.config/tmux/plugins/{{ item.plug }}
     force: yes
     version: master
   with_items:
@@ -36,7 +36,7 @@
 
 - name: software | tmux | recursively chown all tmux plugins files
   file:
-    path: /home/{{ user_name }}/.tmux/plugins
+    path: /home/{{ user_name }}/.config/tmux/plugins
     state: directory
     owner: "{{ user_name }}"
     group: "{{ group_name }}"

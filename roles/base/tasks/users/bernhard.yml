@@ -42,7 +42,7 @@
         - { src: 'tilix/wide.json', dest: '.config/tilix/wide.json' }
         - { src: 'autostart/conky_autostart', dest: '.config/autostart/conky.desktop' }
         - { src: 'autostart/tilix_autostart', dest: '.config/autostart/tilix.desktop' }
-        - { src: 'tmux/tmux_config', dest: '.tmux.conf' }
+        - { src: 'tmux/tmux_config', dest: '.config/tmux/tmux.conf' }
         - { src: 'tmux/tmux_setup_config', dest: 'tmux-setup.conf'}
 
     - name: users | bernhard | conky | synchronize ~/conky directory with /media/{{ user_name }}/Backup
