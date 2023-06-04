@@ -1,5 +1,18 @@
+# available colors in tmux:
+# normal colors:
+#    black, red, green, yellow, blue, magenta, cyan, white.
+# bright colors:
+#    brightred, brightgreen, brightyellow, brightblue, brightmagenta, brightcyan.
+# 
+#    colour0 through colour255 from the 256-color set.  ==> run tmuxcolors.sh
+#    default
+#    hexadecimal RGB code like #000000, #FFFFFF, similar to HTML colors.
+
 # Set default terminal mode to 256colors
 set -g default-terminal "screen-256color"
+
+# default shell
+set -g default-shell /bin/zsh
 
 set -g prefix C-a               # Setting the prefix from C-b to C-a
 unbind C-b                      # Free the original Ctrl-b prefix keybinding
@@ -64,22 +77,21 @@ set -g set-titles on
 #----------------------------
 
 # set the color for window list
-#setw -g window-status-style fg=cyan,bg=black
 
-setw -g window-status-style 'fg=colour9 bg=colour18'
-setw -g window-status-format ' #I#[fg=colour237]:#[fg=colour250]#W#[fg=colour244]#F '
+setw -g window-status-style 'fg=colour200 bg=yellow'
+setw -g window-status-format ' #I#[fg=colour237]:#[fg=colour200]#W#[fg=colour255]#F '
 
 # set colors for the active window
 
 setw -g window-status-current-style 'fg=yellow,bg=magenta,bold'
-setw -g window-status-current-format ' #I#[fg=colour16]:#[fg=cyan]#W#[fg=colour255,bold]#F '
+setw -g window-status-current-format ' #I#[fg=colour16]:#[fg=cyan]#W#[fg=brightyellow,bold]#F '
 
 #setw -g window-status-current-style 'fg=colour1 bg=colour19 bold'
 #setw -g window-status-current-format ' #I#[fg=colour249]:#[fg=colour255]#W#[fg=colour249]#F '
 
 # set colors for pane borders
 setw -g pane-border-style fg=green,bg=black
-setw -g pane-active-border-style fg=white,bg=blue
+setw -g pane-active-border-style fg=white,bg=yellow
 
 # set Command / message line
 setw -g message-style fg=yellow,bold,bg=black
@@ -94,20 +106,15 @@ set -g status-style fg=white,bg=black
 # Center the window list in the status line
 set -g status-justify centre
 
-# Update status line every sixty seconds
-set -g status-interval 60
-set -g status-left-length 50
+# Update status line every 2 seconds
+set -g status-interval 2
+
 set -g status-left "#[bg=colour35]🖥️#[fg=colour234,bold] #H #[bg=colour234,nobold]#[fg=colour35] [#S] "
 
-# Create Status-right for GIT
-#%if "#{==:#{window_name},git}"
-#set -g status-right "#{prefix_highlight} #[bg=colour35]#[fg=colour234] #(gitmux #{pane_current_path} ) 🕔 #[fg=colour234]%H:%M "
-#%else
-set -g status-right "#{prefix_highlight} #[bg=colour35]#[fg=colour234]📈 CPU:#{cpu_percentage} RAM:#{ram_percentage} TEMP:#{cpu_temp} 🕔 #[fg=colour234]%H:%M "
-#%endif
+set -g status-right "#{prefix_highlight} | #[bg=colour35]#[fg=colour234]📈 CPU:#{cpu_percentage} RAM:#{ram_percentage} TEMP:#{cpu_temp} 🕔 #[fg=colour234]%H:%M "
 
-# Second status bar line for Git window
-setw -g pane-border-status bottom
+# Create second status bar line for Git window
+setw -g pane-border-status top
 setw -g pane-border-format "🌌 #(gitmux #{pane_current_path} )"
 
 #---------------------------------------------------------------#
@@ -118,11 +125,15 @@ set -g @plugin 'tmux-plugins/tpm'
 
 # list of tmux plugins
 set -g @plugin 'christoomey/vim-tmux-navigator'   # for navigating panes and vim/nvim with Ctrl-hjkl
-set -g @plugin 'jimeh/tmux-themepack'             # to configure tmux theme
+#set -g @plugin 'jimeh/tmux-themepack'             # to configure tmux theme
 set -g @plugin 'tmux-plugins/tmux-resurrect'      # persist tmux sessions after computer restart
 set -g @plugin 'tmux-plugins/tmux-continuum'      # automatically saves sessions for you every 15 minutes
+set -g @plugin 'tmux-plugins/tmux-yank'           # copy to the system clipboard
+set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
+set -g @plugin 'catppuccin/tmux'                  # color theme latte,frappe,macchiato & mocha
 
-set -g @themepack 'powerline/default/cyan'        # use this theme for tmux
+#set -g @themepack 'powerline/double/green'        # use this theme for tmux
+set -g @catppuccin_flavour 'latte'
 
 set -g @resurrect-capture-pane-contents 'on'      # allow tmux-ressurect to capture pane contents
 set -g @continuum-restore 'on'                    # enable tmux-continuum functionality

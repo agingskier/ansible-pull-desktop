@@ -34,7 +34,11 @@
 # Source global definitions (if any)
 #-------------------------------------------------------------
 
-[ -z "$PS1" ] && return		# if not running interactively, return
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
 
 if [ -f /etc/bashrc ]; then
         . /etc/bashrc  		# --> Read /etc/bashrc, if present.
@@ -103,10 +107,20 @@ export LESS='-j4aR'
 export PATH_TO_FX=/opt/javafx-sdk-18.0.2/lib
 export CLASSPATH=.:/usr/lib/jvm/java-19-openjdk-amd64/lib:$PATH_TO_FX
 
-# $HOME/bin is added to PATH in .profile, so not required in .bashrc
-#if [ -d "$HOME/bin" ] ; then
-#    PATH="$HOME/bin:$PATH"
-#fi
+# $HOME/bin is added to PATH in .profile, so not required to add here
+# ... if $HOME/.cargo/bin exists its required for LunarVim and others
+# ... if $HOME/.local/bin exists its required for LunarVim and others
+for mydir in $HOME/.cargo/bin $HOME/.local/bin; do
+    if [ -d $mydir ]; then
+        case ":$PATH:" in
+          *":${mydir}:"*)   # directory already in PATH, do nothing
+            ;;
+          *) 
+            PATH=${mydir}:$PATH
+            ;;
+        esac
+    fi
+done
 
 export -n SESSION_MANAGER   # required for Digikam
 export VAGRANT_HOME=/mnt/Data/vagrant
