@@ -79,6 +79,15 @@ set -o nounset
 
 export HOSTFILE=$HOME/.hosts    # Put list of remote hosts in ~/.hosts ...
 
+## XDG
+# Set up a few standard directories based on:
+#   https://wiki.archlinux.org/title/XDG_Base_Directory
+
+export XDG_CONFIG_HOME="${HOME}/.config"
+export XDG_CACHE_HOME="${HOME}/.cache"
+export XDG_DATA_HOME="${HOME}/.local/share"
+export XDG_STATE_HOME="${HOME}/.local/state"
+
 # optimize bash_history ($HISTFILE)
 # ignore duplicate lines in the history.
 # ignore commands that  start with space `ignorespace'.

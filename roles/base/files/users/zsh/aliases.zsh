@@ -18,8 +18,6 @@ alias extip='curl icanhazip.com'
 alias path='echo -e ${PATH//:/\\n}'
 alias fpath='echo -e ${FPATH//:/\\n}'
 alias ping='ping -c 3'
-alias sf='screenfetch'
-alias btop='bpytop'                     # bashtop in python
 
 alias mh='cd /mnt/Data/hardway'
 alias dp='cd /mnt/Data/docker-projects'
@@ -57,18 +55,35 @@ alias xp='xprop | grep WM_CLASS' # display xprop class in running window
 # | ls |
 # +----+
 
-alias ls='lsd -F --date '+%a %d %b %Y %X' --color=always'   # see man date for format
-alias lr='lsd -lhSFr --date '+%a %d %b %Y %X' --color always'    # sort by size, biggest last
-alias la='lsd -lhFA --date '+%a %d %b %Y %X' --color always'     # show .dotfiles, no .. dirs, mark dir & exec
-alias lt='lsd -lFA --date '+%a %d %b %Y %X' --color always'
+alias ls='lsd -F --date "+%a %d %b %Y %X" --color=always'   # see man date for format
+alias lr='lsd -lhSFr --date "+%a %d %b %Y %X" --color always'    # sort by size, biggest last
+alias la='lsd -lhFA --date "+%a %d %b %Y %X" --color always'     # show .dotfiles, no .. dirs, mark dir & exec
+alias lt='lsd -lFA --date "+%a %d %b %Y %X" --color always'
 
 alias lsp='lspci | ccze -A'
 alias lsu='lsusb | ccze -A'
 alias lsb='lsblk -o NAME,FSTYPE,SIZE,MOUNTPOINT,LABEL,UUID | ccze -A'
 alias lsc='lscpu | ccze -A'
 alias lsi='sudo blkid | ccze -A'
-alias lsppa='grep -rhE ^deb /etc/apt/sources.list*'
+alias lsppa='egrep -rhE ^deb /etc/apt/sources.list*'
 alias loc='plocate -A -i'
+alias lsmnt='findmnt --tree --types btrfs,ext4,nfs,vfat'
+
+
+# +----+
+# | cd |
+# +----+
+
+alias cd..='cd ..'
+alias ..='cd ../../'
+alias ...='cd ../../../'
+alias ....='cd ../../../../'
+
+alias cdp='cd /mnt/Data/docker-projects'
+alias cds='cd /mnt/Data/src'
+alias cdc='cd /mnt/Data/clone'
+alias cda='cd /mnt/Data/ansible-test'
+alias cdd='cd ~/deploy/ansible-pull-desktop'
 
 # +----+
 # | cp |
@@ -130,7 +145,7 @@ alias gr='git remote'
 alias grs='git remote show'
 alias glol='git log --graph --abbrev-commit --oneline --decorate'
 alias gclean="git branch --merged | grep  -v '\\*\\|main\\|develop' | xargs -n 1 git branch -d"
-# Delete local branch merged with maim
+# Delete local branch merged with main
 alias gblog="git for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:red)%(refname:short)%(color:reset) - %(color:yellow)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:blue)%(committerdate:relative)%(color:reset))'"                                                             # git log for each branches
 alias gsub="git submodule update --remote"                       # pull submodules
 alias gj="git-jump"                      # open in vim quickfix list files of interest (git diff, merged...)
