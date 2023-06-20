@@ -129,6 +129,18 @@ alias gblog="git for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD)
 alias gsub="git submodule update --remote"                       # pull submodules
 alias gj="git-jump"                      # open in vim quickfix list files of interest (git diff, merged...)
 alias dif="git diff --no-index" # Diff two files even if not in git repo! Can add -w (don't diff whitespaces)
+
+# +-----+
+# | ssh |
+# +-----+
+
+alias ssha='eval $(ssh-agent) && ssh-add'
+
+# +------+
+# | nvim |
+# +------+
+alias tilixnvim="tilix --session=~/.config/tilix/nvim-split.json"
+
 #------------------------------------------------------------- 
 # End Aliases
 #-------------------------------------------------------------
