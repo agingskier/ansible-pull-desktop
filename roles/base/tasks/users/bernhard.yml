@@ -40,6 +40,8 @@
         - { src: 'bash/dircolors', dest: '.dircolors' }
         - { src: 'tilix/split.json', dest: '.config/tilix/split.json' }
         - { src: 'tilix/wide.json', dest: '.config/tilix/wide.json' }
+        - { src: 'tilix/three.json', dest: '.config/tilix/three.json' }
+        - { src: 'tilix/nvim-split.json', dest: '.config/tilix/nvim-split.json' }
         - { src: 'autostart/conky_autostart', dest: '.config/autostart/conky.desktop' }
         - { src: 'autostart/tilix_autostart', dest: '.config/autostart/tilix.desktop' }
         - { src: 'tmux/tmux_config', dest: '.config/tmux/tmux.conf' }
