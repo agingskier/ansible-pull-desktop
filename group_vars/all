@@ -1,7 +1,7 @@
 ---
 # file: group_vars/all
 # check installation guide: https://protonvpn.com/support/linux-ubuntu-vpn-setup/
-protonvpn_version: "1.0.3-all"
+protonvpn_version: "1.0.3-2_all"
 #
 # check: https://openjdk.org/projects/jdk/
 openjdk_version: "openjdk-20-jdk"
