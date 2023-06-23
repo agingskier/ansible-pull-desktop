@@ -26,7 +26,7 @@
         line: "{{ item.repl }}"
       with_items:
         - { regex: '^export PATH_TO_FX=', repl: 'export PATH_TO_FX=/opt/javafx-sdk-{{ javafx_version }}/lib' }
-        - { regex: '^export CLASSPATH=', repl: 'export CLASSPATH=.:/usr/lib/jvm/{{ jdk-classpath_version }}/lib:$PATH_TO_FX' }
+        - { regex: '^export CLASSPATH=', repl: 'export CLASSPATH=.:/usr/lib/jvm/{{ jdk_classpath_version }}/lib:$PATH_TO_FX' }
   when:
     - java is defined
     - java
