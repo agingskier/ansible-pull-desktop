@@ -21,7 +21,7 @@
   
     - name: system-setup | grub | copy background images for grub
       copy:
-        src: grub/{{ item.src }}
+        src: /media/{{ user_name }}/Backup/budgie/{{ item.src }}
         dest: /usr/share/images/grub/{{ item.dest }}
         owner: root
         group: root
@@ -29,11 +29,11 @@
       with_items:
         - { src: 'black-hole-blue.tga', dest: 'black-hole-blue.tga' }
         - { src: 'saturn-wallpaper.jpg', dest: 'saturn.jpg' }
-        - { src: 'CarinaNebula.png', dest: 'CarinaNebula.png' }
-        - { src: 'QuasarEarlyUniverse.jpg', dest: 'QuasarEarlyUniverse.jpg' }
-        - { src: 'QuasarOutflow.png', dest: 'QuasarOutflow.png' }
-        - { src: 'SouthernRingNebula.png', dest: 'SouthernRingNebula.png' }
-        - { src: 'StephansQuintetGalaxies.png', dest: 'StephansQuintetGalaxies.png' }
+#        - { src: 'CarinaNebula.png', dest: 'CarinaNebula.png' }
+#        - { src: 'QuasarEarlyUniverse.jpg', dest: 'QuasarEarlyUniverse.jpg' }
+#        - { src: 'QuasarOutflow.png', dest: 'QuasarOutflow.png' }
+#        - { src: 'SouthernRingNebula.png', dest: 'SouthernRingNebula.png' }
+#        - { src: 'StephansQuintetGalaxies.png', dest: 'StephansQuintetGalaxies.png' }
 
     - name: system_setup | grub | checkout git dark-matter repository
       git:
@@ -150,7 +150,7 @@
         
     - name: system-setup | grub | copy black hole file
       copy:
-        src: grub/black-hole-blue.tga
+        src: /media/{{ user_name }}/Backup/budgie/black-hole-blue.tga
         dest: /usr/share/images/grub/black-hole-blue.tga
         owner: root
         group: root
