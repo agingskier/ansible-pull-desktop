@@ -54,9 +54,13 @@
 
     - name: software | firefox | create private profile bpic
       ansible.legacy.shell: firefox -CreateProfile bpic
+      become: true
+      become_user: "{{ user_name }}"
       
     - name: software | firefox | start ProfileManager and delete default profile
-      ansible.legacy.shell: firefox -ProfileManager  
+      ansible.legacy.shell: firefox -ProfileManager
+      become: true
+      become_user: "{{ user_name }}" 
 
   become: yes
   become_method: sudo
