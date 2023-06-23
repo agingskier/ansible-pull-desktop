@@ -58,12 +58,12 @@
     var: gitmux_release.stdout
     verbosity: 2
 
-# extract version number without "v" from variable gitmux_release
 - name: software | tmux | install binary gitmux
   become: true
   become_method: sudo
   unarchive:
-    src: https://github.com/arl/gitmux/releases/download/{{ gitmux_release.stdout }}/gitmux_{{ gitmux_release.stdout | regex_search('(\d(.*))') }}_linux_amd64.tar.gz
+  https://github.com/arl/gitmux/releases/download/v0.10.2/gitmux_v0.10.2_linux_amd64.tar.gz
+    src: https://github.com/arl/gitmux/releases/download/{{ gitmux_release.stdout }}/gitmux_{{ gitmux_release.stdout }}_linux_amd64.tar.gz
     dest: /usr/local/bin
     remote_src: yes
     mode: 0755
