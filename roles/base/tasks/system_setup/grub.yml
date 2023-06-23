@@ -3,10 +3,21 @@
 - name: system-setup | grub block for {{ inventory_hostname }}
   block:
   
+    - name: system-setup | grub | make shure /tmp directory has full access
+      file:
+        path: /tmp
+        state: directory
+        owner: root
+        group: root
+        mode: 0777
+  
     - name: system-setup | grub | create all missing directories for images
       file:
         path: /usr/share/images/grub
         state: directory
+        owner: root
+        group: root
+        mode: 0644
   
     - name: system-setup | grub | copy background images for grub
       copy:
@@ -120,11 +131,22 @@
 
 - name: system-setup | grub block for {{ inventory_hostname }}
   block:
+
+    - name: system-setup | grub | make shure /tmp directory has full access
+      file:
+        path: /tmp
+        state: directory
+        owner: root
+        group: root
+        mode: 0777
   
     - name: system-setup | grub | create all missing directories for images
       file:
         path: /usr/share/images/grub
         state: directory
+        owner: root
+        group: root
+        mode: 0644
         
     - name: system-setup | grub | copy black hole file
       copy:

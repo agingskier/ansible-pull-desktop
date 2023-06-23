@@ -23,7 +23,6 @@
     - import_tasks: software/clamav.yml
     - import_tasks: software/lynis.yml
     - import_tasks: software/utilities.yml
-    - import_tasks: software/btop_plus_plus.yml
 
     # Perform remaining tasks
     - import_tasks: system_setup/grub.yml
