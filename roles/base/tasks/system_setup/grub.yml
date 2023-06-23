@@ -1,42 +1,13 @@
 ---
-#
-# find the correct GFXMODE:
-# install hwinfo and run:
-#  sudo hwinfo --framebuffer
-#
-
-# don't install and use grub-customizer - with installed themes of no use anymore
-
-#- name: system-setup | grub | add ppa repository
-#  apt_repository:
-#    filename: grubcustomizer
-#    repo: ppa:danielrichter2007/grub-customizer
-#    state: present
-#    update_cache: yes
-
-# run "sudo apt-key list" to find the full public gpg key
-# use the last 8 characters for the export command
-
-#    - name: software | grub | apt-key deprecated - convert trusted.gpg into member in tursted.gpg.d
-#      ansible.legacy.shell: |
-#        set -o pipelfail 
-#        apt-key export 3F055C03 | \
-#        gpg --dearmour -o /etc/apt/trusted.gpg.d/grub-customizer.gpg
-#      args:
-#        executalbe: /bin/bash
-#      register: gpg_convert
-#      changed_when: gpg_convert.rc == 0
-
-        
-- name: system-setup | grub | install grub
-  apt:
-    pkg:
-#      - grub-customizer
-      - grub2-splashimages
-    state: present
 
 - name: system-setup | grub block for {{ inventory_hostname }}
   block:
+  
+    - name: system-setup | grub | create all missing directories for images
+      file:
+        path: /usr/share/images/grub
+        state: directory
+  
     - name: system-setup | grub | copy background images for grub
       copy:
         src: grub/{{ item.src }}
@@ -149,6 +120,12 @@
 
 - name: system-setup | grub block for {{ inventory_hostname }}
   block:
+  
+    - name: system-setup | grub | create all missing directories for images
+      file:
+        path: /usr/share/images/grub
+        state: directory
+        
     - name: system-setup | grub | copy black hole file
       copy:
         src: grub/black-hole-blue.tga
