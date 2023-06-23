@@ -37,7 +37,7 @@
 - name: vim | {{ user_name }} | download filetype ftplugin vim files from github
   become: true
   get_url:
-    url: "https://raw.githubusercontent.com/vim/vim/master/runtime/ftplugin/{{ item.url }}"
+    url: "https://raw.githubusercontent.com/vim/vim/master/runtime/ftplugin/{{ item.src }}"
     dest: "/home/{{ user_name }}/.vim/{{ item.src }}"
     owner: "{{ user_name }}"
     group: "{{ group_name }}"
