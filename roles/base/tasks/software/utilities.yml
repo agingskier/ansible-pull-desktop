@@ -29,7 +29,6 @@
       - pv
       - traceroute
       - ripgrep
-      - software-propterties-common
       - solaar
       - speedtest-cli
       - sshpass
@@ -37,9 +36,9 @@
       - whois
 
 - name: software | utilities | remove thunderbird and htop packages
-  apt:
+  ansible.builtin.apt:
     state: absent
-    autoremove: yes
+    autoremove: true
     pkg:
       - thunderbird*
       - htop
