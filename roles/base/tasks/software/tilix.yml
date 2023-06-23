@@ -20,23 +20,23 @@
   with_items:
     - { src: 'schemes_homebrew.json', dest: '.config/tilix/schemes/homebrew.json' }
 
-- name: gnome | desktop | set tilix values
-  become_user: "{{ user_name }}"
-  community.general.dconf:
-    key: "/com/gexperts/Tilix/profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d/{{ item.key }}"
-    value: "{{ item.value }}"
-  with_items:
-    - { key: 'background-color', value: "'#000000'" }
-    - { key: 'badge-color-set', value: 'false' }
-    - { key: 'bold-color-set', value: 'false' }
-    - { key: 'cursor-colors-set', value: 'false' }
-    - { key: 'default-size-columns', value: '100' }
-    - { key: 'default-size-rows', value: '32' }
-    - { key: 'font', value: "'JetBrainsMono Nerd Font Regular 16'" }
-    - { key: 'foreground-color', value: "'#00FF00'" }
-    - { key: 'highlight-colors-set', value: 'false' }
-    - { key: 'scheme', value: "'homebrew'" }
-    - { key: 'palette', value: "['#000000', '#990000', '#00A600', '#999900', '#0000B2', '#B200B2', '#00A6B2', '#BFBFBF', '#666666', '#E50000', '#00D900', '#E5E500', '#0000FF', '#E500E5', '#00E5E5', '#E5E5E5']" }
-    - { key: 'use-system-font', value: 'false' }
-    - { key: 'use-theme-colors', value: 'false' }
-    - { key: 'visible-name', value: "'bpic'" }
+#- name: gnome | desktop | set tilix values
+#  become_user: "{{ user_name }}"
+#  community.general.dconf:
+#    key: "/com/gexperts/Tilix/profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d/{{ item.key }}"
+#    value: "{{ item.value }}"
+#  with_items:
+#    - { key: 'background-color', value: "'#000000'" }
+#    - { key: 'badge-color-set', value: 'false' }
+#    - { key: 'bold-color-set', value: 'false' }
+#    - { key: 'cursor-colors-set', value: 'false' }
+#    - { key: 'default-size-columns', value: '100' }
+#    - { key: 'default-size-rows', value: '32' }
+#    - { key: 'font', value: "'JetBrainsMono Nerd Font Regular 16'" }
+#    - { key: 'foreground-color', value: "'#00FF00'" }
+#    - { key: 'highlight-colors-set', value: 'false' }
+#    - { key: 'scheme', value: "'homebrew'" }
+#    - { key: 'palette', value: "['#000000', '#990000', '#00A600', '#999900', '#0000B2', '#B200B2', '#00A6B2', '#BFBFBF', '#666666', '#E50000', '#00D900', '#E5E500', '#0000FF', '#E500E5', '#00E5E5', '#E5E5E5']" }
+#    - { key: 'use-system-font', value: 'false' }
+#    - { key: 'use-theme-colors', value: 'false' }
+#    - { key: 'visible-name', value: "'bpic'" }
