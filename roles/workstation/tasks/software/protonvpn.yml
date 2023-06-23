@@ -6,15 +6,11 @@
   block:
     - name: software | protonvpn | add protonvpn to apt cache
       apt:
-        deb: https://protonvpn.com/download/protonvpn-stable-release_{{ protonvpn_version }}.deb
-
-    - name: software | protonvpn | update apt cache if older 1 hour
-      apt:
-        update_cache: yes
-        cache_valid_time: 3600
+        deb: https://repo.protonvpn.com/debian/dists/stable/main/binary-all/protonvpn-stable-release_{{ protonvpn_version }}.deb
 
     - name: software | protonvpn | install protonvpn and prerequisites
       apt:
+        update_cache: true
         pkg:
           - protonvpn
           - gnome-shell-extension-appindicator
