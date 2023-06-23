@@ -62,7 +62,6 @@
   become: true
   become_method: sudo
   unarchive:
-  https://github.com/arl/gitmux/releases/download/v0.10.2/gitmux_v0.10.2_linux_amd64.tar.gz
     src: https://github.com/arl/gitmux/releases/download/{{ gitmux_release.stdout }}/gitmux_{{ gitmux_release.stdout }}_linux_amd64.tar.gz
     dest: /usr/local/bin
     remote_src: yes
