@@ -7,8 +7,8 @@
       include_vars: vault-secrets.yml
 
     ## desktop environments
-    - include_tasks: desktop_environments/plank.yml
-    - include_tasks: desktop_environments/desktop.yml
+#    - include_tasks: desktop_environments/plank.yml        # no plank on ubuntu
+#    - include_tasks: desktop_environments/desktop.yml      # not possible for ubuntu
 
     ## system setup
 
