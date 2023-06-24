@@ -17,9 +17,7 @@
     - name: software | kvm | install kvm and dependencies
       apt:
         pkg:
-          - qemu
           - qemu-kvm
-          - qemu-system
           - libvirt-dev
           - libvirt-daemon
           - libvirt-daemon-system

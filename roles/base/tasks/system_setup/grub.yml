@@ -21,7 +21,7 @@
   
     - name: system-setup | grub | copy background images for grub
       copy:
-        src: /media/{{ user_name }}/Backup/budgie/{{ item.src }}
+        src: grub/{{ item.src }}
         dest: /usr/share/images/grub/{{ item.dest }}
         owner: root
         group: root
@@ -39,14 +39,14 @@
       git:
         repo: https://gitlab.com/VandalByte/darkmatter-grub-theme.git
         dest: /tmp/grub-darkmatter
-        force: true
+        bare: true
         version: main
 
     - name: system_setup | grub | checkout git LordShenron repository
       git:
         repo: https://github.com/LordShenron/Grub-Themes.git
         dest: /tmp/grub-LordShenron
-        force: true
+        bare: true
         version: griffin-grub-remix
 
     - name: system_setup | grub | create themes directory
@@ -150,7 +150,7 @@
         
     - name: system-setup | grub | copy black hole file
       copy:
-        src: /media/{{ user_name }}/Backup/budgie/black-hole-blue.tga
+        src: grub/budgie/black-hole-blue.tga
         dest: /usr/share/images/grub/black-hole-blue.tga
         owner: root
         group: root
