@@ -38,6 +38,14 @@
 #        - { src: 'SouthernRingNebula.png', dest: 'SouthernRingNebula.png' }
 #        - { src: 'StephansQuintetGalaxies.png', dest: 'StephansQuintetGalaxies.png' }
 
+    - name: System-setup | grub | Recursively remove git target directory
+      ansible.builtin.file:
+        path: /tmp/{{ item }}
+        state: absent
+      with_items:
+        - grub-darkmatter
+        - grub-LordShenron  
+        
     - name: System_setup | grub | checkout git dark-matter repository
       git:
         repo: https://gitlab.com/VandalByte/darkmatter-grub-theme.git
@@ -157,6 +165,13 @@
         owner: root
         group: root
         mode: 0644
+
+    - name: System-setup | grub | Recursively remove git target directory
+      ansible.builtin.file:
+        path: /tmp/{{ item }}
+        state: absent
+      with_items:
+        - grub-distro
 
     - name: System_setup | grub | checkout git distro-grub-themes repository
       git:
