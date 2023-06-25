@@ -71,7 +71,7 @@
         - themes/darkmatter
         - themes/lordshenron
 
-    - name: System_setup | grub | copy all ubuntu base png files to darkmatter
+    - name: System_setup | grub | copy base png image files to grub/themes/darkmatter
       ansible.builtin.copy:
         src: /tmp/grub-darkmatter/base/1440p/
         dest: /boot/grub/themes/darkmatter/
@@ -79,7 +79,7 @@
         group: root
         mode: 0644
 
-    - name: System_setup | grub | copy all ubuntu Griffin png files to darkmatter
+    - name: System_setup | grub | copy all ubuntu Griffin png files to lordshenron
       ansible.builtin.copy:
         src: /tmp/grub-LordShenron/Griffin/
         dest: /boot/grub/themes/lordshenron/
@@ -87,7 +87,7 @@
         group: root
         mode: 0644
 
-    - name: System_setup | grub | copy png file ubuntu to background
+    - name: System_setup | grub | collect all necessary png files for ubuntu and copy to grub/themes/darkmatter
       ansible.builtin.copy:
         src: /tmp/grub-darkmatter/assets/{{ item.src }}
         dest: /boot/grub/themes/darkmatter/{{ item.dest }}
