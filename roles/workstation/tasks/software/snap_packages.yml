@@ -1,19 +1,22 @@
 ---
-- name: software | snap | install snap packages
+- name: Software | snap | install snap packages
   become: true
   become_method: sudo
   snap:
     name:
+      - bpytop
       - digikam
       - lxd
       - docfetcher
       - remarkable
       - ssh-audit
 
-- name: software | snap connect | allow access to NAS
+- name: Software | snap connect | allow access to NAS
   become: true
   become_method: sudo
-  command: 'snap connect {{ item.app }}:{{ item.plug }}'
+  ansible.builtin.shell: 'snap connect {{ item.app }}:{{ item.plug }}'
+  args:
+    executable: /bin/bash
   register: connect_result
   with_items:
     - { app: 'digikam', plug: 'removable-media' }
