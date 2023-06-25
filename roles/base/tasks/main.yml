@@ -38,9 +38,9 @@
         file: system_setup/bluetooth.yml
 
     # install software
-    - name: Install firefox
-      ansible.builtin.import_tasks:    
-        file: software/firefox.yml
+#    - name: Install firefox             # errors with snap remove command!
+#      ansible.builtin.import_tasks:    
+#        file: software/firefox.yml
     - name: Install brave-browser
       ansible.builtin.import_tasks: 
         file: software/brave.yml
