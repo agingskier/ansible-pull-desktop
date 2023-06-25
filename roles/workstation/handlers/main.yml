@@ -1,5 +1,5 @@
 ---
-- name: restart_network_manager
+- name: Restart_network_manager
   service:
     name: NetworkManager
     state: restarted

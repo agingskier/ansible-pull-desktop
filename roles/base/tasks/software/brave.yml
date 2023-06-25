@@ -1,10 +1,12 @@
 ---
-- name: software | brave browser block
+- name: Software | brave browser block
+  become: yes
+  become_method: sudo
   block:
     #
     # apt-key is deprecated - use curl to get the gpg key and write it to /usr/share/keyrings directory
     #
-    - name: software | brave browser | add brave gpg key to keyring file
+    - name: Software | brave browser | add brave gpg key to keyring file
       ansible.legacy.shell: |
         set -o pipefail
         curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
@@ -15,17 +17,16 @@
       register: brave_gpgkey
       changed_when: brave_gpgkey.rc == 0
 
-    - name: software | brave browser | add brave apt repository
+    - name: Software | brave browser | add brave apt repository
       apt_repository:
         repo: 'deb [arch=amd64 signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main'
         state: present
 
-    - name: software | brave browser | install brave & prerequisite
+    - name: Software | brave browser | install brave & prerequisite
       apt:
         update_cache: true
         name:
           - gnupg2
           - brave-browser
 
-  become: yes
-  become_method: sudo
+ 

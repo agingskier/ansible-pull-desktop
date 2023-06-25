@@ -1,5 +1,5 @@
 ---
-- name: system setup | microcode | install package for intel
+- name: System setup | microcode | install package for intel
   apt:
     name: intel-microcode
     state: present

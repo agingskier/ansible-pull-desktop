@@ -1,15 +1,15 @@
 ---
-- name: restart_sshd
+- name: Restart_sshd
   service:
     name: ssh
     state: restarted
 
-- name: restart_udisks2
+- name: Restart_udisks2
   service:
     name: udisks2
     state: restarted
 
-- name: restart_journald
+- name: Restart_journald
   service:
     name: systemd-journald
     state: restarted

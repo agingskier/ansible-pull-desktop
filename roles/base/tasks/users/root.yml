@@ -1,10 +1,10 @@
 ---
-- name: users | root | ensure account is locked
+- name: Users | root | ensure account is locked
   user:
     name: root
     password_lock: true
 
-- name: users | root | create config directories
+- name: Users | root | create config directories
   file:
     path: /root/{{ item.dir }}
     state: directory
@@ -15,7 +15,7 @@
     - { dir: '.vim' }
     - { dir: '.vim/colors' }
 
-- name: users | root | copy dotfiles
+- name: Users | root | copy dotfiles
   copy:
     src: users/{{ item.src }}
     dest: /root/{{ item.dest }}

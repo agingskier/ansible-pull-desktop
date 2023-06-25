@@ -1,5 +1,5 @@
 ---
-- name: software | utilities | install utility packages
+- name: Software | utilities | install utility packages
   apt:
     state: present
     pkg:
@@ -35,7 +35,7 @@
       - vim-nox
       - whois
 
-- name: software | utilities | remove thunderbird and htop packages
+- name: Software | utilities | remove thunderbird and htop packages
   ansible.builtin.apt:
     state: absent
     autoremove: true

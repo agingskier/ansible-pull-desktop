@@ -1,12 +1,11 @@
 ---
-- name: software | calibre e-book block
+- name: Software | calibre e-book block
+  when:
+    - calibre is defined
+    - calibre
   block:
-    - name: software | install calibre
+    - name: Software | install calibre
       apt:
         pkg:
           - calibre
         state: present
-
-  when:
-    - calibre is defined
-    - calibre

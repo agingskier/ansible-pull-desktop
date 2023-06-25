@@ -1,40 +1,80 @@
 ---
-- name: run all tasks for base role
+- name: Run all tasks for base role
+  when:
+    - task_failed is not defined 
   block:
 
     # install software required by users
-    - import_tasks: software/lsd.yml
-    - import_tasks: software/tilix.yml
+    - name: Install LSD software
+      ansible.builtin.import_tasks:
+        file: software/lsd.yml
+    - name: Configure tilix terminal
+      ansible.builtin.import_tasks:     
+        file: software/tilix.yml
 
     # Make sure users exist on the system
-    - import_tasks: users/root.yml
-    - import_tasks: users/bernhard.yml
-    - import_tasks: users/marlies.yml
-    - import_tasks: users/ubuntu.yml
+    - name: Configure user root
+      ansible.builtin.import_tasks:    
+        file: users/root.yml
+    - name: Configure user bernhard
+      ansible.builtin.import_tasks:    
+        file: users/bernhard.yml
+    - name: Configure user marlies
+      ansible.builtin.import_tasks:    
+        file: users/marlies.yml
+    - name: Create user ubuntu
+      ansible.builtin.import_tasks:    
+        file: users/ubuntu.yml
 
     # Fix some problems
-    - import_tasks: system_setup/mdraid.yml
-    - import_tasks: system_setup/idmapd.yml
-    - import_tasks: system_setup/bluetooth.yml
+    - name: Mdraid fix
+      ansible.builtin.import_tasks: 
+        file: system_setup/mdraid.yml
+    - name: Idmapd fixes
+      ansible.builtin.import_tasks: 
+        file: system_setup/idmapd.yml
+    - name: Add fitting bluetooth driver
+      ansible.builtin.import_tasks: 
+        file: system_setup/bluetooth.yml
 
     # install software
-    - import_tasks: software/firefox.yml
-    - import_tasks: software/brave.yml
-    - import_tasks: software/clamav.yml
-    - import_tasks: software/lynis.yml
-    - import_tasks: software/utilities.yml
+    - name: Install firefox
+      ansible.builtin.import_tasks:    
+        file: software/firefox.yml
+    - name: Install brave-browser
+      ansible.builtin.import_tasks: 
+        file: software/brave.yml
+    - name: Install clamav virus scanner
+      ansible.builtin.import_tasks: 
+        file: software/clamav.yml
+    - name: Install lynis audit software
+      ansible.builtin.import_tasks: 
+        file: software/lynis.yml
+    - name: Install several utilities
+      ansible.builtin.import_tasks: 
+        file: software/utilities.yml
 
     # Perform remaining tasks
-    - import_tasks: system_setup/grub.yml
-    - import_tasks: system_setup/clock.yml
-    - import_tasks: system_setup/cron.yml
-    - import_tasks: system_setup/logging.yml
-    - import_tasks: system_setup/microcode.yml
+    - name: Configure grub
+      ansible.builtin.import_tasks: 
+        file: system_setup/grub.yml
+    - name: Configure clock
+      ansible.builtin.import_tasks: 
+        file: system_setup/clock.yml
+    - name: Set cron jobs
+      ansible.builtin.import_tasks: 
+        file: system_setup/cron.yml
+    - name: Configure logging
+      ansible.builtin.import_tasks: 
+        file: system_setup/logging.yml
+    - name: Fix for microcode
+      ansible.builtin.import_tasks: 
+        file: system_setup/microcode.yml
 #  - import_tasks: system_setup/openssh.yml
 
   rescue:
-    - name: set fact to true if tasks failed
-      set_fact: task_failed=true
+    - name: Set fact to true if tasks failed
+      ansible.builtin.set_fact:
+        task_failed: true
       
-  when:
-    - task_failed is not defined 
+ 

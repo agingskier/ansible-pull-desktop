@@ -1,5 +1,8 @@
 ---
-- name: software | java block
+- name: Software | java block
+  when:
+    - java is defined
+    - java
   block:
     - name: Software | java | install java environment
       apt:
@@ -8,7 +11,7 @@
           - "{{ openjdk_version }}"
 
 # Check: https://gluonhq.com/products/javafx/ for latest release
-    - name: software | javafx | Unzip javafx
+    - name: Software | javafx | Unzip javafx
       become: yes
       become_method: sudo
       unarchive:
@@ -19,7 +22,7 @@
         group: root
         mode: 0755
 
-    - name: software | java & javafx | Replace export statements in .bashrc
+    - name: Software | java & javafx | Replace export statements in .bashrc
       lineinfile:
         path: /home/{{ user_name }}/.bashrc
         regexp: "{{ item.regex }}"
@@ -27,6 +30,3 @@
       with_items:
         - { regex: '^export PATH_TO_FX=', repl: 'export PATH_TO_FX=/opt/javafx-sdk-{{ javafx_version }}/lib' }
         - { regex: '^export CLASSPATH=', repl: 'export CLASSPATH=.:/usr/lib/jvm/{{ jdk_classpath_version }}/lib:$PATH_TO_FX' }
-  when:
-    - java is defined
-    - java

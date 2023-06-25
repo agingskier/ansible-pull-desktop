@@ -1,13 +1,13 @@
 ---
 # Create zsh environment for user bernhard - variables defined in host_vars
 
-- name: zsh | software | install zsh packages
+- name: Zsh | software | install zsh packages
   apt:
     state: present
     pkg:
       - zsh
     
-- name: zsh | {{ user_name }} | Creates zsh directory in .config
+- name: Zsh | Creates zsh directory in .config for {{ user_name }}
   file:
     path: /home/{{ user_name }}/.config/{{ item.dir }}
     state: directory
@@ -18,7 +18,7 @@
     - { dir: 'zsh' }
     - { dir: 'zsh/plugins' }
 
-- name: zsh | {{ user_name }} | copy individual zsh config files
+- name: Zsh | copy individual zsh config files for {{ user_name }}
   copy:
     src: users/zsh/{{ item.src }}
     dest: /home/{{ user_name }}/.config/zsh/{{ item.dest }}
@@ -36,7 +36,7 @@
     - { src: 'zshenv', dest: 'zshenv' }
     - { src: 'zshrc', dest: '.zshrc' }
 
-- name: zsh | {{ user_name }} | copy dotfiles
+- name: Zsh | copy dotfiles for {{ user_name }}
   copy: 
     src: /home/{{ user_name }}/.config/zsh/{{ item.src }}
     dest: /home/{{ user_name }}/{{ item.dest }}

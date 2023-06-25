@@ -1,23 +1,23 @@
 ---
-- name: software | steam block
+- name: Software | steam block
+  when:
+    - steam is defined
+    - steam
   block:
-    - name: software | steam | install package
+    - name: Software | steam | install package
       apt:
         state: present
         name: steam
 
-    - name: software | steam | install steam-devices package
+    - name: Software | steam | install steam-devices package
       apt:
         state: present
         name: steam-devices
 
-    - name: install vulkan drivers
+    - name: Install vulkan drivers
       apt:
         state: present
         pkg:
           - mesa-vulkan-drivers
           - libvulkan1
           - vulkan-tools
-  when:
-    - steam is defined
-    - steam

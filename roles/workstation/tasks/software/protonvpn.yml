@@ -2,13 +2,16 @@
 #
 # See install doc: https://protonvpn.com/support/linux-ubuntu-vpn-setup/
 #
-- name: software | protonvpn block
+- name: Software | protonvpn block
+  when:
+    - protonvpn is defined
+    - protonvpn
   block:
-    - name: software | protonvpn | add protonvpn to apt cache
+    - name: Software | protonvpn | add protonvpn to apt cache
       apt:
         deb: https://repo.protonvpn.com/debian/dists/stable/main/binary-all/protonvpn-stable-release_{{ protonvpn_version }}.deb
 
-    - name: software | protonvpn | install protonvpn and prerequisites
+    - name: Software | protonvpn | install protonvpn and prerequisites
       apt:
         update_cache: true
         pkg:
@@ -17,7 +20,7 @@
           - gir1.2-appindicator3-0.1
         state: present
 
-    - name: software | protonvpn | select display-manager
+    - name: Software | protonvpn | select display-manager
       become: true
       become_method: sudo
       debconf:
@@ -26,7 +29,7 @@
         value: lightdm
         vtype: select
 
-    - name: software | protonvpn | confirm display-manager
+    - name: Software | protonvpn | confirm display-manager
       become: true
       become_method: sudo
       debconf:
@@ -34,7 +37,3 @@
         question: shared/default-x-display-manager
         value: true
         vtype: boolean
-
-  when:
-    - protonvpn is defined
-    - protonvpn

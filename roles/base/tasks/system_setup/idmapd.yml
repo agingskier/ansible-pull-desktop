@@ -1,13 +1,13 @@
 ---
-- name: system setup | nfs | install nfs-common
+- name: System setup | nfs | install nfs-common
   apt:
     state: present
     pkg:
       - nfs-common
 
-- name: system_setup | nfs | Insert domain name into /etc/idmapd.conf
-  become_method: sudo
+- name: System_setup | nfs | Insert domain name into /etc/idmapd.conf
   become: true
+  become_method: sudo
   lineinfile:
     path: /etc/idmapd.conf
     insertafter: '^# Domain'

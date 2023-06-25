@@ -1,7 +1,10 @@
 ---
-- name: software multimedia block
+- name: Software multimedia block
+  when:
+    - media is defined
+    - media
   block:
-    - name: software | install multimedia codecs
+    - name: Software | install multimedia codecs
       apt:
         pkg:
           - pavucontrol
@@ -9,15 +12,11 @@
           - libdvd-pkg
         state: present
 
-    - name: software | Reconfigure libdvd-pkg
+    - name: Software | Reconfigure libdvd-pkg
       become: yes
       become_method: sudo
       command: dpkg-reconfigure libdvd-pkg
       register: media_cmd
       changed_when: media_cmd.rc == 0
-
-  when:
-    - media is defined
-    - media
 
 # https://github.com/ginsys/ansible-plugins/blob/devel/library/dpkg_reconfigure

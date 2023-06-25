@@ -1,5 +1,5 @@
 ---
-- name: software | fsearch | add fsearch apt repository
+- name: Software | fsearch | add fsearch apt repository
   apt_repository:
     repo: 'ppa:christian-boxdoerfer/fsearch-stable'
     state: present
@@ -11,7 +11,7 @@
 #
 # check: https://launchpad.net/~christian-boxdoerfer/+archive/ubuntu/fsearch-stable for Signing Key last 8 characters
 
-- name: software | fsearch | apt-key deprecated - convert trusted.gpg into a member in /usr/share/keyrings
+- name: Software | fsearch | apt-key deprecated - convert trusted.gpg into a member in /usr/share/keyrings
   ansible.legacy.shell: |
     set -o pipefail
     apt-key export DC496F40 | \
@@ -21,27 +21,27 @@
   register: gpg_convert
   changed_when: gpg_convert.rc == 0
 
-- name: software | fsearch | install fsearch
+- name: Software | fsearch | install fsearch
   apt:
     pkg:
       - fsearch
 
-- name: software | fsearch | cmd starts config window expecting close, creates fsearch conf file
+- name: Software | fsearch | cmd starts config window expecting close, creates fsearch conf file
   become: yes
   become_user: "{{ user_name }}"
   command: fsearch --preferences
   timeout: 10
-  ignore_errors: yes
+  ignore_errors: true
   register: fsearch_result
   changed_when: fsearch_result.rc == 0
 
-- name: software | fsearch | remove [Database] block from fsearch.conf file
+- name: Software | fsearch | remove [Database] block from fsearch.conf file
   replace:
     path: /home/{{ user_name }}/.config/fsearch/fsearch.conf
     regexp: '^\[Database\][^[]+'
     replace: ""
 
-- name: software | fsearch | insert modified [Database] block into fsearch.conf file
+- name: Software | fsearch | insert modified [Database] block into fsearch.conf file
   blockinfile:
     path: /home/{{ user_name }}/.config/fsearch/fsearch.conf
     marker: "#<-- Inserted by fsearch.yml Ansible-Playbook  -->"
@@ -71,7 +71,7 @@
       exclude_location_enabled_3=true     
       exclude_files=
       
-- name: software | fsearch | add cron entry to update fsearch database
+- name: Software | fsearch | add cron entry to update fsearch database
   cron:
     name: fsearch_update_db
     user: "{{ user_name }}"

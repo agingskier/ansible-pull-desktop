@@ -1,5 +1,8 @@
 ---
-- name: software | install misc game packages
+- name: Software | install misc game packages
+  when:
+    - games is defined
+    - games
   apt:
     pkg:
       - extremetuxracer
@@ -10,6 +13,3 @@
       - wesnoth
       - flightgear
     state: present
-  when:
-    - games is defined
-    - games

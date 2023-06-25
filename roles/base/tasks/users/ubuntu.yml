@@ -1,11 +1,11 @@
 ---
-- name: root user block
+- name: Ubuntu user block
+  when:
+    - ubuntu is defined
+    - ubuntu
   block:
     - name: Update ubuntu user's Password
       user:
         name: ubuntu
         update_password: always
         password: "{{ ubuntu_passwd }}"
-  when:
-    - ubuntu is defined
-    - ubuntu

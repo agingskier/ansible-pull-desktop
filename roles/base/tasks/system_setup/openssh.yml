@@ -1,21 +1,21 @@
 ---
-- name: system setup | openssh | install or update daemon package
+- name: System setup | openssh | install or update daemon package
   apt:
     name: openssh-server
     state: present
-  notify: restart_sshd
+  notify: Restart_sshd
 
-- name: system setup | openssh | enable daemon
+- name: System setup | openssh | enable daemon
   service:
     name: ssh
     enabled: yes
     state: started
 
-- name: system setup | openssh | generate sshd_config file from template
+- name: System setup | openssh | generate sshd_config file from template
   template:
     src: sshd_config.j2
     dest: /etc/ssh/sshd_config
     owner: root
     group: root
     mode: 0644
-  notify: restart_sshd
+  notify: Restart_sshd

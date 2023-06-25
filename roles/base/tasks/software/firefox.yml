@@ -1,13 +1,15 @@
 ---
-- name: software | firefox block
+- name: Software | firefox block
+  become: true
+  become_method: sudo
   block:
 
-    - name: software | firefox | remove snap firefox
-      snap:
+    - name: Software | firefox | remove snap firefox
+      community.general.snap:
         name: firefox
         state: absent
 
-    - name: software | firefox | create apt file to avoid reinstall of snap firefox
+    - name: Software | firefox | create apt file to avoid reinstall of snap firefox
       copy:
         dest: "/etc/apt/preferences.d/mozilla-firefox"
         owner: root
@@ -18,7 +20,7 @@
           Pin: release o=LP-PPA-mozillateam
           Pin-Priority: 1001
 
-    - name: software | firefox | add firefox apt repository
+    - name: Software | firefox | add firefox apt repository
       apt_repository:
         repo: 'ppa:mozillateam/ppa'
         state: present
@@ -28,7 +30,7 @@
 # run "sudo apt-key list" to find the full public gpg key
 # use the last 8 characters for the export command
 
-    - name: software | firefox | apt-key deprecated - convert trusted.gpg into a member in /etc/apt/trusted.gpg.d
+    - name: Software | firefox | apt-key deprecated - convert trusted.gpg into a member in /etc/apt/trusted.gpg.d
       ansible.legacy.shell: |
         set -o pipefail
         apt-key export CE49EC21 | \
@@ -38,7 +40,7 @@
       register: gpg_convert
       changed_when: gpg_convert.rc == 0
 
-    - name: software | firefox | ensure automatic updates of apt firefox
+    - name: Software | firefox | ensure automatic updates of apt firefox
       copy:
         dest: "/etc/apt/apt.conf.d/51unattended-upgrades-firefox"
         content: |
@@ -47,20 +49,21 @@
         group: root
         mode: 0644
 
-    - name: software | firefox | update cache and install firefox
+    - name: Software | firefox | update cache and install firefox
       ansible.builtin.apt:
         name: firefox
         update_cache: true
 
-    - name: software | firefox | create private profile bpic
+    - name: Software | firefox | create private profile bpic
       ansible.legacy.shell: firefox -CreateProfile bpic
       become: true
       become_user: "{{ user_name }}"
+      register: profile_out
+      changed_when: profile_out.rc == 0
       
-    - name: software | firefox | start ProfileManager and delete default profile
+    - name: Software | firefox | start ProfileManager and delete default profile
       ansible.legacy.shell: firefox -ProfileManager
       become: true
-      become_user: "{{ user_name }}" 
-
-  become: yes
-  become_method: sudo
+      become_user: "{{ user_name }}"
+      register: profile_mgr
+      changed_when: profile_mgr.rc == 0

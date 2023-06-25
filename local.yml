@@ -4,15 +4,15 @@
   hosts: all
   connection: local
   tags: always
-  become: yes
+  become: true
   become_method: sudo
 
   pre_tasks:
-    - name: pre-run | update package cache Ubuntu
+    - name: Pre-run | update package cache Ubuntu
       tags: always
       apt:
-        upgrade: yes
-        update_cache: yes
+        upgrade: true
+        update_cache: true
       changed_when: false
 
 # run base roles, if task_failed not defined

@@ -1,8 +1,11 @@
 ---
-- name: users | bernhard block
+- name: Users | bernhard block
+  when:
+    - bernhard is defined
+    - bernhard
   block:
-    - name: users | bernhard | copy profile image
-      become: yes
+    - name: Users | bernhard | copy profile image
+      become: true
       become_method: sudo
       copy:
         src: users/bernhard/bernhard.jpg
@@ -10,6 +13,3 @@
         owner: root
         group: root
         mode: 0644
-  when:
-    - bernhard is defined
-    - bernhard

@@ -1,13 +1,16 @@
 ---
-- name: software | librecad block
+- name: Software | librecad block
+  when:
+    - librecad is defined
+    - librecad
   block:
-    - name: software | install librecad
+    - name: Software | install librecad
       apt:
         pkg:
           - librecad
         state: present
 
-    - name: software | librecad | create config/librecad directory
+    - name: Software | librecad | create config/librecad directory
       file:
         path: /home/bernhard/{{ item.dir }}
         state: directory
@@ -17,7 +20,7 @@
       with_items:
         - { dir: '.config/LibreCAD' }
 
-    - name: software | librecad | copy config file
+    - name: Software | librecad | copy config file
       copy:
         src: users/bernhard/{{ item.src }}
         dest: /home/bernhard/{{ item.dest }}
@@ -26,6 +29,3 @@
         mode: 0640
       with_items:
         - { src: 'librecad_config', dest: '.config/LibreCAD/LibreCAD.conf' }
-  when:
-    - librecad is defined
-    - librecad

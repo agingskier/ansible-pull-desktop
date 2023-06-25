@@ -1,11 +1,15 @@
 ---
-- name: software | vagrant block
-  tags: vagrant
+- name: Software | vagrant block
+  become: true
+  become_method: sudo
+  when:
+    - vagrant is defined
+    - vagrant
   block:
 #
 # apt-key is deprecated - use curl to get the gpg key and write it to /usr/share/keyrings directory
 #
-    - name: software | vagrant | add vagrant apt key to keyring file
+    - name: Software | vagrant | add vagrant apt key to keyring file
       ansible.legacy.shell: |
         set -o pipefail
         curl -fsSL https://apt.releases.hashicorp.com/gpg | \
@@ -16,14 +20,14 @@
       register: vagrant_gpgkey
       changed_when: vagrant_gpgkey.rc == 0
 
-    - name: software | vagrant | add vagrant apt_repository, filename creates vagrant.list in /etc/apt/sources.list.d
+    - name: Software | vagrant | add vagrant apt_repository, filename creates vagrant.list in /etc/apt/sources.list.d
       apt_repository:
         repo: 'deb [arch=amd64 signed-by=/usr/share/keyrings/vagrant.gpg] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main'
         filename: vagrant
         state: present
         update_cache: true
 
-    - name: software | vagrant | update repo and install vagrant & dependencies
+    - name: Software | vagrant | update repo and install vagrant & dependencies
       apt:
         pkg:
           - vagrant
@@ -39,7 +43,7 @@
           - libguestfs-tools
         state: present
 
-    - name: software | vagrant | activate all deb-src entries in /etc/apt/sources.list
+    - name: Software | vagrant | activate all deb-src entries in /etc/apt/sources.list
       ansible.legacy.shell: |
         set -o pipefail
         cp /etc/apt/sources.list /etc/apt/sources.list~
@@ -49,25 +53,25 @@
       register: debsrc_activate
       changed_when: debsrc_activate.rc == 0
 
-    - name: software | vagrant | remove vagrant-libvirt if present
+    - name: Software | vagrant | remove vagrant-libvirt if present
       apt:
         pkg:
           - vagrant-libvirt
         state: absent
 
-    - name: software | vagrant | set vagrant-libvirt on mark hold
+    - name: Software | vagrant | set vagrant-libvirt on mark hold
       ansible.builtin.dpkg_selections:
         name: vagrant-libvirt
         selection: hold
 
-    - name: software | vagrant | build dependencies
+    - name: Software | vagrant | build dependencies
       apt:
         pkg:
           - vagrant
           - ruby-libvirt
         state: build-dep
 
-    - name: software | vagrant | install vagrant-libvirt plugin
+    - name: Software | vagrant | install vagrant-libvirt plugin
       ansible.legacy.shell: |
         set -o pipefail
         vagrant plugin install vagrant-libvirt
@@ -76,13 +80,7 @@
       register: libvirt_plugin
       changed_when: libvirt_plugin.rc == 0
 
-    - name: software | vagrant | remove boxes and system entries
+    - name: Software | vagrant | remove boxes and system entries
       file:
         path: /mnt/Data/vagrant
         state: absent
-
-  become: yes
-  become_method: sudo
-  when:
-    - vagrant is defined
-    - vagrant

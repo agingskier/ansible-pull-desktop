@@ -1,7 +1,10 @@
 ---
-- name: users | bernhard block
+- name: Users | bernhard block
+  when:
+    - bernhard is defined
+    - bernhard
   block:
-    - name: users | bernhard | create inxi.conf file with VIRT_TERM_COLOR_SCHEME line
+    - name: Users | bernhard | create inxi.conf file with VIRT_TERM_COLOR_SCHEME line
       copy:
         dest: "/home/{{ user_name }}/.config/inxi.conf"
         content: |
@@ -10,7 +13,7 @@
         group: "{{ group_name }}"
         mode: 0644
   
-    - name: users | bernhard | add sudoers file
+    - name: Users | bernhard | add sudoers file
       copy:
         src: users/sudoers_bernhard
         dest: /etc/sudoers.d/bernhard
@@ -18,7 +21,7 @@
         group: root
         mode: 0440
 
-    - name: users | bernhard | change Exec= line for Tilix New Window in com.gexperts.Tilix.desktop
+    - name: Users | bernhard | change Exec= line for Tilix New Window in com.gexperts.Tilix.desktop
       become: yes
       become_method: sudo
       lineinfile:
@@ -26,7 +29,7 @@
         regexp: '^Exec=tilix --action=app-new-window'
         line: 'Exec=tilix --action=app-new-window --geometry=180x24+100+200 --session=~/.config/tilix/wide.json'
 
-    - name: users | autostart | create .config/autostart directory
+    - name: Users | autostart | create .config/autostart directory
       file:
         path: /home/{{ user_name }}/.config/{{ item.dir }}
         state: directory
@@ -36,10 +39,10 @@
       with_items:
         - { dir: 'autostart' }
 
-    - name: users | bernhard | import tasks for tmux before copy config files
+    - name: Users | bernhard | import tasks for tmux before copy config files
       import_tasks: ../software/tmux.yml
  
-    - name: users | bernhard | copy dotfiles
+    - name: Users | bernhard | copy dotfiles
       copy:
         src: users/{{ item.src }}
         dest: /home/{{ user_name }}/{{ item.dest }}
@@ -60,18 +63,14 @@
         - { src: 'tmux/tmux_config', dest: '.config/tmux/tmux.conf' }
         - { src: 'tmux/tmux_setup_config', dest: 'tmux-setup.conf'}
 
-    - name: users | bernhard | conky | synchronize ~/conky directory with /media/{{ user_name }}/Backup
+    - name: Users | bernhard | conky | synchronize ~/conky directory with /media/<user>/Backup
       ansible.posix.synchronize:
         src: /media/{{ user_name }}/Backup/conky/
         dest: /home/{{ user_name }}/conky/
         archive: yes
 
-    - name: users | bernhard | import tasks for vim
+    - name: Users | bernhard | import tasks for vim
       import_tasks: ../software/vim.yml
 
-    - name: users | bernhard | import tasks for zsh
+    - name: Users | bernhard | import tasks for zsh
       import_tasks: ../software/zsh.yml
-      
-  when:
-    - bernhard is defined
-    - bernhard

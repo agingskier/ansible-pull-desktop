@@ -2,7 +2,7 @@
 # Install cool utilities specified under modern-unix plus zsh and nerd fonts
 #
 
-- name: software | lsd | install fontconfig utilities
+- name: Software | lsd | install fontconfig utilities
   apt:
     pkg:
       - fontconfig
@@ -11,7 +11,7 @@
 # Get latest release from Github api
 # get tag line
 # pluck JSON value
-- name: software | lsd | download latest release info for lsd nerd fonts
+- name: Software | lsd | download latest release info for lsd nerd fonts
   ansible.legacy.shell: |
     set -o pipefail
     curl --silent https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest |
@@ -21,12 +21,12 @@
   register: fonts_release
   changed_when: fonts_release.rc == 0
 
-- name: software | lsd | Print latest lsd nerd fonts release
+- name: Software | lsd | Print latest lsd nerd fonts release
   debug:
     var: fonts_release.stdout
     verbosity: 2
 
-- name: software | lsd | Creates nerd fonts directory used by lsd
+- name: Software | lsd | Creates nerd fonts directory used by lsd
   file:
     path: /usr/local/share/fonts/nerd
     state: directory
@@ -34,7 +34,7 @@
     group: root
     mode: 0775
 
-- name: software | lsd | download and install JetBrains and FiraCode nerd fonts
+- name: Software | lsd | download and install JetBrains and FiraCode nerd fonts
   become: true
   become_method: sudo
   unarchive:
@@ -48,7 +48,7 @@
     - JetBrainsMono.zip
     - FiraCode.zip
 
-- name: software | lsd | create cache for new fonts
+- name: Software | lsd | create cache for new fonts
   command: fc-cache -v -f
   register: create_cache
   changed_when: create_cache.rc == 0

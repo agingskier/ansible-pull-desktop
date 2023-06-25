@@ -1,5 +1,5 @@
 ---
-- name: system_setup | ipscan | get the latest version of ipscan software
+- name: System_setup | ipscan | get the latest version of ipscan software
   ansible.legacy.shell: |
     set -o pipefail
     curl --silent https://api.github.com/repos/angryip/ipscan/releases/latest | \
@@ -9,22 +9,22 @@
   register: ipscan_version
   changed_when: ipscan_version.rc == 0
 
-- name: system_setup | ipscan | print version
+- name: System_setup | ipscan | print version
   debug:
     var: ipscan_version.stdout
     verbosity: 2
 
-- name: system_setup | ipscan | configure java
+- name: System_setup | ipscan | configure java
   command: update-alternatives --list java
   register: java_version
   changed_when: java_version.rc == 0
   
-- name: system_setup | ipscan | display java version
+- name: System_setup | ipscan | display java version
   debug:
     var: java_version.stdout
     verbosity: 2
 
-- name: system_setup | ipscan | install the ipscan deb package
+- name: System_setup | ipscan | install the ipscan deb package
   become: true
   become_method: sudo
   ansible.builtin.apt:

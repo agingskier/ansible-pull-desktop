@@ -1,11 +1,11 @@
 ---
-- name: software | lynis | install lynis system audit packages
+- name: Software | lynis | install lynis system audit packages
   apt:
     state: present
     pkg:
       - lynis
 
-- name: software | lynis | cron job for root lynis audit
+- name: Software | lynis | cron job for root lynis audit
   cron:
     name: lynis_audit
     user: root

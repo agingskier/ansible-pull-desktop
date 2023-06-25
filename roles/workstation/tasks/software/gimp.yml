@@ -1,6 +1,10 @@
 ---
-- name: software | gimp block
-  tags: gimp
+- name: Software | gimp block
+  become: true
+  become_method: sudo
+  when:
+    - gimp is defined
+    - gimp
   block:
 
 #    - name: software | gimp | add gimp apt repository and update | check if latest ubuntu release available
@@ -10,14 +14,14 @@
 #        state: present
 #        update_cache: yes
 
-    - name: software | gimp | install gimp & gegl
+    - name: Software | gimp | install gimp & gegl
       apt:
         pkg:
           - gimp
           - gegl
         state: present
 
-    - name: gnome | desktop | create gimp directories in .config
+    - name: Software | gimp | create gimp directories in .config
       file:
         path: /home/{{ user_name }}/{{ item.dir }}
         state: directory
@@ -28,7 +32,7 @@
         - { dir: '.config/GIMP' }
         - { dir: '.config/GIMP/{{ gimp_subdir_version }}' }
 
-    - name: software | gimp | copy gimprc & text-tool files
+    - name: Software | gimp | copy gimprc & text-tool files
       copy:
         src: gimp/{{ item.src }}
         dest: /home/bernhard/.config/GIMP/{{ gimp_subdir_version }}/{{ item.dest }}
@@ -38,9 +42,3 @@
       with_items:
         - { src: 'gimprc', dest: 'gimprc' }
 #       - { src: 'gimp-text-tool', dest: 'tool-options/gimp-text-tool' }
-
-  become: yes
-  become_method: sudo
-  when:
-    - gimp is defined
-    - gimp

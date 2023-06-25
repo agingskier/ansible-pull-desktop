@@ -2,19 +2,21 @@
 #
 #  install info from: https://computingforgeeks.com/install-kvm-centos-rhel-ubuntu-debian-sles-arch/
 #
-- name: software | kvm, qemu, libvirt block
-  tags: kvm
+- name: Software | kvm, qemu, libvirt block
+  when:
+    - kvm is defined
+    - kvm
   block:
-    - name: software | kvm | install cpu-checker prerequisite
+    - name: Software | kvm | install cpu-checker prerequisite
       apt:
         name: cpu-checker
 
-    - name: software | kvm | check system for kvm
+    - name: Software | kvm | check system for kvm
       command: kvm-ok
       register: kvm_result
       changed_when: "'KVM acceleration can be used' in kvm_result.stdout"
 
-    - name: software | kvm | install kvm and dependencies
+    - name: Software | kvm | install kvm and dependencies
       apt:
         pkg:
           - qemu-kvm
@@ -39,7 +41,7 @@
         dest: /etc/modules
         line: 'vhost-net'
 
-    - name: software | kvm | add groups libvirt, kvm to user bernhard
+    - name: Software | kvm | add groups libvirt, kvm to user bernhard
       become: yes
       become_method: sudo
       user:
@@ -49,7 +51,7 @@
       when:
         - "'KVM acceleration can be used' in kvm_result.stdout"
 
-    - name: software | kvm | create config/libvirt directory
+    - name: Software | kvm | create config/libvirt directory
       file:
         path: /home/bernhard/{{ item.dir }}
         state: directory
@@ -59,7 +61,7 @@
       with_items:
         - { dir: '.config/libvirt' }
 
-    - name: software | kvm | copy libvirt config file
+    - name: Software | kvm | copy libvirt config file
       copy:
         src: /etc/libvirt/{{ item.src }}
         dest: /home/bernhard/{{ item.dest }}
@@ -69,7 +71,7 @@
       with_items:
         - { src: 'libvirt.conf', dest: '.config/libvirt/libvirt.conf' }
 
-    - name: software | kvm | remove hash from uri_default line
+    - name: Software | kvm | remove hash from uri_default line
       replace:
         path: /home/bernhard/.config/libvirt/libvirt.conf
         regexp: "{{ item.regexp }}"
@@ -77,18 +79,14 @@
       with_items:
         - { regexp: '#uri_default', value: 'uri_default' }
 
-    - name: software | kvm | insert log-filter line
+    - name: Software | kvm | insert log-filter line
       lineinfile:
         path: /etc/libvirt/libvirtd.conf
         insertafter: '^#log_filters='
         line: 'log_filters="1:qemu"'
 
-    - name: software | kvm | insert log-output line
+    - name: Software | kvm | insert log-output line
       lineinfile:
         path: /etc/libvirt/libvirtd.conf
         insertafter: '^#log_output='
         line: 'log_filters="1:file:/var/log/libvirt/libvirtd.log"'
-
-  when:
-    - kvm is defined
-    - kvm

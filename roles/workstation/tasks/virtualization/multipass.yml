@@ -1,54 +1,56 @@
 ---
-- name: software | multipass block
-  tags: multipass
-  block:
-  - name: software | snap | install multipass package
-    tags: multipass
-    snap:
-      name:
-        - multipass
-
-  - name: software | multipass | stop multipass daemon
-    ansible.legacy.shell: snap stop multipass
-    
-  - name: 'software | multipass | Create target directory for multipass: /mnt/Multipass/multipass'
-    file:
-      path: /mnt/Multipass/multipass
-      state: directory
-      owner: "{{ user_name }}"
-      group: "{{ group_name }}"
-      mode: 0644
-
-  - name: software | multipass | Create directory for override.conf
-    file:
-      path: "/etc/systemd/system/snap.multipass.multipass.service.d"
-      state: directory
-      owner: "{{ user_name }}"
-      group: "{{ group_name }}"
-      mode: 0644
-
-  - name: software | multipass | Create override.conf file with path entry
-    copy:
-      dest: "/etc/systemd/system/snap.multipass.multipass.service.d/override.conf"
-      content: |
-        [Service]
-        Environment=MULTIPASS_STORAGE=/mnt/Multipass/multipass
-      owner: root
-      group: root
-      mode: 0644
- 
-  - name: software | multipass | reload daemon and start multipass
-    ansible.legacy.shell: "{{ item }}"
-    with_items:
-      - "systemctl daemon-reload"
-      - "snap start multipass"
-    args:
-      executable: /bin/bash
-    register: start_daemon
-    changed_when: start_daemon.rc == 0
-
-  become: yes
+- name: Software | multipass block
+  become: true
   become_method: sudo
   when:
     - multipass is defined
     - multipass
+  block:
+    - name: Software | snap | install multipass package
+      tags: multipass
+      community.general.snap:
+        name:
+          - multipass
+
+    - name: Software | multipass | stop multipass daemon
+      ansible.legacy.shell: snap stop multipass
+      args:
+        executable: /bin/bash
+      register: snap_stop
+      changed_when: snap_stop.rc == 0
+
+    - name: Software | multipass | Create target directory /mnt/Multipass/multipass
+      file:
+        path: /mnt/Multipass/multipass
+        state: directory
+        owner: "{{ user_name }}"
+        group: "{{ group_name }}"
+        mode: 0644
+
+    - name: Software | multipass | Create directory for override.conf
+      file:
+        path: "/etc/systemd/system/snap.multipass.multipass.service.d"
+        state: directory
+        owner: "{{ user_name }}"
+        group: "{{ group_name }}"
+        mode: 0644
+
+    - name: Software | multipass | Create override.conf file with path entry
+      copy:
+        dest: "/etc/systemd/system/snap.multipass.multipass.service.d/override.conf"
+        content: |
+          [Service]
+          Environment=MULTIPASS_STORAGE=/mnt/Multipass/multipass
+        owner: root
+        group: root
+        mode: 0644
+ 
+    - name: Software | multipass | reload daemon and start multipass
+      ansible.legacy.shell: "{{ item }}"
+      with_items:
+        - "systemctl daemon-reload"
+        - "snap start multipass"
+      args:
+        executable: /bin/bash
+      register: start_daemon
+      changed_when: start_daemon.rc == 0

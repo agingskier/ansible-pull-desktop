@@ -1,5 +1,5 @@
 ---
-- name: system setup | sensors | install sensors packages
+- name: System setup | sensors | install sensors packages
   apt:
     state: present
     pkg:
@@ -7,9 +7,10 @@
       - psensor
       - smartmontools
 
-- name: system setup | sensors block for {{ inventory_hostname }}
+- name: System setup | sensors block for {{ inventory_hostname }}
+  when: "'bequiet' in inventory_hostname"
   block:
-    - name: system_setup | sensors | copy etc files
+    - name: System_setup | sensors | copy etc files
       copy:
         src: etc/{{ item.src }}
         dest: /etc/{{ item.dest }}
@@ -33,11 +34,10 @@
         var: expect_result.stdout_lines[98:]
       when: expect_result.rc == 0
 
-  when: "'bequiet' in inventory_hostname"
-
-- name: system setup | sensors block for {{ inventory_hostname }}
+- name: System setup | sensors block for {{ inventory_hostname }}
+  when: "'acermsch' in inventory_hostname"
   block:
-    - name: system_setup | sensors | copy etc files
+    - name: System_setup | sensors | copy etc files
       copy:
         src: etc/{{ item.src }}
         dest: /etc/{{ item.dest }}
@@ -60,5 +60,3 @@
       debug:
         var: expect_result.stdout_lines[98:]
       when: expect_result.rc == 0
-      
-  when: "'acermsch' in inventory_hostname"

@@ -1,5 +1,5 @@
 ---
-- name: software | clamav | install clamav and security packages
+- name: Software | clamav | install clamav and security packages
   apt:
     state: present
     pkg:
@@ -10,7 +10,7 @@
       - bleachbit
       - cpulimit
 
-- name: software | clamav | create clamav directory
+- name: Software | clamav | create clamav directory
   file:
     path: /var/log/clamav
     state: directory
@@ -18,13 +18,13 @@
     group: clamav
     mode: 0774
 
-- name: software | clamav | adding existing user '{{ user_name }}' to group clamav (logoff, logon required)
+- name: Software | clamav | adding existing user to group clamav (logoff, logon required) '{{ user_name }}'
   user:
     name: "{{ user_name }}"
     groups: clamav
     append: yes
 
-- name: software | clamav | remove StandardOutput line from systemd files
+- name: Software | clamav | remove StandardOutput line from systemd files
   lineinfile: 
     dest: /lib/systemd/system/{{ item }} 
     state: absent 
@@ -33,7 +33,7 @@
     - clamav-daemon.service
     - clamav-freshclam.service
    
-- name: software | clamav | Creating clamscan file for logrotate
+- name: Software | clamav | Creating clamscan file for logrotate
   copy:
     dest: /etc/logrotate.d/clamscan
     content: |
@@ -49,7 +49,7 @@
     group: root
     mode: 0644
     
-- name: software | clamav | cron job for user {{ user_name }} clamscan
+- name: Software | clamav | cron job clamscan for user {{ user_name }}
   cron:
     name: daily_clamsacan
     user: "{{ user_name }}"
@@ -58,7 +58,7 @@
     job: "/usr/bin/clamscan --exclude-dir=/run/user/bernhard/gvfs --exclude-dir=/home/bernhard/.gvfs --detect-pua -r /home/bernhard --log=/var/log/clamav/clamscan.log"
 
 # clamscan must be running for cpulimit to take effect. Limit cpu usage to 30%
-- name: software | clamav | cron job for user {{ user_name }} clamscan limit cpu usage
+- name: Software | clamav | cron job clamscan limit cpu usage for user {{ user_name }}
   cron:
     name: daily_clamsacan_cpulimit
     user: "{{ user_name }}"
@@ -66,7 +66,7 @@
     hour: 13
     job: "cpulimit -e clamscan -l 30"
 
-- name: software | clamav | cron job for root freshclam
+- name: Software | clamav | cron job for root freshclam
   cron:
     name: freshclam_update_dbs
     user: root

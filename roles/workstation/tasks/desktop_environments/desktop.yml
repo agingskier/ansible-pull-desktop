@@ -1,7 +1,9 @@
 ---
-- name: gnome | desktop block
+- name: Gnome | desktop block
+  become: true
+  become_method: sudo
   block:
-    - name: gnome | desktop | copy wallpaper file
+    - name: Gnome | desktop | copy wallpaper file
       copy:
         src: gnome/saturn.png
         dest: /usr/share/backgrounds/budgie/saturn.png
@@ -9,19 +11,19 @@
         group: root
         mode: 0644
 
-    - name: gnome | desktop | set wallpaper
+    - name: Gnome | desktop | set wallpaper
       community.general.dconf:
         key: "/org/gnome/desktop/background/picture-uri"
         value: "'file:///usr/share/backgrounds/budgie/saturn.png'"
 
-    - name: gnome | desktop | disable touchpad
+    - name: Gnome | desktop | disable touchpad
       community.general.dconf:
         key: "/org/gnome/desktop/peripherals/touchpad/{{ item.key }}"
         value: "{{ item.value }}"
       with_items:
         - { key: 'send-events', value: "'disabled'" }
 
-    - name: gnome | desktop | copy lock screen background file
+    - name: Gnome | desktop | copy lock screen background file
       copy:
         src: gnome/jupiter.jpg
         dest: /usr/share/backgrounds/budgie/jupiter.jpg
@@ -29,7 +31,7 @@
         group: root
         mode: 0644
 
-    - name: gnome | desktop | set interface values
+    - name: Gnome | desktop | set interface values
       community.general.dconf:
         key: "/org/gnome/desktop/interface/{{ item.key }}"
         value: "{{ item.value }}"
@@ -41,13 +43,10 @@
         - { key: 'icon-theme', value: "'Humanity-Dark'" }
         - { key: 'text-scaling-factor', value: '1.20' }
 
-    - name: gnome | gedit | set editor values
+    - name: Gnome | gedit | set editor values
       community.general.dconf:
         key: "/org/gnome/gedit/preferences/editor/{{ item.key }}"
         value: "{{ item.value }}"
       with_items:
         - { key: 'scheme', value: "'cobalt'" }
         - { key: 'tabs-size', value: "'uint32 4'" }
-        
-  become: yes
-  become_method: sudo

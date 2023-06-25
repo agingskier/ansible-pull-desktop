@@ -1,5 +1,5 @@
 ---
-- name: softwarep | install development packages
+- name: Software | install development packages
   apt:
     pkg:
       - fabric

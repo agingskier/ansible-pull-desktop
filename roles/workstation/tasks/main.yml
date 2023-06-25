@@ -1,59 +1,111 @@
 ---
-- name: run all tasks from workstation role
+- name: Run all tasks from workstation role
+  when:
+    - task_failed is not defined
   block:
 
-    - name: include vars file
+    - name: Include vars file
       tags: always
-      include_vars: vault-secrets.yml
+      ansible.builtin.include_vars: vault_secrets.yml
 
     ## desktop environments
-    - include_tasks: desktop_environments/plank.yml        # no plank on ubuntu
-    - include_tasks: desktop_environments/desktop.yml      # not possible for ubuntu
+    - name: Include plank tasks
+      ansible.builtin.include_tasks:
+        file: desktop_environments/plank.yml
+    - name: Include desktop tasks
+      ansible.builtin.include_tasks:
+        file: desktop_environments/desktop.yml
 
     ## system setup
+    - name: Import sensors tasks
+      ansible.builtin.import_tasks:
+        file: system_setup/sensors.yml
 
-    - import_tasks: system_setup/sensors.yml
     - name: Check if /mnt/NAS already created
       stat:
         path: /mnt/NAS
       register: nas_status
 
-    - import_tasks: system_setup/mounts.yml
+    - name: Import nfs mount tasks
+      ansible.builtin.import_tasks:
+        file: system_setup/mounts.yml
       when: not nas_status.stat.exists
 
     ## Development
-    - import_tasks: development/geany.yml
-    - import_tasks: development/java.yml
-    - import_tasks: development/vscodium.yml
-    - import_tasks: development/development.yml
+    - name: Import geany tasks
+      ansible.builtin.import_tasks:
+        file: development/geany.yml
+    - name: Import java tasks
+      ansible.builtin.import_tasks:
+        file: development/java.yml
+    - name: Import vscodium tasks
+      ansible.builtin.import_tasks:
+        file: development/vscodium.yml
+    - name: Import development tasks
+      ansible.builtin.import_tasks:
+        file: development/development.yml
 
     ## install software
-#    - import_tasks: software/calibre.yml
-    - import_tasks: software/keepassxc.yml
-    - import_tasks: software/variety.yml
-    - import_tasks: software/fsearch.yml
-    - import_tasks: software/gimp.yml
-    - import_tasks: software/ipscan.yml
-    - import_tasks: software/librecad.yml
-#    - import_tasks: software/media.yml              # try offline - froze with locked dpkg database
-    - import_tasks: software/games.yml
-#    - import_tasks: software/steam.yml              # needs investigations
-    - import_tasks: software/snap_packages.yml
-    - import_tasks: software/vlc.yml
-    - import_tasks: software/protonvpn.yml
+#    - name: Import calibre tasks
+#      ansible.builtin.import_tasks:
+#        file: software/calibre.yml
+    - name: Import keepassxc tasks
+      ansible.builtin.import_tasks:
+        file: software/keepassxc.yml
+    - name: Import variety tasks
+      ansible.builtin.import_tasks:
+        file: software/variety.yml
+    - name: Import fsearch tasks
+      ansible.builtin.import_tasks:
+        file: software/fsearch.yml
+    - name: Import gimp tasks
+      ansible.builtin.import_tasks:
+        file: software/gimp.yml
+    - name: Import ipscan tasks
+      ansible.builtin.import_tasks:
+        file: software/ipscan.yml
+    - name: Import librecad tasks
+      ansible.builtin.import_tasks:
+        file: software/librecad.yml
+#    - name: Import media tasks
+#      ansible.builtin.import_tasks:
+#        file: software/media.yml              # try offline - froze with locked dpkg database
+    - name: Import games tasks
+      ansible.builtin.import_tasks:
+        file: software/games.yml
+#    - name: Import steam tasks
+#      ansible.builtin.import_tasks:
+#        file: software/steam.yml              # needs investigations
+    - name: Import installation of various snap packages
+      ansible.builtin.import_tasks:
+        file: software/snap_packages.yml
+    - name: Import vlc tasks
+      ansible.builtin.import_tasks:
+        file: software/vlc.yml
+    - name: Import protonvpn tasks
+      ansible.builtin.import_tasks:
+        file: software/protonvpn.yml
 
     ## Virtualization
-    - import_tasks: virtualization/kvm.yml
-    - import_tasks: virtualization/vagrant.yml
-    - import_tasks: virtualization/virtualbox.yml
-    - import_tasks: virtualization/multipass.yml
+    - name: Import kvm tasks
+      ansible.builtin.import_tasks:
+        file: virtualization/kvm.yml
+    - name: Import vagrant tasks
+      ansible.builtin.import_tasks:
+        file: virtualization/vagrant.yml
+    - name: Import virtualbox tasks
+      ansible.builtin.import_tasks:
+        file: virtualization/virtualbox.yml
+    - name: Import multipass tasks
+      ansible.builtin.import_tasks:
+        file: virtualization/multipass.yml
 
     ## User configs
-    - import_tasks: users/bernhard.yml
+    - name: Import final config user bernhard
+      ansible.builtin.import_tasks:
+        file: users/bernhard.yml
 
   rescue:
-    - name: set task failed variable
-      set_fact: task_failed=true
-
-  when:
-    - task_failed is not defined
+    - name: Set fact to true if tasks failed
+      ansible.builtin.set_fact:
+        task_failed: true

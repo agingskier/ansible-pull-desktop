@@ -2,7 +2,7 @@
 - name: Software | snap | install snap packages
   become: true
   become_method: sudo
-  snap:
+  community.general.snap:
     name:
       - bpytop
       - digikam

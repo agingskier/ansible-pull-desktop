@@ -1,10 +1,15 @@
 ---
-- name: software | vscodium block
+- name: Software | vscodium block
+  become: true
+  become_method: sudo
+  when:
+    - vscodium is defined
+    - vscodium
   block:
     #
     # apt-key is deprecated - use curl to get the gpg key and write it to /usr/share/keyrings directory
     #
-    - name: software | vscodium | add vscodium gpg key to keyring file
+    - name: Software | vscodium | add vscodium gpg key to keyring file
       ansible.legacy.shell: |
         set -o pipefail
         curl -fsSL https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg | \
@@ -15,20 +20,14 @@
       register: vscodium_gpgkey
       changed_when: vscodium_gpgkey.rc == 0
 
-    - name: software | vscodium | add vscodium apt repository
+    - name: Software | vscodium | add vscodium apt repository
       apt_repository:
         filename: vscodium
         repo: 'deb [arch=amd64 signed-by=/usr/share/keyrings/vscodium.gpg] https://download.vscodium.com/debs vscodium main'
         state: present
         update_cache: yes
 
-    - name: software | vscodium | install codium
+    - name: Software | vscodium | install codium
       apt:
         pkg:
           - codium
-
-  become: yes
-  become_method: sudo
-  when:
-    - vscodium is defined
-    - vscodium

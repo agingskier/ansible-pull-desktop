@@ -1,5 +1,8 @@
 ---
-- name: users | marlies block
+- name: Users | marlies block
+  when:
+    - marlies is defined
+    - marlies
   block:
 #  define these variables in host_vars
 #    - name: users | marlies | user name fact
@@ -7,7 +10,7 @@
 #        user_name: 'marlies'
 #        group_name: 'users'
 
-    - name: users | marlies | add sudoers file
+    - name: Users | marlies | add sudoers file
       copy:
         src: users/sudoers_marlies
         dest: /etc/sudoers.d/marlies
@@ -15,7 +18,7 @@
         group: root
         mode: 0440
 
-    - name: "users | marlies | change Exec= line for Tilix New Window in com.gexperts.Tilix.desktop"
+    - name: Uusers | marlies | change Exec= line for Tilix New Window in com.gexperts.Tilix.desktop
       become: true
       become_method: sudo
       lineinfile:
@@ -23,7 +26,7 @@
         regexp: '^Exec=tilix --action=app-new-window'
         line: 'Exec=tilix --action=app-new-window --geometry=180x24+100+200 --session=~/.config/tilix/wide.json'
 
-    - name: users | marlies | copy dotfiles
+    - name: Users | marlies | copy dotfiles
       copy:
         src: users/{{ item.src }}
         dest: /home/{{ user_name }}/{{ item.dest }}
@@ -37,7 +40,3 @@
         - { src: 'bash/dircolors', dest: '.dircolors' }
         - { src: 'tilix/split.json', dest: '.config/tilix/split.json' }
         - { src: 'tilix/wide.json', dest: '.config/tilix/wide.json' }
-
-  when:
-    - marlies is defined
-    - marlies

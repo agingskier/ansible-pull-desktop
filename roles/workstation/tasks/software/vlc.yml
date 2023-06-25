@@ -1,8 +1,9 @@
 ---
-- name: software | vlc | install package
-  become: yes
-  snap:
-    name: vlc
+- name: Software | vlc | install package
+  become: true
+  become_method: sudo
   when:
     - vlc is defined
     - vlc
+  community.general.snap:
+    name: vlc

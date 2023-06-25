@@ -1,5 +1,5 @@
 ---
-- name: software | bluetooth | download firmware
+- name: System-setup | bluetooth | download firmware
   become: true
   become_method: sudo
   unarchive:
@@ -10,7 +10,7 @@
     owner: "{{ user_name }}"
     group: "{{ group_name }}"
 
-- name: software | bluetooth | install missing firmware
+- name: System-setup | bluetooth | install missing firmware
   become: true
   become_method: sudo
   copy:

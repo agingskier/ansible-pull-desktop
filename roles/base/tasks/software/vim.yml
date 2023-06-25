@@ -5,12 +5,12 @@
 #    user_name: 'bernhard'
 #    group_name: 'users'
 
-- name: vim-task | {{ user_name }} | recursivebly remove .vim/bundle directory to enable re-runs
+- name: Vim-task | recursivebly remove .vim/bundle directory to enable re-runs for {{ user_name }}
   file:
     path: /home/{{ user_name }}/.vim/bundle
     state: absent
 
-- name: vim | {{ user_name }} | create vim directories
+- name: Vim | create vim directories for {{ user_name }}
   file:
     path: /home/{{ user_name }}/{{ item.dir }}
     state: directory
@@ -24,7 +24,7 @@
     - { dir: '.vim/ftplugin' }
     - { dir: '.vim/plugged' }
 
-- name: vim | {{ user_name }} | copy vim dotfile 
+- name: Vim | copy vim dotfile for {{ user_name }}
   copy:
     src: users/vim/{{ item.src }}
     dest: /home/{{ user_name }}/{{ item.dest }}
@@ -34,7 +34,7 @@
   with_items:
     - { src: 'vimrc', dest: '.vimrc' }
 
-- name: vim | {{ user_name }} | download filetype ftplugin vim files from github
+- name: Vim | download filetype ftplugin vim files from github for {{ user_name }}
   become: true
   get_url:
     url: "https://raw.githubusercontent.com/vim/vim/master/runtime/ftplugin/{{ item.src }}"
@@ -64,7 +64,7 @@
     - { src: 'vim.vim' }
     - { src: 'yaml.vim' }
 
-- name: vim | {{ user_name }} | download plug.vim & color vim files from github
+- name: Vim | download plug.vim & color vim files from github for {{ user_name }}
   become: true
   get_url:
     url: "https://raw.githubusercontent.com/{{ item.url }}"
@@ -80,5 +80,3 @@
     - { url: 'NLKNguyen/papercolor-theme/master/colors/PaperColor.vim', dest: 'colors/PaperColor.vim' }
     - { url: 'rafalbromirski/vim-aurora/master/colors/aurora.vim', dest: 'colors/aurora.vim' }
 # see this website for colors: https://vimcolorschemes.com/?ref=linuxhandbook.com 
-
-

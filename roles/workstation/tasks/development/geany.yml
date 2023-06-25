@@ -1,12 +1,12 @@
 ---
-- name: software | geany | install packages
+- name: Doftware | geany | install packages
   apt:
     pkg:
       - geany
       - geany-plugins
     state: present
 
-- name: software |  geany | create .config/geany/colorschemes directories
+- name: Software |  geany | create .config/geany/colorschemes directories
   file:
     path: /home/{{ user_name }}/{{ item.dir }}
     state: directory
@@ -18,15 +18,15 @@
     - { dir: '.config/geany/colorschemes' }
     - { dir: '.config/geany/filedefs' }
 
-- name: users | {{ user_name }} | download geany colorschemes from github
+- name: Software | geany | download geany colorschemes from github
   become: true
   git:
     repo: "https://github.com/geany/geany-themes.git"
     dest: "/tmp/geany-themes"
-    force: yes
+    force: true
     version: master
 
-- name: software | geany | copy geany colorschemes to .config/geany/colorschemes
+- name: Software | geany | copy geany colorschemes to .config/geany/colorschemes
   copy:
     src: /tmp/geany-themes/colorschemes/
     dest: /home/{{ user_name }}/.config/geany/colorschemes/
@@ -35,7 +35,7 @@
     group: "{{ group_name }}"
     mode: 0644
 
-- name: software | geany | copy filetypes.yaml
+- name: Software | geany | copy filetypes.yaml
   copy:
     src: /usr/share/geany/filedefs/filetypes.yaml
     dest: /home/{{ user_name }}/.config/geany/filedefs/filetypes.yaml
@@ -43,14 +43,14 @@
     group: "{{ group_name }}"
     mode: 0644
 
-- name: software | geany | Insert identifier=types in filetypes.yaml
+- name: Software | geany | Insert identifier=types in filetypes.yaml
   lineinfile:
     path: /home/{{ user_name }}/.config/geany/filedefs/filetypes.yaml
     insertafter: '^operator=operator'
     line: 'identifier=types'
 
-- name: software | geany | Modify cursor and indend guide values
-  become: yes
+- name: Software | geany | Modify cursor and indend guide values
+  become: true
   become_method: sudo
   lineinfile:
     path: /usr/share/geany/filedefs/filetypes.common

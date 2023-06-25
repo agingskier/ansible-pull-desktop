@@ -1,13 +1,15 @@
 ---
-- name: software | variety block
-  tags: variety
+- name: Software | variety block
+  when:
+    - variety is defined
+    - variety
   block:
-    - name: software | variety | install variety
+    - name: Software | variety | install variety
       apt:
         name: variety
         state: present
 
-    - name: software | variety | cmd starts config window expecting close, creates variety conf file
+    - name: Software | variety | cmd starts config window expecting close, creates variety conf file
       become: yes
       become_user: "{{ user_name }}"
       command: variety --preferences
@@ -16,7 +18,7 @@
       register: variety_result
       changed_when: variety_result.rc == 0
 
-    - name: software | variety | kill running variety task
+    - name: Software | variety | kill running variety task
       become: yes
       become_user: "{{ user_name }}"
       command: killall variety
@@ -32,7 +34,7 @@
         regexp: '^change_interval ='
         line: 'change_interval = 60'
 
-    - name: software | variety | Replace all installed sources
+    - name: Software | variety | Replace all installed sources
       replace:
         path: /home/{{ user_name }}/.config/variety/variety.conf
         regexp: "{{ item.regex }}"
@@ -56,7 +58,3 @@
         path: /home/{{ user_name }}/.config/variety/variety.conf
         insertafter: '^src'
         line: 'src12 = True|folder|/mnt/NAS/media/Pictures/Weltreise'
-
-  when:
-    - variety is defined
-    - variety
