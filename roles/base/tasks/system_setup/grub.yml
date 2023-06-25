@@ -7,7 +7,7 @@
   block:
   
     - name: System-setup | grub | make shure /tmp directory has full access
-      file:
+      ansible.builtin.file:
         path: /tmp
         state: directory
         owner: root
@@ -15,7 +15,7 @@
         mode: 0777
   
     - name: System-setup | grub | create all missing directories for images
-      file:
+      ansible.builtin.file:
         path: /usr/share/images/grub
         state: directory
         owner: root
@@ -23,7 +23,7 @@
         mode: 0644
   
     - name: System-setup | grub | copy background images for grub
-      copy:
+      ansible.builtin.copy:
         src: grub/{{ item.src }}
         dest: /usr/share/images/grub/{{ item.dest }}
         owner: root
@@ -47,40 +47,32 @@
         - grub-LordShenron  
         
     - name: System_setup | grub | checkout git dark-matter repository
-      git:
+      ansible.builtin.git:
         repo: https://gitlab.com/VandalByte/darkmatter-grub-theme.git
         dest: /tmp/grub-darkmatter
         force: true
         version: main
 
     - name: System_setup | grub | checkout git LordShenron repository
-      git:
+      ansible.builtin.git:
         repo: https://github.com/LordShenron/Grub-Themes.git
         dest: /tmp/grub-LordShenron
         force: true
         version: griffin-grub-remix
 
-    - name: System_setup | grub | create themes directory
-      file:
-        path: /boot/grub/themes
+    - name: System_setup | grub | create themes directories
+      ansible.builtin.file:
+        path: /boot/grub/{{ item }}
         state: directory
         owner: root
         group: root
         mode: 0755
-
-    - name: System_setup | grub | copy grub darkmatter and LordShenron themes directory if inexistent
-      copy:
-        src: /tmp/{{ item.src }}/
-        dest: /boot/grub/themes/{{ item.dest }}/
-        owner: root
-        group: root
-        mode: 0644
       with_items:
-        - { src: 'grub-darkmatter', dest: 'darkmatter' }
-        - { src: 'grub-LordShenron', dest: 'lordshenron' }
+        - themes/darkmatter
+        - themes/lordshenron
 
     - name: System_setup | grub | copy all ubuntu base png files to darkmatter
-      copy:
+      ansible.builtin.copy:
         src: /tmp/grub-darkmatter/base/1440p/
         dest: /boot/grub/themes/darkmatter/
         owner: root
@@ -88,7 +80,7 @@
         mode: 0644
 
     - name: System_setup | grub | copy all ubuntu Griffin png files to darkmatter
-      copy:
+      ansible.builtin.copy:
         src: /tmp/grub-LordShenron/Griffin/
         dest: /boot/grub/themes/lordshenron/
         owner: root
@@ -96,33 +88,37 @@
         mode: 0644
 
     - name: System_setup | grub | copy png file ubuntu to background
-      copy:
-        src: /tmp/grub-darkmatter/assets/backgrounds/ubuntu-1440p.png
-        dest: /boot/grub/themes/darkmatter/background.png
+      ansible.builtin.copy:
+        src: /tmp/grub-darkmatter/assets/{{ item.src }}
+        dest: /boot/grub/themes/darkmatter/{{ item.dest }}
         owner: root
         group: root
         mode: 0644
-
+      with_items:
+        - { src: 'backgrounds/ubuntu-1440p.png', dest: 'background.png' }
+        - { src: 'fonts/1440p/', dest: '.' }
+        - { src: 'icons-1440p/color/', dest: 'icons/' }
+        
 #
 # acpi stands for: "Advanded Configuration and Power Interface"
 # error messages in log: "EISA: cannot allocate resource for Mainboard"
 # with lxd apparmor produces lots of journalctl entries. Suppress with "apparmor.audit=quiet"
 #
     - name: System_setup | grub | Replace CMDLINE with acpi=off to supress error messages
-      lineinfile:
+      ansible.builtin.lineinfile:
         path: /etc/default/grub
         regexp: 'GRUB_CMDLINE_LINUX_DEFAULT='
         line: 'GRUB_CMDLINE_LINUX_DEFAULT="splash acpi=off apparmor.audit=quiet"'
         backrefs: yes
 
     - name: System_setup | grub | Insert background line in grub file
-      lineinfile:
+      ansible.builtin.lineinfile:
         path: /etc/default/grub
         insertafter: '^#GRUB_GFXMODE='
         line: 'GRUB_GFXMODE=3840x2160x24,auto'
 
     - name: System_setup | grub | add lines for BACKGROUND, THEME, GFXPAYLOAD_LINUX and DISABLE_OS_PROBER
-      lineinfile:
+      ansible.builtin.lineinfile:
         dest: /etc/default/grub
         line: '{{ item }}'
       with_items:
@@ -132,7 +128,7 @@
         - 'GRUB_DISABLE_OS_PROBER="false"'
 
     - name: System_setup | grub | update grub configuration
-      command: update-grub
+      ansible.builtin.command: update-grub
       register: grub_updcmd
       changed_when: grub_updcmd.rc == 0
 
@@ -143,7 +139,7 @@
   block:
 
     - name: System-setup | grub | make shure /tmp directory has full access
-      file:
+      ansible.builtin.file:
         path: /tmp
         state: directory
         owner: root
@@ -151,7 +147,7 @@
         mode: 0777
   
     - name: System-setup | grub | create all missing directories for images
-      file:
+      ansible.builtin.file:
         path: /usr/share/images/grub
         state: directory
         owner: root
@@ -159,7 +155,7 @@
         mode: 0644
         
     - name: System-setup | grub | copy black hole file
-      copy:
+      ansible.builtin.copy:
         src: grub/budgie/black-hole-blue.tga
         dest: /usr/share/images/grub/black-hole-blue.tga
         owner: root
@@ -174,23 +170,23 @@
         - grub-distro
 
     - name: System_setup | grub | checkout git distro-grub-themes repository
-      git:
+      ansible.builtin.git:
         repo: https://github.com/AdisonCavani/distro-grub-themes.git
         dest: /tmp/grub-distro
         force: true
         version: master
 
     - name: System_setup | grub | create themes directory
-      file:
+      ansible.builtin.file:
         path: /boot/grub/themes
         state: directory
         owner: root
         group: root
         mode: 0755
 
-    - name: System_setup | grub | copy distro-grub-themes for acer
-      copy:
-        src: /tmp/grub-distro/customize/acer
+    - name: System_setup | grub | unzip acer.tar file to grub/themes directory
+      ansible.builtin.unarchive:
+        src: /tmp/grub-distro/themes/acer.tar
         dest: /boot/grub/themes
         owner: root
         group: root
@@ -201,29 +197,29 @@
 # error messages in log: "EISA: cannot allocate resource for Mainboard"
 #
     - name: System_setup | grub | Replace CMDLINE with acpi=off to supress error messages
-      lineinfile: 
+      ansible.builtin.lineinfile: 
         path: /etc/default/grub
         regexp: '^GRUB_CMDLINE_LINUX_DEFAULT='
         line: 'GRUB_CMDLINE_LINUX_DEFAULT="quiet splash acpi=off"'
         backrefs: yes
 
     - name: System_setup | grub | Insert background line
-      lineinfile:
+      ansible.builtin.lineinfile:
         path: /etc/default/grub
         insertafter: '^#GRUB_GFXMODE='
         line: 'GRUB_GFXMODE=1024x768x32'
 
     - name: System_setup | grub | lines for BACKGROUND, THEME, GFXPAYLOAD_LINUX and DISABLE_OS_PROBER
-      lineinfile:
+      ansible.builtin.lineinfile:
         dest: /etc/default/grub
         line: '{{ item }}'
       with_items:
         - 'GRUB_BACKGROUND="/usr/share/images/grub/black-hole-blue.tga.jpg"'
-        - 'GRUB_THEME="/boot/grub/themes/acer/theme.txt"'
+        - 'GRUB_THEME="/boot/grub/themes/theme.txt"'
         - 'GRUB_GFXPAYLOAD_LINUX="keep"'
         - 'GRUB_DISABLE_OS_PROBER="false"'
 
     - name: System_setup | grub | update grub configuration
-      command: update-grub
+      ansible.builtin.command: update-grub
       register: grub_updcmd
       changed_when: grub_updcmd.rc == 0
