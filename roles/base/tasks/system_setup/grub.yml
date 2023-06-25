@@ -42,14 +42,12 @@
       git:
         repo: https://gitlab.com/VandalByte/darkmatter-grub-theme.git
         dest: /tmp/grub-darkmatter
-        bare: true
         version: main
 
     - name: System_setup | grub | checkout git LordShenron repository
       git:
         repo: https://github.com/LordShenron/Grub-Themes.git
         dest: /tmp/grub-LordShenron
-        bare: true
         version: griffin-grub-remix
 
     - name: System_setup | grub | create themes directory
@@ -162,7 +160,6 @@
       git:
         repo: https://github.com/AdisonCavani/distro-grub-themes.git
         dest: /tmp/grub-distro
-        force: true
         version: master
 
     - name: System_setup | grub | create themes directory
