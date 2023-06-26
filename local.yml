@@ -26,8 +26,10 @@
     - base
 
 - name: Display msg
-  debug: 
-    msg: "Workstation role commented out"
+  hosts: all
+  tasks:
+    debug: 
+      msg: "Workstation role commented out"
 # run workstation roles, if task_failed not defined
 #- name: Workstation role
 #  hosts: workstation
