@@ -27,12 +27,12 @@
         file: users/ubuntu.yml
 
     # Fix some problems
-    - name: Mdraid fix
-      ansible.builtin.import_tasks: 
-        file: system_setup/mdraid.yml
-    - name: Idmapd fixes
-      ansible.builtin.import_tasks: 
-        file: system_setup/idmapd.yml
+    #    - name: Mdraid fix
+    #  ansible.builtin.import_tasks: 
+    #    file: system_setup/mdraid.yml
+    #- name: Idmapd fixes
+    #  ansible.builtin.import_tasks: 
+    #    file: system_setup/idmapd.yml
     - name: Add fitting bluetooth driver
       ansible.builtin.import_tasks: 
         file: system_setup/bluetooth.yml
@@ -44,12 +44,12 @@
     - name: Install brave-browser
       ansible.builtin.import_tasks: 
         file: software/brave.yml
-    - name: Install clamav virus scanner
-      ansible.builtin.import_tasks: 
-        file: software/clamav.yml
-    - name: Install lynis audit software
-      ansible.builtin.import_tasks: 
-        file: software/lynis.yml
+          #    - name: Install clamav virus scanner
+          # ansible.builtin.import_tasks: 
+          # file: software/clamav.yml
+          #- name: Install lynis audit software
+          # ansible.builtin.import_tasks: 
+          # file: software/lynis.yml
     - name: Install several utilities
       ansible.builtin.import_tasks: 
         file: software/utilities.yml
@@ -67,9 +67,9 @@
     - name: Configure logging
       ansible.builtin.import_tasks: 
         file: system_setup/logging.yml
-    - name: Fix for microcode
-      ansible.builtin.import_tasks: 
-        file: system_setup/microcode.yml
+          # - name: Fix for microcode
+          # ansible.builtin.import_tasks: 
+          # file: system_setup/microcode.yml
 #  - import_tasks: system_setup/openssh.yml
 
   rescue:
