@@ -1,5 +1,5 @@
 ---
-- name: System setup | microcode | install package for intel
+- name: System setup | microcode | MDS cup bug with SMT on - install intel-microcode package
   apt:
     name: intel-microcode
     state: present
