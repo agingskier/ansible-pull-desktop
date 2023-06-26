@@ -69,7 +69,7 @@
         file: system_setup/logging.yml
     - name: Fix for microcode
       ansible.builtin.import_tasks: 
-      file: system_setup/microcode.yml
+        file: system_setup/microcode.yml
       
 #  - import_tasks: system_setup/openssh.yml
 

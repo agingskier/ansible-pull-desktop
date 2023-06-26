@@ -25,15 +25,18 @@
   roles:
     - base
 
+- name: Display msg
+  debug: 
+    msg: "Workstation role commented out"
 # run workstation roles, if task_failed not defined
-- name: Workstation role
-  hosts: workstation
-  tags: workstation
-  become: true
-  become_method: sudo
+#- name: Workstation role
+#  hosts: workstation
+#  tags: workstation
+#  become: true
+#  become_method: sudo
 
-  roles:
-    - workstation
+#  roles:
+#    - workstation
 
 # - name: Server role
 #  hosts: server
