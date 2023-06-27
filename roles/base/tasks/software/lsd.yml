@@ -2,30 +2,13 @@
 # Install cool utilities specified under modern-unix plus zsh and nerd fonts
 #
 
-- name: Software | lsd | install fontconfig utilities
-  apt:
+- name: Software | lsd | install lsd & fontconfig utilities
+  ansible.builtin.apt:
+    state: present
     pkg:
       - fontconfig
       - lsd
  
-# Get latest release from Github api
-# get tag line
-# pluck JSON value
-- name: Software | lsd | download latest release info for lsd nerd fonts
-  ansible.legacy.shell: |
-    set -o pipefail
-    curl --silent https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest |
-    jq -r .tag_name
-  args:
-    executable: /bin/bash
-  register: fonts_release
-  changed_when: fonts_release.rc == 0
-
-- name: Software | lsd | Print latest lsd nerd fonts release
-  debug:
-    var: fonts_release.stdout
-    verbosity: 2
-
 - name: Software | lsd | Creates nerd fonts directory used by lsd
   file:
     path: /usr/local/share/fonts/nerd
@@ -34,13 +17,25 @@
     group: root
     mode: 0775
 
+# Get latest release from Github api
+# get tag line
+# pluck JSON value 
+- name: Software | modern-unix | download latest release info for lsd nerd fonts
+  ansible.builtin.shell: |
+    set -o pipefail
+    curl --silent https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest |
+    jq -r .tag_name
+  args:
+    executable: /bin/bash
+  register: fonts_release
+
 - name: Software | lsd | download and install JetBrains and FiraCode nerd fonts
   become: true
   become_method: sudo
   unarchive:
     src: https://github.com/ryanoasis/nerd-fonts/releases/download/{{ fonts_release.stdout }}/{{ item }}
     dest: /usr/local/share/fonts/nerd
-    remote_src: yes
+    remote_src: true
     owner: root
     group: root
     mode: 0644
