@@ -12,7 +12,6 @@
         repo: 'ppa:phoerious/keepassxc'
         state: present
         filename: keepassxc
-        update_cache: yes
 
 # run "sudo apt-key list" to find the full public gpg key
 # use the last 8 characters for the export command
@@ -28,6 +27,7 @@
       changed_when: gpg_convert.rc == 0
 
     - name: Software | keepassxc | install keepassxc
-      apt:
+      ansible.builtin.apt:
+        update_cache: true
         pkg:
           - keepassxc
