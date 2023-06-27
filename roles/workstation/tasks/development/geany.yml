@@ -1,13 +1,13 @@
 ---
 - name: Doftware | geany | install packages
-  apt:
+  ansible.builtin.apt:
+    state: present
     pkg:
       - geany
       - geany-plugins
-    state: present
 
 - name: Software |  geany | create .config/geany/colorschemes directories
-  file:
+  ansible.builtin.file:
     path: /home/{{ user_name }}/{{ item.dir }}
     state: directory
     owner: "{{ user_name }}"
@@ -20,23 +20,20 @@
 
 - name: Software | geany | download geany colorschemes from github
   become: true
-  git:
+  ansible.builtin.git:
     repo: "https://github.com/geany/geany-themes.git"
     dest: "/tmp/geany-themes"
     force: true
     version: master
 
 - name: Software | geany | copy geany colorschemes to .config/geany/colorschemes
-  copy:
+  ansible.posix.synchronize:
     src: /tmp/geany-themes/colorschemes/
     dest: /home/{{ user_name }}/.config/geany/colorschemes/
-    directory_mode:
-    owner: "{{ user_name }}"
-    group: "{{ group_name }}"
-    mode: 0644
+    archive: true
 
 - name: Software | geany | copy filetypes.yaml
-  copy:
+  ansible.builtin.copy:
     src: /usr/share/geany/filedefs/filetypes.yaml
     dest: /home/{{ user_name }}/.config/geany/filedefs/filetypes.yaml
     owner: "{{ user_name }}"
@@ -44,7 +41,7 @@
     mode: 0644
 
 - name: Software | geany | Insert identifier=types in filetypes.yaml
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /home/{{ user_name }}/.config/geany/filedefs/filetypes.yaml
     insertafter: '^operator=operator'
     line: 'identifier=types'
@@ -52,7 +49,7 @@
 - name: Software | geany | Modify cursor and indend guide values
   become: true
   become_method: sudo
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /usr/share/geany/filedefs/filetypes.common
     insertafter: "{{ item.src }}"
     line: "{{ item.dest }}"
