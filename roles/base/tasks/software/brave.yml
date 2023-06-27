@@ -1,6 +1,6 @@
 ---
 - name: Software | brave browser block
-  become: yes
+  become: true
   become_method: sudo
   block:
     #
@@ -23,7 +23,7 @@
         state: present
 
     - name: Software | brave browser | install brave & prerequisite
-      apt:
+      ansible.builtin.apt:
         update_cache: true
         name:
           - gnupg2
