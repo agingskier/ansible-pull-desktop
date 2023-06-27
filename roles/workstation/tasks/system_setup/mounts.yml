@@ -4,13 +4,22 @@
   become_method: sudo
   block:
     - name: System_setup | mounts | install nfs-common
-      apt:
+      ansible.builtin.apt:
+        state: present
         pkg:
           - nfs-common
-        state: present
+
+    # For NFSv4 mounts to work correctly, it is necessary to set the NFS domain in the file /etc/idmapd.conf.
+    - name: Insert domain name into /etc/idmapd.conf
+      ansible.builtin.lineinfile:
+        path: /etc/idmapd.conf
+        insertafter: '^# Domain'
+        line: 'Domain = sibdata.ch'
+        firstmatch: true
+        state: present     
 
     - name: System_setup | fstab | set swapfile as comment
-      replace:
+      ansible.builtin.replace:
         path: /etc/fstab
         regexp: "{{ item.regexp }}"
         replace: "{{ item.value }}"
@@ -18,7 +27,7 @@
         - { regexp: '^/swapfile ', value: '#/swapfile' }
 
     - name: System_setup | systemd mount | create nfs mountpoint directories
-      file:
+      ansible.builtin.file:
         path: /mnt/{{ item.dir }}
         state: directory
         owner: "{{ user_name }}"
@@ -35,7 +44,7 @@
         - { dir: NAS/steuern }
 
     - name: System_setup | systemd | copy mount files
-      copy:
+      ansible.builtin.copy:
         src: mounts/{{ item.src }}
         dest: /etc/systemd/system/{{ item.dest }}
         owner: root
@@ -57,16 +66,16 @@
 # mnt-NAS-software.mount
 #
     - name: System_setup | service | enable NetworkManager-wait-online
-      service:
+      ansible.builtin.service:
         name: NetworkManager-wait-online
-        enabled: yes
+        enabled: true
 
     - name: System_setup | systemd | enable all mounts, reload daemon
-      systemd:
+      ansible.builtin.systemd:
         name: "{{ item }}"
-        enabled: yes
+        enabled: true
         state: restarted
-        daemon_reload: yes
+        daemon_reload: true
       with_items:
         - 'mnt-NAS-backup.mount'
         - 'mnt-NAS-documents.mount'
@@ -77,14 +86,14 @@
         - 'mnt-NAS-steuern.mount'
 
     - name: System_setup | Add nfs NAS bookmarks
-      lineinfile:
+      ansible.builtin.lineinfile:
         dest: /home/{{ user_name }}/.config/gtk-3.0/bookmarks
         line: "{{ item.line }}"
         insertafter: EOF
       with_items:
         - { line: "file:///mnt/NAS NAS" }
         - { line: "file:///mnt/k8s K8S" }
-        - { line: "file:///mnt/Data Data" }
+ #       - { line: "file:///mnt/Data Data" }
         - { line: "file:///mnt/Storage Storage" }
         - { line: "file:///mnt/Digikam Digikam" }
         - { line: "file:///mnt/Games Games" }
