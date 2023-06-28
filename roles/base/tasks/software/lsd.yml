@@ -10,7 +10,7 @@
       - lsd
  
 - name: Software | lsd | Creates nerd fonts directory used by lsd
-  file:
+  ansible.builtin.file:
     path: /usr/local/share/fonts/nerd
     state: directory
     owner: root
@@ -20,7 +20,7 @@
 # Get latest release from Github api
 # get tag line
 # pluck JSON value 
-- name: Software | modern-unix | download latest release info for lsd nerd fonts
+- name: Software | lsd | download latest release info for lsd nerd fonts
   ansible.builtin.shell: |
     set -o pipefail
     curl --silent https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest |
@@ -28,11 +28,12 @@
   args:
     executable: /bin/bash
   register: fonts_release
+  changed_when: fonts_release.rc == 0
 
 - name: Software | lsd | download and install JetBrains and FiraCode nerd fonts
   become: true
   become_method: sudo
-  unarchive:
+  ansible.builtin.unarchive:
     src: https://github.com/ryanoasis/nerd-fonts/releases/download/{{ fonts_release.stdout }}/{{ item }}
     dest: /usr/local/share/fonts/nerd
     remote_src: true
@@ -44,6 +45,6 @@
     - FiraCode.zip
 
 - name: Software | lsd | create cache for new fonts
-  command: fc-cache -v -f
+  ansible.builtin.command: fc-cache -v -f
   register: create_cache
   changed_when: create_cache.rc == 0

@@ -1,15 +1,15 @@
 ---
 - name: Restart_sshd
-  service:
+  ansible.builtin.service:
     name: ssh
     state: restarted
 
 - name: Restart_udisks2
-  service:
+  ansible.builtin.service:
     name: udisks2
     state: restarted
 
 - name: Restart_journald
-  service:
+  ansible.builtin.service:
     name: systemd-journald
     state: restarted

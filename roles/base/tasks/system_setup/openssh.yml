@@ -1,18 +1,18 @@
 ---
 - name: System setup | openssh | install or update daemon package
-  apt:
+  ansible.builtin.apt:
     name: openssh-server
     state: present
   notify: Restart_sshd
 
 - name: System setup | openssh | enable daemon
-  service:
+  ansible.builtin.service:
     name: ssh
     enabled: yes
     state: started
 
 - name: System setup | openssh | generate sshd_config file from template
-  template:
+  ansible.builtin.template:
     src: sshd_config.j2
     dest: /etc/ssh/sshd_config
     owner: root

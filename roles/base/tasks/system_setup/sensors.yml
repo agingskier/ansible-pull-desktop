@@ -1,0 +1,62 @@
+---
+- name: System setup | sensors | install sensors packages
+  ansible.builtin.apt:
+    state: present
+    pkg:
+      - lm-sensors
+      - psensor
+      - smartmontools
+
+- name: System setup | sensors block for {{ inventory_hostname }}
+  when: "'bequiet' in inventory_hostname"
+  block:
+    - name: System_setup | sensors | copy etc files
+      ansible.builtin.copy:
+        src: etc/{{ item.src }}
+        dest: /etc/{{ item.dest }}
+        owner: root
+        group: root
+        mode: 0644
+      with_items:
+        - { src: 'asus-rampage.conf', dest: 'sensors.d/asus-rampage.conf' }
+        - { src: 'blacklist-edac.conf', dest: 'modprobe.d/blacklist-edac.conf' }
+        - { src: 'sensors-modules-asus', dest: 'modules-load.d/sensors.conf' }
+
+    - name: Run sensors-detect command | generate /etc/modules
+      become: true
+      become_method: sudo
+      ansible.builtin.command: sensors-detect --auto
+      register: expect_result
+      changed_when: expect_result.rc == 0
+
+    - name: Print sensors-detect result
+      ansible.builtin.debug:
+        var: expect_result.stdout_lines[98:]
+      when: expect_result.rc == 0
+
+- name: System setup | sensors block for {{ inventory_hostname }}
+  when: "'acermsch' in inventory_hostname"
+  block:
+    - name: System_setup | sensors | copy etc files
+      ansible.builtin.copy:
+        src: etc/{{ item.src }}
+        dest: /etc/{{ item.dest }}
+        owner: root
+        group: root
+        mode: 0644
+      with_items:
+#        - { src: 'acer-rampage.conf', dest: 'sensors.d/acer-rampage.conf' }
+#        - { src: 'blacklist-edac.conf', dest: 'modprobe.d/blacklist-edac.conf' }
+        - { src: 'sensors-modules-acer', dest: 'modules-load.d/sensors.confq' }
+
+    - name: Run sensors-detect command | generate /etc/modules
+      become: true
+      become_method: sudo
+      ansible.builtin.command: sensors-detect --auto
+      register: expect_result
+      changed_when: expect_result.rc == 0
+
+    - name: Print sensors-detect result
+      ansible.builtin.debug:
+        var: expect_result.stdout_lines[98:]
+      when: expect_result.rc == 0

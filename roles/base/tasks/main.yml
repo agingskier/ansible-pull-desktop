@@ -3,6 +3,10 @@
   when:
     - task_failed is not defined 
   block:
+    # install packages used everywhere
+    - name: Install several utilities
+      ansible.builtin.import_tasks: 
+        file: software/utilities.yml
 
     # install software required by users
     - name: Install LSD software
@@ -26,33 +30,45 @@
       ansible.builtin.import_tasks:    
         file: users/ubuntu.yml
 
-    # Fix some problems
-    #    - name: Mdraid fix
-    #  ansible.builtin.import_tasks: 
-    #    file: system_setup/mdraid.yml
-    #- name: Idmapd fixes
-    #  ansible.builtin.import_tasks: 
-    #    file: system_setup/idmapd.yml
-    - name: Add fitting bluetooth driver
-      ansible.builtin.import_tasks: 
-        file: system_setup/bluetooth.yml
+    ## desktop
+    - name: Include plank tasks
+      ansible.builtin.include_tasks:
+        file: desktop/plank.yml
+    - name: Include desktop tasks
+      ansible.builtin.include_tasks:
+        file: desktop/desktop.yml
+
+    ## system setup
+    - name: Import sensors tasks
+      ansible.builtin.import_tasks:
+        file: system_setup/sensors.yml
+
+    - name: Check if /mnt/NAS already created
+      ansible.builtin.stat:
+        path: /mnt/NAS
+      register: nas_status
+
+    - name: Import nfs mount tasks
+      ansible.builtin.import_tasks:
+        file: system_setup/mounts.yml
+      when: not nas_status.stat.exists
 
     # install software
-#    - name: Install firefox             # errors with snap remove command!
-#      ansible.builtin.import_tasks:    
-#        file: software/firefox.yml
+    - name: Import geany tasks
+      ansible.builtin.import_tasks:
+        file: software/geany.yml
+    - name: Import keepassxc tasks
+      ansible.builtin.import_tasks:
+        file: software/keepassxc.yml
     - name: Install brave-browser
       ansible.builtin.import_tasks: 
         file: software/brave.yml
-          #    - name: Install clamav virus scanner
-          # ansible.builtin.import_tasks: 
-          # file: software/clamav.yml
-          #- name: Install lynis audit software
-          # ansible.builtin.import_tasks: 
-          # file: software/lynis.yml
-    - name: Install several utilities
+    - name: Install clamav virus scanner
       ansible.builtin.import_tasks: 
-        file: software/utilities.yml
+        file: software/clamav.yml
+    - name: Install lynis audit software
+      ansible.builtin.import_tasks: 
+        file: software/lynis.yml
 
     # Perform remaining tasks
     - name: Configure grub
@@ -67,10 +83,21 @@
     - name: Configure logging
       ansible.builtin.import_tasks: 
         file: system_setup/logging.yml
+
+    # Fix some problems shown in journalctl
+    - name: Add fitting bluetooth driver
+      ansible.builtin.import_tasks: 
+        file: system_setup/bluetooth.yml
+    - name: Fix error messages in journalctl
+      ansible.builtin.import_tasks: 
+        file: system_setup/fix-log-msg.yml
     - name: Fix for microcode
       ansible.builtin.import_tasks: 
         file: system_setup/microcode.yml
-      
+    - name: Install missing packages for error message Multiple Disk RAID
+      ansible.builtin.import_tasks: 
+        file: system_setup/microcode.yml
+     
 #  - import_tasks: system_setup/openssh.yml
 
   rescue:

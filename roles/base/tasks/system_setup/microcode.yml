@@ -1,6 +1,6 @@
 ---
 - name: System setup | microcode | MDS cup bug with SMT on - install intel-microcode package
-  apt:
+  ansible.builtin.apt:
     name: intel-microcode
     state: present
   when:

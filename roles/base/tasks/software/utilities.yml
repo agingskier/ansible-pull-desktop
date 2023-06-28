@@ -1,6 +1,6 @@
 ---
 - name: Software | utilities | install utility packages
-  apt:
+  ansible.builtin.apt:
     state: present
     pkg:
       - aptitude

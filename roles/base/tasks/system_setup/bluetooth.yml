@@ -2,10 +2,10 @@
 - name: System-setup | bluetooth | download firmware
   become: true
   become_method: sudo
-  unarchive:
+  ansible.builtin.unarchive:
     src: https://github.com/winterheart/broadcom-bt-firmware/archive/master.zip
     dest: /tmp
-    remote_src: yes
+    remote_src: true
     mode: 0755
     owner: "{{ user_name }}"
     group: "{{ group_name }}"
@@ -13,7 +13,7 @@
 - name: System-setup | bluetooth | install missing firmware
   become: true
   become_method: sudo
-  copy:
+  ansible.builtin.copy:
     src: /tmp/broadcom-bt-firmware-master/brcm/BCM20702A1-0b05-17cf.hcd
     dest: /lib/firmware/brcm
     owner: root

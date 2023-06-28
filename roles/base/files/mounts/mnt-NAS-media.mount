@@ -1,0 +1,15 @@
+[Unit]
+Description=Synology NAS media share on 192.168.29.10
+DefaultDependencies=no
+Conflicts=umount.target
+After=network-online.target remote-fs.target
+Before=umount.target
+
+[Mount]
+What=192.168.29.10:/volume1/media
+Where=/mnt/NAS/media
+Type=nfs
+Options=defaults
+
+[Install]
+WantedBy=multi-user.target

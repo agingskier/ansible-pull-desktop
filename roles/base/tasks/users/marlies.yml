@@ -6,12 +6,12 @@
   block:
 #  define these variables in host_vars
 #    - name: users | marlies | user name fact
-#      set_fact:
+#      ansible.builtin.set_fact:
 #        user_name: 'marlies'
 #        group_name: 'users'
 
     - name: Users | marlies | add sudoers file
-      copy:
+      ansible.builtin.copy:
         src: users/sudoers_marlies
         dest: /etc/sudoers.d/marlies
         owner: root
@@ -21,13 +21,13 @@
     - name: Uusers | marlies | change Exec= line for Tilix New Window in com.gexperts.Tilix.desktop
       become: true
       become_method: sudo
-      lineinfile:
+      ansible.builtin.lineinfile:
         path: /usr/share/applications/com.gexperts.Tilix.desktop
         regexp: '^Exec=tilix --action=app-new-window'
         line: 'Exec=tilix --action=app-new-window --geometry=180x24+100+200 --session=~/.config/tilix/wide.json'
 
     - name: Users | marlies | copy dotfiles
-      copy:
+      ansible.builtin.copy:
         src: users/{{ item.src }}
         dest: /home/{{ user_name }}/{{ item.dest }}
         owner: "{{ user_name }}"

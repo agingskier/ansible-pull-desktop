@@ -1,6 +1,6 @@
 ---
 - name: Gnome | desktop | create tilix schemes directory
-  file:
+  ansible.builtin.file:
     path: /home/{{ user_name }}/{{ item.dir }}
     state: directory
     owner: "{{ user_name }}"
@@ -11,7 +11,7 @@
     - { dir: '.config/tilix/schemes' }
 
 - name: Gnome | desktop | copy tilix homebrew color scheme
-  copy:
+  ansible.builtin.copy:
     src: users/tilix/{{ item.src }}
     dest: /home/{{ user_name }}/{{ item.dest }}
     owner: "{{ user_name }}"

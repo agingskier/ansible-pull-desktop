@@ -18,7 +18,7 @@
       changed_when: brave_gpgkey.rc == 0
 
     - name: Software | brave browser | add brave apt repository
-      apt_repository:
+      ansible.builtin.apt_repository:
         repo: 'deb [arch=amd64 signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main'
         state: present
 

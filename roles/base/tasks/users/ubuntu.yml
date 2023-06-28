@@ -5,7 +5,7 @@
     - ubuntu
   block:
     - name: Update ubuntu user's Password
-      user:
+      ansible.builtin.user:
         name: ubuntu
         update_password: always
         password: "{{ ubuntu_passwd }}"

@@ -1,12 +1,12 @@
 ---
 - name: Software | lynis | install lynis system audit packages
-  apt:
+  ansible.builtin.apt:
     state: present
     pkg:
       - lynis
 
 - name: Software | lynis | cron job for root lynis audit
-  cron:
+  ansible.builtin.cron:
     name: lynis_audit
     user: root
     special_time: reboot

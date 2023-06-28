@@ -1,6 +1,6 @@
 ---
 - name: Software | clamav | install clamav and security packages
-  apt:
+  ansible.builtin.apt:
     state: present
     pkg:
       - gufw
@@ -11,7 +11,7 @@
       - cpulimit
 
 - name: Software | clamav | create clamav directory
-  file:
+  ansible.builtin.file:
     path: /var/log/clamav
     state: directory
     owner: clamav
@@ -19,13 +19,13 @@
     mode: 0774
 
 - name: Software | clamav | adding existing user to group clamav (logoff, logon required) '{{ user_name }}'
-  user:
+  ansible.builtin.user:
     name: "{{ user_name }}"
     groups: clamav
     append: yes
 
 - name: Software | clamav | remove StandardOutput line from systemd files
-  lineinfile: 
+  ansible.builtin.lineinfile: 
     dest: /lib/systemd/system/{{ item }} 
     state: absent 
     regexp: "^StandardOutput="
@@ -34,7 +34,7 @@
     - clamav-freshclam.service
    
 - name: Software | clamav | Creating clamscan file for logrotate
-  copy:
+  ansible.builtin.copy:
     dest: /etc/logrotate.d/clamscan
     content: |
       /var/log/clamav/clamscan.log {
@@ -50,7 +50,7 @@
     mode: 0644
     
 - name: Software | clamav | cron job clamscan for user {{ user_name }}
-  cron:
+  ansible.builtin.cron:
     name: daily_clamsacan
     user: "{{ user_name }}"
     minute: 07
@@ -59,7 +59,7 @@
 
 # clamscan must be running for cpulimit to take effect. Limit cpu usage to 30%
 - name: Software | clamav | cron job clamscan limit cpu usage for user {{ user_name }}
-  cron:
+  ansible.builtin.cron:
     name: daily_clamsacan_cpulimit
     user: "{{ user_name }}"
     minute: 08
@@ -67,7 +67,7 @@
     job: "cpulimit -e clamscan -l 30"
 
 - name: Software | clamav | cron job for root freshclam
-  cron:
+  ansible.builtin.cron:
     name: freshclam_update_dbs
     user: root
     minute: 21

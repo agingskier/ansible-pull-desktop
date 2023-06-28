@@ -5,7 +5,7 @@
     - bernhard
   block:
     - name: Users | bernhard | create inxi.conf file with VIRT_TERM_COLOR_SCHEME line
-      copy:
+      ansible.builtin.copy:
         dest: "/home/{{ user_name }}/.config/inxi.conf"
         content: |
           VIRT_TERM_COLOR_SCHEME=29
@@ -14,7 +14,7 @@
         mode: 0644
   
     - name: Users | bernhard | add sudoers file
-      copy:
+      ansible.builtin.copy:
         src: users/sudoers_bernhard
         dest: /etc/sudoers.d/bernhard
         owner: root
@@ -24,13 +24,13 @@
     - name: Users | bernhard | change Exec= line for Tilix New Window in com.gexperts.Tilix.desktop
       become: yes
       become_method: sudo
-      lineinfile:
+      ansible.builtin.lineinfile:
         path: /usr/share/applications/com.gexperts.Tilix.desktop
         regexp: '^Exec=tilix --action=app-new-window'
         line: 'Exec=tilix --action=app-new-window --geometry=180x24+100+200 --session=~/.config/tilix/wide.json'
 
     - name: Users | autostart | create .config/autostart directory
-      file:
+      ansible.builtin.file:
         path: /home/{{ user_name }}/.config/{{ item.dir }}
         state: directory
         owner: "{{ user_name }}"
@@ -40,10 +40,10 @@
         - { dir: 'autostart' }
 
     - name: Users | bernhard | import tasks for tmux before copy config files
-      import_tasks: ../software/tmux.yml
+      ansible.builtin.import_tasks: ../software/tmux.yml
  
     - name: Users | bernhard | copy dotfiles
-      copy:
+      ansible.builtin.copy:
         src: users/{{ item.src }}
         dest: /home/{{ user_name }}/{{ item.dest }}
         owner: "{{ user_name }}"
@@ -70,7 +70,7 @@
         archive: yes
 
     - name: Users | bernhard | import tasks for vim
-      import_tasks: ../software/vim.yml
+      ansible.builtin.import_tasks: ../software/vim.yml
 
     - name: Users | bernhard | import tasks for zsh
-      import_tasks: ../software/zsh.yml
+      ansible.builtin.import_tasks: ../software/zsh.yml

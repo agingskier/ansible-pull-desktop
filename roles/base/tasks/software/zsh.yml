@@ -2,13 +2,13 @@
 # Create zsh environment for user bernhard - variables defined in host_vars
 
 - name: Zsh | software | install zsh packages
-  apt:
+  ansible.builtin.apt:
     state: present
     pkg:
       - zsh
     
 - name: Zsh | Creates zsh directory in .config for {{ user_name }}
-  file:
+  ansible.builtin.file:
     path: /home/{{ user_name }}/.config/{{ item.dir }}
     state: directory
     owner: "{{ user_name }}"
@@ -19,7 +19,7 @@
     - { dir: 'zsh/plugins' }
 
 - name: Zsh | copy individual zsh config files for {{ user_name }}
-  copy:
+  ansible.builtin.copy:
     src: users/zsh/{{ item.src }}
     dest: /home/{{ user_name }}/.config/zsh/{{ item.dest }}
     owner: "{{ user_name }}"
@@ -37,7 +37,7 @@
     - { src: 'zshrc', dest: '.zshrc' }
 
 - name: Zsh | copy dotfiles for {{ user_name }}
-  copy: 
+  ansible.builtin.copy: 
     src: /home/{{ user_name }}/.config/zsh/{{ item.src }}
     dest: /home/{{ user_name }}/{{ item.dest }}
     owner: "{{ user_name }}"

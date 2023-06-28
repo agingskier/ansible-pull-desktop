@@ -1,5 +1,7 @@
 ---
-
+#
+# see: 'info -f grub -n 'Simple configuration' for information about grub configuration
+# 
 - name: System-setup | grub block for {{ inventory_hostname }}
   become: true
   become_method: sudo
@@ -24,7 +26,7 @@
   
     - name: System-setup | grub | copy background images for grub
       ansible.builtin.copy:
-        src: grub/{{ item.src }}
+        src: images/{{ item.src }}
         dest: /usr/share/images/grub/{{ item.dest }}
         owner: root
         group: root
@@ -32,11 +34,11 @@
       with_items:
         - { src: 'black-hole-blue.tga', dest: 'black-hole-blue.tga' }
         - { src: 'saturn-wallpaper.jpg', dest: 'saturn.jpg' }
-#        - { src: 'CarinaNebula.png', dest: 'CarinaNebula.png' }
-#        - { src: 'QuasarEarlyUniverse.jpg', dest: 'QuasarEarlyUniverse.jpg' }
-#        - { src: 'QuasarOutflow.png', dest: 'QuasarOutflow.png' }
-#        - { src: 'SouthernRingNebula.png', dest: 'SouthernRingNebula.png' }
-#        - { src: 'StephansQuintetGalaxies.png', dest: 'StephansQuintetGalaxies.png' }
+        - { src: 'CarinaNebula.png', dest: 'CarinaNebula.png' }
+        - { src: 'QuasarEarlyUniverse.jpg', dest: 'QuasarEarlyUniverse.jpg' }
+        - { src: 'QuasarOutflow.png', dest: 'QuasarOutflow.png' }
+        - { src: 'SouthernRingNebula.png', dest: 'SouthernRingNebula.png' }
+        - { src: 'StephansQuintetGalaxies.png', dest: 'StephansQuintetGalaxies.png' }
 
     - name: System-setup | grub | Recursively remove git target directory
       ansible.builtin.file:
@@ -109,7 +111,7 @@
         path: /etc/default/grub
         regexp: 'GRUB_CMDLINE_LINUX_DEFAULT='
         line: 'GRUB_CMDLINE_LINUX_DEFAULT="splash acpi=off apparmor.audit=quiet"'
-        backrefs: yes
+        backrefs: true
 
     - name: System_setup | grub | Insert background line in grub file
       ansible.builtin.lineinfile:

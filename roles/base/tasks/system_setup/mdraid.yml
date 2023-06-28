@@ -1,6 +1,6 @@
 ---
-- name: System setup | patch mdraid error | install missing packages
-  apt:
+- name: System setup | patch mdraid error | install missing packages for Multiple Disk RAID
+  ansible.builtin.apt:
     state: present
     pkg:
       - libblockdev-crypto2

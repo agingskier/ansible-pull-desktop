@@ -14,14 +14,14 @@
 #    job: "/bin/rm -rf /home/ansible/.ansible"
 
 - name: System setup | cron | schedule log reduction
-  cron:
+  ansible.builtin.cron:
     name: "logfile reduction"
     user: root
     special_time: reboot
     job: "sleep 300 && journalctl --vacuum-time=7days"
 
 - name: System setup | cron | plocate database
-  cron:
+  ansible.builtin.cron:
     name: "plocate database"
     user: root
     special_time: reboot

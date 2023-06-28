@@ -1,0 +1,33 @@
+---
+- name: Software | keepassxc block
+  become: true
+  become_method: sudo
+  when:
+    - keepassxc is defined
+    - keepassxc
+  block:
+
+    - name: Software | keepassxc | add keepassxc apt repository
+      ansible.builtin.apt_repository:
+        repo: 'ppa:phoerious/keepassxc'
+        state: present
+        filename: keepassxc
+
+# run "sudo apt-key list" to find the full public gpg key
+# use the last 8 characters for the export command
+
+    - name: Software | keepassxc | apt-key deprecated - convert trusted.gpg into member in tursted.gpg.d
+      ansible.legacy.shell: |
+        set -o pipefail
+        apt-key export 0068FCD6 | \
+        gpg --dearmour -o /usr/share/keyrings/keepassxc.gpg
+      args:
+        executable: /bin/bash
+      register: gpg_convert
+      changed_when: gpg_convert.rc == 0
+
+    - name: Software | keepassxc | install keepassxc
+      ansible.builtin.apt:
+        update_cache: true
+        pkg:
+          - keepassxc

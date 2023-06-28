@@ -1,17 +1,17 @@
 ---
 - name: Software | tmux | install tmux package
-  apt:
+  ansible.builtin.apt:
     state: present
     pkg:
       - tmux
 
 - name: Software | recursivebly remove .tmux/plugins directory to enable re-runs for {{ user_name }}
-  file:
+  ansible.builtin.file:
     path: /home/{{ user_name }}/.tmux/plugins
     state: absent
 
 - name: Software | tmux | create .config/tmux directories
-  file:
+  ansible.builtin.file:
     path: /home/{{ user_name }}/.config/{{ item.dir }}
     state: directory
     owner: "{{ user_name }}"
@@ -22,7 +22,7 @@
     - { dir: 'tmux/plugins' }
 
 - name: Software | tmux | git checkout git tmux plugins
-  git:
+  ansible.builtin.git:
     repo: https://github.com/tmux-plugins/{{ item.repo }}
     dest: /home/{{ user_name }}/.config/tmux/plugins/{{ item.plug }}
     force: yes
@@ -35,7 +35,7 @@
     - { repo: 'tmux-open.git', plug: 'tmux-open' }
 
 - name: Software | tmux | recursively chown all tmux plugins files
-  file:
+  ansible.builtin.file:
     path: /home/{{ user_name }}/.config/tmux/plugins
     state: directory
     owner: "{{ user_name }}"
@@ -54,14 +54,14 @@
   changed_when: gitmux_release.rc == 0
 
 - name: Software | tmux | print gitmux_release
-  debug:
+  ansible.builtin.debug:
     var: gitmux_release.stdout
     verbosity: 2
 
 - name: Software | tmux | install binary gitmux
   become: true
   become_method: sudo
-  unarchive:
+  ansible.builtin.unarchive:
     src: https://github.com/arl/gitmux/releases/download/{{ gitmux_release.stdout }}/gitmux_{{ gitmux_release.stdout }}_linux_amd64.tar.gz
     dest: /usr/local/bin
     remote_src: yes
@@ -70,12 +70,12 @@
     group: root
 
 - name: Software | tmux | create gitmux configuration file
-  command: gitmux -printcfg
+  ansible.builtin.command: gitmux -printcfg
   register: gitmux_config
   changed_when: gitmux_config.rc == 0
 
 - name: Software | tmux | write gitmux.conf file
-  copy:
+  ansible.builtin.copy:
     content: "{{ gitmux_config.stdout }}"
     dest: /home/{{ user_name }}/.gitmux.conf
     owner: "{{ user_name }}"

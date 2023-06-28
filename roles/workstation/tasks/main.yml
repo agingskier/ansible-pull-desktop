@@ -8,33 +8,7 @@
       tags: always
       ansible.builtin.include_vars: vault_secrets.yml
 
-    ## desktop environments
-    - name: Include plank tasks
-      ansible.builtin.include_tasks:
-        file: desktop_environments/plank.yml
-    - name: Include desktop tasks
-      ansible.builtin.include_tasks:
-        file: desktop_environments/desktop.yml
-
-    ## system setup
-    - name: Import sensors tasks
-      ansible.builtin.import_tasks:
-        file: system_setup/sensors.yml
-
-    - name: Check if /mnt/NAS already created
-      stat:
-        path: /mnt/NAS
-      register: nas_status
-
-    - name: Import nfs mount tasks
-      ansible.builtin.import_tasks:
-        file: system_setup/mounts.yml
-      when: not nas_status.stat.exists
-
     ## Development
-    - name: Import geany tasks
-      ansible.builtin.import_tasks:
-        file: development/geany.yml
     - name: Import java tasks
       ansible.builtin.import_tasks:
         file: development/java.yml
@@ -49,9 +23,6 @@
 #    - name: Import calibre tasks
 #      ansible.builtin.import_tasks:
 #        file: software/calibre.yml
-    - name: Import keepassxc tasks
-      ansible.builtin.import_tasks:
-        file: software/keepassxc.yml
     - name: Import variety tasks
       ansible.builtin.import_tasks:
         file: software/variety.yml

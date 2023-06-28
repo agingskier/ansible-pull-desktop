@@ -1,0 +1,30 @@
+---
+- name: System-setup | fix-log-msg block
+  become: true
+  become_method: sudo
+  block:
+    #
+    # fix: Error message: systemd-udevd[447]: sdb3: Process '/usr/bin/unshare -m /usr/bin/snap auto-import 
+    #                     --mount=/dev/sdb3' failed with exit code 1.
+    - name: System-setup | fix-log-msg | delete file causing systemd-udevd snap auto-import errors
+      ansible.builtin.file:
+        path: /lib/udev/rules.d/66-snapd-autoimport.rules
+        owner: root
+        group: root
+        mode: 0644
+        state: absent
+
+    #
+    # fix: Error message: kernel: IPv6: MLD: clamping QRV from 1 to 2!
+    #
+    - name: System-setup | fix-log-msg | create 10-ipv6-mld.conf file in /etc/sysctl.d
+      ansible.builtin.copy:
+        dest: "/etc/sysctl.d/95-ipv6-mld.conf"
+        content: |
+          #
+          # kernel: IPv6: MLD: clamping QRV from 1 to 2! (lots of these messages in journalctl)
+          #
+          net.ipv6.mld_qrv = 1
+        owner: root
+        group: root
+        mode: 0644
