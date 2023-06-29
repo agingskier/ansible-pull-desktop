@@ -56,8 +56,8 @@
         - { src: 'bash/dircolors', dest: '.dircolors' }
         - { src: 'tilix/split.json', dest: '.config/tilix/split.json' }
         - { src: 'tilix/wide.json', dest: '.config/tilix/wide.json' }
-#        - { src: 'tilix/three.json', dest: '.config/tilix/three.json' }
-#        - { src: 'tilix/nvim-split.json', dest: '.config/tilix/nvim-split.json' }
+        - { src: 'tilix/three.json', dest: '.config/tilix/three.json' }
+        - { src: 'tilix/nvim-split.json', dest: '.config/tilix/nvim-split.json' }
         - { src: 'autostart/conky_autostart', dest: '.config/autostart/conky.desktop' }
         - { src: 'autostart/tilix_autostart', dest: '.config/autostart/tilix.desktop' }
         - { src: 'tmux/tmux_config', dest: '.config/tmux/tmux.conf' }
@@ -67,7 +67,21 @@
       ansible.posix.synchronize:
         src: /media/{{ user_name }}/Backup/conky/
         dest: /home/{{ user_name }}/conky/
-        archive: yes
+        archive: true
+        
+    - name: Users | bernhard | conky | Evaluating conky dirs selecting *.sh files    
+      ansible.builtin.find:    
+        path: /home/{{ user_name }}/conky    
+        file_type: "file"
+        patterns: "*.sh"
+      register: conky_dir
+        
+    - name: Changing permissions of /home/bernhard/conky/*
+      ansible.builtin.file:    
+        path: "{{ item.path }}"  
+        mode: 0755  
+      with_items:    
+        - "{{ conky_dir.files }}"
 
     - name: Users | bernhard | import tasks for vim
       ansible.builtin.import_tasks: ../software/vim.yml

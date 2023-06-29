@@ -1,0 +1,37 @@
+{
+    "child": {
+        "child1": {
+            "directory": "/home/bernhard/.config/my-nvim-basic",
+            "height": 1293,
+            "profile": "2b7c4080-0ddd-46c5-8f23-563fd3ba789d",
+            "readOnly": false,
+            "synchronizedInput": true,
+            "title": "my-nvim-basic",
+            "type": "Terminal",
+            "uuid": "88e2c250-b670-463f-8af1-5b5d6fab987b",
+            "width": 1247
+        },
+        "child2": {
+            "directory": "/home/bernhard/.config/my-nvim",
+            "height": 1293,
+            "profile": "2b7c4080-0ddd-46c5-8f23-563fd3ba789d",
+            "readOnly": false,
+            "synchronizedInput": true,
+            "title": "my-nvim",
+            "type": "Terminal",
+            "uuid": "bac52253-20e7-4be2-bad5-ae4f82753975",
+            "width": 1246
+        },
+        "orientation": 0,
+        "position": 50,
+        "ratio": 0.5,
+        "type": "Paned"
+    },
+    "height": 1293,
+    "name": "${title}",
+    "synchronizedInput": false,
+    "type": "Session",
+    "uuid": "3edc34c7-919a-4578-9520-9c62757d5c8a",
+    "version": "1.0",
+    "width": 2494
+}
