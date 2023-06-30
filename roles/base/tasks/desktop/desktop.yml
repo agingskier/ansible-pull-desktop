@@ -34,8 +34,11 @@
         - { key: 'color-scheme', value: "'prefer-dark'" }
         - { key: 'cursor-size', value: '48' }
         - { key: 'cursor-theme', value: "'DMZ-Black'" }
+        - { key: 'document-font-name', value: "'Noto Sans 13'" }
+        - { key: 'font-name', value: "'Noto Sans 13'" }
         - { key: 'gtk-theme', value: "'QogirBudgie-dark'" }
         - { key: 'icon-theme', value: "'Humanity-Dark'" }
+        - { key: 'monospace-font-name', "'Noto Mono Bold 13'" }
         - { key: 'text-scaling-factor', value: '1.10' }
 
     - name: Gnome | gedit | set editor values
@@ -44,4 +47,4 @@
         value: "{{ item.value }}"
       with_items:
         - { key: 'scheme', value: "'cobalt'" }
-        - { key: 'tabs-size', value: "'uint32 4'" }
+        - { key: 'tabs-size', value: 'uint32 4' }
