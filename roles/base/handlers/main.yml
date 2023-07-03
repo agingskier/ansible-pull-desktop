@@ -13,7 +13,3 @@
   ansible.builtin.service:
     name: systemd-journald
     state: restarted
-
-- name: Update_xdg
-  become_user: "{{ user_name }}"
-  ansbible.builtin.command: xdg-user-dirs-update

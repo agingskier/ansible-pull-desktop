@@ -84,7 +84,9 @@
         - { src: 'autostart/tilix_autostart', dest: '.config/autostart/tilix.desktop' }
         - { src: 'tmux/tmux_config', dest: '.config/tmux/tmux.conf' }
         - { src: 'tmux/tmux_setup_config', dest: 'tmux-setup.conf'}
-      notify: Update_xdg
+
+    - name: Users | bernhard | XDG | command to create cutomized user directories
+      ansible.builtin.command: xdg-user-dirs-update
 
     - name: Users | bernhard | conky | synchronize ~/conky directory with /media/<user>/Backup
       ansible.posix.synchronize:
