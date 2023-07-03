@@ -26,6 +26,7 @@
       - nmap
       - p7zip-full
       - pdfsam
+      - python3-pip
       - plocate
       - pv
       - traceroute
