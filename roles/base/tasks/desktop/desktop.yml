@@ -38,7 +38,7 @@
         - { key: 'font-name', value: "'Noto Sans 13'" }
         - { key: 'gtk-theme', value: "'QogirBudgie-dark'" }
         - { key: 'icon-theme', value: "'Humanity-Dark'" }
-        - { key: 'monospace-font-name', "'Noto Mono Bold 13'" }
+        - { key: 'monospace-font-name', value: "'Noto Mono Bold 13'" }
         - { key: 'text-scaling-factor', value: '1.10' }
 
     - name: Gnome | gedit | set editor values
