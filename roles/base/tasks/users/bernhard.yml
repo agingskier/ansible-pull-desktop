@@ -29,20 +29,41 @@
         regexp: '^Exec=tilix --action=app-new-window'
         line: 'Exec=tilix --action=app-new-window --geometry=180x24+100+200 --session=~/.config/tilix/wide.json'
 
-    - name: Users | autostart | create .config/autostart directory
+    - name: Users | bernhard | delete preinstalled clutter from home directory
       ansible.builtin.file:
-        path: /home/{{ user_name }}/.config/{{ item.dir }}
+        path: /home/{{ user_name }}/{{ item }}
+        state: absent
+      with_items:
+        - Desktop
+        - Documents
+        - Downloads
+        - Music
+        - Pictures
+        - Public
+        - Templates
+        - Videos  
+
+    - name: Users | bernhard | create personal config directories 
+      ansible.builtin.file:
+        path: /home/{{ user_name }}/{{ item.dir }}
         state: directory
         owner: "{{ user_name }}"
         group: "{{ group_name }}"
         mode: 0700
       with_items:
-        - { dir: 'autostart' }
+        - { dir: '.config/autostart' }
+        - { dir: 'desktop' }
+        - { dir: 'documents' }
+        - { dir: 'downloads' }
+        - { dir: 'pictures' }
+        - { dir: 'projects' }
+        - { dir: 'templates' }
+        - { dir: 'videos' }
 
     - name: Users | bernhard | import tasks for tmux before copy config files
       ansible.builtin.import_tasks: ../software/tmux.yml
  
-    - name: Users | bernhard | copy dotfiles
+    - name: Users | bernhard | copy dotfiles, config files & user-dirs for XDG
       ansible.builtin.copy:
         src: users/{{ item.src }}
         dest: /home/{{ user_name }}/{{ item.dest }}
@@ -54,6 +75,7 @@
         - { src: 'bash/bash_functions', dest: '.bash_functions' }
         - { src: 'bash/bashrc', dest: '.bashrc' }
         - { src: 'bash/dircolors', dest: '.dircolors' }
+        - { src: 'bash/user-dirs', dest: '.config/user-dirs.dirs' }
         - { src: 'tilix/split.json', dest: '.config/tilix/split.json' }
         - { src: 'tilix/wide.json', dest: '.config/tilix/wide.json' }
         - { src: 'tilix/three.json', dest: '.config/tilix/three.json' }
@@ -62,6 +84,7 @@
         - { src: 'autostart/tilix_autostart', dest: '.config/autostart/tilix.desktop' }
         - { src: 'tmux/tmux_config', dest: '.config/tmux/tmux.conf' }
         - { src: 'tmux/tmux_setup_config', dest: 'tmux-setup.conf'}
+      notify: Update_xdg
 
     - name: Users | bernhard | conky | synchronize ~/conky directory with /media/<user>/Backup
       ansible.posix.synchronize:

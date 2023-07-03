@@ -20,7 +20,7 @@
       ansible.legacy.shell: |
         set -o pipefail
         apt-key export 0068FCD6 | \
-        gpg --dearmour -o /usr/share/keyrings/keepassxc.gpg
+        gpg --dearmour -o /etc/apt/trusted.gpg.d/keepassxc.gpg
       args:
         executable: /bin/bash
       register: gpg_convert
