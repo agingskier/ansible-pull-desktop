@@ -33,7 +33,7 @@
         mode: 0644
       with_items:
         - { src: 'black-hole-blue.tga', dest: 'black-hole-blue.tga' }
-        - { src: 'saturn-wallpaper.jpg', dest: 'saturn.jpg' }
+        - { src: 'saturn-wallpaper.png', dest: 'saturn-wallpaper.png' }
         - { src: 'CarinaNebula.png', dest: 'CarinaNebula.png' }
         - { src: 'QuasarEarlyUniverse.jpg', dest: 'QuasarEarlyUniverse.jpg' }
         - { src: 'QuasarOutflow.png', dest: 'QuasarOutflow.png' }
@@ -117,14 +117,14 @@
       ansible.builtin.lineinfile:
         path: /etc/default/grub
         insertafter: '^#GRUB_GFXMODE='
-        line: 'GRUB_GFXMODE=3840x2160x24,auto'
+        line: 'GRUB_GFXMODE=1024x768x32,auto'
 
     - name: System_setup | grub | add lines for BACKGROUND, THEME, GFXPAYLOAD_LINUX and DISABLE_OS_PROBER
       ansible.builtin.lineinfile:
         dest: /etc/default/grub
         line: '{{ item }}'
       with_items:
-        - 'GRUB_BACKGROUND="/usr/share/images/grub/saturn.jpg"'
+        - 'GRUB_BACKGROUND="/usr/share/images/grub/saturn-wallpaper.png"'
         - 'GRUB_THEME="/boot/grub/themes/darkmatter/theme.txt"'
         - 'GRUB_GFXPAYLOAD_LINUX="keep"'
         - 'GRUB_DISABLE_OS_PROBER="false"'
@@ -216,7 +216,7 @@
         dest: /etc/default/grub
         line: '{{ item }}'
       with_items:
-        - 'GRUB_BACKGROUND="/usr/share/images/grub/black-hole-blue.tga.jpg"'
+        - 'GRUB_BACKGROUND="/usr/share/images/grub/black-hole-blue.tga"'
         - 'GRUB_THEME="/boot/grub/themes/theme.txt"'
         - 'GRUB_GFXPAYLOAD_LINUX="keep"'
         - 'GRUB_DISABLE_OS_PROBER="false"'
