@@ -1,10 +1,10 @@
 [Desktop Entry]
 Type=Application
-Exec=conky -i 30 -c /home/bernhard/conky/conkyrc
+Exec=conky -c /home/bernhard/conky/conkyrc
 Hidden=false
 NoDisplay=false
 X-GNOME-Autostart-enabled=true
 Name[en_US]=Conky
 Name=Conky
-Comment[en_US]=Show system info with conky 30 seconds
-Comment=Show system info with conky 30 seconds
+Comment[en_US]=Show system info with conky
+Comment=Show continuos system info with conky
