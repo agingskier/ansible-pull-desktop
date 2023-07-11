@@ -69,11 +69,14 @@
     - name: Install lynis audit software
       ansible.builtin.import_tasks: 
         file: software/lynis.yml
+    - name: Import protonvpn tasks
+      ansible.builtin.import_tasks:
+        file: software/protonvpn.yml
 
     # Perform remaining tasks
-#    - name: Configure grub
-#      ansible.builtin.import_tasks: 
-#        file: system_setup/grub.yml
+    - name: Configure grub
+      ansible.builtin.import_tasks: 
+        file: system_setup/grub.yml
     - name: Configure clock
       ansible.builtin.import_tasks: 
         file: system_setup/clock.yml

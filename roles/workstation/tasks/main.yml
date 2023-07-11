@@ -53,9 +53,6 @@
     - name: Import vlc tasks
       ansible.builtin.import_tasks:
         file: software/vlc.yml
-    - name: Import protonvpn tasks
-      ansible.builtin.import_tasks:
-        file: software/protonvpn.yml
 
     ## Virtualization
     - name: Import kvm tasks
