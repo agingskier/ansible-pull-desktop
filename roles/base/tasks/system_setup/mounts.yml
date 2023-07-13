@@ -92,8 +92,8 @@
         insertafter: EOF
       with_items:
         - { line: "file:///mnt/NAS NAS" }
-        - { line: "file:///mnt/k8s K8S" }
- #       - { line: "file:///mnt/Data Data" }
+        - { line: "file:///mnt/Data Data" }
         - { line: "file:///mnt/Storage Storage" }
         - { line: "file:///mnt/Digikam Digikam" }
         - { line: "file:///mnt/Games Games" }
+        - { line: "file:///mnt/k8s K8S" }
