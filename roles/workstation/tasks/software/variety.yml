@@ -3,25 +3,29 @@
   when:
     - variety is defined
     - variety
+    
+  become: true
+  become_method: sudo
+  
   block:
     - name: Software | variety | install variety
-      apt:
+      ansible.builtin.apt:
         name: variety
         state: present
 
     - name: Software | variety | cmd starts config window expecting close, creates variety conf file
-      become: yes
+      become: true
       become_user: "{{ user_name }}"
-      command: variety --preferences
+      ansible.builtin.command: variety --preferences
       timeout: 10
       ignore_errors: yes
       register: variety_result
       changed_when: variety_result.rc == 0
 
     - name: Software | variety | kill running variety task
-      become: yes
+      become: true
       become_user: "{{ user_name }}"
-      command: killall variety
+      ansible.builtin.command: killall variety
       register: variety_kill
       changed_when: variety_kill == 0
 
@@ -29,13 +33,13 @@
 # variety.conf file has now been created and can be modified
 #            
     - name: Software | variety | Replace Change-Interval 1 minute line
-      lineinfile:
+      ansible.builtin.lineinfile:
         path: /home/{{ user_name }}/.config/variety/variety.conf
         regexp: '^change_interval ='
         line: 'change_interval = 60'
 
     - name: Software | variety | Replace all installed sources
-      replace:
+      ansible.builtin.replace:
         path: /home/{{ user_name }}/.config/variety/variety.conf
         regexp: "{{ item.regex }}"
         replace: "{{ item.repl }}"
@@ -54,7 +58,7 @@
 # or insertafter the last matched line
 #
     - name: Insert background line
-      lineinfile:
+      ansible.builtin.lineinfile:
         path: /home/{{ user_name }}/.config/variety/variety.conf
         insertafter: '^src'
         line: 'src12 = True|folder|/mnt/NAS/media/Pictures/Weltreise'

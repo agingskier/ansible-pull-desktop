@@ -12,7 +12,7 @@
 # check: https://launchpad.net/~christian-boxdoerfer/+archive/ubuntu/fsearch-stable for Signing Key last 8 characters
 
 - name: Software | fsearch | apt-key deprecated - convert trusted.gpg into a member in /usr/share/keyrings
-  ansible.legacy.shell: |
+  ansible.builtin.shell: |
     set -o pipefail
     apt-key export DC496F40 | \
     gpg --dearmour -o /usr/share/keyrings/fsearch.gpg
@@ -22,9 +22,10 @@
   changed_when: gpg_convert.rc == 0
 
 - name: Software | fsearch | install fsearch
-  apt:
+  ansible.builtinapt:
     pkg:
       - fsearch
+    state: present
 
 - name: Software | fsearch | cmd starts config window expecting close, creates fsearch conf file
   become: yes
@@ -36,13 +37,13 @@
   changed_when: fsearch_result.rc == 0
 
 - name: Software | fsearch | remove [Database] block from fsearch.conf file
-  replace:
+  ansible.builtin.replace:
     path: /home/{{ user_name }}/.config/fsearch/fsearch.conf
     regexp: '^\[Database\][^[]+'
     replace: ""
 
 - name: Software | fsearch | insert modified [Database] block into fsearch.conf file
-  blockinfile:
+  ansible.builtin.blockinfile:
     path: /home/{{ user_name }}/.config/fsearch/fsearch.conf
     marker: "#<-- Inserted by fsearch.yml Ansible-Playbook  -->"
     insertbefore: "^[Filters]"
@@ -72,7 +73,7 @@
       exclude_files=
       
 - name: Software | fsearch | add cron entry to update fsearch database
-  cron:
+  ansible.builtin.cron:
     name: fsearch_update_db
     user: "{{ user_name }}"
     minute: "36"

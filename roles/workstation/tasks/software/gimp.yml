@@ -15,14 +15,14 @@
 #        update_cache: yes
 
     - name: Software | gimp | install gimp & gegl
-      apt:
+      ansible.builtin.apt:
         pkg:
           - gimp
           - gegl
         state: present
 
     - name: Software | gimp | create gimp directories in .config
-      file:
+      ansible.builtin.file:
         path: /home/{{ user_name }}/{{ item.dir }}
         state: directory
         owner: "{{ user_name }}"
@@ -33,7 +33,7 @@
         - { dir: '.config/GIMP/{{ gimp_subdir_version }}' }
 
     - name: Software | gimp | copy gimprc & text-tool files
-      copy:
+      ansible.builtin.copy:
         src: gimp/{{ item.src }}
         dest: /home/bernhard/.config/GIMP/{{ gimp_subdir_version }}/{{ item.dest }}
         owner: bernhard

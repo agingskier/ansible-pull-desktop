@@ -1,6 +1,6 @@
 ---
 - name: Software | install development packages
-  apt:
+  ansible.builtin.apt:
     pkg:
       - fabric
       - flake8

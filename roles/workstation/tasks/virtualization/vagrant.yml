@@ -10,7 +10,7 @@
 # apt-key is deprecated - use curl to get the gpg key and write it to /etc/apt/trusted.gpg.d directory
 #
     - name: Software | vagrant | add vagrant apt key to keyring file
-      ansible.legacy.shell: |
+      ansible.builtin.shell: |
         set -o pipefail
         curl -fsSL https://apt.releases.hashicorp.com/gpg | \
         gpg --dearmor | \
@@ -21,14 +21,14 @@
       changed_when: vagrant_gpgkey.rc == 0
 
     - name: Software | vagrant | add vagrant apt_repository, filename creates vagrant.list in /etc/apt/sources.list.d
-      apt_repository:
+      ansible.builtin.apt_repository:
         repo: 'deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/vagrant.gpg] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main'
         filename: vagrant
         state: present
         update_cache: true
 
     - name: Software | vagrant | update repo and install vagrant & dependencies
-      apt:
+      ansible.builtin.apt:
         pkg:
           - vagrant
           - ebtables
@@ -44,7 +44,7 @@
         state: present
 
     - name: Software | vagrant | activate all deb-src entries in /etc/apt/sources.list
-      ansible.legacy.shell: |
+      ansible.builtin.shell: |
         set -o pipefail
         cp /etc/apt/sources.list /etc/apt/sources.list~
         sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list
@@ -54,7 +54,7 @@
       changed_when: debsrc_activate.rc == 0
 
     - name: Software | vagrant | remove vagrant-libvirt if present
-      apt:
+      ansible.builtin.apt:
         pkg:
           - vagrant-libvirt
         state: absent
@@ -65,14 +65,14 @@
         selection: hold
 
     - name: Software | vagrant | build dependencies
-      apt:
+      ansible.builtin.apt:
         pkg:
           - vagrant
           - ruby-libvirt
         state: build-dep
 
     - name: Software | vagrant | install vagrant-libvirt plugin
-      ansible.legacy.shell: |
+      ansible.builtin.shell: |
         set -o pipefail
         vagrant plugin install vagrant-libvirt
       args:
@@ -81,6 +81,6 @@
       changed_when: libvirt_plugin.rc == 0
 
     - name: Software | vagrant | remove boxes and system entries
-      file:
+      ansible.builtin.file:
         path: /mnt/Data/vagrant
         state: absent

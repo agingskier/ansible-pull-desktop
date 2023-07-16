@@ -3,18 +3,20 @@
   when:
     - java is defined
     - java
+
+  become: true
+  become_method: sudo
+
   block:
     - name: Software | java | install java environment
-      apt:
+      ansbible.builtin.apt:
         pkg:
           - default-jdk
           - "{{ openjdk_version }}"
 
 # Check: https://gluonhq.com/products/javafx/ for latest release
     - name: Software | javafx | Unzip javafx
-      become: yes
-      become_method: sudo
-      unarchive:
+      ansible.builtin.unarchive:
         src: https://download2.gluonhq.com/openjfx/{{ javafx_version }}/openjfx-{{ javafx_version }}_linux-x64_bin-sdk.zip
         dest: /opt
         remote_src: yes
@@ -23,7 +25,7 @@
         mode: 0755
 
     - name: Software | java & javafx | Replace export statements in .bashrc
-      lineinfile:
+      ansible.builtin.lineinfile:
         path: /home/{{ user_name }}/.bashrc
         regexp: "{{ item.regex }}"
         line: "{{ item.repl }}"

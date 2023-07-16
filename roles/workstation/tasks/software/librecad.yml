@@ -5,13 +5,13 @@
     - librecad
   block:
     - name: Software | install librecad
-      apt:
+      ansible.builtin.apt:
         pkg:
           - librecad
         state: present
 
     - name: Software | librecad | create config/librecad directory
-      file:
+      ansible.builtin.file:
         path: /home/bernhard/{{ item.dir }}
         state: directory
         owner: bernhard
@@ -21,7 +21,7 @@
         - { dir: '.config/LibreCAD' }
 
     - name: Software | librecad | copy config file
-      copy:
+      ansible.builtin.copy:
         src: users/bernhard/{{ item.src }}
         dest: /home/bernhard/{{ item.dest }}
         owner: bernhard

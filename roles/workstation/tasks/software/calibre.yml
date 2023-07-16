@@ -5,7 +5,7 @@
     - calibre
   block:
     - name: Software | install calibre
-      apt:
+      ansible.builtin.apt:
         pkg:
           - calibre
         state: present

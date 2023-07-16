@@ -7,7 +7,7 @@
     - name: Users | bernhard | copy profile image
       become: true
       become_method: sudo
-      copy:
+      ansible.builtin.copy:
         src: users/bernhard/bernhard.jpg
         dest: /var/lib/AccountsService/icons/bernhard.jpg
         owner: root

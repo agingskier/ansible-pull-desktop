@@ -13,14 +13,14 @@
           - multipass
 
     - name: Software | multipass | stop multipass daemon
-      ansible.legacy.shell: snap stop multipass
+      ansible.builtin..shell: snap stop multipass
       args:
         executable: /bin/bash
       register: snap_stop
       changed_when: snap_stop.rc == 0
 
     - name: Software | multipass | Create target directory /mnt/Multipass/multipass
-      file:
+      ansible.builtin.file:
         path: /mnt/Multipass/multipass
         state: directory
         owner: "{{ user_name }}"
@@ -28,7 +28,7 @@
         mode: 0644
 
     - name: Software | multipass | Create directory for override.conf
-      file:
+      ansible.builtin.file:
         path: "/etc/systemd/system/snap.multipass.multipass.service.d"
         state: directory
         owner: "{{ user_name }}"
@@ -36,7 +36,7 @@
         mode: 0644
 
     - name: Software | multipass | Create override.conf file with path entry
-      copy:
+      ansible.builtin.copy:
         dest: "/etc/systemd/system/snap.multipass.multipass.service.d/override.conf"
         content: |
           [Service]
@@ -46,7 +46,7 @@
         mode: 0644
  
     - name: Software | multipass | reload daemon and start multipass
-      ansible.legacy.shell: "{{ item }}"
+      ansible.builtin.shell: "{{ item }}"
       with_items:
         - "systemctl daemon-reload"
         - "snap start multipass"

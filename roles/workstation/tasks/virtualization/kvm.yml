@@ -6,18 +6,20 @@
   when:
     - kvm is defined
     - kvm
+  become: true
+  become_method: sudo
   block:
     - name: Software | kvm | install cpu-checker prerequisite
-      apt:
+      ansible.builtin.apt:
         name: cpu-checker
 
     - name: Software | kvm | check system for kvm
-      command: kvm-ok
+      ansible.builtin.command: kvm-ok
       register: kvm_result
       changed_when: "'KVM acceleration can be used' in kvm_result.stdout"
 
     - name: Software | kvm | install kvm and dependencies
-      apt:
+      ansible.builtin.apt:
         pkg:
           - qemu-kvm
           - libvirt-dev
@@ -35,24 +37,20 @@
         - "'KVM acceleration can be used' in kvm_result.stdout"
 
     - name: Insert vhost-net in /etc/modules
-      become_method: sudo
-      become: yes
-      lineinfile:
+      ansible.builtin.lineinfile:
         dest: /etc/modules
         line: 'vhost-net'
 
     - name: Software | kvm | add groups libvirt, kvm to user bernhard
-      become: yes
-      become_method: sudo
-      user:
+      ansible.builtin.user:
         name: bernhard
         groups: libvirt,kvm
-        append: yes
+        append: true
       when:
         - "'KVM acceleration can be used' in kvm_result.stdout"
 
     - name: Software | kvm | create config/libvirt directory
-      file:
+      ansible.builtin.file:
         path: /home/bernhard/{{ item.dir }}
         state: directory
         owner: bernhard
@@ -62,17 +60,17 @@
         - { dir: '.config/libvirt' }
 
     - name: Software | kvm | copy libvirt config file
-      copy:
+      ansible.builtin.copy:
         src: /etc/libvirt/{{ item.src }}
-        dest: /home/bernhard/{{ item.dest }}
-        owner: bernhard
+        dest: /home/{{ user_name }}/{{ item.dest }}
+        owner: "{{ user_name }}"
         group: users
         mode: 0640
       with_items:
         - { src: 'libvirt.conf', dest: '.config/libvirt/libvirt.conf' }
 
     - name: Software | kvm | remove hash from uri_default line
-      replace:
+      ansible.builtin.replace:
         path: /home/bernhard/.config/libvirt/libvirt.conf
         regexp: "{{ item.regexp }}"
         replace: "{{ item.value }}"
@@ -80,13 +78,13 @@
         - { regexp: '#uri_default', value: 'uri_default' }
 
     - name: Software | kvm | insert log-filter line
-      lineinfile:
+      ansible.builtin.lineinfile:
         path: /etc/libvirt/libvirtd.conf
         insertafter: '^#log_filters='
         line: 'log_filters="1:qemu"'
 
     - name: Software | kvm | insert log-output line
-      lineinfile:
+      ansible.builtin.lineinfile:
         path: /etc/libvirt/libvirtd.conf
         insertafter: '^#log_output='
         line: 'log_filters="1:file:/var/log/libvirt/libvirtd.log"'

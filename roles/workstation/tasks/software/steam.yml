@@ -5,17 +5,17 @@
     - steam
   block:
     - name: Software | steam | install package
-      apt:
+      ansible.builtin.apt:
         state: present
         name: steam
 
     - name: Software | steam | install steam-devices package
-      apt:
+      ansible.builtin.apt:
         state: present
         name: steam-devices
 
     - name: Install vulkan drivers
-      apt:
+      ansible.bultin.apt:
         state: present
         pkg:
           - mesa-vulkan-drivers

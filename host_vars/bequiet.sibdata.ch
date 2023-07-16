@@ -32,7 +32,7 @@ java: yes
 # application selection
 #
 
-calibre: no
+calibre: yes
 games: yes
 gimp: yes
 kvm: yes

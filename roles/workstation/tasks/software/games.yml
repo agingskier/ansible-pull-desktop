@@ -3,7 +3,7 @@
   when:
     - games is defined
     - games
-  apt:
+  ansible.builtin.apt:
     pkg:
       - extremetuxracer
       - frozen-bubble

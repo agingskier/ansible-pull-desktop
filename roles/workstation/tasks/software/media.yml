@@ -5,7 +5,7 @@
     - media
   block:
     - name: Software | install multimedia codecs
-      apt:
+      ansible.builtin.apt:
         pkg:
           - pavucontrol
           - gstreamer1.0-plugins-bad
@@ -13,9 +13,9 @@
         state: present
 
     - name: Software | Reconfigure libdvd-pkg
-      become: yes
+      become: true
       become_method: sudo
-      command: dpkg-reconfigure libdvd-pkg
+      ansible.builtin.command: dpkg-reconfigure libdvd-pkg
       register: media_cmd
       changed_when: media_cmd.rc == 0
 
