@@ -30,14 +30,11 @@
       register: vbox_extpack
       changed_when: vbox_extpack.rc == 0
 
-    - name: Software | virtualbox | install extension pack
-      ansible.builtin.shell: |
-        set -o pipefail
-        vboxmanage extpack install --replace --accept-license=sh256  /tmp/{{ vbox_ext }}
-      args:
-        executable: /bin/bash
-      register: install_extpack
-      changed_when: install_extpack.rc == 0
+    - name: Software | virtualbox | install extension pack and answer to prompt
+      ansible.builtin.expect: 
+        command: vboxmanage extpack install --replace --accept-license=sh256  /tmp/{{ vbox_ext }}
+      responses:
+        (.*)Do you agree to these license terms and conditions (y/n)? "yes"
 
     - name: Software | virtualbox | add vboxusers group to user bernhard
       ansible.builtin.user:

@@ -17,12 +17,6 @@
       with_items:
         - { src: 'blacklist-kvm.conf', dest: 'modprobe.d/blacklist-kvm.conf' }
 
-    - name: Software | vagrant | enable deb-src for plugin installation
-      replace:
-        path: /etc/apt/sources.list.d/ubuntubudgie-ubuntu-backports-{{ ansible_distribution_release }}.list
-        regexp: '^# deb-src'
-        replace: 'deb-src'
-
     #
     # apt-key is deprecated - use curl to get the gpg key and write it to /etc/apt/trusted.gpg.d directory
     #
@@ -61,14 +55,16 @@
         state: present
 
     - name: Software | vagrant | activate all deb-src entries in /etc/apt/sources.list
-      ansible.builtin.shell: |
-        set -o pipefail
-        cp /etc/apt/sources.list /etc/apt/sources.list~
-        sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list
-      args:
-        executable: /bin/bash
-      register: debsrc_activate
-      changed_when: debsrc_activate.rc == 0
+      ansible.builtin.replace:
+        path: /etc/apt/sources.list
+        regexp: '^# deb-src'
+        replace: 'deb-src'
+
+    - name: Software | vagrant | enable deb-src for plugin installation
+      ansible.builtin.replace:
+        path: /etc/apt/sources.list.d/ubuntubudgie-ubuntu-backports-{{ ansible_distribution_release }}.list
+        regexp: '^# deb-src'
+        replace: 'deb-src'
 
     - name: Software | vagrant | remove vagrant-libvirt if present
       ansible.builtin.apt:
