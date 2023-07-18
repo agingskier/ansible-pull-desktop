@@ -13,7 +13,7 @@
           - multipass
 
     - name: Software | multipass | stop multipass daemon
-      ansible.builtin..shell: snap stop multipass
+      ansible.builtin.shell: snap stop multipass
       args:
         executable: /bin/bash
       register: snap_stop

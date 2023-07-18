@@ -9,7 +9,7 @@
 
   block:
     - name: Software | java | install java environment
-      ansbible.builtin.apt:
+      ansible.builtin.apt:
         pkg:
           - default-jdk
           - "{{ openjdk_version }}"

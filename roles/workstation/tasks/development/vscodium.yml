@@ -21,7 +21,7 @@
       changed_when: vscodium_gpgkey.rc == 0
 
     - name: Software | vscodium | add vscodium apt repository
-      apt_repository:
+      ansible.builtin.apt_repository:
         filename: vscodium
         repo: 'deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/vscodium.gpg] https://download.vscodium.com/debs vscodium main'
         state: present

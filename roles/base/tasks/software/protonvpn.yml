@@ -6,13 +6,15 @@
   when:
     - protonvpn is defined
     - protonvpn
+  become: true
+  become_method: sudo
   block:
     - name: Software | protonvpn | add protonvpn to apt cache
-      apt:
+      ansible.builtin.apt:
         deb: https://repo.protonvpn.com/debian/dists/stable/main/binary-all/protonvpn-stable-release_{{ protonvpn_version }}.deb
 
     - name: Software | protonvpn | install protonvpn and prerequisites
-      apt:
+      ansible.builtin.apt:
         update_cache: true
         pkg:
           - protonvpn
@@ -21,18 +23,14 @@
         state: present
 
     - name: Software | protonvpn | select display-manager
-      become: true
-      become_method: sudo
-      debconf:
+      ansible.builtin.debconf:
         name: gnome-shell-extension-appindicator
         question: shared/default-x-display-manager
         value: lightdm
         vtype: select
 
     - name: Software | protonvpn | confirm display-manager
-      become: true
-      become_method: sudo
-      debconf:
+      ansible.builtin.debconf:
         name: gnome-shell-extension-appindicator
         question: shared/default-x-display-manager
         value: true

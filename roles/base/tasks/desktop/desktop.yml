@@ -7,8 +7,8 @@
       ansible.builtin.copy:
         src: images/{{ item }}
         dest: /home/{{ user_name }}/.local/share/backgrounds
-        owner: {{ user_name }}
-        group: {{ group_name }}
+        owner: "{{ user_name }}"
+        group: "{{ group_name }}"
         mode: 0644
       with_items:
         - saturn-wallpaper.jpg

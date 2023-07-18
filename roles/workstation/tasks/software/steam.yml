@@ -15,7 +15,7 @@
         name: steam-devices
 
     - name: Install vulkan drivers
-      ansible.bultin.apt:
+      ansible.builtin.apt:
         state: present
         pkg:
           - mesa-vulkan-drivers

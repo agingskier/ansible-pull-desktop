@@ -10,7 +10,7 @@
   pre_tasks:
     - name: Pre-run | update package cache Ubuntu
       tags: always
-      apt:
+      ansible.builtin.apt:
         upgrade: true
         update_cache: true
       changed_when: false
@@ -52,7 +52,7 @@
 
     - name: End of Tasks | Print completion notification
       tags: always
-      debug:
+      ansible.builtin.debug:
         msg: "\n
           *-------------------------------------------------------\n
           *Task*: ✔️  Ansible provision finished on *{{ ansible_hostname }}*\n
@@ -63,7 +63,7 @@
 
     - name: End of Tasks | Print failure notification
       tags: always
-      debug:
+      ansible.builtin.debug:
         msg: "⚠️  Ansible provision failed on *{{ ansible_hostname }}*\n\n
           *Task*:  {{ ansible_failed_task.name }}\n
           *Action*: {{ ansible_failed_task.action }}\n
