@@ -6,9 +6,26 @@
     - vagrant is defined
     - vagrant
   block:
-#
-# apt-key is deprecated - use curl to get the gpg key and write it to /etc/apt/trusted.gpg.d directory
-#
+
+    - name: Software | vagrant | add blacklist file due to hypervisor error
+      ansible.builtin.copy:
+        src: etc/{{ item.src }}
+        dest: /etc/{{ item.dest }}
+        owner: root
+        group: root
+        mode: 0644
+      with_items:
+        - { src: 'blacklist-kvm.conf', dest: 'modprobe.d/blacklist-kvm.conf' }
+
+    - name: Software | vagrant | enable deb-src for plugin installation
+      replace:
+        path: /etc/apt/sources.list.d/ubuntubudgie-ubuntu-backports-{{ ansible_distribution_release }}.list
+        regexp: '^# deb-src'
+        replace: 'deb-src'
+
+    #
+    # apt-key is deprecated - use curl to get the gpg key and write it to /etc/apt/trusted.gpg.d directory
+    #
     - name: Software | vagrant | add vagrant apt key to keyring file
       ansible.builtin.shell: |
         set -o pipefail
