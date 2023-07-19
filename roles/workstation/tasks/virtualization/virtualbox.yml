@@ -34,13 +34,14 @@
       ansible.builtin.expect: 
         command: vboxmanage extpack install --replace --accept-license=sh256  /tmp/{{ vbox_ext }}
         responses:
-          (.*)Do you agree to these license terms and conditions (y/n)? "yes"
+          'Do you agree to these license terms and conditions (y/n)?': 'yes'
+        echo: yes
 
     - name: Software | virtualbox | add vboxusers group to user bernhard
       ansible.builtin.user:
         name: bernhard
         groups: vboxusers
-        append: yes
+        append: true
     
     - name: Software | virtualbox | change location for VirtualBox VMs
       ansible.builtin.shell: |
