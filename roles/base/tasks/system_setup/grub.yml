@@ -194,16 +194,17 @@
         group: root
         mode: 0644
 
-#
-# acpi stands for: "Advanded Configuration and Power Interface"
-# error messages in log: "EISA: cannot allocate resource for Mainboard"
-#
+    #
+    # acpi stands for: "Advanded Configuration and Power Interface"
+    # error messages in log: "EISA: cannot allocate resource for Mainboard"
+    # acpi=off produces a "hang" situation during boot
+    #
     - name: System_setup | grub | Replace CMDLINE with acpi=off to supress error messages
       ansible.builtin.lineinfile: 
         path: /etc/default/grub
         regexp: '^GRUB_CMDLINE_LINUX_DEFAULT='
-        line: 'GRUB_CMDLINE_LINUX_DEFAULT="quiet splash acpi=off"'
-        backrefs: yes
+        line: 'GRUB_CMDLINE_LINUX_DEFAULT="quiet splash loglevel=3'
+        backrefs: true
 
     - name: System_setup | grub | Insert background line
       ansible.builtin.lineinfile:
