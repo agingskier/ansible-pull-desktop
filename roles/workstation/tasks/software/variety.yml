@@ -57,8 +57,14 @@
 # would replace only the last line matched or found,
 # or insertafter the last matched line
 #
-    - name: Insert background line
+    - name: Software | variety | Insert background line
       ansible.builtin.lineinfile:
         path: /home/{{ user_name }}/.config/variety/variety.conf
         insertafter: '^src'
         line: 'src12 = True|folder|/mnt/NAS/media/Pictures/Weltreise'
+
+    - name: Software | variety | Replace invalid "Action" line
+      ansible.builtin.replace:
+        path: /home/{{ user_name }}/.config/autostart/variety.desktop
+        regexp: '^Actions='
+        replace: '#Actions='

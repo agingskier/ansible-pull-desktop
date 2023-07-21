@@ -24,11 +24,11 @@
     groups: clamav
     append: yes
 
-- name: Software | clamav | remove StandardOutput line from systemd files
-  ansible.builtin.lineinfile: 
-    dest: /lib/systemd/system/{{ item }} 
-    state: absent 
-    regexp: "^StandardOutput="
+- name: Software | clamav | replace StandardOutput=syslog line with target journal
+  ansible.builtin.replace: 
+    path: /lib/systemd/system/{{ item }} 
+    regexp: '^StandardOutput=syslog'
+    replace: 'StandardOutput=journal'
   with_items:
     - clamav-daemon.service
     - clamav-freshclam.service
