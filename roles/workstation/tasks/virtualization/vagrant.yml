@@ -7,15 +7,15 @@
     - vagrant
   block:
 
-    - name: Software | vagrant | add blacklist file due to hypervisor error
-      ansible.builtin.copy:
-        src: etc/{{ item.src }}
-        dest: /etc/{{ item.dest }}
-        owner: root
-        group: root
-        mode: 0644
-      with_items:
-        - { src: 'blacklist-kvm.conf', dest: 'modprobe.d/blacklist-kvm.conf' }
+    #- name: Software | vagrant | add blacklist file due to hypervisor error
+    #  ansible.builtin.copy:
+    #    src: etc/{{ item.src }}
+    #    dest: /etc/{{ item.dest }}
+    #    owner: root
+    #    group: root
+    #    mode: 0644
+    #  with_items:
+    #    - { src: 'blacklist-kvm.conf', dest: 'modprobe.d/blacklist-kvm.conf' }
 
     #
     # apt-key is deprecated - use curl to get the gpg key and write it to /etc/apt/trusted.gpg.d directory
