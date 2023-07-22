@@ -42,18 +42,18 @@
 
     - name: System-setup | fix-log-msg | create snap firefox rules file
       ansible.builtin.copy:
-        dest: "/etc/audit/rules.d/firefox.rules
+        dest: "/etc/audit/rules.d/firefox.rules"
         content: |
           #
           # spam SECCOMP snap firefox messages
-          @
+          #
           -a never,exclude -F exe=/snap/firefox/current/usr/lib/firefox/firefox
         owner: root
         group: root
         mode: 0644
       notify: Restart_auditd
-      
+     
     - name: System-setup | fix-log-msg | verify if firefox rules are active
       ansible.builtin.command: auditctl -l
       register: audit_cmd
-      changed_when: autid_cmd.rc == 0  
+      changed_when: audit_cmd.rc == 0

@@ -38,6 +38,7 @@
         mode: 0700
       with_items:
         - { dir: '.config/autostart' }
+        - { dir: '.config/conky' }
 
     - name: Users | bernhard | import tasks for tmux before copy config files
       ansible.builtin.import_tasks: ../software/tmux.yml
@@ -66,17 +67,17 @@
     - name: Users | bernhard | conky | synchronize ~/conky directory with /media/<user>/Backup
       ansible.posix.synchronize:
         src: /media/{{ user_name }}/Backup/conky/
-        dest: /home/{{ user_name }}/conky/
+        dest: /home/{{ user_name }}/.config/conky/
         archive: true
         
     - name: Users | bernhard | conky | Evaluating conky dirs selecting *.sh files    
       ansible.builtin.find:    
-        path: /home/{{ user_name }}/conky    
+        path: /home/{{ user_name }}/.config/conky    
         file_type: "file"
         patterns: "*.sh"
       register: conky_dir
         
-    - name: Changing permissions of /home/bernhard/conky/*
+    - name: Changing permissions of /home/bernhard/.config/conky/*
       ansible.builtin.file:    
         path: "{{ item.path }}"  
         mode: 0755  
