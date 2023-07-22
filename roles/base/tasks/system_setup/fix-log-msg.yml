@@ -28,3 +28,32 @@
         owner: root
         group: root
         mode: 0644
+        
+    #
+    # fix Spam snap messages in journal:
+    #  ... audit[97745]: SECCOMP auid=1000 uid=1000 gid=1000 ses=3 subj=? pid=97745 comm="CanvasRenderer"
+    #  ... exe="/snap/firefox/1775/usr/lib/firefox/firefox"
+    #
+    - name: System-setup | fix-log-msg | avoid spam messages SECCOMP from snap firefox
+      ansible.builtin.apt:
+        state: present
+        pkg:
+          - auditd
+
+    - name: System-setup | fix-log-msg | create snap firefox rules file
+      ansible.builtin.copy:
+        dest: "/etc/audit/rules.d/firefox.rules
+        content: |
+          #
+          # spam SECCOMP snap firefox messages
+          @
+          -a never,exclude -F exe=/snap/firefox/current/usr/lib/firefox/firefox
+        owner: root
+        group: root
+        mode: 0644
+      notify: Restart_auditd
+      
+    - name: System-setup | fix-log-msg | verify if firefox rules are active
+      ansible.builtin.command: auditctl -l
+      register: audit_cmd
+      changed_when: autid_cmd.rc == 0  

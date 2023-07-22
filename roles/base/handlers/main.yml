@@ -13,3 +13,9 @@
   ansible.builtin.service:
     name: systemd-journald
     state: restarted
+
+- name: Restart_auditd
+  ansible.builtin.service:
+    name: auditd
+    enabled: true
+    state: restarted
