@@ -14,7 +14,7 @@
         set -o pipefail
         curl -fsSL https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg | \
         sudo gpg --dearmor | \
-        sudo tee /etc/apt/trusted.gpg.d/vscodium.gpg > /dev/null
+        sudo tee /usr/share/keyrings/vscodium.gpg > /dev/null
       args:
         executable: /bin/bash
       register: vscodium_gpgkey
@@ -22,8 +22,7 @@
 
     - name: Software | vscodium | add vscodium apt repository
       ansible.builtin.apt_repository:
-        filename: vscodium
-        repo: 'deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/vscodium.gpg] https://download.vscodium.com/debs vscodium main'
+        repo: 'deb [arch=amd64 signed-by=/usr/share/keyrings/vscodium.gpg] https://download.vscodium.com/debs vscodium main'
         state: present
 
     - name: Software | vscodium | install codium
@@ -31,4 +30,3 @@
         update_cache: true
         pkg:
           - codium
-        state: present

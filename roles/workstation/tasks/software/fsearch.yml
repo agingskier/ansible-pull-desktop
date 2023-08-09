@@ -1,10 +1,4 @@
 ---
-- name: Software | fsearch | add fsearch apt repository
-  ansible.builtin.apt_repository:
-    repo: 'ppa:christian-boxdoerfer/fsearch-stable'
-    state: present
-    filename: fsearch
-    update_cache: true
 
 # run "sudo apt-key list" to find the full public gpg key
 # use the last 8 characters for the export command
@@ -21,11 +15,17 @@
   register: gpg_convert
   changed_when: gpg_convert.rc == 0
 
-- name: Software | fsearch | install fsearch
+- name: Software | fsearch | add fsearch apt repository
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/fsearch.gpg] https://ppa.launchpadcontent.net/christian-boxdoerfer/fsearch-stable/ubuntu {{ ansible_distribution_release }} main"
+    state: present
+    update_cache: true
+
+- name: Software | fsearch | install fsearch (
   ansible.builtin.apt:
+    update_cache: true
     pkg:
       - fsearch
-    state: present
 
 - name: Software | fsearch | cmd starts config window expecting close, creates fsearch conf file
   become: true

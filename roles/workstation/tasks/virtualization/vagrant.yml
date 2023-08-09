@@ -25,7 +25,7 @@
         set -o pipefail
         curl -fsSL https://apt.releases.hashicorp.com/gpg | \
         gpg --dearmor | \
-        sudo tee /etc/apt/trusted.gpg.d/vagrant.gpg > /dev/null
+        sudo tee /usr/share/keyrings/vagrant.gpg > /dev/null
       args:
         executable: /bin/bash
       register: vagrant_gpgkey
@@ -33,13 +33,12 @@
 
     - name: Software | vagrant | add vagrant apt_repository, filename creates vagrant.list in /etc/apt/sources.list.d
       ansible.builtin.apt_repository:
-        repo: 'deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/vagrant.gpg] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main'
-        filename: vagrant
+        repo: 'deb [arch=amd64 signed-by=/usr/share/keyrings/vagrant.gpg] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main'
         state: present
-        update_cache: true
 
     - name: Software | vagrant | update repo and install vagrant & dependencies
       ansible.builtin.apt:
+        update_cache: true
         pkg:
           - vagrant
           - ebtables
@@ -52,7 +51,6 @@
           - zlib1g-dev
           - ruby-dev
           - libguestfs-tools
-        state: present
 
     - name: Software | vagrant | activate all deb-src entries in /etc/apt/sources.list
       ansible.builtin.replace:
