@@ -46,3 +46,4 @@
       - htop
       - apport
       - apport-gtk
+      - apport-symptoms
