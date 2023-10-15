@@ -4,6 +4,17 @@
   become_method: sudo
   block:
 
+    - name: Gnome | desktop | set background values
+      community.general.dconf:
+        key: "/org/gnome/desktop/background/{{ item.key }}"
+        value: "{{ item.value }}"
+      with_items:
+        - { key: 'color-shading-type', value: "'solid'" }
+        - { key: 'picture-options', value: "'zoom'" }
+        - { key: 'picture-uri', value: "'file:///usr/share/backgrounds/budgie/saturnian-profile.jpg'" }
+        - { key: 'primary-color', value: "'#000000'" }
+        - { key: 'secondary-color', value: "'#000000'" }
+
     - name: Gnome | desktop | disable touchpad
       community.general.dconf:
         key: "/org/gnome/desktop/peripherals/touchpad/{{ item.key }}"
