@@ -74,9 +74,9 @@
         file: software/protonvpn.yml
 
     # Perform remaining tasks
-    - name: Configure grub
-      ansible.builtin.import_tasks: 
-        file: system_setup/grub.yml
+#    - name: Configure grub
+#      ansible.builtin.import_tasks: 
+#        file: system_setup/grub.yml
     - name: Configure clock
       ansible.builtin.import_tasks: 
         file: system_setup/clock.yml
