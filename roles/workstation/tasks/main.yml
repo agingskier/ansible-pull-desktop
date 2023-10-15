@@ -58,12 +58,12 @@
     - name: Import kvm tasks
       ansible.builtin.import_tasks:
         file: virtualization/kvm.yml
-    - name: Import vagrant tasks
-      ansible.builtin.import_tasks:
-        file: virtualization/vagrant.yml
-    - name: Import virtualbox tasks
-      ansible.builtin.import_tasks:
-        file: virtualization/virtualbox.yml
+ #   - name: Import vagrant tasks
+ #     ansible.builtin.import_tasks:
+ #       file: virtualization/vagrant.yml
+ #   - name: Import virtualbox tasks
+ #     ansible.builtin.import_tasks:
+ #       file: virtualization/virtualbox.yml
     - name: Import multipass tasks
       ansible.builtin.import_tasks:
         file: virtualization/multipass.yml
