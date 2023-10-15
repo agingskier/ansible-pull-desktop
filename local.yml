@@ -5,7 +5,7 @@
   connection: local
   tags: always
   become: true
-  become_method: sudo
+  become_method: ansible.builtin.sudo
 
   pre_tasks:
     - name: Pre-run | update package cache Ubuntu
@@ -20,7 +20,7 @@
   hosts: all
   tags: base
   become: true
-  become_method: sudo
+  become_method: ansible.builtin.sudo
 
   roles:
     - base
@@ -30,7 +30,7 @@
   hosts: workstation
   tags: workstation
   become: true
-  become_method: sudo
+  become_method: ansible.builtin.sudo
 
   roles:
     - workstation
@@ -46,7 +46,7 @@
 - name: Reporting
   hosts: all
   become: true
-  become_method: sudo
+  become_method: ansible.builtin.sudo
 
   tasks:
 

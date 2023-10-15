@@ -3,22 +3,6 @@
   become: true
   become_method: sudo
   block:
-    - name: Gnome | desktop | copy wallpaper file
-      ansible.builtin.copy:
-        src: images/{{ item }}
-        dest: /home/{{ user_name }}/.local/share/backgrounds
-        owner: "{{ user_name }}"
-        group: "{{ group_name }}"
-        mode: 0644
-      with_items:
-        - saturn-wallpaper.jpg
-        - jupiter.jpg
-        - cygnus-x1.jpg
-
-    - name: Gnome | desktop | set wallpaper
-      community.general.dconf:
-        key: "/org/gnome/desktop/background/picture-uri"
-        value: "'file:///home/{{ user_name }}/.local/share/backgrounds/saturn-wallpaper.jpg'"
 
     - name: Gnome | desktop | disable touchpad
       community.general.dconf:
