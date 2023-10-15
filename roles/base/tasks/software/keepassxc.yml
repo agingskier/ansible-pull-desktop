@@ -10,23 +10,17 @@
      # run "sudo apt-key list" to find the full public gpg key
      # use the last 8 characters for the export command
 
-    - name: Software | keepassxc | apt-key deprecated - convert trusted.gpg into member in tursted.gpg.d
-      ansible.legacy.shell: |
-        set -o pipefail
-        apt-key export 0068FCD6 | \
-        gpg --dearmour -o /usr/share/keyrings/keepassxc.gpg
+    - name: Software | keepassxc | snap install keepassxc
+      community.general.snap:
+        name: 
+          - keepassxc
+
+    - name: Software | keepassxc | snap connect | allow access to NAS
+      become: true
+      become_method: sudo
+      ansible.builtin.shell: 'snap connect {{ item.app }}:{{ item.plug }}'
       args:
         executable: /bin/bash
-      register: gpg_convert
-      changed_when: gpg_convert.rc == 0
-
-    - name: Software | keepassxc | add keepassxc apt repository
-      ansible.builtin.apt_repository:
-        repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/keepassxc.gpg] https://ppa.launchpadcontent.net/phoerious/keepassxc/ubuntu {{ ansible_distribution_release }} main"
-        state: present
-
-    - name: Software | keepassxc | install keepassxc
-      ansible.builtin.apt:
-        update_cache: true
-        pkg:
-          - keepassxc
+      register: connect_result
+      with_items:
+        - { app: 'keepassxc', plug: 'removable-media' }
