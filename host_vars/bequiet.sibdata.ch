@@ -42,8 +42,6 @@ media: yes
 multipass: yes
 protonvpn: yes
 steam: yes
-vagrant: yes
 variety: yes
-virtualbox: yes
 vlc: no
 vscodium: yes
