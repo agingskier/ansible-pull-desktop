@@ -7,7 +7,6 @@
       - bpytop
       - digikam
       - lxd
-      - docfetcher
       - remarkable
       - ssh-audit
 
@@ -20,6 +19,5 @@
   register: connect_result
   with_items:
     - { app: 'digikam', plug: 'removable-media' }
-    - { app: 'docfetcher', plug: 'removable-media' }
     - { app: 'remarkable', plug: 'removable-media' }
   changed_when: connect_result.rc == 0
