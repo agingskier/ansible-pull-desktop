@@ -8,7 +8,7 @@
   when: "'bequiet' in inventory_hostname"
   block:
   
-    - name: System-setup | grub | make shure /tmp directory has full access
+    - name: System-setup | grub | make sure /tmp has full access
       ansible.builtin.file:
         path: /tmp
         state: directory
@@ -16,7 +16,7 @@
         group: root
         mode: 0777
   
-    - name: System-setup | grub | create all missing directories for images
+    - name: System-setup | grub | background | create images/gurb directories
       ansible.builtin.file:
         path: /usr/share/images/grub
         state: directory
@@ -24,7 +24,7 @@
         group: root
         mode: 0644
   
-    - name: System-setup | grub | copy background images for grub
+    - name: System-setup | grub | background | copy background images from files/images
       ansible.builtin.copy:
         src: images/{{ item.src }}
         dest: /usr/share/images/grub/{{ item.dest }}
@@ -40,7 +40,7 @@
         - { src: 'SouthernRingNebula.png', dest: 'SouthernRingNebula.png' }
         - { src: 'StephansQuintetGalaxies.png', dest: 'StephansQuintetGalaxies.png' }
 
-    - name: System-setup | grub | Recursively remove git target directory
+    - name: System-setup | grub | Themes | Recursively remove git target directory
       ansible.builtin.file:
         path: /tmp/{{ item }}
         state: absent
@@ -48,21 +48,21 @@
         - grub-darkmatter
         - grub-LordShenron  
         
-    - name: System_setup | grub | checkout git dark-matter repository
+    - name: System_setup | grub | Themes | checkout git dark-matter repository
       ansible.builtin.git:
         repo: https://gitlab.com/VandalByte/darkmatter-grub-theme.git
         dest: /tmp/grub-darkmatter
         force: true
         version: main
 
-    - name: System_setup | grub | checkout git LordShenron repository
+    - name: System_setup | grub | Themes | checkout git LordShenron repository
       ansible.builtin.git:
         repo: https://github.com/LordShenron/Grub-Themes.git
         dest: /tmp/grub-LordShenron
         force: true
         version: griffin-grub-remix
 
-    - name: System_setup | grub | create themes directories
+    - name: System_setup | grub | Themes | create themes directories
       ansible.builtin.file:
         path: /boot/grub/{{ item }}
         state: directory
@@ -73,7 +73,7 @@
         - themes/darkmatter
         - themes/lordshenron
 
-    - name: System_setup | grub | copy base png image files to grub/themes/darkmatter
+    - name: System_setup | grub | Themes | copy all ubuntu base png files to darkmatter
       ansible.builtin.copy:
         src: /tmp/grub-darkmatter/base/1440p/
         dest: /boot/grub/themes/darkmatter/
@@ -81,7 +81,7 @@
         group: root
         mode: 0644
 
-    - name: System_setup | grub | copy all ubuntu Griffin png files to lordshenron
+    - name: System_setup | grub | Themes | copy all ubuntu Griffin png files to lordshenron
       ansible.builtin.copy:
         src: /tmp/grub-LordShenron/Griffin/
         dest: /boot/grub/themes/lordshenron/
@@ -89,7 +89,7 @@
         group: root
         mode: 0644
 
-    - name: System_setup | grub | collect all necessary png files for ubuntu and copy to grub/themes/darkmatter
+    - name: System_setup | grub | Themes Darkmatter | copy png file ubuntu to background
       ansible.builtin.copy:
         src: /tmp/grub-darkmatter/assets/{{ item.src }}
         dest: /boot/grub/themes/darkmatter/{{ item.dest }}
@@ -101,7 +101,7 @@
         - { src: 'fonts/1440p/', dest: '.' }
         - { src: 'icons-1440p/color/', dest: 'icons/' }
         
-    - name: System_setup | grub | Insert background line in grub file
+    - name: System_setup | grub | Insert GFXMODE value grub file
       ansible.builtin.lineinfile:
         path: /etc/default/grub
         insertafter: '^#GRUB_GFXMODE='
@@ -114,6 +114,7 @@
       with_items:
         - 'GRUB_BACKGROUND="/usr/share/images/grub/saturn-wallpaper.png"'
         - 'GRUB_THEME="/boot/grub/themes/darkmatter/theme.txt"'
+        - '#GRUB_THEME="/boot/grub/themes/lordshenron/theme.txt"'
         - 'GRUB_GFXPAYLOAD_LINUX="keep"'
         - 'GRUB_DISABLE_OS_PROBER="false"'
 
@@ -146,11 +147,13 @@
         
     - name: System-setup | grub | copy black hole file
       ansible.builtin.copy:
-        src: grub/budgie/black-hole-blue.tga
-        dest: /usr/share/images/grub/black-hole-blue.tga
+        src: images/{{ item.src }}
+        dest: /usr/share/images/grub/{{ item.dest }}
         owner: root
         group: root
         mode: 0644
+      with_items:
+        - { src: 'black-hole-blue.tga', dest: 'black-hole-blue.tga' }
 
     - name: System-setup | grub | Recursively remove git target directory
       ansible.builtin.file:
@@ -189,7 +192,7 @@
         line: 'GRUB_CMDLINE_LINUX_DEFAULT="quiet splash loglevel=3'
         backrefs: true
 
-    - name: System_setup | grub | Insert background line
+    - name: System_setup | grub | Insert GFXMODE line
       ansible.builtin.lineinfile:
         path: /etc/default/grub
         insertafter: '^#GRUB_GFXMODE='
