@@ -31,7 +31,6 @@
       - pv
       - traceroute
       - ripgrep
-      - solaar
       - speedtest-cli
       - sshpass
       - vim-nox
