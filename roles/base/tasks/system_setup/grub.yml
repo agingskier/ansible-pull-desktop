@@ -101,18 +101,6 @@
         - { src: 'fonts/1440p/', dest: '.' }
         - { src: 'icons-1440p/color/', dest: 'icons/' }
         
-#
-# acpi stands for: "Advanded Configuration and Power Interface"
-# error messages in log: "EISA: cannot allocate resource for Mainboard"
-# with lxd apparmor produces lots of journalctl entries. Suppress with "apparmor.audit=quiet"
-#
-    - name: System_setup | grub | Replace CMDLINE with acpi=off to supress error messages
-      ansible.builtin.lineinfile:
-        path: /etc/default/grub
-        regexp: 'GRUB_CMDLINE_LINUX_DEFAULT='
-        line: 'GRUB_CMDLINE_LINUX_DEFAULT="splash acpi=off apparmor.audit=quiet"'
-        backrefs: true
-
     - name: System_setup | grub | Insert background line in grub file
       ansible.builtin.lineinfile:
         path: /etc/default/grub
@@ -194,12 +182,7 @@
         group: root
         mode: 0644
 
-    #
-    # acpi stands for: "Advanded Configuration and Power Interface"
-    # error messages in log: "EISA: cannot allocate resource for Mainboard"
-    # acpi=off produces a "hang" situation during boot
-    #
-    - name: System_setup | grub | Replace CMDLINE with acpi=off to supress error messages
+    - name: System_setup | grub | Replace CMDLINE with loglevel=3 to supress error messages
       ansible.builtin.lineinfile: 
         path: /etc/default/grub
         regexp: '^GRUB_CMDLINE_LINUX_DEFAULT='
