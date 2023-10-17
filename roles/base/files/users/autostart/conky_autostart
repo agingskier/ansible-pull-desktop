@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Exec=conky -p 10 -c /home/bernhard/.config/conky/conkyrc
+Exec=conky -c /home/bernhard/.config/conky/conkyrc
 Hidden=false
 NoDisplay=false
 X-GNOME-Autostart-enabled=true
