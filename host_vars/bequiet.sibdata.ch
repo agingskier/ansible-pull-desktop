@@ -44,4 +44,3 @@ protonvpn: yes
 steam: yes
 variety: yes
 vlc: no
-vscodium: yes

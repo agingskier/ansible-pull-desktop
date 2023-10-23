@@ -12,9 +12,6 @@
     - name: Import java tasks
       ansible.builtin.import_tasks:
         file: development/java.yml
-    - name: Import vscodium tasks
-      ansible.builtin.import_tasks:
-        file: development/vscodium.yml
     - name: Import development tasks
       ansible.builtin.import_tasks:
         file: development/development.yml
