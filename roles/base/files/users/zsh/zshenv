@@ -13,9 +13,20 @@ export EDITOR=vim
 export VISUAL=vim
 
 ## history
-export HISTFILE=$HOME/.history
-export HISTSIZE=10000
-export SAVEHIST=10000
+# ignore duplicate lines in the history.
+# ignore commands that  start with space `ignorespace'.
+export HISTFILE=$HOME/.zsh_history
+export HISTCONTROL=ignoreboth:erasedups
+export HISTSIZE=2000
+export HISTFILESIZE=8000
+export HISTIGNORE="free*:exit:clear:man*:mkdir*"
+export HISTTIMEFORMAT="%F %T: " # Date, Time
+shopt -s histappend
+shopt -s histverify
+shopt -s autocd
+shopt -s cdspell
+shopt -s dotglob
+shopt -s interactive_comments # default
 
 ## XDG
 # Set up a few standard directories based on:
@@ -30,4 +41,18 @@ export XDG_STATE_HOME="${HOME}/.local/state"
 export ZDOTDIR=$HOME/.config/zsh
 
 ## path
-export PATH=~/bin:$PATH
+# $HOME/bin is added to PATH in .profile, so not required to add here
+# ... if $HOME/.local/bin exists its required for LunarVim and others
+# sample if more than one directory:  "for mydir in $HOME/.cargo/bin $HOME/.local/bin; do"
+for mydir in $HOME/.local/bin; do
+    if [ -d $mydir ]; then
+        case ":$PATH:" in
+          *":${mydir}:"*)   # directory already in PATH, do nothing
+            ;;
+          *) 
+            PATH=${mydir}:$PATH
+            ;;
+        esac
+    fi
+done
+
