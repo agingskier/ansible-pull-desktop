@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/bin/env zsh
 #===============================================================
 #
 # FUNCTIONS
@@ -18,17 +18,14 @@ function func ()
 	echo -e "${magenta}lj 		${yellow}--> ${green}display messages with journalctl"
 	echo -e "${magenta}netinfo 	${yellow}--> ${green}network information"
 	echo -e "${magenta}myinfo 		${yellow}--> ${green}display various system information"
-	echo -e "${magenta}colors 		${yellow}--> ${green}display various color schemes"
+	echo -e "${magenta}dis-colors 		${yellow}--> ${green}display various color schemes"
 	echo -e "${magenta}save 		${yellow}--> ${green}execute different backup's"
 	echo -e "${magenta}desk 		${yellow}--> ${green}display desktop name and version"
-	echo -e "${magenta}doc 		${yellow}--> ${green}start DocFetcher from /mnt/NAS/software"
 	echo -e "${magenta}ebook 		${yellow}--> ${green}Start Calibre for specific Libraries"
-	echo -e "${magenta}extip 		${yellow}--> ${green}Display external ip address"
 	echo -e "${magenta}bt 		${yellow}--> ${green}Boot Time with systemd-analyze"
 	echo -e "${magenta}fn 	 	${yellow}--> ${green}find all files with a pattern in current directory"
 	echo -e "${magenta}fr 	 	${yellow}--> ${green}find all files with a pattern in complete system excluding /proc"
 	echo -e "${magenta}fs	 	${yellow}--> ${green}find all files with specified size in current directory"
-	echo -e "${magenta}docker-cleanup   ${yellow}--> ${green}Cleanup docker, use --dry-run to check"
 	echo "${NC}"
 }
 
@@ -104,11 +101,6 @@ function netinfo ()	#netinfo - shows network information for your system
     echo "--------------- Network Connections ---------------"
 	nmcli con
 	echo "---------------------------------------------------"
-}
-
-function extip ()  # Get External IP address
-{
-	curl -s ifconfig.co
 }
 
 function myinfo ()
@@ -202,14 +194,6 @@ function desk ()
 			;;
 	esac
 echo ${yellow}"Desktop: "${magenta}$TOP${yellow} "Version: "${magenta}$VER${NC}
-}
-
-function doc ()
-{
-	echo "It will take a while to bring up DocFetcher...."
-	cd ~/DocFetcher-1.1.22
-	./DocFetcher-GTK3.sh
-	cd
 }
 
 function ebook ()

@@ -1,26 +1,25 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 # +--------+
 # | System |
 # +--------+
 
-alias shutdown='sudo shutdown now'
-alias restart='sudo reboot now'
-alias suspend='sudo pm-suspend'
+alias reload='source ~/config/zsh/.zshrc'
 
-alias bigf='tree -iahfFQC | egrep -v /$ | sort -k2hr | head --lines=15'
 alias nf='find * -type f | wc -l'               # number of files
 
 alias df='df -h -x squashfs -x tmpfs -x devtmpfs'
 alias dus='du -aS | sort -n -r | head --lines=15'
-alias extip='curl icanhazip.com'
+alias extip='curl -4 ifconfig.co'
+alias ping='ping -c 3'
 
 alias path='echo -e ${PATH//:/\\n}'
 alias fpath='echo -e ${FPATH//:/\\n}'
-alias ping='ping -c 3'
+alias libpath='echo -e ${LD_LIBRARY_PATH//:/\\n}'
 
-alias mh='cd /mnt/Data/hardway'
-alias dp='cd /mnt/Data/docker-projects'
+alias dist='cat /etc/os-release'
+alias glx='glxinfo | egrep OpenGL'
+alias pp='plank --preferences'
 
 alias d='dirs -v'
 for index ({1..9}) alias "$index"="cd +${index}"; unset index
@@ -38,37 +37,13 @@ for index ({1..9}) alias "$index"="cd +${index}"; unset index
 # You can also increase index ({1..9}) to index ({1..100}) for example,
 # if you want to be able to jump back to 100 directories.
 
-# +---------+
-# | History |
-# +---------+
-
-alias h='fc -l'               # last 16 entries in history
-alias hs='history | egrep'    # search history for an entry
-
 # +-----+
 # | X11 |
 # +-----+
 
-alias xp='xprop | grep WM_CLASS' # display xprop class in running window
-
-# +----+
-# | ls |
-# +----+
-
-alias ls='lsd -F --date "+%a %d %b %Y %X" --color=always'   # see man date for format
-alias lr='lsd -lhSFr --date "+%a %d %b %Y %X" --color always'    # sort by size, biggest last
-alias la='lsd -lhFA --date "+%a %d %b %Y %X" --color always'     # show .dotfiles, no .. dirs, mark dir & exec
-alias lt='lsd -lFA --date "+%a %d %b %Y %X" --color always'
-
-alias lsp='lspci | ccze -A'
-alias lsu='lsusb | ccze -A'
-alias lsb='lsblk -o NAME,FSTYPE,SIZE,MOUNTPOINT,LABEL,UUID | ccze -A'
-alias lsc='lscpu | ccze -A'
-alias lsi='sudo blkid | ccze -A'
-alias lsppa='egrep -rhE ^deb /etc/apt/sources.list*'
-alias loc='plocate -A -i'
-alias lsmnt='findmnt --tree --types btrfs,ext4,nfs,vfat'
-
+alias xp='xprop | egrep WM_CLASS' # display xprop class in running window
+alias xs='xsel'                   # display clipboard
+alias xsc='xsel -c'               # clear clipboard
 
 # +----+
 # | cd |
@@ -82,6 +57,7 @@ alias ....='cd ../../../../'
 alias cdp='cd /mnt/Data/docker-projects'
 alias cds='cd /mnt/Data/src'
 alias cdc='cd /mnt/Data/clone'
+alias cdcn='cd /mnt/Data/clone/nvim'
 alias cda='cd /mnt/Data/ansible-test'
 alias cdd='cd ~/deploy/ansible-pull-desktop'
 
@@ -93,6 +69,68 @@ alias cp='cp -iv'
 alias mv='mv -iv'
 # do not delete / or prompt if deleting more than 3 files at a time #
 alias rm='rm -I --preserve-root'
+
+# +-------------------------------------------------------+
+# |The 'ls' family (this assumes you use a recent GNU ls) |
+# +-------------------------------------------------------+
+
+alias ls='lsd -F --date "+%a %d %b %Y %X" --color=always'      # see man date for format
+alias lr='lsd -lhSFr --date "+%a %d %b %Y %X" --color always'  # sort by size, biggest last
+alias la='lsd -lhFA --date "+%a %d %b %Y %X" --color always'   # show .dotfiles, no .. dirs, mark dir & exec
+alias lt='lsd -lFA --date "+%a %d %b %Y %X" --color always'
+
+alias lsp='lspci | ccze -A'
+alias lsu='lsusb | ccze -A'
+alias lsb='lsblk -o NAME,FSTYPE,SIZE,MOUNTPOINT,LABEL,UUID | ccze -A'
+alias lsc='lscpu | ccze -A'
+alias lsi='sudo blkid | ccze -A'
+alias loc='plocate -A -i'
+alias lsppa='egrep -rh ^deb /etc/apt/sources.list /etc/apt/sources.list*'
+alias lsmnt='findmnt --tree --types btrfs,ext4,nfs,vfat'
+ 
+alias lsop='lsof -P -iTCP -sTCP:LISTEN'         # display all open ports
+alias lserr='journalctl -b -p err'
+
+# +--------------------------------+
+# | Some alias to make life easier |
+# +--------------------------------+
+alias cls='tput clear'
+
+alias x='nemo .'            # open nemo in current directory
+alias h='fc -l'            # last 16 entries in history
+alias hs='history | egrep'    # search history for an entry
+alias j='jobs -l'
+alias nf='find * -type f | wc -l'		# number of files
+
+# display 15 biggest files in chosen directory
+alias bigf='tree -iasfFQ | egrep -v /$ | sort -k2nr | head --lines=15'
+
+alias dus='du -aS | sort -n -r | head --lines=15'
+alias ping='ping -c 5'
+alias sf='zsh <(curl -sL nf.hydev.org)'
+# limit cpu for very demaning clamscan to 30% - clamscan must be running
+alias clamlim='cpulimit -e clamscan -l 30'
+
+alias cputemp='sensors | egrep Core'
+alias pscpu='echo "USER       PID %CPU %MEM  SZ    RSS   TTY      STAT STIME   TIME COMMAND"; ps auxw | tail | sort -k 1.15,1.19nr | head'
+alias psmem='echo "USER       PID %CPU %MEM  SZ    RSS   TTY      STAT STIME   TIME COMMAND"; ps auxw | tail | sort -k 1.21,1.25nr | head'
+
+alias which='type -a'
+
+# +------+
+# | logs |
+# +------+
+
+alias logb='journalctl --boot --reverse --lines=150 | ccze -A'
+alias logk='journalctl --dmesg --reverse --lines=150 | ccze -A'
+
+# +------+
+# | grep |
+# +------+
+
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
 
 # +------+
 # | logs |
@@ -150,3 +188,12 @@ alias gblog="git for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD)
 alias gsub="git submodule update --remote"                       # pull submodules
 alias gj="git-jump"                      # open in vim quickfix list files of interest (git diff, merged...)
 alias dif="git diff --no-index" # Diff two files even if not in git repo! Can add -w (don't diff whitespaces)
+
+# +------+
+# | nvim |
+# +------+
+alias tilixnvim="tilix --session=~/.config/tilix/nvim-split.json"
+
+#------------------------------------------------------------- 
+# End Aliases
+#-------------------------------------------------------------
