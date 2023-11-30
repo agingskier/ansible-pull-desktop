@@ -1,7 +1,7 @@
 ---
 - name: System-setup | bluetooth | download firmware
   become: true
-  become_method: sudo
+  become_method: ansible.builtin.sudo
   ansible.builtin.unarchive:
     src: https://github.com/winterheart/broadcom-bt-firmware/archive/master.zip
     dest: /tmp
@@ -12,7 +12,7 @@
 
 - name: System-setup | bluetooth | install missing firmware
   become: true
-  become_method: sudo
+  become_method: ansible.builtin.sudo
   ansible.builtin.copy:
     src: /tmp/broadcom-bt-firmware-master/brcm/BCM20702A1-0b05-17cf.hcd
     dest: /lib/firmware/brcm

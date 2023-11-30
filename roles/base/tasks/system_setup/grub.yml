@@ -1,13 +1,12 @@
 ---
 #
 # see: 'info -f grub -n 'Simple configuration' for information about grub configuration
-# 
+#
 - name: System-setup | grub block for {{ inventory_hostname }}
   become: true
-  become_method: sudo
+  become_method: ansible.builtin.sudo
   when: "'bequiet' in inventory_hostname"
   block:
-  
     - name: System-setup | grub | make sure /tmp has full access
       ansible.builtin.file:
         path: /tmp
@@ -15,7 +14,7 @@
         owner: root
         group: root
         mode: 0777
-  
+
     - name: System-setup | grub | background | create images/gurb directories
       ansible.builtin.file:
         path: /usr/share/images/grub
@@ -23,7 +22,7 @@
         owner: root
         group: root
         mode: 0644
-  
+
     - name: System-setup | grub | background | copy background images from files/images
       ansible.builtin.copy:
         src: images/{{ item.src }}
@@ -32,13 +31,13 @@
         group: root
         mode: 0644
       with_items:
-        - { src: 'black-hole-blue.tga', dest: 'black-hole-blue.tga' }
-        - { src: 'saturn-wallpaper.png', dest: 'saturn-wallpaper.png' }
-        - { src: 'CarinaNebula.png', dest: 'CarinaNebula.png' }
-        - { src: 'QuasarEarlyUniverse.jpg', dest: 'QuasarEarlyUniverse.jpg' }
-        - { src: 'QuasarOutflow.png', dest: 'QuasarOutflow.png' }
-        - { src: 'SouthernRingNebula.png', dest: 'SouthernRingNebula.png' }
-        - { src: 'StephansQuintetGalaxies.png', dest: 'StephansQuintetGalaxies.png' }
+        - { src: "black-hole-blue.tga", dest: "black-hole-blue.tga" }
+        - { src: "saturn-wallpaper.png", dest: "saturn-wallpaper.png" }
+        - { src: "CarinaNebula.png", dest: "CarinaNebula.png" }
+        - { src: "QuasarEarlyUniverse.jpg", dest: "QuasarEarlyUniverse.jpg" }
+        - { src: "QuasarOutflow.png", dest: "QuasarOutflow.png" }
+        - { src: "SouthernRingNebula.png", dest: "SouthernRingNebula.png" }
+        - { src: "StephansQuintetGalaxies.png", dest: "StephansQuintetGalaxies.png" }
 
     - name: System-setup | grub | Themes | Recursively remove git target directory
       ansible.builtin.file:
@@ -46,8 +45,8 @@
         state: absent
       with_items:
         - grub-darkmatter
-        - grub-LordShenron  
-        
+        - grub-LordShenron
+
     - name: System_setup | grub | Themes | checkout git dark-matter repository
       ansible.builtin.git:
         repo: https://gitlab.com/VandalByte/darkmatter-grub-theme.git
@@ -97,20 +96,20 @@
         group: root
         mode: 0644
       with_items:
-        - { src: 'backgrounds/ubuntu-1440p.png', dest: 'background.png' }
-        - { src: 'fonts/1440p/', dest: '.' }
-        - { src: 'icons-1440p/color/', dest: 'icons/' }
-        
+        - { src: "backgrounds/ubuntu-1440p.png", dest: "background.png" }
+        - { src: "fonts/1440p/", dest: "." }
+        - { src: "icons-1440p/color/", dest: "icons/" }
+
     - name: System_setup | grub | Insert GFXMODE value grub file
       ansible.builtin.lineinfile:
         path: /etc/default/grub
-        insertafter: '^#GRUB_GFXMODE='
-        line: 'GRUB_GFXMODE=1024x768x32,auto'
+        insertafter: "^#GRUB_GFXMODE="
+        line: "GRUB_GFXMODE=1024x768x32,auto"
 
     - name: System_setup | grub | add lines for BACKGROUND, THEME, GFXPAYLOAD_LINUX and DISABLE_OS_PROBER
       ansible.builtin.lineinfile:
         dest: /etc/default/grub
-        line: '{{ item }}'
+        line: "{{ item }}"
       with_items:
         - 'GRUB_BACKGROUND="/usr/share/images/grub/saturn-wallpaper.png"'
         - 'GRUB_THEME="/boot/grub/themes/darkmatter/theme.txt"'
@@ -125,10 +124,9 @@
 
 - name: System-setup | grub block for {{ inventory_hostname }}
   become: true
-  become_method: sudo
+  become_method: ansible.builtin.sudo
   when: "'acermsch' in inventory_hostname"
   block:
-
     - name: System-setup | grub | make shure /tmp directory has full access
       ansible.builtin.file:
         path: /tmp
@@ -136,7 +134,7 @@
         owner: root
         group: root
         mode: 0777
-  
+
     - name: System-setup | grub | create all missing directories for images
       ansible.builtin.file:
         path: /usr/share/images/grub
@@ -144,7 +142,7 @@
         owner: root
         group: root
         mode: 0644
-        
+
     - name: System-setup | grub | copy black hole file
       ansible.builtin.copy:
         src: images/{{ item.src }}
@@ -153,7 +151,7 @@
         group: root
         mode: 0644
       with_items:
-        - { src: 'black-hole-blue.tga', dest: 'black-hole-blue.tga' }
+        - { src: "black-hole-blue.tga", dest: "black-hole-blue.tga" }
 
     - name: System-setup | grub | Recursively remove git target directory
       ansible.builtin.file:
@@ -186,22 +184,22 @@
         mode: 0644
 
     - name: System_setup | grub | Replace CMDLINE with loglevel=3 to supress error messages
-      ansible.builtin.lineinfile: 
+      ansible.builtin.lineinfile:
         path: /etc/default/grub
-        regexp: '^GRUB_CMDLINE_LINUX_DEFAULT='
+        regexp: "^GRUB_CMDLINE_LINUX_DEFAULT="
         line: 'GRUB_CMDLINE_LINUX_DEFAULT="quiet splash loglevel=3'
         backrefs: true
 
     - name: System_setup | grub | Insert GFXMODE line
       ansible.builtin.lineinfile:
         path: /etc/default/grub
-        insertafter: '^#GRUB_GFXMODE='
-        line: 'GRUB_GFXMODE=1024x768x32'
+        insertafter: "^#GRUB_GFXMODE="
+        line: "GRUB_GFXMODE=1024x768x32"
 
     - name: System_setup | grub | lines for BACKGROUND, THEME, GFXPAYLOAD_LINUX and DISABLE_OS_PROBER
       ansible.builtin.lineinfile:
         dest: /etc/default/grub
-        line: '{{ item }}'
+        line: "{{ item }}"
       with_items:
         - 'GRUB_BACKGROUND="/usr/share/images/grub/black-hole-blue.tga"'
         - 'GRUB_THEME="/boot/grub/themes/theme.txt"'

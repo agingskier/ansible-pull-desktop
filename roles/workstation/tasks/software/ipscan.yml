@@ -26,6 +26,6 @@
 
 - name: System_setup | ipscan | install the ipscan deb package
   become: true
-  become_method: sudo
+  become_method: ansible.builtin.sudo
   ansible.builtin.apt:
     deb: https://github.com/angryip/ipscan/releases/download/{{ ipscan_version.stdout }}/ipscan_{{ ipscan_version.stdout }}_amd64.deb

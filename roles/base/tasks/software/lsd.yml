@@ -32,7 +32,7 @@
 
 - name: Software | lsd | download and install JetBrains and FiraCode nerd fonts
   become: true
-  become_method: sudo
+  become_method: ansible.builtin.sudo
   ansible.builtin.unarchive:
     src: https://github.com/ryanoasis/nerd-fonts/releases/download/{{ fonts_release.stdout }}/{{ item }}
     dest: /usr/local/share/fonts/nerd

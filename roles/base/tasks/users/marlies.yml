@@ -20,7 +20,7 @@
 
     - name: Uusers | marlies | change Exec= line for Tilix New Window in com.gexperts.Tilix.desktop
       become: true
-      become_method: sudo
+      become_method: ansible.builtin.sudo
       ansible.builtin.lineinfile:
         path: /usr/share/applications/com.gexperts.Tilix.desktop
         regexp: '^Exec=tilix --action=app-new-window'

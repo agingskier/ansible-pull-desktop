@@ -48,7 +48,7 @@
 
 - name: Software | geany | Modify cursor and indend guide values
   become: true
-  become_method: sudo
+  become_method: ansible.builtin.sudo
   ansible.builtin.lineinfile:
     path: /usr/share/geany/filedefs/filetypes.common
     insertafter: "{{ item.src }}"

@@ -1,7 +1,7 @@
 ---
 - name: Software | keepassxc block
   become: true
-  become_method: sudo
+  become_method: ansible.builtin.sudo
   when:
     - keepassxc is defined
     - keepassxc
@@ -17,7 +17,7 @@
 
     - name: Software | keepassxc | snap connect | allow access to NAS
       become: true
-      become_method: sudo
+      become_method: ansible.builtin.sudo
       ansible.builtin.shell: 'snap connect {{ item.app }}:{{ item.plug }}'
       args:
         executable: /bin/bash

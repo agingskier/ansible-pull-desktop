@@ -7,7 +7,7 @@
     - kvm is defined
     - kvm
   become: true
-  become_method: sudo
+  become_method: ansible.builtin.sudo
   block:
     - name: Software | kvm | install cpu-checker prerequisite
       ansible.builtin.apt:

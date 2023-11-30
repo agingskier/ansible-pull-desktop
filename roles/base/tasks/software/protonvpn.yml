@@ -7,7 +7,7 @@
     - protonvpn is defined
     - protonvpn
   become: true
-  become_method: sudo
+  become_method: ansible.builtin.sudo
   block:
     - name: Software | protonvpn | add protonvpn to apt cache
       ansible.builtin.apt:

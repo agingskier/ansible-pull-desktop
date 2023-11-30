@@ -1,7 +1,7 @@
 ---
 - name: System-setup nfs mounts block
   become: true
-  become_method: sudo
+  become_method: ansible.builtin.sudo
   block:
     - name: System_setup | mounts | install nfs-common
       ansible.builtin.apt:

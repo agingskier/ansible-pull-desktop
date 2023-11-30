@@ -60,7 +60,7 @@
 
 - name: Software | tmux | install binary gitmux
   become: true
-  become_method: sudo
+  become_method: ansible.builtin.sudo
   ansible.builtin.unarchive:
     src: https://github.com/arl/gitmux/releases/download/{{ gitmux_release.stdout }}/gitmux_{{ gitmux_release.stdout }}_linux_amd64.tar.gz
     dest: /usr/local/bin

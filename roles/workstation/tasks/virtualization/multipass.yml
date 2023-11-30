@@ -1,7 +1,7 @@
 ---
 - name: Software | multipass block
   become: true
-  become_method: sudo
+  become_method: ansible.builtin.sudo
   when:
     - multipass is defined
     - multipass

@@ -14,7 +14,7 @@
 
     - name: Software | Reconfigure libdvd-pkg
       become: true
-      become_method: sudo
+      become_method: ansible.builtin.sudo
       ansible.builtin.command: dpkg-reconfigure libdvd-pkg
       register: media_cmd
       changed_when: media_cmd.rc == 0

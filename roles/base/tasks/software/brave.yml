@@ -1,7 +1,7 @@
 ---
 - name: Software | brave browser block
   become: true
-  become_method: sudo
+  become_method: ansible.builtin.sudo
   block:
     #
     # apt-key is deprecated - use curl to get the gpg key and write it to /usr/share/keyrings directory

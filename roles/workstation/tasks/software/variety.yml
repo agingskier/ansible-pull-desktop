@@ -5,7 +5,7 @@
     - variety
     
   become: true
-  become_method: sudo
+  become_method: ansible.builtin.sudo
   
   block:
     - name: Software | variety | install variety

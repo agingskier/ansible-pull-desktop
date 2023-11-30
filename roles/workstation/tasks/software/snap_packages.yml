@@ -1,7 +1,7 @@
 ---
 - name: Software | snap | install snap packages
   become: true
-  become_method: sudo
+  become_method: ansible.builtin.sudo
   community.general.snap:
     name:
       - bpytop
@@ -12,7 +12,7 @@
 
 - name: Software | snap connect | allow access to NAS
   become: true
-  become_method: sudo
+  become_method: ansible.builtin.sudo
   ansible.builtin.shell: 'snap connect {{ item.app }}:{{ item.plug }}'
   args:
     executable: /bin/bash

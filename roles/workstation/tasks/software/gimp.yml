@@ -1,7 +1,7 @@
 ---
 - name: Software | gimp block
   become: true
-  become_method: sudo
+  become_method: ansible.builtin.sudo
   when:
     - gimp is defined
     - gimp

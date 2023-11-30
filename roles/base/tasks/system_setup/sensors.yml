@@ -24,7 +24,7 @@
 
     - name: Run sensors-detect command | generate /etc/modules
       become: true
-      become_method: sudo
+      become_method: ansible.builtin.sudo
       ansible.builtin.command: sensors-detect --auto
       register: expect_result
       changed_when: expect_result.rc == 0
@@ -51,7 +51,7 @@
 
     - name: Run sensors-detect command | generate /etc/modules
       become: true
-      become_method: sudo
+      become_method: ansible.builtin.sudo
       ansible.builtin.command: sensors-detect --auto
       register: expect_result
       changed_when: expect_result.rc == 0
