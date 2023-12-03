@@ -1,10 +1,30 @@
 ---
-- name: Doftware | geany | install packages
-  ansible.builtin.apt:
-    state: present
-    pkg:
-      - geany
-      - geany-plugins
+- name: Information | geany | download latest release info for geany
+  shell: |
+    set -o pipefail
+    curl --silent https://api.github.com/repos/ecmu/geany.AppImage/releases/latest |
+    jq -r .tag_name
+  args:
+    executable: /bin/bash
+  register: geany_release
+  changed_when: geany_release.rc == 0
+
+- name: Information | geany | Release {{ geany_release.stdout }}
+  debug:
+    msg: "Latest release for geany is: {{ geany_release.stdout }} "
+
+- name: Software | geany | install up-to-date geany appimage
+  ansible.builtin.get_url:
+    url: https://github.com/ecmu/geany.AppImage/releases/download/{{ geany_release.stdout }}/Geany-{{ geany_release.stdout }}-x86_64.AppImage
+    dest: /usr/local/bin
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Software | geany | Copy --.appimage to geany
+  ansible.builtin.copy:
+    src: /usr/local/bin/Geany-{{ geany_release.stdout }}-x86_64.AppImage
+    dest: /usr/local/bin/geany
 
 - name: Software |  geany | create .config/geany/colorschemes directories
   ansible.builtin.file:
