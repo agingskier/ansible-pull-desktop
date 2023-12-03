@@ -4,11 +4,33 @@
     - librecad is defined
     - librecad
   block:
-    - name: Software | install librecad
-      ansible.builtin.apt:
-        pkg:
-          - librecad
-        state: present
+    - name: Information | LibreCAD | download latest release info for LibreCAD
+      shell: |
+        set -o pipefail
+        curl --silent https://api.github.com/repos/LibreCAD/LibreCAD/releases/latest |
+        jq -r .tag_name
+      args:
+        executable: /bin/bash
+      register: cad_release
+      changed_when: cad_release.rc == 0
+
+    - name: Information | LibreCAD | Release {{ cad_release.stdout }}
+      debug:
+        msg: "Latest release for LibreCAD is: {{ cad_release.stdout }} "
+        verbosity: 2
+
+    - name: Software | LibreCAD | install up-to-date LibreCAD appimage
+      ansible.builtin.get_url:
+        url: https://github.com/LibreCAD/LibreCAD/releases/download/{{ cad_release.stdout }}LibreCAD-{{ cad_release.stdout }}-x86_64.AppImage
+        dest: /usr/local/bin
+        owner: root
+        group: root
+        mode: 0755
+
+    - name: Software | Neovim | Copy nvim.appimage to nvim
+      ansible.builtin.copy:
+        src: /usr/local/bin/LibreCAD-{{ cad_release.stdout }}-x86_64.AppImage
+        dest: /usr/local/bin/librecad
 
     - name: Software | librecad | create config/librecad directory
       ansible.builtin.file:
