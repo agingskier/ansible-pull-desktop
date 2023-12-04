@@ -1,6 +1,6 @@
 ---
 - name: Information | geany | download latest release info for geany
-  shell: |
+  ansible.builtin.shell: |
     set -o pipefail
     curl --silent https://api.github.com/repos/ecmu/geany.AppImage/releases/latest |
     jq -r .tag_name
@@ -10,7 +10,7 @@
   changed_when: geany_release.rc == 0
 
 - name: Information | geany | Release {{ geany_release.stdout }}
-  debug:
+  ansible.builtin.debug:
     msg: "Latest release for geany is: {{ geany_release.stdout }} "
 
 - name: Software | geany | install up-to-date geany appimage
@@ -25,6 +25,14 @@
   ansible.builtin.copy:
     src: /usr/local/bin/Geany-{{ geany_release.stdout }}-x86_64.AppImage
     dest: /usr/local/bin/geany
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Software | geany | Remove --.appimage file
+  ansible.builtin.file:
+    path: /usr/local/bin/Geany-{{ geany_release.stdout }}-x86_64.AppImage
+    state: absent
 
 - name: Software |  geany | create .config/geany/colorschemes directories
   ansible.builtin.file:
@@ -34,9 +42,9 @@
     group: "{{ group_name }}"
     mode: 0700
   with_items:
-    - { dir: '.config/geany' }
-    - { dir: '.config/geany/colorschemes' }
-    - { dir: '.config/geany/filedefs' }
+    - { dir: ".config/geany" }
+    - { dir: ".config/geany/colorschemes" }
+    - { dir: ".config/geany/filedefs" }
 
 - name: Software | geany | download geany colorschemes from github
   become: true
@@ -63,8 +71,8 @@
 - name: Software | geany | Insert identifier=types in filetypes.yaml
   ansible.builtin.lineinfile:
     path: /home/{{ user_name }}/.config/geany/filedefs/filetypes.yaml
-    insertafter: '^operator=operator'
-    line: 'identifier=types'
+    insertafter: "^operator=operator"
+    line: "identifier=types"
 
 - name: Software | geany | Modify cursor and indend guide values
   become: true
@@ -74,6 +82,6 @@
     insertafter: "{{ item.src }}"
     line: "{{ item.dest }}"
   with_items:
-    - { src: '^caret=caret', dest: 'caret=0x00ff00;0x0;false;false' }
-    - { src: '^caret_width=1', dest: 'caret_width=3' }
-    - { src: '^indent_guide=indent_guide', dest: 'indent_guide=0xDAFB31;0xffffff;false;false' }
+    - { src: "^caret=caret", dest: "caret=0x00ff00;0x0;false;false" }
+    - { src: "^caret_width=1", dest: "caret_width=3" }
+    - { src: "^indent_guide=indent_guide", dest: "indent_guide=0xDAFB31;0xffffff;false;false" }

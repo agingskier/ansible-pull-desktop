@@ -21,6 +21,7 @@
       ansible.builtin.shell: 'snap connect {{ item.app }}:{{ item.plug }}'
       args:
         executable: /bin/bash
-      register: connect_result
       with_items:
         - { app: 'keepassxc', plug: 'removable-media' }
+      register: connect_result
+      changed_when: connect_result.rc == 0
