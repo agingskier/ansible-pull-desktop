@@ -82,7 +82,6 @@
         - 'mnt-NAS-manuals.mount'
         - 'mnt-NAS-media.mount'
         - 'mnt-NAS-rechnungen.mount'
- #       - 'mnt-NAS-software.mount'   
         - 'mnt-NAS-steuern.mount'
 
     - name: System_setup | Add nfs NAS bookmarks
