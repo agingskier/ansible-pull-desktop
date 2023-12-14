@@ -60,28 +60,28 @@
     dest: /home/{{ user_name }}/.config/geany/colorschemes/
     archive: true
 
-- name: Software | geany | copy filetypes.yaml
-  ansible.builtin.copy:
-    src: /usr/share/geany/filedefs/filetypes.yaml
-    dest: /home/{{ user_name }}/.config/geany/filedefs/filetypes.yaml
-    owner: "{{ user_name }}"
-    group: "{{ group_name }}"
-    mode: 0644
-
-- name: Software | geany | Insert identifier=types in filetypes.yaml
-  ansible.builtin.lineinfile:
-    path: /home/{{ user_name }}/.config/geany/filedefs/filetypes.yaml
-    insertafter: "^operator=operator"
-    line: "identifier=types"
-
-- name: Software | geany | Modify cursor and indend guide values
-  become: true
-  become_method: ansible.builtin.sudo
-  ansible.builtin.lineinfile:
-    path: /usr/share/geany/filedefs/filetypes.common
-    insertafter: "{{ item.src }}"
-    line: "{{ item.dest }}"
-  with_items:
-    - { src: "^caret=caret", dest: "caret=0x00ff00;0x0;false;false" }
-    - { src: "^caret_width=1", dest: "caret_width=3" }
-    - { src: "^indent_guide=indent_guide", dest: "indent_guide=0xDAFB31;0xffffff;false;false" }
+#- name: Software | geany | copy filetypes.yaml
+#  ansible.builtin.copy:
+#    src: /usr/share/geany/filedefs/filetypes.yaml
+#    dest: /home/{{ user_name }}/.config/geany/filedefs/filetypes.yaml
+#    owner: "{{ user_name }}"
+#    group: "{{ group_name }}"
+#    mode: 0644
+#
+#- name: Software | geany | Insert identifier=types in filetypes.yaml
+#  ansible.builtin.lineinfile:
+#    path: /home/{{ user_name }}/.config/geany/filedefs/filetypes.yaml
+#    insertafter: "^operator=operator"
+#    line: "identifier=types"
+#
+#- name: Software | geany | Modify cursor and indend guide values
+#  become: true
+#  become_method: ansible.builtin.sudo
+#  ansible.builtin.lineinfile:
+#    path: /usr/share/geany/filedefs/filetypes.common
+#    insertafter: "{{ item.src }}"
+#    line: "{{ item.dest }}"
+#  with_items:
+#    - { src: "^caret=caret", dest: "caret=0x00ff00;0x0;false;false" }
+#    - { src: "^caret_width=1", dest: "caret_width=3" }
+#    - { src: "^indent_guide=indent_guide", dest: "indent_guide=0xDAFB31;0xffffff;false;false" }
