@@ -32,7 +32,7 @@
     - { src: 'history.zsh', dest: 'history.zsh' }
     - { src: 'vim-mode.zsh', dest: 'vim-mode.zsh' }
     - { src: 'prompt.zsh', dest: 'prompt.zsh' }
-    - { src: 'bash-functions.zsh', dest: 'bash-functions.zsh' }
+    - { src: 'zsh-functions.zsh', dest: 'zsh-functions.zsh' }
     - { src: 'zshenv', dest: 'zshenv' }
     - { src: 'zshrc', dest: '.zshrc' }
 
