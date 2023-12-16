@@ -25,7 +25,7 @@
         state: directory
         owner: "{{ user_name }}"
         group: "{{ group_name }}"
-        mode: 0644
+        mode: 0775
 
     - name: Software | multipass | Create directory for override.conf
       ansible.builtin.file:

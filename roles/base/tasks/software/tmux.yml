@@ -16,7 +16,7 @@
     state: directory
     owner: "{{ user_name }}"
     group: "{{ group_name }}"
-    mode: 0700
+    mode: 0775
   with_items:
     - { dir: 'tmux' }
     - { dir: 'tmux/plugins' }

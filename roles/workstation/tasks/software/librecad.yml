@@ -38,7 +38,7 @@
         state: directory
         owner: bernhard
         group: users
-        mode: 0740
+        mode: 0775
       with_items:
         - { dir: '.config/LibreCAD' }
 

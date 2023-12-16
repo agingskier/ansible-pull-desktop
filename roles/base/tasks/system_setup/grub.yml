@@ -21,7 +21,7 @@
         state: directory
         owner: root
         group: root
-        mode: 0644
+        mode: 0775
 
     - name: System-setup | grub | background | copy background images from files/images
       ansible.builtin.copy:
