@@ -21,18 +21,21 @@
 
     - name: Software | LibreCAD | install up-to-date LibreCAD appimage
       ansible.builtin.get_url:
-        url: https://github.com/LibreCAD/LibreCAD/releases/download/{{ cad_release.stdout }}LibreCAD-{{ cad_release.stdout }}-x86_64.AppImage
-        dest: /usr/local/bin
+        url: https://github.com/LibreCAD/LibreCAD/releases/download/{{ cad_release.stdout }}/LibreCAD-{{ cad_release.stdout }}-x86_64.AppImage
+        dest: /tmp
         owner: root
         group: root
         mode: 0755
 
-    - name: Software | Neovim | Copy nvim.appimage to nvim
+    - name: Software | LibreCAD | Copy ...appimage to librecad
       ansible.builtin.copy:
-        src: /usr/local/bin/LibreCAD-{{ cad_release.stdout }}-x86_64.AppImage
+        src: /tmp/LibreCAD-{{ cad_release.stdout }}-x86_64.AppImage
         dest: /usr/local/bin/librecad
+        owner: root
+        group: root
+        mode: 0755
 
-    - name: Software | librecad | create config/librecad directory
+    - name: Software | LibreCAD | create config/librecad directory
       ansible.builtin.file:
         path: /home/bernhard/{{ item.dir }}
         state: directory
