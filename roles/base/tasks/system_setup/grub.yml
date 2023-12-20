@@ -106,6 +106,15 @@
         insertafter: "^#GRUB_GFXMODE="
         line: "GRUB_GFXMODE=1024x768x32,auto"
 
+    - name: Replace all installed sources
+      ansible.builtin.replace:
+      path: /etc/default/grub
+      regexp: "{{ item.regex }}"
+      replace: "{{ item.repl }}"
+    with_items:
+      - { regex: '^GRUB_TIMEOUT_STYLE=hidden', repl: 'GRUB_TIMEOUT_STYLE=menu' }
+      - { regex: '^GRUB_TIMEOUT=0', repl: 'GRUB_TIMEOUT=15' }
+
     - name: System_setup | grub | add lines for BACKGROUND, THEME, GFXPAYLOAD_LINUX and DISABLE_OS_PROBER
       ansible.builtin.lineinfile:
         dest: /etc/default/grub

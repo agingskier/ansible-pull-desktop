@@ -85,7 +85,7 @@
         - 'mnt-NAS-software.mount'
         - 'mnt-NAS-steuern.mount'
 
-    - name: System_setup | Add nfs NAS bookmarks
+    - name: System_setup | Add nfs NAS and other bookmarks
       ansible.builtin.lineinfile:
         dest: /home/{{ user_name }}/.config/gtk-3.0/bookmarks
         line: "{{ item.line }}"
@@ -97,3 +97,4 @@
         - { line: "file:///mnt/Digikam Digikam" }
         - { line: "file:///mnt/Games Games" }
         - { line: "file:///mnt/k8s K8S" }
+        - { line: "file:///mnt/VMs VMs" }
