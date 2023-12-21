@@ -88,9 +88,9 @@
         file: system_setup/logging.yml
 
     # Fix some problems shown in journalctl
-    - name: Add fitting bluetooth driver
-      ansible.builtin.import_tasks: 
-        file: system_setup/bluetooth.yml
+#    - name: Add fitting bluetooth driver
+#      ansible.builtin.import_tasks: 
+#        file: system_setup/bluetooth.yml
     - name: Fix error messages in journalctl
       ansible.builtin.import_tasks: 
         file: system_setup/fix-log-msg.yml
