@@ -1,5 +1,7 @@
 #----cut here----
 # Chip drivers
+drivertemp
+nouveau
 coretemp
 nct6775
 #----cut here----
