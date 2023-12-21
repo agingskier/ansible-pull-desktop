@@ -18,9 +18,9 @@
         group: root
         mode: 0644
       with_items:
-        - { src: 'asus-rampage.conf', dest: 'sensors.d/asus-rampage.conf' }
+        - { src: 'Z790-sensors.conf', dest: 'sensors.d/Z790-sensors.conf' }
         - { src: 'blacklist-edac.conf', dest: 'modprobe.d/blacklist-edac.conf' }
-        - { src: 'sensors-modules-asus', dest: 'modules-load.d/sensors.conf' }
+        - { src: 'sensors-modules-asrock', dest: 'modules-load.d/sensors.conf' }
 
     - name: Run sensors-detect command | generate /etc/modules
       become: true
