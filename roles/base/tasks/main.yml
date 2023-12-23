@@ -91,13 +91,10 @@
 #    - name: Add fitting bluetooth driver
 #      ansible.builtin.import_tasks: 
 #        file: system_setup/bluetooth.yml
-    - name: Fix error messages in journalctl
-      ansible.builtin.import_tasks: 
-        file: system_setup/fix-log-msg.yml
+#    - name: Fix error messages in journalctl
+#      ansible.builtin.import_tasks: 
+#        file: system_setup/fix-log-msg.yml
     - name: Fix for microcode
-      ansible.builtin.import_tasks: 
-        file: system_setup/microcode.yml
-    - name: Install missing packages for error message Multiple Disk RAID
       ansible.builtin.import_tasks: 
         file: system_setup/microcode.yml
      

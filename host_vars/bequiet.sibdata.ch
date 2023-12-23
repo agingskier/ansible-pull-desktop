@@ -13,9 +13,6 @@ ssh_users: "bernhard"
 microcode_amd_install: no
 microcode_intel_install: yes
 
-# nvidia packages are required by conky
-nvidia: yes
-
 #
 # users
 #
