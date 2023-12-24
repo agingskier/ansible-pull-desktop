@@ -1,0 +1,27 @@
+---
+
+- name: System setup | lxc | create modprobe file 
+  when: "'bequiet' in inventory_hostname"
+  block:
+    - name: System_setup | lxc | create containerd.conf
+      ansible.builtin.copy:
+        dest: /etc/modules-load.d/containerd.conf
+        content: |
+          overlay
+          br_netfilter
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: System_setup | lxc | Create kube-proxy-ipvs.conf file with modules
+      ansible.builtin.copy:
+        dest: /etc/modules-load.d/kube-proxy-ipvs.conf
+        content: |
+          ip_vs
+          ip_vs_rr
+          ip_vs_wrr
+          ip_vs_sh
+          nf_conntrack
+        owner: root
+        group: root
+        mode: 0644

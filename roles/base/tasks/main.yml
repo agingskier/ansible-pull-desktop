@@ -97,7 +97,9 @@
     - name: Fix for microcode
       ansible.builtin.import_tasks: 
         file: system_setup/microcode.yml
-     
+    - name: Modprobe modules for lxc
+        file: system_setup/lxc.yml    
+    
 #  - import_tasks: system_setup/openssh.yml
 
   rescue:
