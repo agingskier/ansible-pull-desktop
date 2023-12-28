@@ -19,7 +19,6 @@
         mode: 0644
       with_items:
         - { src: 'Z790-sensors.conf', dest: 'sensors.d/Z790-sensors.conf' }
-        - { src: 'blacklist-edac.conf', dest: 'modprobe.d/blacklist-edac.conf' }
         - { src: 'sensors-modules-asrock', dest: 'modules-load.d/sensors.conf' }
 
     - name: Run sensors-detect command | generate /etc/modules
@@ -46,7 +45,6 @@
         mode: 0644
       with_items:
 #        - { src: 'acer-rampage.conf', dest: 'sensors.d/acer-rampage.conf' }
-#        - { src: 'blacklist-edac.conf', dest: 'modprobe.d/blacklist-edac.conf' }
         - { src: 'sensors-modules-acer', dest: 'modules-load.d/sensors.confq' }
 
     - name: Run sensors-detect command | generate /etc/modules
