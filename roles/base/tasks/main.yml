@@ -90,12 +90,13 @@
     # Fix some problems shown in journalctl
     - name: Fix error messages in journalctl
       ansible.builtin.import_tasks: 
-       file: system_setup/fix-log-msg.yml
+        file: system_setup/fix-log-msg.yml
     - name: Fix for microcode
       ansible.builtin.import_tasks: 
         file: system_setup/microcode.yml
-    - name: Modprobe modules for lxc
-        file: system_setup/lxc.yml    
+#    - name: Modprobe modules for lxc
+#      ansible.builtin.import_tasks:
+#        file: system_setup/lxc.yml    
     
 #  - import_tasks: system_setup/openssh.yml
 

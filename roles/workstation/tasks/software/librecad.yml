@@ -5,7 +5,7 @@
     - librecad
   block:
     - name: Information | LibreCAD | download latest release info for LibreCAD
-      shell: |
+      ansible.builtin.shell: |
         set -o pipefail
         curl --silent https://api.github.com/repos/LibreCAD/LibreCAD/releases/latest |
         jq -r .tag_name
@@ -15,7 +15,7 @@
       changed_when: cad_release.rc == 0
 
     - name: Information | LibreCAD | Release {{ cad_release.stdout }}
-      debug:
+      ansible.builtin.debug:
         msg: "Latest release for LibreCAD is: {{ cad_release.stdout }} "
         verbosity: 2
 
