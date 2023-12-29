@@ -32,7 +32,7 @@
     - { key: 'cursor-colors-set', value: 'false' }
     - { key: 'default-size-columns', value: '100' }
     - { key: 'default-size-rows', value: '32' }
-    - { key: 'font', value: "'JetBrainsMono Nerd Font Regular 16'" }
+    - { key: 'font', value: "'JetBrainsMono Nerd Font Light 16'" }
     - { key: 'foreground-color', value: "'#00FF00'" }
     - { key: 'highlight-colors-set', value: 'false' }
     - { key: 'scheme', value: "'homebrew'" }
