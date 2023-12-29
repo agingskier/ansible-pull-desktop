@@ -27,20 +27,43 @@
         key: "/org/gnome/desktop/interface/{{ item.key }}"
         value: "{{ item.value }}"
       with_items:
-        - { key: 'color-scheme', value: "'prefer-dark'" }
-        - { key: 'cursor-size', value: '48' }
+        - { key: 'color-scheme', value: "'Prefer-Dark'" }
+        - { key: 'cursor-size', value: '64' }
         - { key: 'cursor-theme', value: "'DMZ-Black'" }
         - { key: 'document-font-name', value: "'Noto Sans 13'" }
         - { key: 'font-name', value: "'Noto Sans 13'" }
-        - { key: 'gtk-theme', value: "'QogirBudgie-dark'" }
+        - { key: 'gtk-theme', value: "'QogirBudgie-Dark'" }
         - { key: 'icon-theme', value: "'Humanity-Dark'" }
         - { key: 'monospace-font-name', value: "'Noto Mono Bold 13'" }
         - { key: 'text-scaling-factor', value: '1.10' }
+
+    - name: Gnome | gedit | create gedit/styles directories
+      ansible.builtin.file:
+        path: /home/{{ user_name }}/.local/share/gedit/styles
+        state: directory
+        owner: {{ user_name }}
+        group: {{ group_name }}
+        mode: 0755
+        recurse: true
+
+    - name: Gnome | gedit | download gedit colorschemes from github
+      ansible.builtin.git:
+        repo: "https://github.com/mig/gedit-themes.git"
+        dest: "/tmp/gedit-themes"
+
+    - name: Gnome | gedit | copy gedit colorschemes to .local/share/gedit/styles
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: /home/bernhard/.local/share/gedit/styles/
+        owner: {{ user_name }}
+        group: {{ group_name }}
+        mode: 0644
+      with_fileglob: "/tmp/gedit-themes/*.xml"
 
     - name: Gnome | gedit | set editor values
       community.general.dconf:
         key: "/org/gnome/gedit/preferences/editor/{{ item.key }}"
         value: "{{ item.value }}"
       with_items:
-        - { key: 'scheme', value: "'cobalt'" }
-        - { key: 'tabs-size', value: 'uint32 4' }
+        - { key: 'scheme', value: "'Darkmacs'" }
+        - { key: 'tabs-size', value: 'uint32 2' }
