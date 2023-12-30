@@ -1,38 +1,12 @@
 ---
-- name: Information | geany | download latest release info for geany
-  ansible.builtin.shell: |
-    set -o pipefail
-    curl --silent https://api.github.com/repos/ecmu/geany.AppImage/releases/latest |
-    jq -r .tag_name
-  args:
-    executable: /bin/bash
-  register: geany_release
-  changed_when: geany_release.rc == 0
 
-- name: Information | geany | Release {{ geany_release.stdout }}
-  ansible.builtin.debug:
-    msg: "Latest release for geany is: {{ geany_release.stdout }} "
+- name: Software | geany | install packages
+  ansible.builtin.apt:
+    state: present
+    pkg:
+      - geany
+      - geany-plugins
 
-- name: Software | geany | install up-to-date geany appimage
-  ansible.builtin.get_url:
-    url: https://github.com/ecmu/geany.AppImage/releases/download/{{ geany_release.stdout }}/Geany-{{ geany_release.stdout }}-x86_64.AppImage
-    dest: /usr/local/bin
-    owner: root
-    group: root
-    mode: 0755
-
-- name: Software | geany | Copy --.appimage to geany
-  ansible.builtin.copy:
-    src: /usr/local/bin/Geany-{{ geany_release.stdout }}-x86_64.AppImage
-    dest: /usr/local/bin/geany
-    owner: root
-    group: root
-    mode: 0755
-
-- name: Software | geany | Remove --.appimage file
-  ansible.builtin.file:
-    path: /usr/local/bin/Geany-{{ geany_release.stdout }}-x86_64.AppImage
-    state: absent
 
 - name: Software |  geany | create .config/geany/colorschemes directories
   ansible.builtin.file:
@@ -40,7 +14,7 @@
     state: directory
     owner: "{{ user_name }}"
     group: "{{ group_name }}"
-    mode: 0700
+    mode: 0755
   with_items:
     - { dir: ".config/geany" }
     - { dir: ".config/geany/colorschemes" }
@@ -60,28 +34,28 @@
     dest: /home/{{ user_name }}/.config/geany/colorschemes/
     archive: true
 
-#- name: Software | geany | copy filetypes.yaml
-#  ansible.builtin.copy:
-#    src: /usr/share/geany/filedefs/filetypes.yaml
-#    dest: /home/{{ user_name }}/.config/geany/filedefs/filetypes.yaml
-#    owner: "{{ user_name }}"
-#    group: "{{ group_name }}"
-#    mode: 0644
-#
-#- name: Software | geany | Insert identifier=types in filetypes.yaml
-#  ansible.builtin.lineinfile:
-#    path: /home/{{ user_name }}/.config/geany/filedefs/filetypes.yaml
-#    insertafter: "^operator=operator"
-#    line: "identifier=types"
-#
-#- name: Software | geany | Modify cursor and indend guide values
-#  become: true
-#  become_method: ansible.builtin.sudo
-#  ansible.builtin.lineinfile:
-#    path: /usr/share/geany/filedefs/filetypes.common
-#    insertafter: "{{ item.src }}"
-#    line: "{{ item.dest }}"
-#  with_items:
-#    - { src: "^caret=caret", dest: "caret=0x00ff00;0x0;false;false" }
-#    - { src: "^caret_width=1", dest: "caret_width=3" }
-#    - { src: "^indent_guide=indent_guide", dest: "indent_guide=0xDAFB31;0xffffff;false;false" }
+- name: Software | geany | copy filetypes.yaml
+  ansible.builtin.copy:
+    src: /usr/share/geany/filedefs/filetypes.yaml
+    dest: /home/{{ user_name }}/.config/geany/filedefs/filetypes.yaml
+    owner: "{{ user_name }}"
+    group: "{{ group_name }}"
+    mode: 0644
+
+- name: Software | geany | Insert identifier=types in filetypes.yaml
+  ansible.builtin.lineinfile:
+    path: /home/{{ user_name }}/.config/geany/filedefs/filetypes.yaml
+    insertafter: "^operator=operator"
+    line: "identifier=types"
+
+- name: Software | geany | Modify cursor and indend guide values
+  become: true
+  become_method: ansible.builtin.sudo
+  ansible.builtin.lineinfile:
+    path: /usr/share/geany/filedefs/filetypes.common
+    insertafter: "{{ item.src }}"
+    line: "{{ item.dest }}"
+  with_items:
+    - { src: "^caret=caret", dest: "caret=0x00ff00;0x0;false;false" }
+    - { src: "^caret_width=1", dest: "caret_width=3" }
+    - { src: "^indent_guide=indent_guide", dest: "indent_guide=0xDAFB31;0xffffff;false;false" }
