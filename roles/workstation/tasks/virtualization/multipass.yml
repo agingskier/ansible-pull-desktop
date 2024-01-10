@@ -19,9 +19,9 @@
       register: snap_stop
       changed_when: snap_stop.rc == 0
 
-    - name: Software | multipass | Create target directory /mnt/Multipass/multipass
+    - name: Software | multipass | Create target directory /mnt/Storage/multipass
       ansible.builtin.file:
-        path: /mnt/Multipass/multipass
+        path: /mnt/Storage/multipass
         state: directory
         owner: "{{ user_name }}"
         group: "{{ group_name }}"
@@ -40,7 +40,7 @@
         dest: "/etc/systemd/system/snap.multipass.multipass.service.d/override.conf"
         content: |
           [Service]
-          Environment=MULTIPASS_STORAGE=/mnt/Multipass/multipass
+          Environment=MULTIPASS_STORAGE=/mnt/Storage/multipass
         owner: root
         group: root
         mode: 0644
