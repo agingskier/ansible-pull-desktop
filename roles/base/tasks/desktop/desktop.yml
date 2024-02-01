@@ -41,8 +41,8 @@
       ansible.builtin.file:
         path: /home/{{ user_name }}/.local/share/gedit/styles
         state: directory
-        owner: {{ user_name }}
-        group: {{ group_name }}
+        owner: "{{ user_name }}"
+        group: "{{ group_name }}"
         mode: 0755
         recurse: true
 
@@ -55,8 +55,8 @@
       ansible.builtin.copy:
         src: "{{ item }}"
         dest: /home/bernhard/.local/share/gedit/styles/
-        owner: {{ user_name }}
-        group: {{ group_name }}
+        owner: "{{ user_name }}"
+        group: "{{ group_name }}"
         mode: 0644
       with_fileglob: "/tmp/gedit-themes/*.xml"
 

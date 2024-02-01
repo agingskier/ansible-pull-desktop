@@ -40,7 +40,7 @@
     owner: root
     group: root
     mode: 0644
-  with_item:
+  with_items:
     - JetBrainsMono.zip
     - FiraCode.zip
 
