@@ -87,5 +87,5 @@
     - name: Users | bernhard | import tasks for vim
       ansible.builtin.import_tasks: ../software/vim.yml
 
-    - name: Users | bernhard | import tasks for zsh
-      ansible.builtin.import_tasks: ../software/zsh.yml
+#    - name: Users | bernhard | import tasks for zsh
+#      ansible.builtin.import_tasks: ../software/zsh.yml
