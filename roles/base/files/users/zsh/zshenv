@@ -12,22 +12,6 @@ export GREP_COLORS='sl=97;48;5;236:cx=37;40:mt=30;48;5;186:fn=38;5;197:ln=38;5;1
 export EDITOR=vim
 export VISUAL=vim
 
-## history
-# ignore duplicate lines in the history.
-# ignore commands that  start with space `ignorespace'.
-export HISTFILE=$HOME/.zsh_history
-export HISTCONTROL=ignoreboth:erasedups
-export HISTSIZE=2000
-export HISTFILESIZE=8000
-export HISTIGNORE="free*:exit:clear:man*:mkdir*"
-export HISTTIMEFORMAT="%F %T: " # Date, Time
-shopt -s histappend
-shopt -s histverify
-shopt -s autocd
-shopt -s cdspell
-shopt -s dotglob
-shopt -s interactive_comments # default
-
 ## XDG
 # Set up a few standard directories based on:
 #   https://wiki.archlinux.org/title/XDG_Base_Directory
@@ -39,6 +23,17 @@ export XDG_STATE_HOME="${HOME}/.local/state"
 
 ## zsh
 export ZDOTDIR=$HOME/.config/zsh
+
+## history
+# setopt are defined in history.zsh file
+# ignore duplicate lines in the history.
+# ignore commands that  start with space `ignorespace'.
+export HISTFILE=$ZDOTIR/.zsh_history
+export HISTCONTROL=ignoreboth:erasedups
+export HISTSIZE=2000
+export HISTFILESIZE=8000
+export HISTIGNORE="free*:exit:clear:man*:mkdir*"
+export HISTTIMEFORMAT="%F %T: " # Date, Time
 
 ## path
 # $HOME/bin is added to PATH in .profile, so not required to add here
