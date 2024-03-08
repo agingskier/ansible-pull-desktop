@@ -16,8 +16,32 @@
     mode: 0775
   with_items:
     - { dir: 'zsh' }
-    - { dir: 'zsh/plugins' }
 
+- name: Software | zap | Download install script zap (plugin manager for zsh)
+  ansible.builtin.shell: |
+    set -o pipefail
+    curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh --branch release-v1 \
+      --output /tmp/zap-install.sh
+  args:
+    executable: /bin/zsh
+  register: zap_load
+  changed_when: zap_load.rc == 0
+
+- name: Software | zap | Change permission of install script
+  ansible.builtin.file:
+    path: /tmp/{{ item }}
+    state: file
+    owner: "{{ user_name }}"
+    group: "{{ group_name }}"
+    mode: 0755
+  with_items:
+    - zap-install.sh
+
+- name: Software | zap | install zap
+  ansible.builtin.script: /tmp/zap-install.sh
+  register: zap_install
+  changed_when: zap_install.rc == 0
+  
 - name: Zsh | copy individual zsh config files for {{ user_name }}
   ansible.builtin.copy:
     src: users/zsh/{{ item.src }}
@@ -26,22 +50,22 @@
     group: "{{ group_name }}"
     mode: 0600
   with_items:
-    - { src: 'shell-manager.zsh', dest: 'shell-manager.zsh' }
     - { src: 'aliases.zsh', dest: 'aliases.zsh' }
-    - { src: 'completion.zsh', dest: 'completion.zsh' }
     - { src: 'history.zsh', dest: 'history.zsh' }
-    - { src: 'vim-mode.zsh', dest: 'vim-mode.zsh' }
     - { src: 'prompt.zsh', dest: 'prompt.zsh' }
-    - { src: 'zsh-functions.zsh', dest: 'zsh-functions.zsh' }
-    - { src: 'zshenv', dest: 'zshenv' }
+    - { src: 'functions.zsh', dest: 'functions.zsh' }
     - { src: 'zshrc', dest: '.zshrc' }
 
-- name: Zsh | copy dotfiles for {{ user_name }}
-  ansible.builtin.copy: 
-    src: /home/{{ user_name }}/.config/zsh/{{ item.src }}
+- name: Zsh | copy zshenv as dotfile for {{ user_name }}
+  ansible.builtin.copy:
+    src: users/zsh/{{ item.src }}
     dest: /home/{{ user_name }}/{{ item.dest }}
     owner: "{{ user_name }}"
     group: "{{ group_name }}"
     mode: 0600
   with_items:
     - { src: 'zshenv', dest: '.zshenv' }
+
+- name: Zsh | change shell to /bin/zsh - new login required
+  ansible.builtin.shell:
+    cmd: chsh -s $(which zsh) 
