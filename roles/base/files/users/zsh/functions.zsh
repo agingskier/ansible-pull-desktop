@@ -1,4 +1,4 @@
-#!/bin/env zsh
+#!/bin/env bash
 #===============================================================
 #
 # FUNCTIONS
@@ -18,14 +18,17 @@ function func ()
 	echo -e "${magenta}lj 		${yellow}--> ${green}display messages with journalctl"
 	echo -e "${magenta}netinfo 	${yellow}--> ${green}network information"
 	echo -e "${magenta}myinfo 		${yellow}--> ${green}display various system information"
-	echo -e "${magenta}dis-colors 		${yellow}--> ${green}display various color schemes"
+	echo -e "${magenta}dis-colors	${yellow}--> ${green}display various color schemes"
 	echo -e "${magenta}save 		${yellow}--> ${green}execute different backup's"
 	echo -e "${magenta}desk 		${yellow}--> ${green}display desktop name and version"
+	echo -e "${magenta}doc 		${yellow}--> ${green}start DocFetcher from /mnt/NAS/software"
 	echo -e "${magenta}ebook 		${yellow}--> ${green}Start Calibre for specific Libraries"
+	echo -e "${magenta}extip 		${yellow}--> ${green}Display external ip address"
 	echo -e "${magenta}bt 		${yellow}--> ${green}Boot Time with systemd-analyze"
 	echo -e "${magenta}fn 	 	${yellow}--> ${green}find all files with a pattern in current directory"
 	echo -e "${magenta}fr 	 	${yellow}--> ${green}find all files with a pattern in complete system excluding /proc"
 	echo -e "${magenta}fs	 	${yellow}--> ${green}find all files with specified size in current directory"
+	echo -e "${magenta}docker-cleanup   ${yellow}--> ${green}Cleanup docker, use --dry-run to check"
 	echo "${NC}"
 }
 
@@ -54,28 +57,28 @@ function dis-colors ()
 {
 	echo -e "\n${cyan}Display various color schemes:${NC}"
 	echo -e "${cyan}------------------------------${NC}"
-	echo -e "\n${green}1 ${magenta}256colors 	${yellow}--> ${green}scheme for 256 colors terminal"
-	echo -e "${green}2 ${magenta}8colors  	${yellow}--> ${green}scheme for 8 colors terminal"
-	echo -e "${green}3 ${magenta}dircolors  	${yellow}--> ${green}colors for ls command (.dircolors file)"
-	echo -e "${green}4 ${magenta}ansi colors	${yellow}--> ${green}display ansi color values"
-	echo -e "${green}5 ${magenta}tput colors	${yellow}--> ${green}scheme for tput colors"
-    	echo -e "${green}6 ${magenta}Hex colors 	${yellow}--> ${green}Hex colors on hexcol.com"
+	echo -e "\n${green}01 ${magenta}256colors 	${yellow}--> ${green}scheme for 256 colors terminal"
+	echo -e "${green}02 ${magenta}8colors  	${yellow}--> ${green}scheme for 8 colors terminal"
+	echo -e "${green}03 ${magenta}dircolors  	${yellow}--> ${green}colors for ls command (.dircolors file)"
+	echo -e "${green}04 ${magenta}ansi colors	${yellow}--> ${green}display ansi color values"
+	echo -e "${green}05 ${magenta}tput colors	${yellow}--> ${green}scheme for tput colors"
+    	echo -e "${green}06 ${magenta}Hex colors 	${yellow}--> ${green}Hex colors on hexcol.com"
 	echo "${NC}"
-	read -p "==>_" answer
+	read "answer?Select color scheme ==>_"
 	echo " "
   	case $answer in
-		1) 256color.sh
+		01) 256color.sh
 		;;
-		2) 8color.sh
+		02) 8color.sh
 		;;
-		3) dislscols.sh
+		03) dislscols.sh
 		;;
-		4) ansi-colors.sh
+		04) ansi-colors.sh
 		;;
-		5) tputcolors.sh
+		05) tputcolors.sh
 		;;
-                6) firefox https://hexcol.com/color/b200b2
-                ;;
+		06) firefox https://hexcol.com/color/b200b2
+        ;;
 	esac
 }
 
@@ -103,14 +106,16 @@ function netinfo ()	#netinfo - shows network information for your system
 	echo "---------------------------------------------------"
 }
 
+function extip ()  # Get External IP address
+{
+	curl -4 ifconfig.co
+	curl -6 ifconfig.co
+}
+
 function myinfo ()
 {
 	printf "CPU:    "
 	cat /proc/cpuinfo | grep "model name" | head -1 | awk '{ for (i = 4; i <= NF; i++) printf "%s ", $i }'
-	printf "\n"
-	head /sys/devices/system/cpu/vulnerabilities/*
-	printf "\n"
-	cputemp
 	printf "\n"
 	hostnamectl | ccze -A
 	printf "\n"
@@ -121,7 +126,7 @@ function fn ()				# function to search for files in current directory
 {
 	tmp=$*
 	if [ -z "$tmp" ]; then
-		read -p "File pattern (i.e. *.pdf or *steuer*): " tmp
+		read "tmp?File pattern (i.e. *.pdf or *steuer*): >"
 	fi
 	find . -iname "*$tmp*"
 }
@@ -130,7 +135,7 @@ function fr ()				# function to search for files in complete system excluding /p
 {
 	tmp=$*
 	if [ -z "$tmp" ]; then
-		read -p "File pattern (i.e. *.pdf or *steuer*): " tmp
+		read "tmp?File pattern (i.e. *.pdf or *steuer*): >"
 	fi
 	sudo find / \( -path /proc -o -path /mnt \) -prune -o -iname "$tmp"
 }
@@ -139,7 +144,7 @@ function fs ()				# function to search for files in current directory
 {
 	tmp=$*
 	if [ -z "$tmp" ]; then
-		read -p "File size in MB or GB (i.e. 4000M or 4G): " tmp
+		read "tmp?File size in MB or GB (i.e. 4000M or 4G): >"
 	fi
 	find . -type f -size "+$tmp"
 }
@@ -148,24 +153,24 @@ function save ()
 {
 	echo -e "\n${cyan}Execute backup jobs to NAS or HDD:${NC}"
 	echo -e "${cyan}----------------------------------${NC}"
-	echo -e "\n${green}1 ${magenta}Home dir dry-run 		${yellow}--> ${green}Dry run of home directory"
-	echo -e "${green}2 ${magenta}Home dir  			${yellow}--> ${green}Backup of home directory to NAS"
-	echo -e "${green}3 ${magenta}Full backup 			${yellow}--> ${green}Full backup to HDD"
-	echo -e "${green}4 ${magenta}Synchronize Digikam dry-run 	${yellow}--> ${green}Dry run all *.jpg pictures to /mnt/Digikam"
-	echo -e "${green}5 ${magenta}Synchronize Digikam 		${yellow}--> ${green}Copy all *.jpg pictures to /mnt/Digikam"
+	echo -e "\n${green}01 ${magenta}Home dir dry-run 		${yellow}--> ${green}Dry run of home directory"
+	echo -e "${green}02 ${magenta}Home dir  			${yellow}--> ${green}Backup of home directory to NAS"
+	echo -e "${green}03 ${magenta}Full backup 			${yellow}--> ${green}Full backup to HDD"
+	echo -e "${green}04 ${magenta}Synchronize Digikam dry-run 	${yellow}--> ${green}Dry run all *.jpg pictures to /mnt/Digikam"
+	echo -e "${green}05 ${magenta}Synchronize Digikam 		${yellow}--> ${green}Copy all *.jpg pictures to /mnt/Digikam"
 	echo "${NC}"
-	read -p "==>_" answer
+	read "answer?Select required backup job ==>_"
 	echo " "
   	case $answer in
-		1) backup-home-dry.sh
+		01) backup-home-dry.sh
 		;;
-		2) backup-home.sh
+		02) backup-home.sh
 		;;
-		3) backup-full.sh
+		03) backup-full.sh
 		;;
-		4) sync-digikam-dry.sh
+		04) sync-digikam-dry.sh
 		;;
-		5) sync-digikam.sh
+		05) sync-digikam.sh
 		;;
 	esac
 }
@@ -193,31 +198,31 @@ function desk ()
 		*)
 			;;
 	esac
-echo ${yellow}"Desktop: "${magenta}$TOP${yellow} "Version: "${magenta}$VER${NC}
+	echo ${yellow}"Desktop: "${magenta}$TOP${yellow} "Version: "${magenta}$VER${NC}
 }
 
 function ebook ()
 {
 	echo -e "\n${cyan}Start Calibre with specified Library:${NC}"
 	echo -e "${cyan}------------------${NC}"
-	echo -e "\n${green}1 ${magenta}Linux 			${yellow}--> ${green}Start with /mnt/Data/CalibreLibrary/Linux"
-	echo -e "${green}2 ${magenta}LinuxWelt 			${yellow}--> ${green}Start with /mnt/Data/CalibreLibrary/LinuxWelt"
-	echo -e "${green}3 ${magenta}LibreOffice    	    	${yellow}--> ${green}Start with /mnt/Data/CalibreLibrary/LibreOffice"
-	echo -e "${green}4 ${magenta}Hardware 			${yellow}--> ${green}Start with /mnt/Data/CalibreLibrary/Hardware"
-	echo -e "${green}5 ${magenta}Software 			${yellow}--> ${green}Start with /mnt/Data/CalibreLibrary/Software"
+	echo -e "\n${green}01 ${magenta}Linux 			${yellow}--> ${green}Start with /mnt/Data/CalibreLibrary/Linux"
+	echo -e "${green}02 ${magenta}LinuxWelt 			${yellow}--> ${green}Start with /mnt/Data/CalibreLibrary/LinuxWelt"
+	echo -e "${green}03 ${magenta}LibreOffice    	    	${yellow}--> ${green}Start with /mnt/Data/CalibreLibrary/LibreOffice"
+	echo -e "${green}04 ${magenta}Hardware 			${yellow}--> ${green}Start with /mnt/Data/CalibreLibrary/Hardware"
+	echo -e "${green}05 ${magenta}Software 			${yellow}--> ${green}Start with /mnt/Data/CalibreLibrary/Software"
 	echo "${NC}"
-	read -p "==>_" answer
+	read "answer?Select Library ==>_"
 	echo " "
   	case $answer in
-		1) calibre --with-library=/mnt/Data/CalibreLibrary/Linux
+		01) calibre --with-library=/mnt/Data/CalibreLibrary/Linux
 		;;
-		2) calibre --with-library=/mnt/Data/CalibreLibrary/LinuxWelt
+		02) calibre --with-library=/mnt/Data/CalibreLibrary/LinuxWelt
 		;;
-		3) calibre --with-library=/mnt/Data/CalibreLibrary/LibreOffice
+		03) calibre --with-library=/mnt/Data/CalibreLibrary/LibreOffice
 		;;
-		4) calibre --with-library=/mnt/Data/CalibreLibrary/Hardware
+		04) calibre --with-library=/mnt/Data/CalibreLibrary/Hardware
 		;;
-		5) calibre --with-library=/mnt/Data/CalibreLibrary/Software
+		05) calibre --with-library=/mnt/Data/CalibreLibrary/Software
 		;;
 	esac
 }
@@ -225,26 +230,26 @@ function bt ()
 {
 	echo -e "\n${cyan}Analyze Boot Time:${NC}"
 	echo -e "${cyan}------------------${NC}"
-	echo -e "\n${green}1 ${magenta}Overview 			${yellow}--> ${green}Just an overview of analyze"
-	echo -e "${green}2 ${magenta}Slowest services 		${yellow}--> ${green}Blame list of analyze"
-	echo -e "${green}3 ${magenta}Plot all services 		${yellow}--> ${green}Plot of analyze"
-	echo -e "${green}4 ${magenta}Critical chain 		${yellow}--> ${green}Tree of critical chain"
+	echo -e "\n${green}01 ${magenta}Overview 			${yellow}--> ${green}Just an overview of analyze"
+	echo -e "${green}02 ${magenta}Slowest services 		${yellow}--> ${green}Blame list of analyze"
+	echo -e "${green}03 ${magenta}Plot all services 		${yellow}--> ${green}Plot of analyze"
+	echo -e "${green}04 ${magenta}Critical chain 		${yellow}--> ${green}Tree of critical chain"
 	echo "${NC}"
-	read -p "==>_" answer
+	read "answer?Select Boot Info ==>_"
 	echo " "
   	case $answer in
-		1) systemd-analyze
+		01) systemd-analyze
 		;;
-		2) systemd-analyze blame
+		02) systemd-analyze blame
 		;;
-		3)  echo "Plotting Boot Times and display with Firefox"
+		03)  echo "Plotting Boot Times and display with Firefox"
 			if [ -f ~/boot.svg ]; then
 				rm ~/boot.svg
 			fi
 			systemd-analyze plot > boot.svg
 			firefox boot.svg
 		;;
-		4) systemd-analyze critical-chain
+		04) systemd-analyze critical-chain
 		;;
 	esac
 }

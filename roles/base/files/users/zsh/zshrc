@@ -1,80 +1,30 @@
-#!/bin/env zsh
-
-#---------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 # use the ~/.dircolors as input to dircolors command which will
 # create the LS_COLORS variable and exports it.
 # see https://github.com/seebi/dircolors-solarized/raw/master/dircolors.256dark
 # for a sample.
-#---------------------------------------------------------------------
+#------------------------------------------------------------------------------
 
 eval `dircolors -b ~/.dircolors`
-
-# +------------+
-# | SETOPTs    |
-# | navigation |
-# +------------+
-
-# use "man zshoptions" and search for “Completion”
-setopt no_beep              # Don't beep on error
-setopt interactive_comments # allow comments even in interactive shells
-setopt auto_cd              # if  command is the name of a directory, ...
-#                           # ... perform the cd command to that directory
-setopt extended_Glob        # extended globbing syntax, awesome!
-setopt correct              # spelling correction for commands
-setopt nomatch              # On an ambiguous completion, just insert the first match immediately
-
-# navigate in directory stack (
-setopt auto_pushd           # Push the current directory visited on the stack.
-setopt pushd_ignore_dups    # Do not store duplicates in the stack.
-setopt pushd_silent         # Do not print the directory stack after pushd or popd.
-
-# Module zsh/complist must be loaded before compinit
-zmodload zsh/complist
-
-# To initialize the completion for the current Zsh session, you’ll need to call the function compinit.
-autoload -U compinit
-compinit
-_comp_options+=(globdots)   # Include hidden files.
-
-# To load the prompt, you need to add something like that in your zshrc:
-
-# fpath=(/my/path/to/zsh/prompt $fpath)
-# autoload -Uz name_of_the_prompt_file; name_of_the_prompt_file
-# The first line will add the folder containing the prompt to $fpath, as discussed above.
-# It will also ensure that any function declared in the folder /my/path/to/zsh/prompt will ...
-# ... overwrite every other ones with the same name, in other fpath folders.
-# This prompt require font awesome 6 for the git icons
-
-fpath=($ZDOTDIR/plugins $fpath)
 
 # Colors
 autoload -Uz colors && colors
 
-# Function to add files, add plugins and set fpath
-source "$ZDOTDIR/shell-manager.zsh"
+# Created by Zap installer
+[ -f "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh" ] && source "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh"
 
-# Normal files to source
-zsh_add_file "history.zsh"
-zsh_add_file "completion.zsh"
-zsh_add_file "vim-mode.zsh"
-zsh_add_file "aliases.zsh"
-zsh_add_file "prompt.zsh"
-zsh_add_file "zsh-functions.zsh"
+plug "zsh-users/zsh-autosuggestions"
+plug "zsh-users/zsh-syntax-highlighting"
 
-# Plugins
-zsh_add_plugin "zsh-users/zsh-autosuggestions"
-zsh_add_plugin "zsh-users/zsh-syntax-highlighting"
-zsh_add_plugin "z-shell/zsh-diff-so-fancy"
-zsh_add_plugin "romkatv/powerlevel10k"
+plug "zap-zsh/completions"
 
-# zsh_add_completion "zsh_users/zsh-completions"
-zsh_add_completion "endaaman/lxd-completion-zsh"
+plug "jeffreytse/zsh-vi-mode"
+plug "$ZDOTDIR/aliases.zsh"
+plug "$ZDOTDIR/history.zsh"
+plug "$ZDOTDIR/prompt.zsh"
+plug "$ZDOTDIR/functions.zsh"
 
-# For more plugins: https://github.com/unixorn/awesome-zsh-plugins
-# More completions https://github.com/zsh-users/zsh-completions
-
-# edit current command line with vim (vim-mode, then CTRL-e)
-autoload -Uz edit-command-line
-zle -N edit-command-line
-bindkey -M vicmd '^e' edit-command-line
+# Load and initialise completion system
+autoload -Uz compinit
+compinit
 
