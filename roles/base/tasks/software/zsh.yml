@@ -20,8 +20,8 @@
 - name: Software | zap | Download install script zap (plugin manager for zsh)
   ansible.builtin.shell: |
     set -o pipefail
-    curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh --branch release-v1 \
-      --output /tmp/zap-install.sh
+    curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh \
+      --output /tmp/zap-install.zsh
   args:
     executable: /bin/zsh
   register: zap_load
@@ -35,10 +35,10 @@
     group: "{{ group_name }}"
     mode: 0755
   with_items:
-    - zap-install.sh
+    - zap-install.zsh
 
-- name: Software | zap | install zap
-  ansible.builtin.script: /tmp/zap-install.sh
+- name: Software | zap | install zsh plugin manager (zap
+  ansible.builtin.script: /tmp/zap-install.zsh --branch release-v1
   register: zap_install
   changed_when: zap_install.rc == 0
   
@@ -68,4 +68,8 @@
 
 - name: Zsh | change shell to /bin/zsh - new login required
   ansible.builtin.shell:
-    cmd: chsh -s $(which zsh) 
+    cmd: chsh -s $(which zsh)
+  args:
+    executable: /bin/zsh
+  register: new_shell
+  changed_when: new_shell.rc == 0
