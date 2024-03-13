@@ -57,7 +57,7 @@
 
 - name: Users | Zsh | copy individual zsh config files for root
   ansible.builtin.copy:
-    src: zsh/{{ item.src }}
+    src: users/zsh/{{ item.src }}
     dest: /root/.config/zsh/{{ item.dest }}
     owner: root
     group: root
@@ -71,7 +71,7 @@
 
 - name: Users | Zsh | copy dotfiles for root
   ansible.builtin.copy: 
-    src: zsh/{{ item.src }}
+    src: users/zsh/{{ item.src }}
     dest: /root/{{ item.dest }}
     owner: root
     group: root
