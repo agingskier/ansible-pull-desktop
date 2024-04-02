@@ -6,7 +6,7 @@
 
 alias reload='source ~/config/zsh/.zshrc'
 
-alias extip='curl -4 ifconfig.co && curl -6 ifconfig.co'
+alias extip='curl -4 ifconfig.co'
 alias ping='ping -c 3'
 
 alias path='echo -e ${PATH//:/\\n}'
@@ -166,7 +166,9 @@ alias ssha='eval $(ssh-agent) && ssh-add'
 # +------+
 # | nvim |
 # +------+
-alias tilixnvim="tilix --session=~/.config/tilix/nvim-split.json"
+alias txvim="tilix --session=~/.config/tilix/nvim-split.json"
+alias txlog="tilix --session=~/.config/tilix/wide.json -x 'journalctl -b0 -r'"
+alias txtop="tilix --session=~/.config/tilix/wide.json -x 'bpytop'"
 
 #------------------------------------------------------------- 
 # End Aliases
