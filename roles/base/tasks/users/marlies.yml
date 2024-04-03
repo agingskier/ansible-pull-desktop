@@ -18,19 +18,26 @@
         group: root
         mode: 0440
 
-    - name: Users | marlies | change Exec= line for Tilix New Window in com.gexperts.Tilix.desktop
+    - name: Users | marlies | change first occurence of Exec=tilix in /usr/share/applications/com.gexperts.Tilix.desktop
       become: true
       become_method: ansible.builtin.sudo
       ansible.builtin.lineinfile:
         path: /usr/share/applications/com.gexperts.Tilix.desktop
-        dest: /usr/share/applications/com.gexperts.Tilix.desktop
-        regexp: " {{ item.regexp }}"
-        line: " {{ item.line }}"
-      loop:
+        regexp: "^Exec=tilix"
+        line: "Exec=tilix --title=my-tilix"
+        firstmatch: true
+        state: present
+        
+    - name: Users | marlies | change Exec= line for Tilix New Window in com.gexperts.Tilix.desktop
+      become: true
+      become_method: ansible.builtin.sudo
+      ansible.builtin.replace:
+        path: /usr/share/applications/com.gexperts.Tilix.desktop
+        regexp: "{{ item.regexp }}"
+        replace: "{{ item.line }}"
+      with_items:
         - { regexp: '^Exec=tilix --action=app-new-window', line: 'Exec=tilix --action=app-new-window --geometry=80x24+350+120 --session=~/.config/tilix/wide.json' }
-        - { regexp: '^Exec=tilix --action=app-new-session', line: 'Exec=tilix --title=my-tilix --action=app-new-session' }
-        - { regexp: '^Exec=tilix', line: 'Exec=tilix --title=my-tilix' }
-
+        - { regexp: '^Exec=tilix --action=app-new-session', line: 'Exec=tilix --title=my-tilix --action=app-new-session' } 
 
     - name: Users | marlies | copy dotfiles
       ansible.builtin.copy:
