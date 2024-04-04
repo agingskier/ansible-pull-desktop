@@ -166,9 +166,9 @@ alias ssha='eval $(ssh-agent) && ssh-add'
 # +------+
 # | nvim |
 # +------+
-alias txvim="tilix --session=~/.config/tilix/nvim-split.json"
-alias txlog="tilix --session=~/.config/tilix/wide.json -x 'journalctl -b0 -r'"
-alias txtop="tilix --session=~/.config/tilix/wide.json -x 'bpytop'"
+alias txvim="tilix --geometry=80x24+100+100 --session=~/.config/tilix/nvim-split.json"
+alias txlog="tilix --geometry=80x24+200+200 --session=~/.config/tilix/wide.json -x 'journalctl -b0 -r'"
+alias txtop="tilix --geometry=80x24+300+300 --session=~/.config/tilix/wide.json -x 'bpytop'"
 
 #------------------------------------------------------------- 
 # End Aliases
