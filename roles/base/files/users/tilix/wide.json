@@ -1,7 +1,7 @@
 {
     "child": {
         "directory": "",
-        "height": 873,
+        "height": 1100,
         "profile": "2b7c4080-0ddd-46c5-8f23-563fd3ba789d",
         "readOnly": false,
         "synchronizedInput": true,
@@ -10,7 +10,7 @@
         "uuid": "df55d866-b8c3-4fe6-8c2e-19db96b8fa1d",
         "width": 2666
     },
-    "height": 873,
+    "height": 1100,
     "name": "${title}",
     "synchronizedInput": false,
     "type": "Session",

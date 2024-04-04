@@ -1,23 +1,23 @@
 {
     "child": {
         "child1": {
-            "directory": "/home/bernhard/.config/my-nvim-basic",
+            "directory": "/home/bernhard/.config/my-neo",
             "height": 1293,
             "profile": "2b7c4080-0ddd-46c5-8f23-563fd3ba789d",
             "readOnly": false,
             "synchronizedInput": true,
-            "title": "my-nvim-basic",
+            "title": "my-neo-nvim",
             "type": "Terminal",
             "uuid": "88e2c250-b670-463f-8af1-5b5d6fab987b",
             "width": 1247
         },
         "child2": {
-            "directory": "/home/bernhard/.config/my-nvim",
+            "directory": "/home/bernhard/.config/my-zero",
             "height": 1293,
             "profile": "2b7c4080-0ddd-46c5-8f23-563fd3ba789d",
             "readOnly": false,
             "synchronizedInput": true,
-            "title": "my-nvim",
+            "title": "my-zero-nvim",
             "type": "Terminal",
             "uuid": "bac52253-20e7-4be2-bad5-ae4f82753975",
             "width": 1246
