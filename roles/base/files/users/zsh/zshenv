@@ -28,7 +28,7 @@ export ZDOTDIR=$HOME/.config/zsh
 # setopt are defined in history.zsh file
 # ignore duplicate lines in the history.
 # ignore commands that  start with space `ignorespace'.
-export HISTFILE=$ZDOTIR/.zsh_history
+export HISTFILE=$ZDOTDIR/.zsh_history
 export HISTCONTROL=ignoreboth:erasedups
 export HISTSIZE=2000
 export HISTFILESIZE=8000
