@@ -9,7 +9,7 @@
     - name: Software | brave browser | add brave gpg key to keyring file
       ansible.legacy.shell: |
         set -o pipefail
-        curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+        curl -fsSLo /etc/apt/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
 #        gpg --dearmor | \
 #        tee /etc/apt/trusted.gpg.d/brave-browser-archive-keyring.gpg > /dev/null
       args:
@@ -19,8 +19,9 @@
 
     - name: Software | brave browser | add brave apt repository
       ansible.builtin.apt_repository:
-        repo: 'deb [arch=amd64 signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main'
+        repo: 'deb [arch=amd64 signed-by=/etc/apt/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main'
         state: present
+        update_cache: true
 
     - name: Software | brave browser | install brave & prerequisite
       ansible.builtin.apt:
