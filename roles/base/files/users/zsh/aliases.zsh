@@ -101,11 +101,11 @@ alias cls='tput clear'
 alias which='type -a'
 alias fonts='fc-cache -f -v'
 
-alias x='nemo .'            # open nemo in current directory
-alias h='fc -l'            # last 16 entries in history
-alias hs='history | egrep'    # search history for an entry
+alias x='nemo .'                  # open nemo in current directory
+alias h='fc -l'                   # last 16 entries in history
+alias hs='history -i | egrep'     # search history for an entry with timestamp
 alias j='jobs -l'
-alias nf='find * -type f | wc -l'		# number of files
+alias nf='find * -type f | wc -l' # number of files
 
 # display 15 biggest files in chosen directory
 alias bigf='tree -iasfFQ | egrep -v /$ | sort -k2nr | head --lines=15'
