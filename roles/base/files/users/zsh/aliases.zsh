@@ -4,7 +4,7 @@
 # | System |
 # +--------+
 
-alias reload='source ~/config/zsh/.zshrc'
+alias reload='source ~/.config/zsh/.zshrc'
 
 alias extip='curl -4 ifconfig.co'
 alias ping='ping -c 3'
