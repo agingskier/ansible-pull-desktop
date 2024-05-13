@@ -7,6 +7,14 @@
 
 eval `dircolors -b ~/.dircolors`
 
+function precmd () {
+  SYS=`uname -r`
+  EXTIP=`curl -s -4 ifconfig.so`
+  
+  print -Pn -- '\e]2; - %n@%m - ${SYS} on ${EXTIP}\a'
+#   print -Pn -- '\e]2;%n@%m %~\a'
+}
+
 # Colors
 autoload -Uz colors && colors
 
