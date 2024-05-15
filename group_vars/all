@@ -1,16 +1,16 @@
 ---
 # file: group_vars/all
 # check installation guide: https://protonvpn.com/support/linux-ubuntu-vpn-setup/
-protonvpn_version: "1.0.3-2_all"
+protonvpn_version: "1.0.3-3_all"
 #
 # check: https://openjdk.org/projects/jdk/
-openjdk_version: "openjdk-21-jdk"
+openjdk_version: "openjdk-22-jdk"
 #
 # check: https://openjdk.org/projects/jdk/
-jdk_classpath_version: "java-21-openjdk-amd64"
+jdk_classpath_version: "java-22-openjdk-amd64"
 #
 # Check: https://gluonhq.com/products/javafx/
-javafx_version: "21"
+javafx_version: "22"
 #
 # check: GIMP sub directory if still 2.10
 gimp_subdir_version: "2.10"
