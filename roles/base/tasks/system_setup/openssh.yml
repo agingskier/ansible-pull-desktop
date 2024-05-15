@@ -8,7 +8,7 @@
 - name: System setup | openssh | enable daemon
   ansible.builtin.service:
     name: ssh
-    enabled: yes
+    enabled: true
     state: started
 
 - name: System setup | openssh | generate sshd_config file from template

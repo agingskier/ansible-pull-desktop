@@ -18,7 +18,7 @@
       become_user: "{{ user_name }}"
       ansible.builtin.command: variety --preferences
       timeout: 10
-      ignore_errors: yes
+      ignore_errors: true
       register: variety_result
       changed_when: variety_result.rc == 0
 

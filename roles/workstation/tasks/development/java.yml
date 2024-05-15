@@ -19,7 +19,7 @@
       ansible.builtin.unarchive:
         src: https://download2.gluonhq.com/openjfx/{{ javafx_version }}/openjfx-{{ javafx_version }}_linux-x64_bin-sdk.zip
         dest: /opt
-        remote_src: yes
+        remote_src: true
         owner: root
         group: root
         mode: 0755

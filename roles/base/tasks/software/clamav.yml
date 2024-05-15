@@ -22,7 +22,7 @@
   ansible.builtin.user:
     name: "{{ user_name }}"
     groups: clamav
-    append: yes
+    append: true
 
 - name: Software | clamav | replace StandardOutput=syslog line with target journal
   ansible.builtin.replace: 

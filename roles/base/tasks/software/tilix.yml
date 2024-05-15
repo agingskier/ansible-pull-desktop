@@ -27,6 +27,7 @@
     - { url: 'v7Qag', dest: 'kibble.json' }
 
 - name: Software | tilix | set tilix values in dconf
+  become: true
   become_user: "{{ user_name }}"
   community.general.dconf:
     key: "/com/gexperts/Tilix/profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d/{{ item.key }}"

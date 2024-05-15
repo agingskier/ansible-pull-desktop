@@ -12,7 +12,6 @@
     group: root
     mode: 0700
   with_items:
-    - { dir: '.config/zsh' }
     - { dir: '.vim' }
     - { dir: '.vim/colors' }
 
@@ -30,51 +29,5 @@
     - { src: 'bash/dircolors', dest: '.dircolors' }
     - { src: 'vim/vimrc-root', dest: '.vimrc' }
 
-- name: Users | zap | Download install script zap (plugin manager for zsh)
-  ansible.builtin.shell: |
-    set -o pipefail
-    curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh \ 
-      --output /tmp/zap-install.zsh
-  args:
-    executable: /bin/zsh
-  register: zap_load
-  changed_when: zap_load.rc == 0
-
-- name: Users | zap | Change permission of scripts
-  ansible.builtin.file:
-    path: /tmp/{{ item }}
-    state: file
-    owner: root
-    group: root
-    mode: 0755
-  with_items:
-    - zap-install.zsh
-
-- name: Users | zap | install zsh plugin manager (zap)
-  ansible.builtin.script: /tmp/zap-install.zsh --branch release-v1
-  register: zap_install
-  changed_when: zap_install.rc == 0
-
-- name: Users | Zsh | copy individual zsh config files for root
-  ansible.builtin.copy:
-    src: users/zsh/{{ item.src }}
-    dest: /root/.config/zsh/{{ item.dest }}
-    owner: root
-    group: root
-    mode: 0600
-  with_items:
-    - { src: 'aliases.zsh', dest: 'aliases.zsh' }
-    - { src: 'history.zsh', dest: 'history.zsh' }
-    - { src: 'root-prompt.zsh', dest: 'prompt.zsh' }
-    - { src: 'functions.zsh', dest: 'functions.zsh' }
-    - { src: 'zshrc', dest: '.zshrc' }
-
-- name: Users | Zsh | copy dotfiles for root
-  ansible.builtin.copy: 
-    src: users/zsh/{{ item.src }}
-    dest: /root/{{ item.dest }}
-    owner: root
-    group: root
-    mode: 0600
-  with_items:
-    - { src: 'zshenv', dest: '.zshenv' }
+#    - name: Users | bernhard | import tasks for zsh
+#      ansible.builtin.import_tasks: ../software/zsh.yml

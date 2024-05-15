@@ -25,7 +25,7 @@
   ansible.builtin.git:
     repo: https://github.com/tmux-plugins/{{ item.repo }}
     dest: /home/{{ user_name }}/.config/tmux/plugins/{{ item.plug }}
-    force: yes
+    force: true
     version: master
   with_items:
     - { repo: 'tmux-cpu.git', plug: 'tmux-cpu' }
@@ -41,7 +41,7 @@
     owner: "{{ user_name }}"
     group: "{{ group_name }}"
     mode: 0755
-    recurse: yes
+    recurse: true
 
 - name: Software | tmux | Download latest release gitmux info
   ansible.legacy.shell: |
@@ -64,7 +64,7 @@
   ansible.builtin.unarchive:
     src: https://github.com/arl/gitmux/releases/download/{{ gitmux_release.stdout }}/gitmux_{{ gitmux_release.stdout }}_linux_amd64.tar.gz
     dest: /usr/local/bin
-    remote_src: yes
+    remote_src: true
     mode: 0755
     owner: root
     group: root

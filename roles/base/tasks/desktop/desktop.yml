@@ -54,6 +54,6 @@
         key: "/org/gnome/gedit/preferences/editor/{{ item.key }}"
         value: "{{ item.value }}"
       with_items:
-        - { key: 'editor-font=', value: "'JetBrainsMono Nerd Font 14'"
+        - { key: 'editor-font=', value: "'JetBrainsMono Nerd Font 14'" }
         - { key: 'scheme', value: "'darkmacs'" }
         - { key: 'tabs-size', value: 'uint32 2' }
