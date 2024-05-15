@@ -29,5 +29,5 @@
     - { src: 'bash/dircolors', dest: '.dircolors' }
     - { src: 'vim/vimrc-root', dest: '.vimrc' }
 
-#    - name: Users | bernhard | import tasks for zsh
-#      ansible.builtin.import_tasks: ../software/zsh.yml
+- name: Users | root | import tasks for zsh
+  ansible.builtin.import_tasks: ../software/zsh-root.yml

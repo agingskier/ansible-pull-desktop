@@ -4,10 +4,10 @@
   
 - name: Software | Zsh | Creates zsh directory in .config for {{ user_name }}
   ansible.builtin.file:
-    path: /home/{{ user_name }}/.config/{{ item.dir }}
+    path: /root/.config/{{ item.dir }}
     state: directory
-    owner: "{{ user_name }}"
-    group: "{{ group_name }}"
+    owner: root
+    group: root
     mode: 0775
   with_items:
     - { dir: 'zsh' }
@@ -15,16 +15,16 @@
 - name: Software | zsh | git checkout zap plugin manager
   ansible.builtin.git:
     repo: https://github.com/zap-zsh/zap.git 
-    dest: /home/{{ user_name }}/.local/share/zap
+    dest: /root/.local/share/zap
     force: true
     version: release-v1
  
 - name: Software | Zsh | copy individual zsh config files for {{ user_name }}
   ansible.builtin.copy:
     src: users/zsh/{{ item.src }}
-    dest: /home/{{ user_name }}/.config/zsh/{{ item.dest }}
-    owner: "{{ user_name }}"
-    group: "{{ group_name }}"
+    dest: /root/.config/zsh/{{ item.dest }}
+    owner: root
+    group: root
     mode: 0600
   with_items:
     - { src: 'aliases.zsh', dest: 'aliases.zsh' }
@@ -36,9 +36,9 @@
 - name: Software | Zsh | copy zshenv as dotfile for {{ user_name }}
   ansible.builtin.copy:
     src: users/zsh/{{ item.src }}
-    dest: /home/{{ user_name }}/{{ item.dest }}
-    owner: "{{ user_name }}"
-    group: "{{ group_name }}"
+    dest: /root/{{ item.dest }}
+    owner: root
+    group: root
     mode: 0600
   with_items:
     - { src: 'zshenv', dest: '.zshenv' }
