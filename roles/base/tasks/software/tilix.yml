@@ -13,7 +13,7 @@
 - name: Software | tilix | download tilix color schemes from github
   ansible.builtin.get_url:
     url: "https://git.io/{{ item.url }}"
-    dest: "/home/{{ user_name }}/txtest/.config/tilix/schemes/{{ item.dest }}"
+    dest: "/home/{{ user_name }}/.config/tilix/schemes/{{ item.dest }}"
     owner: "{{ user_name }}"
     group: "{{ group_name }}"
     mode: 0644
