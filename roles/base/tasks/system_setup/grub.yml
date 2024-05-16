@@ -114,6 +114,7 @@
       with_items:
         - { regex: '^GRUB_TIMEOUT_STYLE=hidden', repl: 'GRUB_TIMEOUT_STYLE=menu' }
         - { regex: '^GRUB_TIMEOUT=0', repl: 'GRUB_TIMEOUT=15' }
+        - { regex: 'quiet splash', repl: ' ' }
 
     - name: System_setup | grub | add lines for BACKGROUND, THEME, GFXPAYLOAD_LINUX and DISABLE_OS_PROBER
       ansible.builtin.lineinfile:
@@ -121,8 +122,8 @@
         line: "{{ item }}"
       with_items:
         - 'GRUB_BACKGROUND="/usr/share/images/grub/saturn-wallpaper.png"'
-        - 'GRUB_THEME="/boot/grub/themes/darkmatter/theme.txt"'
-        - '#GRUB_THEME="/boot/grub/themes/lordshenron/theme.txt"'
+        - '#RUB_THEME="/boot/grub/themes/darkmatter/theme.txt"'
+        - 'GRUB_THEME="/boot/grub/themes/lordshenron/theme.txt"'
         - 'GRUB_GFXPAYLOAD_LINUX="keep"'
         - 'GRUB_DISABLE_OS_PROBER="false"'
 
