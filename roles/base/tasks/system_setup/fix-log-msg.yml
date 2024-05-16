@@ -19,12 +19,24 @@
     #
     - name: System-setup | fix-log-msg | create 10-ipv6-mld.conf file in /etc/sysctl.d
       ansible.builtin.copy:
-        dest: "/etc/sysctl.d/95-ipv6-mld.conf"
+        path: "/etc/sysctl.d/95-ipv6-mld.conf"
         content: |
           #
           # kernel: IPv6: MLD: clamping QRV from 1 to 2! (lots of these messages in journalctl)
           #
           net.ipv6.mld_qrv = 1
+        owner: root
+        group: root
+        mode: 0644
+
+    #
+    # fix: Shutdown too slow, reduce stop timeout value - Reboot required
+    #
+    - name: System-setup | fix-log-msg | change system.conf entry to speed up shutdown
+      ansible.builtin.lineinfile:
+        path: "/etc/systemd/system.conf"
+        regex: "^#DefaultTimeoutStopSec=90s"
+        line: "DefaultTimeoutStopSec=10s"
         owner: root
         group: root
         mode: 0644
