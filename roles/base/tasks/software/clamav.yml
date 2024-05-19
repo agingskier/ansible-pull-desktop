@@ -11,6 +11,8 @@
       - cpulimit
 
 - name: Software | clamav | create clamav directory
+  become: true
+  become_user: root
   ansible.builtin.file:
     path: /var/log/clamav
     state: directory
