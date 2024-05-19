@@ -41,6 +41,16 @@
         group: root
         mode: 0644
 
+    - name: Software | sssd | create sssd directory
+      become: true
+      become_user: root
+      ansible.builtin.file:
+        path: /var/log/sssd
+        state: directory
+        owner: sssd
+        group: sssd
+        mode: 0774
+
     #
     # fix: Error message: systemd[1]: Dependency failed for sssd-ssh.socket - SSSD SSH Service responder socket.
     #
