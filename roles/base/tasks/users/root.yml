@@ -30,4 +30,6 @@
     - { src: 'vim/vimrc-root', dest: '.vimrc' }
 
 - name: Users | root | import tasks for zsh
+  become: true
+  become_user: root
   ansible.builtin.import_tasks: ../software/zsh-root.yml

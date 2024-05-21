@@ -1,8 +1,8 @@
 ---
-# Create zsh environment for user bernhard - variables defined in host_vars
+# Create zsh environment for user root 
 # zsh package is installed in utilities.yml
   
-- name: Software | Zsh | Creates zsh directory in .config for {{ user_name }}
+- name: Software | Zsh | Creates zsh directory in .config for root
   ansible.builtin.file:
     path: /root/.config/{{ item.dir }}
     state: directory
@@ -12,12 +12,27 @@
   with_items:
     - { dir: 'zsh' }
 
-- name: Software | zsh | git checkout zap plugin manager
-  ansible.builtin.git:
-    repo: https://github.com/zap-zsh/zap.git 
-    dest: /root/.local/share/zap
-    force: true
-    version: release-v1
+- name: Software | zsh | download install.zsh script for zap (zsh plugin manager)
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh
+    dest: /tmp/zap-install.zsh
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Software | zsh | run zap-install.zsh script (checkout to ~/.local/share/zap)
+  ansible.builtin.shell:
+    cmd: /tmp/zap-install.zsh --branch release-v1 
+  args:
+    executable: /bin/zsh
+  register: zap_run
+  changed_when: zap_run.rc == 0
+
+- name: Software | zsh | display zap-install result
+  ansible.builtin.debug:
+    msg: 
+      - "{{ zap_run.stdout_lines }}"
+    verbosity: 2
  
 - name: Software | Zsh | copy individual zsh config files for {{ user_name }}
   ansible.builtin.copy:
@@ -29,7 +44,7 @@
   with_items:
     - { src: 'aliases.zsh', dest: 'aliases.zsh' }
     - { src: 'history.zsh', dest: 'history.zsh' }
-    - { src: 'prompt.zsh', dest: 'prompt.zsh' }
+    - { src: 'root-prompt.zsh', dest: 'prompt.zsh' }
     - { src: 'functions.zsh', dest: 'functions.zsh' }
     - { src: 'zshrc', dest: '.zshrc' }
 
@@ -47,6 +62,6 @@
   ansible.builtin.shell:
     cmd: chsh -s $(which zsh)
   args:
-    executable: /bin/zsh
+    executable: /bin/bash
   register: new_shell
   changed_when: new_shell.rc == 0
