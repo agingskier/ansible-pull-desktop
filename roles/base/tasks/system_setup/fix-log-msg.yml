@@ -3,6 +3,29 @@
   become: true
   become_method: ansible.builtin.sudo
   block:
+    - name: System-setup | journald | create journald.conf.d directory
+      become: true
+      become_user: root
+      ansible.builtin.file:
+        path: /etc/systemd/journald.conf.d
+        state: directory
+        owner: root
+        group: root
+        mode: 0755
+    #
+    # fix: Make journal log persistent to /var/log/journal - default is to /run/log/journal which is volatile
+    #
+    - name: System-setup | fix-journallog | create 10-journal-log-destination.conf
+      ansible.builtin.copy:
+        path: /etc/systemd/journald.conf.d/10-journal-log-destination.conf
+        content: |
+          [Journal]
+          # Overwrite Storage destination
+          Storage=persistent
+        owner: root
+        group: root
+        mode: 0644
+  
     #
     # fix: Error message: systemd-udevd[447]: sdb3: Process '/usr/bin/unshare -m /usr/bin/snap auto-import 
     #                     --mount=/dev/sdb3' failed with exit code 1.
@@ -41,7 +64,7 @@
         group: root
         mode: 0644
 
-    - name: Software | sssd | create sssd directory
+    - name: System-setup | sssd | create sssd directory
       become: true
       become_user: root
       ansible.builtin.file:
@@ -49,7 +72,7 @@
         state: directory
         owner: sssd
         group: sssd
-        mode: 0774
+        mode: 0755
 
     #
     # fix: Error message: systemd[1]: Dependency failed for sssd-ssh.socket - SSSD SSH Service responder socket.
