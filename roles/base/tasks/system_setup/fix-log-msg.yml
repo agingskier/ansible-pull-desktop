@@ -11,7 +11,7 @@
         state: directory
         owner: root
         group: root
-        mode: 0755
+        mode: "0755"
     #
     # fix: Make journal log persistent to /var/log/journal - default is to /run/log/journal which is volatile
     #
@@ -22,9 +22,11 @@
           [Journal]
           # Overwrite Storage destination
           Storage=persistent
+          MaxFileSec=1day
         owner: root
         group: root
-        mode: 0644
+        mode: "0644"
+      notify: Restart journald
   
     #
     # fix: Error message: systemd-udevd[447]: sdb3: Process '/usr/bin/unshare -m /usr/bin/snap auto-import 
@@ -34,7 +36,7 @@
         path: /lib/udev/rules.d/66-snapd-autoimport.rules
         owner: root
         group: root
-        mode: 0644
+        mode: "0644"
         state: absent
 
     #
@@ -50,7 +52,7 @@
           net.ipv6.mld_qrv = 1
         owner: root
         group: root
-        mode: 0644
+        mode: "0644"
 
     #
     # fix: Shutdown too slow, reduce stop timeout value - Reboot required
@@ -62,7 +64,7 @@
         line: "DefaultTimeoutStopSec=10s"
         owner: root
         group: root
-        mode: 0644
+        mode: "0644"
 
     - name: System-setup | sssd | create sssd directory
       become: true
@@ -72,7 +74,7 @@
         state: directory
         owner: sssd
         group: sssd
-        mode: 0755
+        mode: "0755"
 
     #
     # fix: Error message: systemd[1]: Dependency failed for sssd-ssh.socket - SSSD SSH Service responder socket.
@@ -83,7 +85,7 @@
         dest: /etc/sssd/conf.d/sssd.conf
         owner: root
         group: root
-        mode: 0644
+        mode: "0644"
 
     #
     # fix: Error message: bluetoothd[1674]: profiles/sap/server.c:sap_server_register() Sap driver initialization failed.
@@ -95,4 +97,4 @@
         line: "ExecStart=/usr/libexec/bluetooth/bluetoothd --noplugin=sap"
         owner: root
         group: root
-        mode: 0644
+        mode: "0644"

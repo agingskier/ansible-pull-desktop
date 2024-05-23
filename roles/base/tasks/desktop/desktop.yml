@@ -32,13 +32,14 @@
         state: directory
         owner: "{{ user_name }}"
         group: "{{ group_name }}"
-        mode: 0755
+        mode: "0755"
         recurse: true
 
     - name: Gnome | gedit | download gedit colorschemes from github
       ansible.builtin.git:
         repo: "https://github.com/mig/gedit-themes.git"
         dest: "/tmp/gedit-themes"
+        version: master
 
     - name: Gnome | gedit | copy gedit colorschemes to .local/share/gedit/styles
       ansible.builtin.copy:
@@ -46,7 +47,7 @@
         dest: /home/bernhard/.local/share/gedit/styles/
         owner: "{{ user_name }}"
         group: "{{ group_name }}"
-        mode: 0644
+        mode: "0644"
       with_fileglob: "/tmp/gedit-themes/*.xml"
 
     - name: Gnome | gedit | set editor values

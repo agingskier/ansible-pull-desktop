@@ -8,7 +8,7 @@
     state: directory
     owner: "{{ user_name }}"
     group: "{{ group_name }}"
-    mode: 0775
+    mode: "0775"
   with_items:
     - { dir: 'zsh' }
 
@@ -18,7 +18,7 @@
     dest: /tmp/zap-install.zsh
     owner: "{{ user_name }}"
     group: "{{ group_name }}"
-    mode: 0755
+    mode: "0755"
 
 - name: Software | zsh | run zap-install.zsh script (checkout to ~/.local/share/zap)
   become: true
@@ -42,7 +42,7 @@
     dest: /home/{{ user_name }}/.config/zsh/{{ item.dest }}
     owner: "{{ user_name }}"
     group: "{{ group_name }}"
-    mode: 0600
+    mode: "0600"
   with_items:
     - { src: 'aliases.zsh', dest: 'aliases.zsh' }
     - { src: 'history.zsh', dest: 'history.zsh' }
@@ -56,7 +56,7 @@
     dest: /home/{{ user_name }}/{{ item.dest }}
     owner: "{{ user_name }}"
     group: "{{ group_name }}"
-    mode: 0600
+    mode: "0600"
   with_items:
     - { src: 'zshenv', dest: '.zshenv' }
 

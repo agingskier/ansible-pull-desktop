@@ -22,7 +22,7 @@
         remote_src: true
         owner: root
         group: root
-        mode: 0755
+        mode: "0755"
 
     - name: Software | java & javafx | Replace export statements in .bashrc
       ansible.builtin.lineinfile:

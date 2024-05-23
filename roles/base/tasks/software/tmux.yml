@@ -16,7 +16,7 @@
     state: directory
     owner: "{{ user_name }}"
     group: "{{ group_name }}"
-    mode: 0775
+    mode: "0775"
   with_items:
     - { dir: 'tmux' }
     - { dir: 'tmux/plugins' }
@@ -40,7 +40,7 @@
     state: directory
     owner: "{{ user_name }}"
     group: "{{ group_name }}"
-    mode: 0755
+    mode: "0755"
     recurse: true
 
 - name: Software | tmux | Download latest release gitmux info
@@ -65,7 +65,7 @@
     src: https://github.com/arl/gitmux/releases/download/{{ gitmux_release.stdout }}/gitmux_{{ gitmux_release.stdout }}_linux_amd64.tar.gz
     dest: /usr/local/bin
     remote_src: true
-    mode: 0755
+    mode: "0755"
     owner: root
     group: root
 
@@ -80,4 +80,4 @@
     dest: /home/{{ user_name }}/.gitmux.conf
     owner: "{{ user_name }}"
     group: "{{ group_name }}"
-    mode: 0644
+    mode: "0644"

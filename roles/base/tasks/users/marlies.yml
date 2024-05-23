@@ -16,7 +16,7 @@
         dest: /etc/sudoers.d/marlies
         owner: root
         group: root
-        mode: 0440
+        mode: "0440"
 
     - name: Users | marlies | change first occurence of Exec=tilix in /usr/share/applications/com.gexperts.Tilix.desktop
       become: true
@@ -45,7 +45,7 @@
         dest: /home/{{ user_name }}/{{ item.dest }}
         owner: "{{ user_name }}"
         group: "{{ group_name }}"
-        mode: 0600
+        mode: "0600"
       with_items:
         - { src: 'bash/bash_aliases', dest: '.bash_aliases' }
         - { src: 'bash/bash_functions', dest: '.bash_functions' }

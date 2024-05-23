@@ -14,7 +14,7 @@
     state: directory
     owner: "{{ user_name }}"
     group: "{{ group_name }}"
-    mode: 0755
+    mode: "0755"
   with_items:
     - { dir: ".config/geany" }
     - { dir: ".config/geany/colorschemes" }
@@ -40,7 +40,7 @@
     dest: /home/{{ user_name }}/.config/geany/filedefs/filetypes.yaml
     owner: "{{ user_name }}"
     group: "{{ group_name }}"
-    mode: 0644
+    mode: "0644"
 
 - name: Software | geany | Replace identifier=identifier with types in filetypes.yaml
   ansible.builtin.replace:

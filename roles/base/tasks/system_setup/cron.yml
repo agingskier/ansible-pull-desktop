@@ -1,13 +1,13 @@
 ---
-#- name: system setup | cron | schedule automatic ansible provisioning
-#  cron:
+# - name: system setup | cron | schedule automatic ansible provisioning
+#   cron:
 #    name: "ansible-pull provision"
 #    user: ansible
 #    minute: "*/30"
 #    job: "sudo /usr/bin/ansible-pull -o -U https://github.com/agingskier/ansible_pull_desktop.git > /dev/null"
 
-#- name: system setup | cron | schedule ansible cleanup at boot
-#  cron:
+# - name: system setup | cron | schedule ansible cleanup at boot
+#   cron:
 #    name: "ansible refresh at boot"
 #    user: ansible
 #    special_time: reboot

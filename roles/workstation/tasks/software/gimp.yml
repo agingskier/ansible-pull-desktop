@@ -27,7 +27,7 @@
         state: directory
         owner: "{{ user_name }}"
         group: "{{ group_name }}"
-        mode: 0755
+        mode: "0755"
       with_items:
         - { dir: '.config/GIMP' }
         - { dir: '.config/GIMP/{{ gimp_subdir_version }}' }
@@ -38,7 +38,7 @@
         dest: /home/bernhard/.config/GIMP/{{ gimp_subdir_version }}/{{ item.dest }}
         owner: bernhard
         group: users
-        mode: 0664
+        mode: "0664"
       with_items:
         - { src: 'gimprc', dest: 'gimprc' }
 #       - { src: 'gimp-text-tool', dest: 'tool-options/gimp-text-tool' }

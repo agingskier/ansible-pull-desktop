@@ -12,4 +12,4 @@
         dest: /var/lib/AccountsService/icons/bernhard.jpg
         owner: root
         group: root
-        mode: 0644
+        mode: "0644"

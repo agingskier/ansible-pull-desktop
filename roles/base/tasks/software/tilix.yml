@@ -5,7 +5,7 @@
     state: directory
     owner: "{{ user_name }}"
     group: "{{ group_name }}"
-    mode: 0740
+    mode: "0740"
   with_items:
     - { dir: '.config/tilix' }
     - { dir: '.config/tilix/schemes' }
@@ -16,7 +16,7 @@
     dest: "/home/{{ user_name }}/.config/tilix/schemes/{{ item.dest }}"
     owner: "{{ user_name }}"
     group: "{{ group_name }}"
-    mode: 0644
+    mode: "0644"
   with_items:
     - { url: 'v7QVD', dest: 'argonaut.json' }
     - { url: 'v7Qav', dest: 'cobalt2.json' }

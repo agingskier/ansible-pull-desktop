@@ -15,7 +15,7 @@
     state: directory
     owner: root
     group: root
-    mode: 0775
+    mode: "0775"
 
 # Get latest release from Github api
 # get tag line
@@ -39,7 +39,7 @@
     remote_src: true
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   with_items:
     - JetBrainsMono.zip
     - FiraCode.zip

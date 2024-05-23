@@ -25,7 +25,7 @@
         dest: /tmp
         owner: root
         group: root
-        mode: 0755
+        mode: "0755"
 
     - name: Software | LibreCAD | Copy ...appimage to librecad
       ansible.builtin.copy:
@@ -33,7 +33,7 @@
         dest: /usr/local/bin/librecad
         owner: root
         group: root
-        mode: 0755
+        mode: "0755"
 
     - name: Software | LibreCAD | create config/librecad directory
       ansible.builtin.file:
@@ -41,7 +41,7 @@
         state: directory
         owner: bernhard
         group: users
-        mode: 0775
+        mode: "0775"
       with_items:
         - { dir: '.config/LibreCAD' }
 
@@ -51,6 +51,6 @@
         dest: /home/bernhard/{{ item.dest }}
         owner: bernhard
         group: users
-        mode: 0640
+        mode: "0640"
       with_items:
         - { src: 'librecad_config', dest: '.config/LibreCAD/LibreCAD.conf' }

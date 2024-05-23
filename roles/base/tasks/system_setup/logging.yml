@@ -4,4 +4,4 @@
     dest: "/etc/systemd/journald.conf"
     regexp: "^#MaxFileSec="
     line: "MaxFileSec=5day"
-  notify: Restart_journald
+  notify: Restart journald

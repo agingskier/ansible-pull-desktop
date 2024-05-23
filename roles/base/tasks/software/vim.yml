@@ -1,9 +1,4 @@
 ---
-# Create vim environment for user bernhard - variables defined in host_vars
-#- name: users | bernhard | user name fact
-#  set_fact:
-#    user_name: 'bernhard'
-#    group_name: 'users'
 
 - name: Vim-task | recursivebly remove .vim/bundle directory to enable re-runs for {{ user_name }}
   ansible.builtin.file:
@@ -16,7 +11,7 @@
     state: directory
     owner: "{{ user_name }}"
     group: "{{ group_name }}"
-    mode: 0700
+    mode: "0700"
   with_items:
     - { dir: '.vim' }
     - { dir: '.vim/autoload' }
@@ -30,7 +25,7 @@
     dest: /home/{{ user_name }}/{{ item.dest }}
     owner: "{{ user_name }}"
     group: "{{ group_name }}"
-    mode: 0600
+    mode: "0600"
   with_items:
     - { src: 'vimrc', dest: '.vimrc' }
 
@@ -41,7 +36,7 @@
     dest: "/home/{{ user_name }}/.vim/{{ item.src }}"
     owner: "{{ user_name }}"
     group: "{{ group_name }}"
-    mode: 0600
+    mode: "0600"
   with_items:
     - { src: 'bash.vim' }
     - { src: 'conf.vim' }
@@ -71,7 +66,7 @@
     dest: "/home/{{ user_name }}/.vim/{{ item.dest }}"
     owner: "{{ user_name }}"
     group: "{{ group_name }}"
-    mode: 0600
+    mode: "0600"
   with_items:
     - { url: 'junegunn/vim-plug/master/plug.vim', dest: 'autoload/plug.vim' }
     - { url: 'nanotech/jellybeans.vim/master/colors/jellybeans.vim', dest: 'colors/jellybeans.vim' }

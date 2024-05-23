@@ -16,7 +16,7 @@
         dest: /etc/{{ item.dest }}
         owner: root
         group: root
-        mode: 0644
+        mode: "0644"
       with_items:
         - { src: 'Z790-sensors.conf', dest: 'sensors.d/Z790-sensors.conf' }
         - { src: 'sensors-modules-asrock', dest: 'modules-load.d/sensors.conf' }
@@ -42,7 +42,7 @@
         dest: /etc/{{ item.dest }}
         owner: root
         group: root
-        mode: 0644
+        mode: "0644"
       with_items:
 #        - { src: 'acer-rampage.conf', dest: 'sensors.d/acer-rampage.conf' }
         - { src: 'sensors-modules-acer', dest: 'modules-load.d/sensors.confq' }

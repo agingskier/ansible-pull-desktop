@@ -55,7 +55,7 @@
         state: directory
         owner: bernhard
         group: users
-        mode: 0775
+        mode: "0775"
       with_items:
         - { dir: '.config/libvirt' }
 
@@ -64,8 +64,8 @@
         src: /etc/libvirt/{{ item.src }}
         dest: /home/{{ user_name }}/{{ item.dest }}
         owner: "{{ user_name }}"
-        group: users
-        mode: 0640
+        group: "{{ group_name }}"
+        mode: "0640"
       with_items:
         - { src: 'libvirt.conf', dest: '.config/libvirt/libvirt.conf' }
 

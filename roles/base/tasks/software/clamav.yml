@@ -18,7 +18,7 @@
     state: directory
     owner: clamav
     group: clamav
-    mode: 0774
+    mode: "0774"
 
 - name: Software | clamav | adding existing user to group clamav (logoff, logon required) '{{ user_name }}'
   ansible.builtin.user:
@@ -49,14 +49,14 @@
       }
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
     
 - name: Software | clamav | cron job clamscan for user {{ user_name }}
   ansible.builtin.cron:
     name: daily_clamsacan
     user: "{{ user_name }}"
-    minute: 07
-    hour: 13
+    minute: "07"
+    hour: "13"
     job: "/usr/bin/clamscan --exclude-dir=/run/user/bernhard/gvfs --exclude-dir=/home/bernhard/.gvfs --detect-pua -r /home/bernhard --log=/var/log/clamav/clamscan.log"
 
 # clamscan must be running for cpulimit to take effect. Limit cpu usage to 30%
@@ -64,13 +64,13 @@
   ansible.builtin.cron:
     name: daily_clamsacan_cpulimit
     user: "{{ user_name }}"
-    minute: 08
-    hour: 13
+    minute: "08"
+    hour: "13"
     job: "cpulimit -e clamscan -l 30"
 
 - name: Software | clamav | cron job for root freshclam
   ansible.builtin.cron:
     name: freshclam_update_dbs
     user: root
-    minute: 21
+    minute: "21"
     job: "/usr/bin/freshclam --quiet"

@@ -13,7 +13,7 @@
         state: directory
         owner: root
         group: root
-        mode: 0777
+        mode: "0777"
 
     - name: System-setup | grub | background | create images/gurb directories
       ansible.builtin.file:
@@ -21,7 +21,7 @@
         state: directory
         owner: root
         group: root
-        mode: 0775
+        mode: "0775"
 
     - name: System-setup | grub | background | copy background images from files/images
       ansible.builtin.copy:
@@ -29,7 +29,7 @@
         dest: /usr/share/images/grub/{{ item.dest }}
         owner: root
         group: root
-        mode: 0644
+        mode: "0644"
       with_items:
         - { src: "black-hole-blue.tga", dest: "black-hole-blue.tga" }
         - { src: "saturn-wallpaper.png", dest: "saturn-wallpaper.png" }
@@ -67,7 +67,7 @@
         state: directory
         owner: root
         group: root
-        mode: 0755
+        mode: "0755"
       with_items:
         - themes/darkmatter
         - themes/lordshenron
@@ -78,7 +78,7 @@
         dest: /boot/grub/themes/darkmatter/
         owner: root
         group: root
-        mode: 0644
+        mode: "0644"
 
     - name: System_setup | grub | Themes | copy all ubuntu Griffin png files to lordshenron
       ansible.builtin.copy:
@@ -86,7 +86,7 @@
         dest: /boot/grub/themes/lordshenron/
         owner: root
         group: root
-        mode: 0644
+        mode: "0644"
 
     - name: System_setup | grub | Themes Darkmatter | copy png file ubuntu to background
       ansible.builtin.copy:
@@ -94,7 +94,7 @@
         dest: /boot/grub/themes/darkmatter/{{ item.dest }}
         owner: root
         group: root
-        mode: 0644
+        mode: "0644"
       with_items:
         - { src: "backgrounds/ubuntu-1440p.png", dest: "background.png" }
         - { src: "fonts/1440p/", dest: "." }
@@ -143,7 +143,7 @@
         state: directory
         owner: root
         group: root
-        mode: 0777
+        mode: "0777"
 
     - name: System-setup | grub | create all missing directories for images
       ansible.builtin.file:
@@ -151,7 +151,7 @@
         state: directory
         owner: root
         group: root
-        mode: 0644
+        mode: "0644"
 
     - name: System-setup | grub | copy black hole file
       ansible.builtin.copy:
@@ -159,7 +159,7 @@
         dest: /usr/share/images/grub/{{ item.dest }}
         owner: root
         group: root
-        mode: 0644
+        mode: "0644"
       with_items:
         - { src: "black-hole-blue.tga", dest: "black-hole-blue.tga" }
 
@@ -183,7 +183,7 @@
         state: directory
         owner: root
         group: root
-        mode: 0755
+        mode: "0755"
 
     - name: System_setup | grub | unzip acer.tar file to grub/themes directory
       ansible.builtin.unarchive:
@@ -191,7 +191,7 @@
         dest: /boot/grub/themes
         owner: root
         group: root
-        mode: 0644
+        mode: "0644"
 
     - name: System_setup | grub | Replace CMDLINE with loglevel=3 to supress error messages
       ansible.builtin.lineinfile:

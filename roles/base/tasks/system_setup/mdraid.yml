@@ -5,4 +5,4 @@
     pkg:
       - libblockdev-crypto2
       - libblockdev-mdraid2
-  notify: Restart_udisks2
+  notify: Restart udisks2

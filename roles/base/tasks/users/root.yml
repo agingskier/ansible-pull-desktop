@@ -10,7 +10,7 @@
     state: directory
     owner: root
     group: root
-    mode: 0700
+    mode: "0700"
   with_items:
     - { dir: '.vim' }
     - { dir: '.vim/colors' }
@@ -21,7 +21,7 @@
     dest: /root/{{ item.dest }}
     owner: root
     group: root
-    mode: 0600
+    mode: "0600"
   with_items:
     - { src: 'bash/root-bashrc', dest: '.bashrc' }
     - { src: 'bash/bash_aliases', dest: '.bash_aliases' }

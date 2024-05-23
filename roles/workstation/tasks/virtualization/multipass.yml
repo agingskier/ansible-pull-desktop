@@ -25,7 +25,7 @@
         state: directory
         owner: "{{ user_name }}"
         group: "{{ group_name }}"
-        mode: 0755
+        mode: "0755"
 
     - name: Software | multipass | Create directory for override.conf
       ansible.builtin.file:
@@ -33,7 +33,7 @@
         state: directory
         owner: root
         group: root
-        mode: 0744
+        mode: "0744"
 
     - name: Software | multipass | Create override.conf file with path entry
       ansible.builtin.copy:
@@ -43,7 +43,7 @@
           Environment=MULTIPASS_STORAGE=/mnt/Storage/multipass
         owner: root
         group: root
-        mode: 0644
+        mode: "0644"
  
     - name: Software | multipass | reload daemon and start multipass
       ansible.builtin.shell: "{{ item }}"
