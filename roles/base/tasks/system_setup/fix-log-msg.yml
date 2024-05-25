@@ -14,6 +14,7 @@
         mode: "0755"
     #
     # fix: Make journal log persistent to /var/log/journal - default is to /run/log/journal which is volatile
+    # Use 'systemd-analyze cat-config systemd/journald.conf' to display the full config.
     #
     - name: System-setup | fix-journallog | create 10-journal-log-destination.conf
       ansible.builtin.copy:
@@ -56,12 +57,26 @@
 
     #
     # fix: Shutdown too slow, reduce stop timeout value - Reboot required
+    # Use 'systemd-analyze cat-config systemd/system.conf' to display the full config.
     #
-    - name: System-setup | fix-log-msg | change system.conf entry to speed up shutdown
+    - name: System-setup | shutdown times | create system.conf.d directory
+      become: true
+      become_user: root
+      ansible.builtin.file:
+        path: /etc/systemd/system.conf.d
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: System-setup | fix-shutdown-time | create 75-faster-shutdown.conf file
       ansible.builtin.lineinfile:
-        path: "/etc/systemd/system.conf"
-        regex: "^#DefaultTimeoutStopSec=90s"
-        line: "DefaultTimeoutStopSec=10s"
+        content: |
+          [Manager]
+          DefaultTimeoutStartSec=10s
+          DefaultTimeoutStopSec=10s
+          DefaultTimeoutAbortSec=10s
+          DefaultRestartSec=15s
         owner: root
         group: root
         mode: "0644"

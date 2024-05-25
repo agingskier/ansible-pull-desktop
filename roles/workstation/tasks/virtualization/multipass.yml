@@ -19,6 +19,20 @@
       register: snap_stop
       changed_when: snap_stop.rc == 0
 
+    - name: Software | multipass | connect multipass:removable-media for /mnt odr /media
+      ansible.builtin.shell: snap connect multipass:removable-media
+      args:
+        executable: /bin/zsh
+      register: snap_removable
+      changed_when: snap_removable.rc == 0
+
+    - name: Software | multipass | connect multipass:all-home for /home
+      ansible.builtin.shell: snap connect multipass:all-home
+      args:
+        executable: /bin/zsh
+      register: snap_home
+      changed_when: snap_home.rc == 0
+
     - name: Software | multipass | Create target directory /mnt/Storage/multipass
       ansible.builtin.file:
         path: /mnt/Storage/multipass
@@ -29,7 +43,7 @@
 
     - name: Software | multipass | Create directory for override.conf
       ansible.builtin.file:
-        path: "/etc/systemd/system/snap.multipass.multipass.service.d"
+        path: "/etc/systemd/system/snap.multipass.multipassd.service.d"
         state: directory
         owner: root
         group: root
@@ -37,10 +51,11 @@
 
     - name: Software | multipass | Create override.conf file with path entry
       ansible.builtin.copy:
-        dest: "/etc/systemd/system/snap.multipass.multipass.service.d/override.conf"
+        dest: "/etc/systemd/system/snap.multipass.multipassd.service.d/override.conf"
         content: |
           [Service]
           Environment=MULTIPASS_STORAGE=/mnt/Storage/multipass
+          TimeoutStopSec=60
         owner: root
         group: root
         mode: "0644"
