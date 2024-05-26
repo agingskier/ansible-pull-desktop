@@ -18,10 +18,9 @@
     #
     - name: System-setup | fix-journallog | create 10-journal-log-destination.conf
       ansible.builtin.copy:
-        path: /etc/systemd/journald.conf.d/10-journal-log-destination.conf
+        dest: /etc/systemd/journald.conf.d/10-journal-log-destination.conf
         content: |
           [Journal]
-          # Overwrite Storage destination
           Storage=persistent
           MaxFileSec=1day
         owner: root
@@ -45,7 +44,7 @@
     #
     - name: System-setup | fix-log-msg | create 10-ipv6-mld.conf file in /etc/sysctl.d
       ansible.builtin.copy:
-        path: "/etc/sysctl.d/95-ipv6-mld.conf"
+        dest: "/etc/sysctl.d/95-ipv6-mld.conf"
         content: |
           #
           # kernel: IPv6: MLD: clamping QRV from 1 to 2! (lots of these messages in journalctl)
@@ -70,7 +69,8 @@
         mode: "0755"
 
     - name: System-setup | fix-shutdown-time | create 75-faster-shutdown.conf file
-      ansible.builtin.lineinfile:
+      ansible.builtin.copy:
+        dest: /etc/systemd/system.conf.d/10-journal-log-destination.conf
         content: |
           [Manager]
           DefaultTimeoutStartSec=10s
