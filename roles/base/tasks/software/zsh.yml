@@ -20,6 +20,11 @@
     group: "{{ group_name }}"
     mode: "0755"
 
+- name: Software | Zsh | Make zap install idempotent - remove ~/.local/share/zap directory for {{ user_name }}
+  ansible.builtin.file:
+    path: /home/{{ user_name }}/.local/share/zap
+    state: absent
+
 - name: Software | zsh | run zap-install.zsh script (checkout to ~/.local/share/zap)
   become: true
   become_user: "{{ user_name }}"

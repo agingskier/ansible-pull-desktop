@@ -20,6 +20,11 @@
     group: root
     mode: "0755"
 
+- name: Software | Zsh | Make zap install idempotent - remove ~/.local/share/zap directory for root
+  ansible.builtin.file:
+    path: /root/.local/share/zap
+    state: absent
+
 - name: Software | zsh | run zap-install.zsh script (checkout to ~/.local/share/zap)
   ansible.builtin.shell:
     cmd: /tmp/zap-install.zsh --branch release-v1 
