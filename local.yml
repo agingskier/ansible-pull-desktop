@@ -6,14 +6,23 @@
   tags: always
   become: true
   become_method: ansible.builtin.sudo
+  gather_facts: false
 
   pre_tasks:
-    - name: Pre-run | update package cache Ubuntu
+    - name: Pre-tasks | update package cache Ubuntu
       tags: always
       ansible.builtin.apt:
         upgrade: true
         update_cache: true
       changed_when: false
+
+    - name: Pre-tasks | Collect only a subset of facts with distribution_release
+      tags: always
+      ansible.builtin.setup:
+        gather_subset:
+          - '!env'
+          - network
+
 
 # run base roles, if task_failed not defined
 - name: Base role for all systems
