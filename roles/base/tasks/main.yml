@@ -15,6 +15,9 @@
     - name: Configure tilix terminal
       ansible.builtin.import_tasks:     
         file: software/tilix.yml
+    - name: Install gedit themes
+      ansible.builtin.import_tasks:     
+        file: software/gedit.yml
 
     # Make sure users exist on the system
     - name: Configure user root
@@ -29,14 +32,6 @@
     - name: Create user ubuntu
       ansible.builtin.import_tasks:    
         file: users/ubuntu.yml
-
-    ## desktop
-    - name: Include plank tasks
-      ansible.builtin.include_tasks:
-        file: desktop/plank.yml
-    - name: Include desktop tasks
-      ansible.builtin.include_tasks:
-        file: desktop/desktop.yml
 
     ## system setup
     - name: Import sensors tasks
