@@ -38,11 +38,8 @@ export KUBECONFIG=/home/bernhard/.kube/lxd.conf
 # ignore duplicate lines in the history.
 # ignore commands that  start with space `ignorespace'.
 export HISTFILE=$ZDOTDIR/.zsh_history
-export HISTCONTROL=ignoreboth:erasedups
-export HISTSIZE=8000
-export HISTFILESIZE=50000
-export HISTIGNORE="free*:exit:clear:man*:mkdir*"
-export HISTTIMEFORMAT="%F %T: " # Date, Time
+export HISTSIZE=10000
+export HISTFILESIZE=10000
 
 ## path
 # $HOME/bin is added to PATH in .profile, so not required to add here

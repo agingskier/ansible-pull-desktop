@@ -101,9 +101,9 @@ alias cls='tput clear'
 alias which='type -a'
 alias fonts='fc-cache -f -v'
 
-alias x='nemo .'                  # open nemo in current directory
-alias h='fc -l'                   # last 16 entries in history
-alias hs='history -i | egrep'     # search history for an entry with timestamp
+alias x='nemo .'                   # open nemo in current directory
+alias h='fc -li 1'                 # complete history with timestamp
+alias hs='history -i 1 | egrep'    # search history for an entry with timestamp
 alias j='jobs -l'
 alias nf='find * -type f | wc -l' # number of files
 
