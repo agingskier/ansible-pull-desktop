@@ -70,7 +70,7 @@
 
     - name: System-setup | fix-shutdown-time | create 75-faster-shutdown.conf file
       ansible.builtin.copy:
-        dest: /etc/systemd/system.conf.d/10-journal-log-destination.conf
+        dest: /etc/systemd/system.conf.d/75-faster-shutdown.conf
         content: |
           [Manager]
           DefaultTimeoutStartSec=10s
