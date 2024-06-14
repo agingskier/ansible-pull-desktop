@@ -13,6 +13,8 @@
         pkg:
           - default-jdk
           - "{{ openjdk_version }}"
+          - libreoffice-script-provider-python
+          - libreoffice-java-common
 
 # Check: https://gluonhq.com/products/javafx/ for latest release
     - name: Software | javafx | Unzip javafx
