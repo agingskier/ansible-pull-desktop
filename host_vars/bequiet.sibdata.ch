@@ -10,34 +10,34 @@ ssh_users: "bernhard"
 #
 # platform-specific
 #
-microcode_amd_install: no
-microcode_intel_install: yes
+microcode_amd_install: false
+microcode_intel_install: true
 
 #
 # users
 #
-bernhard: yes
-marlies: no
-ubuntu: no
+bernhard: true  
+marlies: false  
+ubuntu: false 
 
 #
 # development
 #
-java: yes
+java: true  
 
 #
 # application selection
 #
 
-calibre: yes
-games: yes
-gimp: yes
-kvm: yes
-keepassxc: yes
-librecad: yes
-media: yes
-multipass: yes
-protonvpn: yes
-steam: yes
-variety: yes
-vlc: no
+calibre: true 
+games: true 
+gimp: true  
+kvm: true 
+keepassxc: true 
+librecad: true  
+media: true 
+multipass: true 
+protonvpn: true 
+steam: true 
+variety: true 
+vlc: false
