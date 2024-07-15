@@ -30,7 +30,7 @@
   register: fonts_release
   changed_when: fonts_release.rc == 0
 
-- name: Software | lsd | download and install JetBrains and FiraCode nerd fonts
+- name: Software | lsd | download and install UbuntuMono and VictorMono nerd fonts
   become: true
   become_method: ansible.builtin.sudo
   ansible.builtin.unarchive:
@@ -41,8 +41,8 @@
     group: root
     mode: "0644"
   with_items:
-    - JetBrainsMono.zip
-    - FiraCode.zip
+    - UbuntuMono.zip
+    - VictorMono.zip
 
 - name: Software | lsd | create cache for new fonts
   ansible.builtin.command: fc-cache -v -f
