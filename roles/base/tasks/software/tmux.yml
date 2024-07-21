@@ -28,6 +28,7 @@
     force: true
     version: master
   with_items:
+    - { repo: 'tpm.git', plug: 'tmp' }
     - { repo: 'tmux-cpu.git', plug: 'tmux-cpu' }
     - { repo: 'tmux-prefix-highlight.git', plug: 'tmux-prefix-highlight' }
     - { repo: 'tmux-yank.git', plug: 'tmux-yank' }
