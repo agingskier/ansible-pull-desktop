@@ -21,7 +21,7 @@
     - { dir: 'tmux' }
     - { dir: 'tmux/plugins' }
 
-- name: Software | tmux | git checkout git tmux plugins
+- name: Software | tmux | git checkout only tpm and sensible git tmux plugins - rest are defined in tmux.conf
   ansible.builtin.git:
     repo: https://github.com/tmux-plugins/{{ item.repo }}
     dest: /home/{{ user_name }}/.config/tmux/plugins/{{ item.plug }}
@@ -29,11 +29,7 @@
     version: master
   with_items:
     - { repo: 'tpm.git', plug: 'tmp' }
-    - { repo: 'tmux-cpu.git', plug: 'tmux-cpu' }
-    - { repo: 'tmux-prefix-highlight.git', plug: 'tmux-prefix-highlight' }
-    - { repo: 'tmux-yank.git', plug: 'tmux-yank' }
-    - { repo: 'tmux-sidebar.git', plug: 'tmux-sidebar' }
-    - { repo: 'tmux-open.git', plug: 'tmux-open' }
+    - { repo: 'tmux-sensible.git', plug: 'tmux-sensible' }
 
 - name: Software | tmux | recursively chown all tmux plugins files
   ansible.builtin.file:
@@ -43,6 +39,11 @@
     group: "{{ group_name }}"
     mode: "0755"
     recurse: true
+
+- name: Software | tmuxinator | run gem install tmuxinator
+  community.general.gem:
+    name: tmuxinator
+    state: latest
 
 - name: Software | tmux | Download latest release gitmux info
   ansible.legacy.shell: |
@@ -78,7 +79,7 @@
 - name: Software | tmux | write gitmux.conf file
   ansible.builtin.copy:
     content: "{{ gitmux_config.stdout }}"
-    dest: /home/{{ user_name }}/.gitmux.conf
+    dest: /home/{{ user_name }}/.config/tmux/gitmux.conf
     owner: "{{ user_name }}"
     group: "{{ group_name }}"
     mode: "0644"
