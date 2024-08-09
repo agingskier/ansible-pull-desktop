@@ -8,6 +8,11 @@
     pkg:
       - fontconfig
       - lsd
+
+- name: Software | eza | install eza to /usr/local/bin (alternativ to lsd)
+  community.general.cargo:
+    name: eza
+    path: /usr/local
  
 - name: Software | lsd | Creates nerd fonts directory used by lsd
   ansible.builtin.file:
