@@ -19,16 +19,6 @@
     - { dir: '.vim/ftplugin' }
     - { dir: '.vim/plugged' }
 
-- name: Vim | copy vim dotfile for {{ user_name }}
-  ansible.builtin.copy:
-    src: users/vim/{{ item.src }}
-    dest: /home/{{ user_name }}/{{ item.dest }}
-    owner: "{{ user_name }}"
-    group: "{{ group_name }}"
-    mode: "0600"
-  with_items:
-    - { src: 'vimrc', dest: '.vimrc' }
-
 - name: Vim | download filetype ftplugin vim files from github for {{ user_name }}
   become: true
   ansible.builtin.get_url:

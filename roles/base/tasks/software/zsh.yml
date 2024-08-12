@@ -41,30 +41,6 @@
       - "{{ zap_run.stdout_lines }}"
     verbosity: 2
  
-- name: Software | Zsh | copy individual zsh config files for {{ user_name }}
-  ansible.builtin.copy:
-    src: users/zsh/{{ item.src }}
-    dest: /home/{{ user_name }}/.config/zsh/{{ item.dest }}
-    owner: "{{ user_name }}"
-    group: "{{ group_name }}"
-    mode: "0600"
-  with_items:
-    - { src: 'aliases.zsh', dest: 'aliases.zsh' }
-    - { src: 'history.zsh', dest: 'history.zsh' }
-    - { src: 'prompt.zsh', dest: 'prompt.zsh' }
-    - { src: 'functions.zsh', dest: 'functions.zsh' }
-    - { src: 'zshrc', dest: '.zshrc' }
-
-- name: Software | Zsh | copy zshenv as dotfile for {{ user_name }}
-  ansible.builtin.copy:
-    src: users/zsh/{{ item.src }}
-    dest: /home/{{ user_name }}/{{ item.dest }}
-    owner: "{{ user_name }}"
-    group: "{{ group_name }}"
-    mode: "0600"
-  with_items:
-    - { src: 'zshenv', dest: '.zshenv' }
-
 - name: Software | Zsh | change shell to /bin/zsh - new login required
   become: true
   become_user: "{{ user_name }}"
