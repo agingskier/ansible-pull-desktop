@@ -7,7 +7,6 @@
       - bpytop
       - digikam
       - lxd
-      - remarkable
       - ssh-audit
 
 - name: Software | snap connect | allow access to NAS
@@ -19,5 +18,4 @@
   register: connect_result
   with_items:
     - { app: 'digikam', plug: 'removable-media' }
-    - { app: 'remarkable', plug: 'removable-media' }
-  changed_when: connect_result.rc == 0
+   changed_when: connect_result.rc == 0
