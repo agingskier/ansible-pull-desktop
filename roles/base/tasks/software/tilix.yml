@@ -33,5 +33,5 @@
     key: "/com/gexperts/Tilix/profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d/{{ item.key }}"
     value: "{{ item.value }}"
   with_items:
-    - { key: 'font', value: "'JetBrainsMono Nerd Font Light 16'" }
+    - { key: 'font', value: "'VictorMono Nerd Font Mono Regular 16'" }
     - { key: 'visible-name', value: "'bpic'" }
