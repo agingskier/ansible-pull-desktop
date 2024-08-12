@@ -16,6 +16,7 @@
       - dnsutils
       - duf
       - etherape
+      - ghostwriter
       - gparted
       - libimage-exiftool-perl
       - libjson-xs-perl
@@ -26,7 +27,6 @@
       - nmap
       - p7zip-full
       - pdfsam
-      - python3-pip
       - plocate
       - pv
       - traceroute

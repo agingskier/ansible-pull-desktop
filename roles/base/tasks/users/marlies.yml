@@ -38,18 +38,3 @@
       with_items:
         - { regexp: '^Exec=tilix --action=app-new-window', line: 'Exec=tilix --action=app-new-window --geometry=80x24+350+120 --session=~/.config/tilix/wide.json' }
         - { regexp: '^Exec=tilix --action=app-new-session', line: 'Exec=tilix --title=my-tilix --action=app-new-session' } 
-
-    - name: Users | marlies | copy dotfiles
-      ansible.builtin.copy:
-        src: users/{{ item.src }}
-        dest: /home/{{ user_name }}/{{ item.dest }}
-        owner: "{{ user_name }}"
-        group: "{{ group_name }}"
-        mode: "0600"
-      with_items:
-        - { src: 'bash/bash_aliases', dest: '.bash_aliases' }
-        - { src: 'bash/bash_functions', dest: '.bash_functions' }
-        - { src: 'bash/bashrc', dest: '.bashrc' }
-        - { src: 'bash/dircolors', dest: '.dircolors' }
-        - { src: 'tilix/split.json', dest: '.config/tilix/split.json' }
-        - { src: 'tilix/wide.json', dest: '.config/tilix/wide.json' }
