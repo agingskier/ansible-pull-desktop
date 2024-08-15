@@ -20,6 +20,7 @@
       - libimage-exiftool-perl
       - libjson-xs-perl
       - libxml-dumper-perl
+      - nala
       - ncdu
       - neofetch
       - net-tools

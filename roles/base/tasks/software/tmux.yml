@@ -1,4 +1,3 @@
-
 ---
 - name: Software | tmux block
   when:
