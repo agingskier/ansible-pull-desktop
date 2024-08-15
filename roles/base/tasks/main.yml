@@ -15,6 +15,12 @@
     - name: Configure tilix terminal
       ansible.builtin.import_tasks:     
         file: software/tilix.yml
+    - name: Configure tmux for tilix
+      ansible.builtin.import_tasks:     
+        file: software/tmux.yml
+    - name: Install and configure zsh shell
+      ansible.builtin.import_tasks:     
+        file: software/zsh.yml
     - name: Install gedit themes
       ansible.builtin.import_tasks:     
         file: software/gedit.yml

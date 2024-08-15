@@ -1,52 +1,63 @@
 ---
-# Create zsh environment for user bernhard - variables defined in host_vars
-# zsh package is installed in utilities.yml
+# Create zsh environment for user - variables defined in host_vars
+
+- name: Users | zsh block
+  when:
+    - zsh is defined
+    - zsh
+  block:
   
-- name: Software | Zsh | Creates zsh directory in .config for {{ user_name }}
-  ansible.builtin.file:
-    path: /home/{{ user_name }}/.config/{{ item.dir }}
-    state: directory
-    owner: "{{ user_name }}"
-    group: "{{ group_name }}"
-    mode: "0775"
-  with_items:
-    - { dir: 'zsh' }
+    - name: Software | zsh | install zsh software
+      ansible.builtin.apt:
+        state: present
+        pkg:
+          - zsh
 
-- name: Software | zsh | download install.zsh script for zap (zsh plugin manager)
-  ansible.builtin.get_url:
-    url: https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh
-    dest: /tmp/zap-install.zsh
-    owner: "{{ user_name }}"
-    group: "{{ group_name }}"
-    mode: "0755"
+    - name: Software | Zsh | Creates zsh directory in .config for {{ user_name }}
+      ansible.builtin.file:
+        path: /home/{{ user_name }}/.config/{{ item.dir }}
+        state: directory
+        owner: "{{ user_name }}"
+        group: "{{ group_name }}"
+        mode: "0775"
+      with_items:
+        - { dir: 'zsh' }
 
-- name: Software | Zsh | Make zap install idempotent - remove ~/.local/share/zap directory for {{ user_name }}
-  ansible.builtin.file:
-    path: /home/{{ user_name }}/.local/share/zap
-    state: absent
+    - name: Software | zsh | download install.zsh script for zap (zsh plugin manager)
+      ansible.builtin.get_url:
+        url: https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh
+        dest: /tmp/zap-install.zsh
+        owner: "{{ user_name }}"
+        group: "{{ group_name }}"
+        mode: "0755"
 
-- name: Software | zsh | run zap-install.zsh script (checkout to ~/.local/share/zap)
-  become: true
-  become_user: "{{ user_name }}"
-  ansible.builtin.shell:
-    cmd: /tmp/zap-install.zsh --branch release-v1 
-  args:
-    executable: /bin/zsh
-  register: zap_run
-  changed_when: zap_run.rc == 0
+    - name: Software | Zsh | Make zap install idempotent - remove ~/.local/share/zap directory for {{ user_name }}
+      ansible.builtin.file:
+        path: /home/{{ user_name }}/.local/share/zap
+        state: absent
 
-- name: Software | zsh | display zap-install result
-  ansible.builtin.debug:
-    msg: 
-      - "{{ zap_run.stdout_lines }}"
-    verbosity: 2
- 
-- name: Software | Zsh | change shell to /bin/zsh - new login required
-  become: true
-  become_user: "{{ user_name }}"
-  ansible.builtin.shell:
-    cmd: chsh -s $(which zsh)
-  args:
-    executable: /bin/bash
-  register: new_shell
-  changed_when: new_shell.rc == 0
+    - name: Software | zsh | run zap-install.zsh script (checkout to ~/.local/share/zap)
+      become: true
+      become_user: "{{ user_name }}"
+      ansible.builtin.shell:
+        cmd: /tmp/zap-install.zsh --branch release-v1 
+      args:
+        executable: /bin/zsh
+      register: zap_run
+      changed_when: zap_run.rc == 0
+
+    - name: Software | zsh | display zap-install result
+      ansible.builtin.debug:
+        msg: 
+          - "{{ zap_run.stdout_lines }}"
+        verbosity: 2
+     
+    - name: Software | Zsh | change shell to /bin/zsh - new login required
+      become: true
+      become_user: "{{ user_name }}"
+      ansible.builtin.shell:
+        cmd: chsh -s $(which zsh)
+      args:
+        executable: /bin/bash
+      register: new_shell
+      changed_when: new_shell.rc == 0

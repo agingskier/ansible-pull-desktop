@@ -53,9 +53,6 @@
         - { dir: '.config/autostart' }
         - { dir: '.config/conky' }
 
-    - name: Users | bernhard | import tasks for tmux before copy config files
-      ansible.builtin.import_tasks: ../software/tmux.yml
- 
     - name: Users | bernhard | copy desktop files for autostart
       ansible.builtin.copy:
         src: users/{{ item.src }}
@@ -70,5 +67,3 @@
     - name: Users | bernhard | import tasks for vim
       ansible.builtin.import_tasks: ../software/vim.yml
 
-    - name: Users | bernhard | import tasks for zsh
-      ansible.builtin.import_tasks: ../software/zsh.yml

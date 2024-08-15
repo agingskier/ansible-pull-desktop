@@ -1,5 +1,5 @@
 ---
-# Install cool utilities specified under modern-unix plus zsh and nerd fonts
+# Install lsd rustup eza and nerd fonts
 #
 
 - name: Software | lsd | install lsd & fontconfig utilities
@@ -8,6 +8,11 @@
     pkg:
       - fontconfig
       - lsd
+
+- name: Software | eza | install snap packages
+  community.general.snap:
+    name: rustup
+    classic: true
 
 - name: Software | eza | install eza to /usr/local/bin (alternativ to lsd)
   community.general.cargo:

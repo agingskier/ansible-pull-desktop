@@ -23,6 +23,8 @@ ubuntu: false
 #
 # development
 #
+zsh: true
+tmux: true
 java: true  
 
 #

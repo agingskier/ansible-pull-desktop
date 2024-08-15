@@ -7,7 +7,6 @@
       - at
       - bat
       - ccze
-      - colordiff
       - conky-all
       - cpulimit
       - stacer
@@ -35,7 +34,6 @@
       - sshpass
       - vim-nox
       - whois
-      - zsh
 
 - name: Software | utilities | remove thunderbird, htop and problem report packages
   ansible.builtin.apt:
