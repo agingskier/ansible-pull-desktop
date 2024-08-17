@@ -1,10 +1,10 @@
 [Desktop Entry]
 Type=Application
-Exec=tilix --action=app-new-window --geometry=80x24+100+200 --session /home/bernhard/.config/tilix/split.json
+Exec=tilix --action=app-new-window --session /home/bernhard/.config/tilix/full-screen.json -e "tmuxinator base start"
 Hidden=false
 NoDisplay=false
 X-GNOME-Autostart-enabled=true
 Name[en_US]=Tilix
 Name=Tilix
-Comment[en_US]=Tilix terminal with 4 splits
-Comment=Tilix terminal with 4 splits
+Comment[en_US]=Tilix full-screen terminal with 4 splits
+Comment=Tilix full-screen terminal with 4 splits
