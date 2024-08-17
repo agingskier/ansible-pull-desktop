@@ -38,10 +38,10 @@
     msg: 
       - "{{ zap_run.stdout_lines }}"
     verbosity: 2
- 
-- name: Software | Zsh | copy individual zsh config files for {{ user_name }}
+
+- name: Software | Zsh | copy individual zsh dotfiles from user {{ user_name }}
   ansible.builtin.copy:
-    src: users/zsh/{{ item.src }}
+    src: /home/{{ user_name }}/.config/zsh/{{ item.src }}
     dest: /root/.config/zsh/{{ item.dest }}
     owner: root
     group: root
@@ -49,24 +49,31 @@
   with_items:
     - { src: 'aliases.zsh', dest: 'aliases.zsh' }
     - { src: 'history.zsh', dest: 'history.zsh' }
-    - { src: 'root-prompt.zsh', dest: 'prompt.zsh' }
     - { src: 'functions.zsh', dest: 'functions.zsh' }
-    - { src: 'zshrc', dest: '.zshrc' }
+    - { src: '.zshrc', dest: '.zshrc' }
+
+- name: Software | Zsh | copy individual zsh config file
+  ansible.builtin.copy:
+    src: users/zsh/{{ item.src }}
+    dest: /root/.config/zsh/{{ item.dest }}
+    owner: root
+    group: root
+    mode: "0600"
+  with_items:
+    - { src: 'root-prompt.zsh', dest: 'prompt.zsh' }
 
 - name: Software | Zsh | copy zshenv as dotfile for {{ user_name }}
   ansible.builtin.copy:
-    src: users/zsh/{{ item.src }}
+    src: /home/{{ user_name }}/{{ item.src }}
     dest: /root/{{ item.dest }}
     owner: root
     group: root
     mode: "0600"
   with_items:
-    - { src: 'zshenv', dest: '.zshenv' }
+    - { src: '.zshenv', dest: '.zshenv' }
 
-- name: Software | Zsh | change shell to /bin/zsh - new login required
-  ansible.builtin.shell:
-    cmd: chsh -s $(which zsh)
-  args:
-    executable: /bin/bash
-  register: new_shell
-  changed_when: new_shell.rc == 0
+- name: Software | Zsh | change shell to /bin/zsh 
+  ansible.builtin.user:
+    name: root
+    shell: /bin/zsh
+

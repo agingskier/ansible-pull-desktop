@@ -15,7 +15,19 @@
     - { dir: '.vim' }
     - { dir: '.vim/colors' }
 
-- name: Users | root | copy dotfiles
+- name: Users | root | copy dotfiles from user bernhard
+  ansible.builtin.copy:
+    src: /home/bernhard/{{ item.src }}
+    dest: /root/{{ item.dest }}
+    owner: root
+    group: root
+    mode: "0600"
+  with_items:
+    - { src: '.bash_aliases', dest: '.bash_aliases' }
+    - { src: '.bash_functions', dest: '.bash_functions' }
+    - { src: '.dircolors', dest: '.dircolors' }
+
+- name: Users | root | copy individual bash prompt
   ansible.builtin.copy:
     src: users/{{ item.src }}
     dest: /root/{{ item.dest }}
@@ -24,9 +36,6 @@
     mode: "0600"
   with_items:
     - { src: 'bash/root-bashrc', dest: '.bashrc' }
-    - { src: 'bash/bash_aliases', dest: '.bash_aliases' }
-    - { src: 'bash/bash_functions', dest: '.bash_functions' }
-    - { src: 'bash/dircolors', dest: '.dircolors' }
     - { src: 'vim/vimrc-root', dest: '.vimrc' }
 
 - name: Users | root | import tasks for zsh
