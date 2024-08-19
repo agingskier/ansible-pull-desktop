@@ -12,26 +12,17 @@
     - name: Software | protonvpn | add protonvpn to apt cache
       ansible.builtin.apt:
         deb: https://repo.protonvpn.com/debian/dists/stable/main/binary-all/protonvpn-stable-release_{{ protonvpn_version }}.deb
-
-    - name: Software | protonvpn | install protonvpn and prerequisites
+    #
+    # Proton VPN Gnome Desktop metapackage
+    # A metapackage that installs all necessary dependencies for Proton VPN on Gnome based desktops
+    #
+    - name: Software | protonvpn | install proton-vpn-gnome-desktop and prerequisites
       ansible.builtin.apt:
         update_cache: true
         pkg:
-          - protonvpn
+          - proton-vpn-gnome-desktop
+          - libayatana-appindicator3-1
+          - gir1.2-ayatanaappindicator3-0.1
           - gnome-shell-extension-appindicator
-          - gir1.2-appindicator3-0.1
         state: present
 
-    - name: Software | protonvpn | select display-manager
-      ansible.builtin.debconf:
-        name: gnome-shell-extension-appindicator
-        question: shared/default-x-display-manager
-        value: lightdm
-        vtype: select
-
-    - name: Software | protonvpn | confirm display-manager
-      ansible.builtin.debconf:
-        name: gnome-shell-extension-appindicator
-        question: shared/default-x-display-manager
-        value: true
-        vtype: boolean
