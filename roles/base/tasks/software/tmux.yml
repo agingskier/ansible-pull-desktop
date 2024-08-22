@@ -17,6 +17,8 @@
           - ruby
           - ruby-rubygems
           - ruby-dev
+          - xsel                        # x11 copy/paste support for tmux and neovim
+          - xclip                       # xclip copy/paste support for tmux and neovim
 
     - name: Software | tmuxinator | run gem install tmuxinator
       community.general.gem:
