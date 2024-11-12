@@ -23,7 +23,7 @@
   become: true
   ansible.builtin.get_url:
     url: "https://raw.githubusercontent.com/vim/vim/master/runtime/ftplugin/{{ item.src }}"
-    dest: "/home/{{ user_name }}/.vim/{{ item.src }}"
+    dest: "/home/{{ user_name }}/.vim/ftplugin/{{ item.src }}"
     owner: "{{ user_name }}"
     group: "{{ group_name }}"
     mode: "0600"
