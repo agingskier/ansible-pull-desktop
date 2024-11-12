@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Exec=tilix --action=app-new-window --session /home/bernhard/.config/tilix/full-screen.json -e "tmuxinator base start"
+Exec=tilix --action=app-new-window --session /home/bernhard/.config/tilix/full-screen.json --geometry=80x24+100+140 -e "tmuxinator base start"
 Hidden=false
 NoDisplay=false
 X-GNOME-Autostart-enabled=true
