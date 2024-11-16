@@ -8,6 +8,7 @@
       - bat
       - ccze
       - conky-all
+      - cowsay
       - cpulimit
       - stacer
       - dconf-editor
@@ -15,6 +16,7 @@
       - dnsutils
       - duf
       - etherape
+      - fortune
       - ghostwriter
       - gparted
       - libimage-exiftool-perl
