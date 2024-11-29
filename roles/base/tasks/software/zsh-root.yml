@@ -76,4 +76,3 @@
   ansible.builtin.user:
     name: root
     shell: /bin/zsh
-

@@ -12,7 +12,7 @@
         owner: "{{ user_name }}"
         group: "{{ group_name }}"
         mode: "0644"
-  q
+
     - name: Users | bernhard | add sudoers file
       ansible.builtin.copy:
         src: users/sudoers_bernhard
