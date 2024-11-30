@@ -9,15 +9,26 @@
       - fontconfig
       - lsd
 
-- name: Software | eza | install snap packages
-  community.general.snap:
-    name: rustup
-    classic: true
+- name: Software | eza | add eza apt key to keyring file
+  ansible.builtin.shell: |
+    set -o pipefail
+    curl -fsSL https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | \
+    sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
+  args:
+    executable: /bin/bash
+  register: eza_gpgkey
+  changed_when: eza_gpgkey.rc == 0
 
-- name: Software | eza | install eza to /usr/local/bin (alternativ to lsd)
-  community.general.cargo:
-    name: eza
-    path: /usr/local
+- name: Software | eza | add eza apt repository
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/gierens.gpg] https://deb.gierens.de stable main"
+    state: present
+
+- name: Software | eza | install eza
+  ansible.builtin.apt:
+    update_cache: true
+    pkg:
+      - eza
  
 - name: Software | lsd | Creates nerd fonts directory used by lsd
   ansible.builtin.file:
