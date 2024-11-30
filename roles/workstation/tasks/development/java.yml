@@ -34,3 +34,12 @@
       with_items:
         - { regex: '^export PATH_TO_FX=', repl: 'export PATH_TO_FX=/opt/javafx-sdk-{{ javafx_version }}/lib' }
         - { regex: '^export CLASSPATH=', repl: 'export CLASSPATH=.:/usr/lib/jvm/{{ jdk_classpath_version }}/lib:$PATH_TO_FX' }
+
+    - name: Software | java & javafx | Replace export statements in .zshenv
+      ansible.builtin.lineinfile:
+        path: /home/{{ user_name }}/.zshenv
+        regexp: "{{ item.regex }}"
+        line: "{{ item.repl }}"
+      with_items:
+        - { regex: '^export PATH_TO_FX=', repl: 'export PATH_TO_FX=/opt/javafx-sdk-{{ javafx_version }}/lib' }
+        - { regex: '^export CLASSPATH=', repl: 'export CLASSPATH=.:/usr/lib/jvm/{{ jdk_classpath_version }}/lib:$PATH_TO_FX' }
