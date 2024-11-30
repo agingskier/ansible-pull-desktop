@@ -61,3 +61,11 @@
         executable: /bin/bash
       register: new_shell
       changed_when: new_shell.rc == 0
+      
+    - name: Software | zsh & tmuxinator | install completion files for zsh shell
+      ansible.builtin.get_url:
+        url: https://raw.githubusercontent.com/tmuxinator/tmuxinator/master/completion/tmuxinator.zsh
+        dest: /usr/local/share/zsh/site-functions/_tmuxinator
+        owner: root
+        group: root
+        mode: '0755'
