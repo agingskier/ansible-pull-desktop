@@ -52,11 +52,11 @@
           - "{{ zap_run.stdout_lines }}"
         verbosity: 2
      
-    - name: Software | Zsh | change shell to /bin/zsh - new login required
+    - name: Software | Zsh | change shell to /bin/zsh - new login required - sudo chsh will change shell for root not bernhard
       become: true
-      become_user: "{{ user_name }}"
+      become_user: root
       ansible.builtin.shell:
-        cmd: sudo chsh -s $(which zsh)
+        cmd: "chsh -s $(which zsh) {{ user_name }}"
       args:
         executable: /bin/bash
       register: new_shell
