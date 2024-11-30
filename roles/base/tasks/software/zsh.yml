@@ -56,7 +56,7 @@
       become: true
       become_user: "{{ user_name }}"
       ansible.builtin.shell:
-        cmd: chsh -s $(which zsh)
+        cmd: sudo chsh -s $(which zsh)
       args:
         executable: /bin/bash
       register: new_shell
