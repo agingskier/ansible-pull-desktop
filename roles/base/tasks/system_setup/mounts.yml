@@ -58,6 +58,20 @@
         - { src: 'mnt-NAS-rechnungen.mount', dest: 'mnt-NAS-rechnungen.mount' }
         - { src: 'mnt-NAS-software.mount', dest: 'mnt-NAS-software.mount' }
         - { src: 'mnt-NAS-steuern.mount', dest: 'mnt-NAS-steuern.mount' }
+
+    - name: System_setup | Add nfs NAS and other bookmarks
+      ansible.builtin.lineinfile:
+        dest: /home/{{ user_name }}/.config/gtk-3.0/bookmarks
+        line: "{{ item.line }}"
+        insertafter: EOF
+      with_items:
+        - { line: "file:///mnt/NAS NAS" }
+        - { line: "file:///mnt/Data Data" }
+        - { line: "file:///mnt/Storage Storage" }
+        - { line: "file:///mnt/Digikam Digikam" }
+        - { line: "file:///mnt/Games Games" }
+        - { line: "file:///mnt/k8s K8S" }
+        - { line: "file:///mnt/VMs VMs" }
 #
 # Service NetworkManager-wait-online must be enabled, otherwise the
 # following mounts will fail (sometimes ok, sometimes not)
@@ -84,17 +98,3 @@
         - 'mnt-NAS-rechnungen.mount'
         - 'mnt-NAS-software.mount'
         - 'mnt-NAS-steuern.mount'
-
-    - name: System_setup | Add nfs NAS and other bookmarks
-      ansible.builtin.lineinfile:
-        dest: /home/{{ user_name }}/.config/gtk-3.0/bookmarks
-        line: "{{ item.line }}"
-        insertafter: EOF
-      with_items:
-        - { line: "file:///mnt/NAS NAS" }
-        - { line: "file:///mnt/Data Data" }
-        - { line: "file:///mnt/Storage Storage" }
-        - { line: "file:///mnt/Digikam Digikam" }
-        - { line: "file:///mnt/Games Games" }
-        - { line: "file:///mnt/k8s K8S" }
-        - { line: "file:///mnt/VMs VMs" }
