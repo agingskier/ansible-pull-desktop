@@ -12,19 +12,20 @@
 
 - name: Software | tilix | download tilix color schemes from github
   ansible.builtin.get_url:
-    url: "https://git.io/{{ item.url }}"
+    url: "https://codeberg.org/SnowCode/tilix-colors{{ item.url }}"
     dest: "/home/{{ user_name }}/.config/tilix/schemes/{{ item.dest }}"
     owner: "{{ user_name }}"
     group: "{{ group_name }}"
     mode: "0644"
   with_items:
-    - { url: 'v7QVD', dest: 'argonaut.json' }
-    - { url: 'v7Qav', dest: 'cobalt2.json' }
-    - { url: 'v7Q2j', dest: 'dark-pastel.json' }
-    - { url: 'v7QaW', dest: 'hipster-green.json' }
-    - { url: 'v7QaN', dest: 'paul-millr.json' }
-    - { url: 'v7QVZ', dest: 'thayer-bright.json' }
-    - { url: 'v7Qag', dest: 'kibble.json' }
+    - { url: 'argonaut.json', dest: 'argonaut.json' }
+    - { url: 'cobalt2.json', dest: 'cobalt2.json' }
+    - { url: 'dark-pastel.json', dest: 'dark-pastel.json' }
+    - { url: 'hipster-green.json', dest: 'hipster-green.json' }
+    - { url: 'paul-millr.json', dest: 'paul-millr.json' }
+    - { url: 'nord.json', dest: 'nord.json' }
+    - { url: 'thayer-bright.json', dest: 'thayer-bright.json' }
+    - { url: 'kibble.json', dest: 'kibble.json' }
 
 - name: Software | tilix | set tilix values in dconf
   become: true
