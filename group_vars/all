@@ -4,13 +4,13 @@
 protonvpn_version: "1.0.6_all"
 #
 # check: https://openjdk.org/projects/jdk/
-openjdk_version: "openjdk-23-jdk"
+openjdk_version: "openjdk-21-jdk"
 #
 # check: https://openjdk.org/projects/jdk/
-jdk_classpath_version: "java-23-openjdk-amd64"
+jdk_classpath_version: "java-21-openjdk-amd64"
 #
 # Check: https://gluonhq.com/products/javafx/
-javafx_version: "23"
+javafx_version: "21"
 #
 # check: GIMP sub directory if still 2.10
 gimp_subdir_version: "2.10"
