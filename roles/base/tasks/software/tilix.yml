@@ -12,7 +12,7 @@
 
 - name: Software | tilix | download tilix color schemes from github
   ansible.builtin.get_url:
-    url: "https://codeberg.org/SnowCode/tilix-colors{{ item.url }}"
+    url: "https://codeberg.org/SnowCode/tilix-colors/raw/branch/master/{{ item.url }}"
     dest: "/home/{{ user_name }}/.config/tilix/schemes/{{ item.dest }}"
     owner: "{{ user_name }}"
     group: "{{ group_name }}"
