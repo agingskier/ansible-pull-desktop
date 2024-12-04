@@ -92,15 +92,15 @@
         mode: "0755"
 
     #
-    # fix: Error message: systemd[1]: Dependency failed for sssd-ssh.socket - SSSD SSH Service responder socket.
+    # fix: Error message: systemd[1]: Dependency failed for sssd-ssh.socket - SSSD SSH Service responder socket. Mode 0600 is important.
     #
-    - name: System-setup | fix-log-msg | copy sssd.conf to /etc/sssd/conf.d directory
+    - name: System-setup | fix-log-msg | copy sssd.conf to /etc/sssd directory
       ansible.builtin.copy:
         src: /usr/lib/x86_64-linux-gnu/sssd/conf/sssd.conf
-        dest: /etc/sssd/conf.d/sssd.conf
+        dest: /etc/sssd/sssd.conf
         owner: root
         group: root
-        mode: "0644"
+        mode: "0600"
 
     #
     # fix: Error message: bluetoothd[1674]: profiles/sap/server.c:sap_server_register() Sap driver initialization failed.
