@@ -36,11 +36,11 @@
         path: /home/{{ user_name }}/.local/share/zap
         state: absent
 
-    - name: Software | zsh | run zap-install.zsh script (checkout to ~/.local/share/zap)
+    - name: Software | zsh | run zap-install.zsh script (checkout to ~/.local/share/zap) - suppress .zshrc with --keep option
       become: true
       become_user: "{{ user_name }}"
       ansible.builtin.shell:
-        cmd: /tmp/zap-install.zsh --branch release-v1 
+        cmd: /tmp/zap-install.zsh --keep --branch release-v1 
       args:
         executable: /bin/zsh
       register: zap_run
