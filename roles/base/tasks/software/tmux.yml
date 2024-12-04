@@ -14,16 +14,9 @@
         state: present
         pkg:
           - tmux
-          - ruby
-          - ruby-rubygems
-          - ruby-dev
+          - tmuxinator
           - xsel                        # x11 copy/paste support for tmux and neovim
           - xclip                       # xclip copy/paste support for tmux and neovim
-
-    - name: Software | tmuxinator | run gem install tmuxinator
-      community.general.gem:
-        name: tmuxinator
-        state: latest
 
     - name: Software | tmuxinator | install completion files for bash shell
       ansible.builtin.get_url:
