@@ -16,6 +16,7 @@
       - dnsutils
       - duf
       - etherape
+      - fd-find
       - fortune
       - ghostwriter
       - gparted

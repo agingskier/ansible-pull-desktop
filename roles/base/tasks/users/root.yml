@@ -4,7 +4,7 @@
     name: root
     password_lock: true
 
-- name: Users | root | create config directories for vim and zsh
+- name: Users | root | create config directories for vim
   ansible.builtin.file:
     path: /root/{{ item.dir }}
     state: directory
@@ -37,8 +37,3 @@
   with_items:
     - { src: 'bash/root-bashrc', dest: '.bashrc' }
     - { src: 'vim/vimrc-root', dest: '.vimrc' }
-
-- name: Users | root | import tasks for zsh
-  become: true
-  become_user: root
-  ansible.builtin.import_tasks: ../software/zsh-root.yml
