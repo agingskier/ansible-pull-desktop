@@ -22,6 +22,7 @@
     - { url: 'cobalt2.json', dest: 'cobalt2.json' }
     - { url: 'dark-pastel.json', dest: 'dark-pastel.json' }
     - { url: 'hipster-green.json', dest: 'hipster-green.json' }
+    - { url: 'homebrew.json', dest: 'homebrew.json' }
     - { url: 'paul-millr.json', dest: 'paul-millr.json' }
     - { url: 'nord.json', dest: 'nord.json' }
     - { url: 'thayer-bright.json', dest: 'thayer-bright.json' }
