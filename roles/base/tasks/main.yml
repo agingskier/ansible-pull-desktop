@@ -8,6 +8,11 @@
       ansible.builtin.import_tasks: 
         file: software/utilities.yml
 
+    # install software nvm/npm/node and utility for bare dotfile repository
+    - name: Install LSD software
+      ansible.builtin.import_tasks:
+        file: software/nodejs.yml
+
     # install software required by users
     - name: Install LSD software
       ansible.builtin.import_tasks:

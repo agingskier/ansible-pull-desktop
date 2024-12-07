@@ -1,0 +1,96 @@
+---
+# Create nodejs environment for user - variables defined in host_vars
+
+- name: Softeare | nodejs block
+  when:
+    - nodejs is defined
+    - nodejs
+  block:
+  
+    - name: Software | nvm | remove existing ~/.config/nvm directory
+      ansible.builtin.file:
+        path: /home/bernhard/.config/nvm
+        state: absent
+
+    - name: Software | nvm | extract latest release number for Node Version Manager
+      ansible.legacy.shell: |
+        set -o pipefail
+        curl --silent "https://api.github.com/repos/nvm-sh/nvm/releases/latest" |
+        jq -r .tag_name
+      args:
+        executable: /bin/bash
+      register: nvm_release
+      changed_when: nvm_release.rc == 0 
+
+    - name: Software | nvm | Download install script Node Version Manager (nvm)
+      ansible.builtin.shell: |
+        set -o pipefail
+        curl --silent https://raw.githubusercontent.com/nvm-sh/nvm/{{ nvm_release.stdout }}/install.sh \
+          --output /home/{{ user_name }}/bin/nvm-install.sh
+      args:
+        executable: /bin/bash
+      register: nvm_load
+      changed_when: nvm_load.rc == 0
+
+    - name: Software | nvm | Support zsh location in nvm-install.sh (dot in regexp stands for $ character)
+      ansible.builtin.replace:        
+        path: /home/{{ user_name }}/bin/nvm-install.sh
+        regexp: "{{ item.string }}"
+        replace: "{{ item.repl }}"
+      with_items:
+        - { string: "HOME/.z", repl: "ZDOTDIR/.z" }
+        - { string: "{HOME}/.{EACH", repl: "{ZDOTDIR}/${EACH" }
+  
+    - name: Software | nvm | Change permission of nvm-install.sh
+      ansible.builtin.file:
+        path: /home/{{ user_name }}/bin/nvm-install.sh
+        state: file
+        owner: "{{ user_name }}"
+        group: "{{ group_name }}"
+        mode: "0755"
+
+    - name: Software | nvm | install Node Version Manager (nvm)
+      ansible.builtin.shell:
+        cmd: /home/{{ user_name }}/bin/nvm-install.sh
+      args:
+        executable: /bin/bash
+      register: nvm_install
+      changed_when: nvm_install.rc == 0
+
+    - name: Software | nvm | display nvm-install.sh result
+      ansible.builtin.debug:
+        msg: 
+          - "{{ nvm_install.stdout_lines }}"
+
+    - name: Software | nvm | install Node.js with Node Version Manager (nvm)
+      ansible.builtin.shell: |
+        source /home/{{ user_name }}/.config/nvm/nvm.sh
+        nvm install node
+      args:
+        executable: /bin/bash
+      register: node_install
+      changed_when: node_install.rc == 0
+
+    - name: Software | node.js | display node install result
+      ansible.builtin.debug:
+        msg: 
+          - "{{ node_install.stdout_lines }}"
+
+    # the dot in ". $NVM_DIR/nvm.sh" is required!
+    - name: Software | nvm | Verify nvm installation. Source .zshenv to activate new $PATH variable
+      ansible.builtin.shell:
+        set -o pipefail
+        source $HOME/.zshenv
+        . $NVM_DIR/nvm.sh
+        nvm --version
+        npm --version
+        node --version
+      args:
+        executable: /bin/zsh
+      register: nvm_verify
+      changed_when: nvm_verify.rc == 0
+
+    - name: Software | npm | Install git-split-diffs package globally.
+      community.general.npm:
+        name: git-split-diffs
+        global: true

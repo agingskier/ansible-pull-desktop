@@ -23,6 +23,7 @@ ubuntu: no
 #
 # development (required for ipscan)
 #
+nodejs: false
 zsh: false
 tmux: false
 java: yes
