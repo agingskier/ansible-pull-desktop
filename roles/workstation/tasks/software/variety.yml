@@ -61,7 +61,7 @@
       ansible.builtin.lineinfile:
         path: /home/{{ user_name }}/.config/variety/variety.conf
         insertafter: '^src'
-        line: 'src12 = True|folder|/mnt/NAS/media/Pictures/Weltreise'
+        line: 'src12 = True|album (by filename)|/mnt/NAS/media/Pictures/Weltreise'
 
     - name: Software | variety | Replace invalid "Action" line
       ansible.builtin.replace:
