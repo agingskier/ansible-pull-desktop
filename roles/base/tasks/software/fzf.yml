@@ -1,0 +1,58 @@
+---
+- name: Softeare | fzf block
+  become: true
+  become_method: ansible.builtin.sudo
+  block:
+
+    # Get latest release from Github api
+    # get tag line
+    # pluck JSON value 
+    - name: Software | fzf | download latest release info for fzf
+      ansible.builtin.shell: |
+        set -o pipefail
+        curl --silent https://api.github.com/repos/junegunn/fzf/releases/latest |
+        jq -r .tag_name
+      args:
+        executable: /bin/bash
+      register: fzf_release
+
+    - name: Software | fzf | install binary (version without 'v')
+      ansible.builtin.unarchive:
+        src: https://github.com/junegunn/fzf/releases/download/{{ fzf_release.stdout }}/fzf-{{ fzf_release.stdout | regex_search('(\d(.*))') }}-linux_amd64.tar.gz
+        dest: /usr/local/bin
+        remote_src: true
+        mode: '0755'
+        owner: root
+        group: root
+
+    - name: Software | fzf | install fzf-tmux script
+      ansible.builtin.get_url:
+        url: https://raw.githubusercontent.com/junegunn/fzf/master/bin/fzf-tmux
+        dest: /usr/local/bin/fzf-tmux
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Software | fzf | insert fzf key bindings and completion in .bashrc
+      ansible.builtin.blockinfile:
+        path: /home/{{ user_name }}/.bashrc
+        marker: "#<-- {mark} Inserted by fzf.yml Ansible-Playbook  -->"
+        append_newline: true
+        prepend_newline: true
+        block: |
+          #--------------------------------------------------------------
+          # Set up fzf key bindings and fuzzy completion
+          #--------------------------------------------------------------
+          eval "$(fzf --bash)"
+
+    - name: Software | fzf | insert fzf key bindings and completion in .config/zsh/.zshrc
+      ansible.builtin.blockinfile:
+        path: /home/{{ user_name }}/.config/zsh/.zshrc
+        marker: "#<-- {mark} Inserted by fzf.yml Ansible-Playbook  -->"
+        append_newline: true
+        prepend_newline: true
+        block: |
+          #--------------------------------------------------------------
+          # Set up fzf key bindings and fuzzy completion
+          #--------------------------------------------------------------
+          source <(fzf --zsh)

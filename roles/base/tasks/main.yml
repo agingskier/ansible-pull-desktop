@@ -9,9 +9,14 @@
         file: software/utilities.yml
 
     # install software nvm/npm/node and utility for bare dotfile repository
-    - name: Install LSD software
+    - name: Install node-js software
       ansible.builtin.import_tasks:
         file: software/nodejs.yml
+
+    # install software fzf
+    - name: Install fzf software
+      ansible.builtin.import_tasks:
+        file: software/fzf.yml
 
     # install software required by users
     - name: Install LSD software
