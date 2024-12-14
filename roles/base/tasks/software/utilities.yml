@@ -6,6 +6,7 @@
       - aptitude
       - at
       - bat
+      - btop
       - ccze
       - conky-all
       - cowsay

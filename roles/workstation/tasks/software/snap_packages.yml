@@ -4,7 +4,6 @@
   become_method: ansible.builtin.sudo
   community.general.snap:
     name:
-      - bpytop
       - digikam
       - lxd
       - ssh-audit
