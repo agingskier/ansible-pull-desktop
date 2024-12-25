@@ -1,4 +1,7 @@
 ---
+#
+# external location for instances, check: https://canonical.com/multipass/docs/configure-multipass-storage
+#
 - name: Software | multipass block
   become: true
   become_method: ansible.builtin.sudo
@@ -6,8 +9,12 @@
     - multipass is defined
     - multipass
   block:
+    - name: Softeare | multipass | Recursively remove directory /mnt/Storage/multipass
+      ansible.builtin.file:
+        path: /mnt/Storage/multipass
+        state: absent
+
     - name: Software | snap | install multipass package
-      tags: multipass
       community.general.snap:
         name:
           - multipass
@@ -15,7 +22,7 @@
     - name: Software | multipass | stop multipass daemon
       ansible.builtin.shell: snap stop multipass
       args:
-        executable: /bin/zsh
+        executable: /bin/bash
       register: snap_stop
       changed_when: snap_stop.rc == 0
 
@@ -29,7 +36,7 @@
     - name: Software | multipass | connect multipass:all-home for /home
       ansible.builtin.shell: snap connect multipass:all-home
       args:
-        executable: /bin/zsh
+        executable: /bin/bash
       register: snap_home
       changed_when: snap_home.rc == 0
 
@@ -37,8 +44,8 @@
       ansible.builtin.file:
         path: /mnt/Storage/multipass
         state: directory
-        owner: "{{ user_name }}"
-        group: "{{ group_name }}"
+        owner: root
+        group: root
         mode: "0755"
 
     - name: Software | multipass | Create directory for override.conf
@@ -66,6 +73,6 @@
         - "systemctl daemon-reload"
         - "snap start multipass"
       args:
-        executable: /bin/zsh
+        executable: /bin/bash
       register: start_daemon
       changed_when: start_daemon.rc == 0
