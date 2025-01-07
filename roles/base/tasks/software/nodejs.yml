@@ -50,6 +50,7 @@
         mode: "0755"
 
     - name: Software | nvm | install Node Version Manager (nvm)
+      become_user: "{{ user_name }}"
       ansible.builtin.shell:
         cmd: /home/{{ user_name }}/bin/nvm-install.sh
       args:
