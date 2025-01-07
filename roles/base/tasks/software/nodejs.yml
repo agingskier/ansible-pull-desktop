@@ -77,12 +77,12 @@
         msg: 
           - "{{ node_install.stdout_lines }}"
 
-    # the dot in ". $NVM_DIR/nvm.sh" is required!
-    - name: Software | nvm | Verify nvm installation. Source .zshenv to activate new $PATH variable
-      ansible.builtin.shell:
+    - name: Software | nvm | Verify nvm installation. Source .zshenv to load nvm and activate new $PATH variable
+      ansible.builtin.shell: |
         set -o pipefail
+        echo $PATH
         source $HOME/.zshenv
-        . $NVM_DIR/nvm.sh
+        echo $PATH
         nvm --version
         npm --version
         node --version
@@ -91,7 +91,12 @@
       register: nvm_verify
       changed_when: nvm_verify.rc == 0
 
-#    - name: Software | npm | Install git-split-diffs package globally.
-#      community.general.npm:
-#        name: git-split-diffs
-#        global: true
+    - name: Software | nvm | display shell results
+      ansible.builtin.debug:
+        msg: 
+          - "{{ nvm_verify.stdout_lines }}"
+
+    - name: Software | npm | Install git-split-diffs package globally.
+      community.general.npm:
+        name: git-split-diffs
+        global: true
