@@ -15,6 +15,7 @@
       args:
         executable: /bin/bash
       register: fzf_release
+      changed_when: fzf_release.rc == 0
 
     - name: Software | fzf | install binary (version without 'v')
       ansible.builtin.unarchive:
