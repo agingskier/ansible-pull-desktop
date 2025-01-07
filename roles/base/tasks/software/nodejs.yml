@@ -91,7 +91,7 @@
       register: nvm_verify
       changed_when: nvm_verify.rc == 0
 
-    - name: Software | npm | Install git-split-diffs package globally.
-      community.general.npm:
-        name: git-split-diffs
-        global: true
+#    - name: Software | npm | Install git-split-diffs package globally.
+#      community.general.npm:
+#        name: git-split-diffs
+#        global: true
