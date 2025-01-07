@@ -87,7 +87,7 @@
         npm --version
         node --version
       args:
-        executable: /bin/zsh
+        executable: /bin/bash
       register: nvm_verify
       changed_when: nvm_verify.rc == 0
 
