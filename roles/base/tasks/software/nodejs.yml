@@ -77,11 +77,11 @@
         msg: 
           - "{{ node_install.stdout_lines }}"
 
-    - name: Software | nvm | Verify nvm installation. Source .zshenv to load nvm and activate new $PATH variable
+    - name: Software | nvm | Verify nvm installation. Source .bashrc (zsh not yet installed) to load nvm and activate new $PATH variable
       ansible.builtin.shell: |
         set -o pipefail
         echo $PATH
-        source $HOME/.zshenv
+        source $HOME/.bashrc
         echo $PATH
         nvm --version
         npm --version
