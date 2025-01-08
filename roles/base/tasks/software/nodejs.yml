@@ -77,11 +77,13 @@
         msg: 
           - "{{ node_install.stdout_lines }}"
 
-    - name: Software | nvm | Verify nvm installation. Source .bashrc (zsh not yet installed) to load nvm and activate new $PATH variable
+    - name: Software | nvm | Verify nvm installation. Source .bashrc to load nvm and '. $NVM_DIR/nvm.sh' to activate new $PATH variable
+      become_user: "{{ user_name }}"
       ansible.builtin.shell: |
         set -o pipefail
         echo $PATH
         source $HOME/.bashrc
+        . $NVM_DIR/nvm.sh
         echo $PATH
         nvm --version
         npm --version
@@ -96,7 +98,10 @@
         msg: 
           - "{{ nvm_verify.stdout_lines }}"
 
-    - name: Software | npm | Install git-split-diffs package globally.
+    - name: Software | npm | Install git-split-diffs and tldr packages globally.
       community.general.npm:
-        name: git-split-diffs
+        name: "{{ item }}"
         global: true
+      with_items:
+        - git-split-diffs
+        - tldr
