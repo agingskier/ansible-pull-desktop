@@ -100,7 +100,7 @@
         dest: /etc/sssd/sssd.conf
         owner: root
         group: root
-        mode: "0644"
+        mode: "0600"
 
     #
     # fix: Error message: bluetoothd[1674]: profiles/sap/server.c:sap_server_register() Sap driver initialization failed.
