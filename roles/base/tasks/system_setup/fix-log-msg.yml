@@ -87,20 +87,20 @@
       ansible.builtin.file:
         path: /var/log/sssd
         state: directory
-        owner: sssd
-        group: sssd
+        owner: root
+        group: root
         mode: "0755"
 
     #
     # fix: Error message: systemd[1]: Dependency failed for sssd-ssh.socket - SSSD SSH Service responder socket. Mode 0600 is important.
     #
-    #- name: System-setup | fix-log-msg | copy sssd.conf to /etc/sssd directory
-    #  ansible.builtin.copy:
-    #    src: /usr/lib/x86_64-linux-gnu/sssd/conf/sssd.conf
-    #    dest: /etc/sssd/sssd.conf
-    #    owner: root
-    #    group: root
-    #    mode: "0600"
+    - name: System-setup | fix-log-msg | copy sssd.conf to /etc/sssd directory
+      ansible.builtin.copy:
+        src: /usr/lib/x86_64-linux-gnu/sssd/conf/sssd.conf
+        dest: /etc/sssd/sssd.conf
+        owner: root
+        group: root
+        mode: "0644"
 
     #
     # fix: Error message: bluetoothd[1674]: profiles/sap/server.c:sap_server_register() Sap driver initialization failed.
@@ -110,6 +110,24 @@
         path: /usr/lib/systemd/system/bluetooth.service
         regex: "^ExecStart="
         line: "ExecStart=/usr/libexec/bluetooth/bluetoothd --noplugin=sap"
+        owner: root
+        group: root
+        mode: "0644"
+
+    #
+    # fix: Error message: During shutdown - ] usb 2-8: Failed to set U1 timout to 0x0, error code -113 
+    #
+    - name: System-setup | fix-log-msg | create 75-usb-failed-timeout.rules file in /etc/udev/rules.d
+      ansible.builtin.copy:
+        dest: /lib/udev/rules.d/75-usb-failed-timeout.rules
+        content: |
+          #
+          # prevent error messages during shutdown
+          # ] usb 2-8: Failed to set U1 timout to 0x0, error code -113
+          # ] usb 2-8: Failed to set U1 timout to 0x1e, error code -113
+          # ] usb 2-8: Failed to set U1 timout to 0x3f, error code -113
+          #
+          ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="on"
         owner: root
         group: root
         mode: "0644"
