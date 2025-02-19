@@ -42,7 +42,7 @@
     #
     # fix: Error message: kernel: IPv6: MLD: clamping QRV from 1 to 2!
     #
-    - name: System-setup | fix-log-msg | create 10-ipv6-mld.conf file in /etc/sysctl.d
+    - name: System-setup | fix-log-msg | create 95-ipv6-mld.conf file in /etc/sysctl.d
       ansible.builtin.copy:
         dest: "/etc/sysctl.d/95-ipv6-mld.conf"
         content: |
@@ -54,6 +54,22 @@
         group: root
         mode: "0644"
 
+    #
+    # fix: Error message: kernel: apparmor="AUDIT" ... comm="steuern.lu.2024" requested="userns_create" target="unprivileged_userns"
+    #
+    - name: System-setup | fix-log-msg | create 95-unprivileged-userns.conf file in /etc/sysctl.d
+      ansible.builtin.copy:
+        dest: "/etc/sysctl.d/95-unprivileged-userns.conf"
+        content: |
+          #
+          # kernel: apparmor="AUDIT" operation="userns_create" class="namespace"
+          #   info="Userns create - transitioning profile" profile="unconfined"
+          #   comm="steuern.lu.2024" requested="userns_create" target="unprivileged_userns"
+          #
+          kernel.apparmor_restrict_unprivileged_userns = 0
+        owner: root
+        group: root
+        mode: "0644"
     #
     # fix: Shutdown too slow, reduce stop timeout value - Reboot required
     # Use 'systemd-analyze cat-config systemd/system.conf' to display the full config.
