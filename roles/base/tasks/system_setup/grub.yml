@@ -192,12 +192,22 @@
         owner: root
         group: root
         mode: "0644"
+    #
+    # Supress ath10k_pci error messages with pci=noaer
+    # pcieport AER: Correctable error message received from 0000:02:00.0
+    # ath10k_pci 0000:02:00.0: PCIe Bus Error: severity=Correctable, type=Data Link Layer, (Receiver ID)
+    # ath10k_pci 0000:02:00.0:   device [168c:0042] error status/mask=00000080/00006000
+    # ath10k_pci 0000:02:00.0:    [ 7] BadDLLP
+    #
+    # Supress lots of ACPI BIOS Errors with acpi=off
+    # ACPI BIOS Error (bug): Failure creating named object [\_SB.PC00.XHCI.RHUB.SS04._PLD], AE_ALREADY_EXISTS (20240322/dswload2-326)
+    #
 
     - name: System_setup | grub | Replace CMDLINE with loglevel=3 to supress error messages
       ansible.builtin.lineinfile:
         path: /etc/default/grub
         regexp: "^GRUB_CMDLINE_LINUX_DEFAULT="
-        line: 'GRUB_CMDLINE_LINUX_DEFAULT="quiet splash loglevel=3"'
+        line: 'GRUB_CMDLINE_LINUX_DEFAULT="quiet splash pci=noaer acpi=off"'
         backrefs: true
 
     - name: System_setup | grub | Insert GFXMODE line
