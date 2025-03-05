@@ -43,4 +43,4 @@ multipass: true
 protonvpn: true 
 steam: true 
 variety: true 
-vlc: false
+vlc: true
