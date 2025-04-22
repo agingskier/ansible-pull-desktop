@@ -156,7 +156,6 @@
     # fix: Error message: kernel: r8169 0000:03:00.0: can't disable ASPM; OS doesn't have ASPM control 
     #
     - name: System-setup | fix-log-msg | install fwts (Firmware Test Suite)
-        ansible.builtin.apt:
+      ansible.builtin.apt:
         name: fwts
         state: present
-
