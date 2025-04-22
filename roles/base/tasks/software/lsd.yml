@@ -23,10 +23,10 @@
   ansible.builtin.apt_repository:
     repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/gierens.gpg] https://deb.gierens.de stable main"
     state: present
+    update_cache: true
 
 - name: Software | eza | install eza
   ansible.builtin.apt:
-    update_cache: true
     pkg:
       - eza
  
