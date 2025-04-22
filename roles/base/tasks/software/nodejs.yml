@@ -98,10 +98,11 @@
         msg: 
           - "{{ nvm_verify.stdout_lines }}"
 
-    - name: Software | npm | Install git-split-diffs and tldr packages globally.
-      community.general.npm:
-        name: "{{ item }}"
-        global: true
-      with_items:
-        - git-split-diffs
-        - tldr
+# cannot execute npm as the new $PATH variable is not upto date yet - requires starting terminal
+#    - name: Software | npm | Install git-split-diffs and tldr packages globally.
+#      community.general.npm:
+#        name: "{{ item }}"
+#        global: true
+#      with_items:
+#        - git-split-diffs
+#        - tldr
