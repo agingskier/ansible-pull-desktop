@@ -22,10 +22,7 @@
     - name: Install LSD software
       ansible.builtin.import_tasks:
         file: software/lsd.yml
-#    - name: Configure tilix terminal
-#      ansible.builtin.import_tasks:     
-#        file: software/tilix.yml
-    - name: Configure tmux for tilix
+    - name: Configure tmux for xfce4
       ansible.builtin.import_tasks:     
         file: software/tmux.yml
     - name: Install and configure zsh shell

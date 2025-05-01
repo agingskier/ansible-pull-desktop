@@ -86,19 +86,3 @@
         mode: "0755"
         owner: root
         group: root
-
-###
-# The following steps are not required anymore. gitmux.conf file is managed in dotfiles bare git repository
-###
-#    - name: Software | tmux | create gitmux configuration file
-#      ansible.builtin.command: gitmux -printcfg
-#      register: gitmux_config
-#      changed_when: gitmux_config.rc == 0
-
-#    - name: Software | tmux | write gitmux.conf file
-#      ansible.builtin.copy:
-#        content: "{{ gitmux_config.stdout }}"
-#        dest: /home/{{ user_name }}/.config/tmux/gitmux.conf
-#        owner: "{{ user_name }}"
-#        group: "{{ group_name }}"
-#        mode: "0644"
