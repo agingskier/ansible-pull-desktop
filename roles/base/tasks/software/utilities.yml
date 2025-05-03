@@ -39,13 +39,13 @@
       - vim-nox
       - whois
 
-- name: Software | utilities | remove thunderbird, htop and problem report packages
-  ansible.builtin.apt:
-    state: absent
-    autoremove: true
-    pkg:
-      - thunderbird*
-      - htop
-      - apport
-      - apport-gtk
-      - apport-symptoms
+#- name: Software | utilities | remove thunderbird, htop and problem report packages
+#  ansible.builtin.apt:
+#    state: absent
+#    autoremove: true
+#    pkg:
+#      - thunderbird*
+#      - htop
+#      - apport
+#      - apport-gtk
+#      - apport-symptoms
