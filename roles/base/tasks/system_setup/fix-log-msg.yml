@@ -159,3 +159,35 @@
       ansible.builtin.apt:
         name: fwts
         state: present
+    #
+    # fix: Error message: Permissions for /etc/netplan/01-network-manager-all.yaml are too open.
+    #
+    - name: System-setup | fix-log-msg | change permission for 01-network-manager-all.yaml
+      ansible.builtin.file:
+        path: /etc/netplan/01-network-manager-all.yaml
+        owner: root
+        group: root
+        mode: "0600"
+    #
+    # fix: Error message: systemd-udevd[483]: /usr/lib/udev/rules.d/90-alsa-restore.rules:16 
+    #            GOTO="alsa_restore_std" has no matching label, ignoring.
+    #
+    - name: System_setup | fix-log-msg | Replace LABEL alsa-restore-go line
+      ansible.builtin.replace:
+        path: /home/bernhard/90-alsa-restore.rules
+        regexp: '^LABEL="alsa_restore_go"'
+        replace: 'LABEL="alsa_restore_std"'
+            
+    - name: System_setup | fix-log-msg | Insert LABEL line
+      ansible.builtin.lineinfile:
+        path: /home/bernhard/90-alsa-restore.rules
+        insertbefore: '^ENV{ALSA_CARD_NUMBER'
+        line: 'LABEL="alsa_restore_go"'
+        state: present
+    #
+    # fix: Error messages: Dependency failed for xdg-desktop-portal-gnome.service - Portal service (GNOME implementation).
+    #
+    - name: System-setup | fix-log-msg | remove xdg-desktop-portal-gnome package (fixes problem)
+      ansible.builtin.apt:
+        name: xdg-desktop-portal-gnome
+        state: absent        
