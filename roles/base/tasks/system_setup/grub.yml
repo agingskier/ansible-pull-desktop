@@ -7,6 +7,12 @@
   become_method: ansible.builtin.sudo
   when: "'bequiet' in inventory_hostname"
   block:
+    - name: System-setup | grub | make sure package grub-pc is installed - was missing
+      ansible.builtin.apt:
+        update_cache: true
+        name:
+          - grub-pc
+
     - name: System-setup | grub | make sure /tmp has full access
       ansible.builtin.file:
         path: /tmp
