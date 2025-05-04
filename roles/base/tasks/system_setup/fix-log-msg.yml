@@ -184,10 +184,3 @@
         insertbefore: '^ENV{ALSA_CARD_NUMBER'
         line: 'LABEL="alsa_restore_go"'
         state: present
-    #
-    # fix: Error messages: Dependency failed for xdg-desktop-portal-gnome.service - Portal service (GNOME implementation).
-    #
-    - name: System-setup | fix-log-msg | remove xdg-desktop-portal-gnome package (fixes problem)
-      ansible.builtin.apt:
-        name: xdg-desktop-portal-gnome
-        state: absent        
