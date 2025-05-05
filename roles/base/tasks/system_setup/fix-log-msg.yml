@@ -184,3 +184,34 @@
         insertbefore: '^ENV{ALSA_CARD_NUMBER'
         line: 'LABEL="alsa_restore_go"'
         state: present
+
+    #
+    # fix: Error message: dbus-broker-launch[2010]:
+    # dbus-broker-launch[2010]: Service file '/usr/share//dbus-1/services/nemo.FileManager1.service'
+    #          is not named after the D-Bus name 'org.freedesktop.FileManager1'.
+    # dbus-broker-launch[2010]: Service file '/usr/share//dbus-1/services/nemo.service' is not named after the D-Bus name 'org.Nemo'.
+    # dbus-broker-launch[2010]: Ignoring duplicate name 'org.freedesktop.FileManager1' in service file '/usr/share//dbus-1/services/
+    #          org.freedesktop.FileManager1.service'
+    #
+    - name: System_setup | fix-log-msg | Delete dbus-1 files for nemo
+      ansible.builtin.lineinfile:
+        path: /usr/share/dbus-1/services/nemo.FileManager1.service
+        state: absent
+           
+    - name: System_setup | fix-log-msg | Check if nemo.service file exists
+      ansible.builtin.stat:
+        path: /usr/share/dbus-1/services/nemo.service
+      register: check_file_name
+
+    - name: System_setup | fix-log-msg | Copy dbus-1 file nemo.service to org.Nemo
+      ansible.builtin.copy:
+        remote_src: true
+        src: /usr/share/dbus-1/services/nemo.service
+        dest: /usr/share/dbus-1/services/org.Nemo
+      when: check_file_name.stat.exists
+
+    - name: System_setup | fix-log-msg | Delete dbus-1 file nemo.service
+      ansible.builtin.file:
+        path: /usr/share/dbus-1/services/nemo.service
+        state: absent
+      when: check_file_name.stat.exists
