@@ -194,7 +194,7 @@
     #          org.freedesktop.FileManager1.service'
     #
     - name: System_setup | fix-log-msg | Delete dbus-1 files for nemo
-      ansible.builtin.lineinfile:
+      ansible.builtin.file:
         path: /usr/share/dbus-1/services/nemo.FileManager1.service
         state: absent
            
