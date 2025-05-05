@@ -174,13 +174,13 @@
     #
     - name: System_setup | fix-log-msg | Replace LABEL alsa-restore-go line
       ansible.builtin.replace:
-        path: /home/bernhard/90-alsa-restore.rules
+        path: /usr/lib/udev/rules.d/90-alsa-restore.rules
         regexp: '^LABEL="alsa_restore_go"'
         replace: 'LABEL="alsa_restore_std"'
             
     - name: System_setup | fix-log-msg | Insert LABEL line
       ansible.builtin.lineinfile:
-        path: /home/bernhard/90-alsa-restore.rules
+        path: /usr/lib/udev/rules.d/90-alsa-restore.rules
         insertbefore: '^ENV{ALSA_CARD_NUMBER'
         line: 'LABEL="alsa_restore_go"'
         state: present
