@@ -208,6 +208,9 @@
         remote_src: true
         src: /usr/share/dbus-1/services/nemo.service
         dest: /usr/share/dbus-1/services/org.Nemo
+        owner: root
+        group: root
+        mode: "0600"
       when: check_file_name.stat.exists
 
     - name: System_setup | fix-log-msg | Delete dbus-1 file nemo.service

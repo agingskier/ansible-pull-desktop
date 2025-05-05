@@ -23,7 +23,8 @@
         - .bashrc
         - .zshenv
 
-    - name: Software | nodejs | Verify nvm installation. 
+    - name: Software | nodejs | Verify nvm installation.
+      become: true 
       become_user: bernhard
       ansible.builtin.shell: |
         set -o pipefail
