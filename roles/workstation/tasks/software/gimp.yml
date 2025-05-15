@@ -7,21 +7,29 @@
     - gimp
   block:
 
-#    - name: software | gimp | add gimp apt repository and update | check if latest ubuntu release available
-#      apt_repository:
-#        filename: gimp
-#        repo: 'ppa:ubuntuhandbook1/gimp'
-#        state: present
-#        update_cache: yes
-
-    - name: Software | gimp | install gimp & gegl
+    - name: Software | gimp | install gimp, gegl and dependencies
       ansible.builtin.apt:
         pkg:
           - gimp
           - gegl
+          - gimp-help-en
+          - gimp-data-extras
         state: present
 
-    - name: Software | gimp | create gimp directories in .config
+    - name: Software | gimp | start gimp for configuration and create .config/GIMP structure
+      ansible.builtin.commmand:
+        cmd: gimp-3.0
+      timeout: 10
+      ignore_errors: true
+      register: gimp_result
+      changed_when: gimp_result.rc == 0
+
+    - name: Software | gimp | print result from command
+      ansible.builtin.debug:
+        var: gimp_result
+        verbosity: 2
+
+    - name: Sofware | gimp | creates directory tree for .config/GIMP/3.0/plug-ins/arrowdesigner
       ansible.builtin.file:
         path: /home/{{ user_name }}/{{ item.dir }}
         state: directory
@@ -29,16 +37,14 @@
         group: "{{ group_name }}"
         mode: "0755"
       with_items:
-        - { dir: '.config/GIMP' }
-        - { dir: '.config/GIMP/{{ gimp_subdir_version }}' }
+        - { dir: '.config/GIMP/{{ gimp_subdir_version }}/plug-ins/arrowdesigner' }
 
-    - name: Software | gimp | copy gimprc & text-tool files
-      ansible.builtin.copy:
-        src: gimp/{{ item.src }}
-        dest: /home/bernhard/.config/GIMP/{{ gimp_subdir_version }}/{{ item.dest }}
-        owner: bernhard
-        group: users
-        mode: "0664"
+    - name: Users | bernhard | download arrowdesigner.py, install arrowdesigner and make it executable
+      ansible.builtin.get_url:
+        url: "https://raw.githubusercontent.com/{{ item.url }}"
+        dest: "/home/{{ user_name }}/.config/GIMP/3.0/plug-ins/arrowdesigner/{{ item.dest }}"
+        owner: "{{ user_name }}"
+        group: "{{ group_name }}"
+        mode: '0755'
       with_items:
-        - { src: 'gimprc', dest: 'gimprc' }
-#       - { src: 'gimp-text-tool', dest: 'tool-options/gimp-text-tool' }
+        - { url: 'akkana/gimp-plugins/refs/heads/master/gimp3/arrowdesigner.py', dest: 'arrowdesigner.py' }
