@@ -29,7 +29,7 @@
         var: gimp_result
         verbosity: 2
 
-    - name: Sofware | gimp | creates directory tree for .config/GIMP/3.0/plug-ins/arrowdesigner
+    - name: Sofware | gimp | creates directory tree for .config/GIMP/3.0/plug-ins/arrowdesigner and scripts
       ansible.builtin.file:
         path: /home/{{ user_name }}/{{ item.dir }}
         state: directory
@@ -38,6 +38,7 @@
         mode: "0755"
       with_items:
         - { dir: '.config/GIMP/{{ gimp_subdir_version }}/plug-ins/arrowdesigner' }
+        - { dir: '.config/GIMP/{{ gimp_subdir_version }}/scripts' }
 
     - name: Users | bernhard | download arrowdesigner.py, install arrowdesigner and make it executable
       ansible.builtin.get_url:
@@ -45,6 +46,13 @@
         dest: "/home/{{ user_name }}/.config/GIMP/3.0/plug-ins/arrowdesigner/{{ item.dest }}"
         owner: "{{ user_name }}"
         group: "{{ group_name }}"
-        mode: '0755'
+        mode: "0755"
       with_items:
         - { url: 'akkana/gimp-plugins/refs/heads/master/gimp3/arrowdesigner.py', dest: 'arrowdesigner.py' }
+    - name: Software | gimp | copy arrow_V3.scm file from /mnt/Data/gimp/scripts
+      ansible.builtin.copy:
+        src: /mnt/Data/gimp/scripts/arrow_V3.scm
+        dest: /home/{{ user_name }}/.config/GIMP/3.0/scripts/arrow_V3.scm
+        owner: "{{ user_name }}"
+        group: "{{ group_name }}"
+        mode: "0755"
