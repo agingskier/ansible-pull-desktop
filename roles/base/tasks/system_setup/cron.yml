@@ -26,3 +26,10 @@
     user: root
     special_time: reboot
     job: "sleep 200 && updatedb"
+
+- name: System setup | cron | run fstrim command weekly on all mounted SSD
+  ansible.builtin.cron:
+    name: "weekly SSD fstrim command"
+    user: root
+    special_time: weekly
+    job: "sleep 100 && fstrim -avv"    
