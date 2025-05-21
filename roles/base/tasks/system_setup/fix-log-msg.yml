@@ -139,7 +139,7 @@
         content: |
           [Service]
           ExecStart=
-          ExecStart=/usr/lib/bluetooth/bluetoothd --noplugin=sap --experimental
+          ExecStart=/usr/libexec/bluetooth/bluetoothd --noplugin=sap --experimental
           ConfigurationDirectoryMode=
           ConfigurationDirectoryMode=0755
         owner: root
@@ -183,13 +183,13 @@
     # fix: Error message: systemd-udevd[483]: /usr/lib/udev/rules.d/90-alsa-restore.rules:16 
     #            GOTO="alsa_restore_std" has no matching label, ignoring.
     #
-    - name: System_setup | fix-log-msg | Replace LABEL alsa-restore-go line
+    - name: System_setup | alsa-error | Replace LABEL alsa-restore-go line
       ansible.builtin.replace:
         path: /usr/lib/udev/rules.d/90-alsa-restore.rules
         regexp: '^LABEL="alsa_restore_go"'
         replace: 'LABEL="alsa_restore_std"'
             
-    - name: System_setup | fix-log-msg | Insert LABEL line
+    - name: System_setup | alsa-error | Insert LABEL line
       ansible.builtin.lineinfile:
         path: /usr/lib/udev/rules.d/90-alsa-restore.rules
         insertbefore: '^ENV{ALSA_CARD_NUMBER'
@@ -229,3 +229,22 @@
         path: /usr/share/dbus-1/services/nemo.service
         state: absent
       when: check_file_name.stat.exists
+
+    #
+    # fix: Error message: blueman.desktop[4871]: blueman-applet 09.36.17 WARNING  DiscvManager:122 update_menuitems: warning: Adapter is None
+    #
+    - name: System-setup | blueman error | create blueman.desktop in .config/autostart directory to override installed file
+      ansible.builtin.copy:
+        dest: /home/{{ user_name }}/.config/autostart/blueman.desktop
+        content: |
+          [Desktop Entry]
+          Name=Blueman Applet
+          Comment=Blueman Bluetooth Manager
+          Icon=blueman
+          Exec=blueman-tray
+          Terminal=false
+          Type=Application
+          Categories=
+        owner: "{{ user_name }}"
+        group: "{{ group_name }}"
+        mode: "0644"
