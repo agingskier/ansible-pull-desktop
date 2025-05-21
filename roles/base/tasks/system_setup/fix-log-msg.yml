@@ -123,17 +123,28 @@
     #      bluetooth.service: ConfigurationDirectory 'bluetooth' already exists but the mode is different.
     #      ... (File system: 755 ConfigurationDirectoryMode: 555)
     #
-    - name: System-setup | fix-log-msg | change ExecStart line with option --noplugin=sap
-      ansible.builtin.lineinfile:
-        path: /usr/lib/systemd/system/bluetooth.service
-        regexp: "{{ item.regex }}"
-        line: "{{ item.line }}"
+    - name: System-setup | bluetooth | create bluetooth.service.d directory
+      become: true
+      become_user: root
+      ansible.builtin.file:
+        path: /etc/systemd/system/bluetooth.service.d
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: System-setup | bluetooth | create override.conf file
+      ansible.builtin.copy:
+        dest: /etc/systemd/system/bluetooth.service.d/override.conf
+        content: |
+          [Service]
+          ExecStart=
+          ExecStart=/usr/lib/bluetooth/bluetoothd --noplugin=sap --experimental
+          ConfigurationDirectoryMode=
+          ConfigurationDirectoryMode=0755
         owner: root
         group: root
         mode: "0644"
-      with_items:
-        - { regex: '^ExecStart=', line: 'ExecStart=/usr/libexec/bluetooth/bluetoothd --noplugin=sap' }
-        - { regex: '^ConfigurationDirectoryMode=0555', line: 'ConfigurationDirectoryMode=0755' }
 
     #
     # fix: Error message: During shutdown - ] usb 2-8: Failed to set U1 timout to 0x0, error code -113 
