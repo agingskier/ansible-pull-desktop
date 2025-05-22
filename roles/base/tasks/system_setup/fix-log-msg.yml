@@ -140,11 +140,15 @@
           [Service]
           ExecStart=
           ExecStart=/usr/libexec/bluetooth/bluetoothd --noplugin=sap --experimental
-          ConfigurationDirectoryMode=
-          ConfigurationDirectoryMode=0755
         owner: root
         group: root
         mode: "0644"
+
+    - name: System_setup | bluetooth | Change ConfigurationDirectoryMode from 0700 to 0755
+      ansible.builtin.replace:
+        path: /usr/lib/systemd/system/bluetooth.service
+        regexp: '^ConfigurationDirectoryMode=0700"'
+        replace: 'ConfigurationDirectoryMode=0755"'
 
     #
     # fix: Error message: During shutdown - ] usb 2-8: Failed to set U1 timout to 0x0, error code -113 
