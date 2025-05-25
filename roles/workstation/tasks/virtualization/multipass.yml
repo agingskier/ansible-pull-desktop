@@ -67,6 +67,19 @@
         group: root
         mode: "0644"
 
+    - name: Software | multipass | reload daemon - must be before removing data directories
+      ansible.builtin.systemd_service:
+      daemon_reload: true
+
+    - name: Software | multipass | start multipass
+      ansible.builtin.shell: "{{ item }}"
+      with_items:
+        - "snap start multipass"
+      args:
+        executable: /bin/bash
+      register: start_daemon
+      changed_when: start_multipass.rc == 0
+
     - name: Softeare | multipass | Recursively remove original data directories
       ansible.builtin.file:
         path: /var/snap/multipass/common/{{ item.dir }}
@@ -74,13 +87,3 @@
       with_items:
         - { dir: data/multipassd }
         - { dir: cache/multipassd }
- 
-    - name: Software | multipass | reload daemon and start multipass
-      ansible.builtin.shell: "{{ item }}"
-      with_items:
-        - "systemctl daemon-reload"
-        - "snap start multipass"
-      args:
-        executable: /bin/bash
-      register: start_daemon
-      changed_when: start_daemon.rc == 0
