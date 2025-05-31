@@ -71,7 +71,7 @@
         - { line: "file:///mnt/Digikam Digikam" }
         - { line: "file:///mnt/Games Games" }
         - { line: "file:///mnt/k8s K8S" }
-        - { line: "file:///mnt/VMs VMs" }
+        - { line: "file:///mnt/VM VM" }
 #
 # Service NetworkManager-wait-online must be enabled, otherwise the
 # following mounts will fail (sometimes ok, sometimes not)
