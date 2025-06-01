@@ -20,21 +20,24 @@
           - multipass
 
     - name: Software | multipass | stop multipass daemon
-      ansible.builtin.shell: snap stop multipass
+      ansible.builtin.shell: 
+        cmd: snap stop multipass
       args:
         executable: /bin/bash
       register: snap_stop
       changed_when: snap_stop.rc == 0
 
     - name: Software | multipass | connect multipass:removable-media for /mnt odr /media
-      ansible.builtin.shell: snap connect multipass:removable-media
+      ansible.builtin.shell: 
+        cmd: snap connect multipass:removable-media
       args:
         executable: /bin/zsh
       register: snap_removable
       changed_when: snap_removable.rc == 0
 
     - name: Software | multipass | connect multipass:all-home for /home
-      ansible.builtin.shell: snap connect multipass:all-home
+      ansible.builtin.shell: 
+        cmd: snap connect multipass:all-home
       args:
         executable: /bin/bash
       register: snap_home
@@ -72,7 +75,8 @@
         daemon_reload: true
 
     - name: Software | multipass | start multipass
-      ansible.builtin.shell: snap start multipass
+      ansible.builtin.shell: 
+        cmd: snap start multipass
       args:
         executable: /bin/bash
       changed_when: start_multipass.rc == 0
