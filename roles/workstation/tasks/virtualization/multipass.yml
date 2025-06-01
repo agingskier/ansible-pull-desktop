@@ -75,7 +75,6 @@
       ansible.builtin.shell: snap start multipass
       args:
         executable: /bin/bash
-      register: start_daemon
       changed_when: start_multipass.rc == 0
 
     - name: Softeare | multipass | Recursively remove original data directories
