@@ -72,9 +72,7 @@
         daemon_reload: true
 
     - name: Software | multipass | start multipass
-      ansible.builtin.shell: "{{ item }}"
-      with_items:
-        - "snap start multipass"
+      ansible.builtin.shell: snap start multipass
       args:
         executable: /bin/bash
       register: start_daemon
