@@ -28,6 +28,9 @@
     - name: Install and configure zsh shell
       ansible.builtin.import_tasks:     
         file: software/zsh.yml
+    - name: Install and configure oh-my-posh prompt for zsh shell
+      ansible.builtin.import_tasks:     
+        file: software/ohmyposh.yml
     - name: Install gedit themes
       ansible.builtin.import_tasks:     
         file: software/gedit.yml
