@@ -1,0 +1,66 @@
+---
+# Create oh-my-posh prompt for zsh environment - variables defined in host_vars
+
+- name: Software | ohmyposh block
+  when:
+    - zsh is defined
+    - zsh
+  block:
+
+    - name: Software | oh-my-posh | download install script for oh-my-posh prompt
+      ansible.builtin.get_url:
+        url: https://ohmyposh.dev/install.sh
+        dest: /tmp/ohmyposh-install.sh
+        owner: "{{ user_name }}"
+        group: "{{ group_name }}"
+        mode: "0755"
+
+    - name: Software | oh-my-posh | install oh-my-posh (become_user must be set, otherwise it will be root)
+      become: true
+      become_user: "{{ user_name }}"
+      ansible.builtin.shell:
+        cmd: /tmp/ohmyposh-install.sh -d /tmp -t $HOME/.config/oh-my-posh/themes
+      args:
+        executable: /bin/bash
+      register: ohmyposh_install
+      changed_when: ohmyposh_install.rc == 0
+
+    - name: Software | oh-my-posh | display ohmyposh-install.sh result
+      ansible.builtin.debug:
+        msg: 
+          - "{{ ohmyposh_install.stdout_lines }}"
+        verbosity: 2
+
+    - name: Software | oh-my-posh | copy oh-my-posh binary file to /usr/local/bin
+      ansible.builtin.copy:
+        src: /tmp/oh-my-posh
+        dest: /usr/local/bin/oh-my-posh
+        owner: root
+        group: root
+        mode: 0755
+
+    - name: Software | oh-my-posh | Verify oh-my-posh installation.
+      ansible.builtin.shell:
+        cmd: oh-my-posh --version
+      args:
+        executable: /bin/bash
+      register: ohmyposh_verify
+      changed_when: ohmyposh_verify.rc == 0
+
+    - name: Software | oh-my-posh | display shell results
+      ansible.builtin.debug:
+        msg: 
+          - "{{ ohmyposh_verify.stdout_lines }}"
+        verbosity: 2
+
+    - name: Software | oh-my-posh | insert oh-my-posh prompt in .config/zsh/.zshrc
+      ansible.builtin.blockinfile:
+        path: /home/{{ user_name }}/.config/zsh/.zshrc
+        marker: "#<-- {mark} Inserted by ohmyposh.yml Ansible-Playbook  -->"
+        append_newline: true
+        prepend_newline: true
+        block: |
+          #-------------------------------------------------------------------------------
+          # Set up oh-my-posh prompt (bpic.omp.json is part of dotfiles project on gitlab)
+          #-------------------------------------------------------------------------------
+          eval "$(oh-my-posh init zsh --config $HOME/.config/oh-my-posh/themes/bpic.omp.json)"
