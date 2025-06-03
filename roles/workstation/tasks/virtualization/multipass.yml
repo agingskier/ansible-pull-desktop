@@ -71,7 +71,7 @@
         mode: "0644"
 
     - name: Software | multipass | reload daemon - must be before removing data directories
-      ansible.builtin.systemd:
+      ansible.builtin.systemd_service:
         daemon_reload: true
 
     - name: Software | multipass | start multipass
