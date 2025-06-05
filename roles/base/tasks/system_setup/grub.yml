@@ -7,11 +7,14 @@
   become_method: ansible.builtin.sudo
   when: "'bequiet' in inventory_hostname"
   block:
-    - name: System-setup | grub | make sure package grub-pc is installed - was missing
-      ansible.builtin.apt:
-        update_cache: true
-        name:
-          - grub-pc
+
+    - name: System-setup | grub | /etc/default/grub is installed with package grub-pc (only for BIOS)
+      ansible.builtin.copy:
+        src: /usr/share/grub/default/grub
+        dest: /etc/default/grub
+        owner: root
+        group: root
+        mode: "0644"
 
     - name: System-setup | grub | make sure /tmp has full access
       ansible.builtin.file:
@@ -119,8 +122,9 @@
         replace: "{{ item.repl }}"
       with_items:
         - { regex: '^GRUB_TIMEOUT_STYLE=hidden', repl: 'GRUB_TIMEOUT_STYLE=menu' }
-        - { regex: '^GRUB_TIMEOUT=0', repl: 'GRUB_TIMEOUT=15' }
+        - { regex: '^GRUB_TIMEOUT=0', repl: 'GRUB_TIMEOUT=10' }
         - { regex: 'quiet splash', repl: ' ' }
+        - { regex: 'OS_PROBER=true', repl: 'OS_PROBER=false' }
 
     - name: System_setup | grub | add lines for BACKGROUND, THEME, GFXPAYLOAD_LINUX and DISABLE_OS_PROBER
       ansible.builtin.lineinfile:
@@ -128,10 +132,9 @@
         line: "{{ item }}"
       with_items:
         - 'GRUB_BACKGROUND="/usr/share/images/grub/saturn-wallpaper.png"'
-        - '#RUB_THEME="/boot/grub/themes/darkmatter/theme.txt"'
+        - '#GRUB_THEME="/boot/grub/themes/darkmatter/theme.txt"'
         - 'GRUB_THEME="/boot/grub/themes/lordshenron/theme.txt"'
         - 'GRUB_GFXPAYLOAD_LINUX="keep"'
-        - 'GRUB_DISABLE_OS_PROBER="false"'
 
     - name: System_setup | grub | update grub configuration
       ansible.builtin.command: update-grub
@@ -143,6 +146,15 @@
   become_method: ansible.builtin.sudo
   when: "'acermsch' in inventory_hostname"
   block:
+
+    - name: System-setup | grub | /etc/default/grub is installed with package grub-pc (only for BIOS)
+      ansible.builtin.copy:
+        src: /usr/share/grub/default/grub
+        dest: /etc/default/grub
+        owner: root
+        group: root
+        mode: "0644"
+
     - name: System-setup | grub | make shure /tmp directory has full access
       ansible.builtin.file:
         path: /tmp
