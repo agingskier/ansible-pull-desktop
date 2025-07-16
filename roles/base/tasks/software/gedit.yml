@@ -4,6 +4,11 @@
   become_method: ansible.builtin.sudo
   block:
 
+    - name: Gnome | gedit | Add plugin draw-spaces (activate in preferences)
+      ansible.builtin.apt:
+        name: gedit-plugin-draw-spaces
+        state: present
+
     - name: Gnome | gedit | create gedit/styles directories
       ansible.builtin.file:
         path: /home/{{ user_name }}/.local/share/gedit/styles
