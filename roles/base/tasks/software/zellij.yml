@@ -1,0 +1,7 @@
+---
+- name: Software | zellij | install zellij multiplexer snap
+  ansible.builtin.snap:
+    state: present
+    name:
+      - zellij
+    classic: true

@@ -25,6 +25,9 @@
     - name: Configure tmux for xfce4
       ansible.builtin.import_tasks:     
         file: software/tmux.yml
+    - name: Install zellij Multiplexer
+      ansible.builtin.import_tasks:     
+        file: software/zellij.yml
     - name: Install and configure zsh shell
       ansible.builtin.import_tasks:     
         file: software/zsh.yml
