@@ -1,0 +1,7 @@
+[Unit]
+Description=Weekly Freshclam updateDB
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/freshclam --quiet

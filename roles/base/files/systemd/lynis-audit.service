@@ -1,0 +1,9 @@
+[Unit]
+Description=Run monthly Lynis audit
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=lynis audit system
+StandardOutput=append:/var/log/lynis-audit.log
+StandardError=append:/var/log/lynis-audit.log

@@ -5,9 +5,13 @@
     pkg:
       - lynis
 
-- name: Software | lynis | cron job for root lynis audit
-  ansible.builtin.cron:
-    name: lynis_audit
-    user: root
-    special_time: reboot
-    job: "sleep 400 && lynis audit system > /var/log/lynis-audit.log"
+- name: Software | lynis | systemd service and timer for root
+  ansible.builtin.copy:
+    src: file/systemd/{{ item }}
+    dest: /etc/systemd/system/{{ item }}
+    owner: root
+    group: root
+    mode: "0644"
+  with_items:
+    - lynis-audit.service
+    - lynis-audit.timer

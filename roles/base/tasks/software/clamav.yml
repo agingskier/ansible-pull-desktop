@@ -8,7 +8,6 @@
       - clamav-daemon
       - chkrootkit
       - bleachbit
-      - cpulimit
 
 - name: Software | clamav | create clamav directory
   become: true
@@ -50,27 +49,29 @@
     owner: root
     group: root
     mode: "0644"
-    
-- name: Software | clamav | cron job clamscan for user {{ user_name }}
-  ansible.builtin.cron:
-    name: daily_clamsacan
-    user: "{{ user_name }}"
-    minute: "07"
-    hour: "13"
-    job: "/usr/bin/clamscan --exclude-dir=/run/user/bernhard/gvfs --exclude-dir=/home/bernhard/.gvfs --detect-pua -r /home/bernhard --log=/var/log/clamav/clamscan.log"
 
-# clamscan must be running for cpulimit to take effect. Limit cpu usage to 30%
-- name: Software | clamav | cron job clamscan limit cpu usage for user {{ user_name }}
-  ansible.builtin.cron:
-    name: daily_clamsacan_cpulimit
-    user: "{{ user_name }}"
-    minute: "08"
-    hour: "13"
-    job: "cpulimit -e clamscan -l 30"
+- name: Software | clamav | systemd service, timer and slice  for user {{ user_name }}
+  ansible.builtin.copy:
+    src: file/systemd/{{ item }}
+    dest: /home/{{ user_name }}/.config/systemd/user/{{ item }}
+    owner: "{{ user_name }}"
+    group: "{{ group_name }}"
+    mode: "0644"
+  with_items:
+    - daily-clamscan.service
+    - daily-clamscan.timer
+    - cpulimited.slice
+    - freshclam-updatedb.service
+    - freshclam-updatedb.timer
 
-- name: Software | clamav | cron job for root freshclam
-  ansible.builtin.cron:
-    name: freshclam_update_dbs
-    user: root
-    minute: "21"
-    job: "/usr/bin/freshclam --quiet"
+- name: Software | clamav | systemd service and timer for root
+  ansible.builtin.copy:
+    src: file/systemd/{{ item }}
+    dest: /etc/systemd/system/{{ item }}
+    owner: root
+    group: root
+    mode: "0644"
+  with_items:
+    - freshclam-updatedb.service
+    - freshclam-updatedb.timer
+

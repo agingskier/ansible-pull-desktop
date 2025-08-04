@@ -1,0 +1,10 @@
+[Unit]
+Description=Run weekly freshclam updateDB on Monday at 14:15
+
+[Timer]
+OnCalendar=Mon 14:15
+Persistent=true
+Unit=freshclam-updatedb.service
+
+[Install]
+WantedBy=timers.target

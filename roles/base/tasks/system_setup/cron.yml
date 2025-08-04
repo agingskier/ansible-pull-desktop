@@ -1,35 +1,11 @@
 ---
-# - name: system setup | cron | schedule automatic ansible provisioning
-#   cron:
-#    name: "ansible-pull provision"
-#    user: ansible
-#    minute: "*/30"
-#    job: "sudo /usr/bin/ansible-pull -o -U https://github.com/agingskier/ansible_pull_desktop.git > /dev/null"
-
-# - name: system setup | cron | schedule ansible cleanup at boot
-#   cron:
-#    name: "ansible refresh at boot"
-#    user: ansible
-#    special_time: reboot
-#    job: "/bin/rm -rf /home/ansible/.ansible"
-
-- name: System setup | cron | schedule log reduction
-  ansible.builtin.cron:
-    name: "logfile reduction"
-    user: root
-    special_time: reboot
-    job: "sleep 300 && journalctl --vacuum-time=7days"
-
-- name: System setup | cron | plocate database
-  ansible.builtin.cron:
-    name: "plocate database"
-    user: root
-    special_time: reboot
-    job: "sleep 200 && updatedb"
-
-- name: System setup | cron | run fstrim command weekly on all mounted SSD
-  ansible.builtin.cron:
-    name: "weekly SSD fstrim command"
-    user: root
-    special_time: weekly
-    job: "sleep 100 && fstrim -avv"    
+- name: System setup | systemd | systemd logfile reduction service and timer for root
+  ansible.builtin.copy:
+    src: file/systemd/{{ item }}
+    dest: /etc/systemd/system/{{ item }}
+    owner: root
+    group: root
+    mode: "0644"
+  with_items:
+    - logfile-reduction.service
+    - logfile-reduction.timer

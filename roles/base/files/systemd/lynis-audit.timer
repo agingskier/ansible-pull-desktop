@@ -1,0 +1,10 @@
+[Unit]
+Description=Run monthly lynis audit job daily Clamscan on Mondays at 14:30
+
+[Timer]
+OnCalendar=Mon *-*-01 14:30:00
+Persistent=true
+Unit=lynis-audit.service
+
+[Install]
+WantedBy=timers.target

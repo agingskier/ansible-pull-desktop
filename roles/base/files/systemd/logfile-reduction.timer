@@ -1,0 +1,9 @@
+[Unit]
+Description=Run logfile reduction after boot
+
+[Timer]
+OnBootSec=20
+Unit=logfile-redution.service
+
+[Install]
+WantedBy=timers.target
