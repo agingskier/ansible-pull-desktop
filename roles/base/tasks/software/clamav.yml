@@ -61,8 +61,20 @@
     - daily-clamscan.service
     - daily-clamscan.timer
     - cpulimited.slice
-    - freshclam-updatedb.service
-    - freshclam-updatedb.timer
+
+- name: Software | clamav | systemd clam service, timer and slice for user {{ user_name }}
+  ansible.builtin.systemd_service:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+    scope: user
+    daemon_reload: true
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ ansible_user_uid }}"
+  with_items:
+    - daily-clamscan.timer
+    - daily-clamscan.service
+    - cpulimited.slice
 
 - name: Software | clamav | systemd service and timer for root
   ansible.builtin.copy:
@@ -74,4 +86,15 @@
   with_items:
     - freshclam-updatedb.service
     - freshclam-updatedb.timer
+
+- name: Software | clamav | systemd freshclam updatedb service and timer
+  ansible.builtin.systemd_service:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+    scope: system
+    daemon_reload: true
+  with_items:
+    - freshclam-updatedb.timer
+    - freshclam-updatedb.service
 

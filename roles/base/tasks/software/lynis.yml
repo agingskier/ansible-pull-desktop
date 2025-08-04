@@ -15,3 +15,14 @@
   with_items:
     - lynis-audit.service
     - lynis-audit.timer
+
+- name: Software | lynis | systemd lynis audit service and timer
+  ansible.builtin.systemd_service:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+    scope: system
+    daemon_reload: true
+  with_items:
+    - lynis-audit.timer
+    - lynis-audit.service

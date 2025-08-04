@@ -9,3 +9,14 @@
   with_items:
     - logfile-reduction.service
     - logfile-reduction.timer
+
+- name: System_setup | systemd units | systemd logfile reduction service and timer
+  ansible.builtin.systemd_service:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+    scope: system
+    daemon_reload: true
+  with_items:
+    - logfile-reduction.timer
+    - logfile-reduction.service
