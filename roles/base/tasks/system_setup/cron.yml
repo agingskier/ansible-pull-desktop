@@ -19,4 +19,4 @@
     daemon_reload: true
   with_items:
     - logfile-reduction.timer
-    - logfile-reduction.service
+...

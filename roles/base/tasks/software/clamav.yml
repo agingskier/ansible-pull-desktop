@@ -73,7 +73,6 @@
     XDG_RUNTIME_DIR: "/run/user/{{ ansible_user_uid }}"
   with_items:
     - daily-clamscan.timer
-    - daily-clamscan.service
     - cpulimited.slice
 
 - name: Software | clamav | systemd service and timer for root
@@ -96,4 +95,4 @@
     daemon_reload: true
   with_items:
     - freshclam-updatedb.timer
-    - freshclam-updatedb.service
+...

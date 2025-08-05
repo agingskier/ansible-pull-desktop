@@ -25,4 +25,4 @@
     daemon_reload: true
   with_items:
     - lynis-audit.timer
-    - lynis-audit.service
+...
