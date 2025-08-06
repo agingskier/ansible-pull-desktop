@@ -5,7 +5,6 @@
     pkg:
       - gufw
       - clamav
-      - clamav-daemon
       - chkrootkit
       - bleachbit
 

@@ -3,7 +3,7 @@ Description=Run logfile reduction after boot
 
 [Timer]
 OnBootSec=20
-Unit=logfile-redution.service
+Unit=logfile-reduction.service
 
 [Install]
 WantedBy=timers.target

@@ -1,7 +1,9 @@
 [Unit]
-Description=Weekly Freshclam updateDB
+Description=Update Freshclam DB every 21 minutes past the hour
 After=network.target
 
 [Service]
 Type=simple
 ExecStart=/usr/bin/freshclam --quiet
+StandardOutput=append:/var/log/clamav/freshclam.log
+StandardError=append:/var/log/clamav/freshclam-error.log

@@ -5,3 +5,5 @@ After=network.target
 [Service]
 Type=simple
 ExecStart=/usr/bin/journalctl --vacuum-time=7days
+StandardOutput=append:/var/log/log-reduction.log
+StandardError=append:/var/log/log-reduction-error.log
