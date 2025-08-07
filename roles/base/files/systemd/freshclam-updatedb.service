@@ -5,5 +5,6 @@ After=network.target
 [Service]
 Type=simple
 ExecStart=/usr/bin/freshclam --quiet
+LogsDirectory=clamav
 StandardOutput=append:/var/log/clamav/freshclam.log
 StandardError=append:/var/log/clamav/freshclam-error.log
