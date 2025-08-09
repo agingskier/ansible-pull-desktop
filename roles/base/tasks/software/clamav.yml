@@ -8,6 +8,21 @@
       - chkrootkit
       - bleachbit
 
+- name: Software | clamav | create system group clamav
+  ansible.builtin.group:
+    name: clamav
+    state: present
+    system: true
+
+- name: Software | clamav | create system user clamav
+  ansible.builtin.user:
+    name: clamav
+    comment: "Clam Antivirus"
+    create_home: false
+    shell: /bin/false
+    group: clamav
+    system: true
+
 - name: Software | clamav | create clamav directory
   become: true
   become_user: root
@@ -24,15 +39,6 @@
     groups: clamav
     append: true
 
-- name: Software | clamav | replace StandardOutput=syslog line with target journal
-  ansible.builtin.replace: 
-    path: /lib/systemd/system/{{ item }} 
-    regexp: '^StandardOutput=syslog'
-    replace: 'StandardOutput=journal'
-  with_items:
-    - clamav-daemon.service
-    - clamav-freshclam.service
-   
 - name: Software | clamav | Creating clamscan file for logrotate
   ansible.builtin.copy:
     dest: /etc/logrotate.d/clamscan
@@ -49,32 +55,7 @@
     group: root
     mode: "0644"
 
-- name: Software | clamav | systemd service, timer and slice  for user {{ user_name }}
-  ansible.builtin.copy:
-    src: file/systemd/{{ item }}
-    dest: /home/{{ user_name }}/.config/systemd/user/{{ item }}
-    owner: "{{ user_name }}"
-    group: "{{ group_name }}"
-    mode: "0644"
-  with_items:
-    - daily-clamscan.service
-    - daily-clamscan.timer
-    - cpulimited.slice
-
-- name: Software | clamav | systemd clam service, timer and slice for user {{ user_name }}
-  ansible.builtin.systemd_service:
-    name: "{{ item }}"
-    state: started
-    enabled: true
-    scope: user
-    daemon_reload: true
-  environment:
-    XDG_RUNTIME_DIR: "/run/user/{{ ansible_user_uid }}"
-  with_items:
-    - daily-clamscan.timer
-    - cpulimited.slice
-
-- name: Software | clamav | systemd service and timer for root
+- name: Software | clamav | systemd service, timer and slice
   ansible.builtin.copy:
     src: file/systemd/{{ item }}
     dest: /etc/systemd/system/{{ item }}
@@ -82,16 +63,21 @@
     group: root
     mode: "0644"
   with_items:
-    - freshclam-updatedb.service
-    - freshclam-updatedb.timer
+    - clamscan.service
+    - clamscan.timer
+    - clamscan-cpulimit.slice
 
-- name: Software | clamav | systemd freshclam updatedb service and timer
+- name: Software | clamav | systemd clam service, timer and slice and installed clamav-freshclam.service
   ansible.builtin.systemd_service:
     name: "{{ item }}"
     state: started
     enabled: true
     scope: system
     daemon_reload: true
+#  environment:
+#    XDG_RUNTIME_DIR: "/run/user/{{ ansible_user_uid }}"
   with_items:
-    - freshclam-updatedb.timer
+    - clamscan.timer
+    - clamscan-cpulimit.slice
+    - clamav-freshclam.service
 ...

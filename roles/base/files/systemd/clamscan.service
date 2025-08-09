@@ -9,7 +9,5 @@ ExecStart=/usr/bin/clamscan \
   --exclude-dir=/home/bernhard/.gvfs \
   --exclude-dir=/home/bernhard/.cache/ibus \
   --detect-pua --recursive /home/bernhard
-Slice=cpulimited.slice
-LogDirectory=clamav
+Slice=clanscan-cpulimit.slice
 StandardOutput=append:/var/log/clamav/clamscan.log
-StandardError=append:/var/log/clamav/clamscan-error.log

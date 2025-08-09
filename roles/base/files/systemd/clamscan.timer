@@ -4,7 +4,7 @@ Description=Run daily Clamscan at 14:00
 [Timer]
 OnCalendar=*-*-* 14:00
 Persistent=true
-Unit=daily-clamscan.service
+Unit=clamscan.service
 
 [Install]
 WantedBy=timers.target
