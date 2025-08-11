@@ -7,11 +7,13 @@ Type=simple
 # Run clamscan with PUA detection enabled
 # --bell = terminal bell on detection, optional
 # --infected = show only infected/PUA files
+# --log=<file> location for SCAN SUMMARY report
 # The ExecStart= line clears any old command from the original unit so we can replace it.
 ExecStart=
 ExecStart=/usr/bin/clamscan \
   --detect-pua=yes \
   --infected \
+  --log=/var/log/clamav/clamscan.log \
   --recursive /home/bernhard
 Slice=clanscan-cpulimit.slice
 StandardOutput=append:/var/log/clamav/clamscan.log
