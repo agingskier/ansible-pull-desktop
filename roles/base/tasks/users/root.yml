@@ -35,5 +35,5 @@
     group: root
     mode: "0600"
   with_items:
-    - { src: 'bash/root-bashrc', dest: '.bashrc' }
-    - { src: 'vim/vimrc-root', dest: '.vimrc' }
+    - { src: 'root/root-bashrc', dest: '.bashrc' }
+    - { src: 'root/root-vimrc', dest: '.vimrc' }
