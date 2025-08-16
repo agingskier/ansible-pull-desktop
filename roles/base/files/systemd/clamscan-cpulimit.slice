@@ -1,9 +1,0 @@
-[Unit]
-Description=Slice used to run daily clamscan. 30% CPU
-Before=slices.target
-
-[Slice]
-CPUQuota=30%
-
-[Install]
-WantedBy=multi-user.target

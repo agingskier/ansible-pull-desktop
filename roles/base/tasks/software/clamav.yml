@@ -3,10 +3,11 @@
   ansible.builtin.apt:
     state: present
     pkg:
-      - gufw
       - clamav
+      - clamav-daemon
+      - clamav-data
+      - clamav-doc
       - chkrootkit
-      - bleachbit
 
 - name: Software | clamav | create system group clamav
   ansible.builtin.group:
@@ -55,29 +56,134 @@
     group: root
     mode: "0644"
 
-- name: Software | clamav | systemd service, timer and slice
+- name: Software | clamav | Optimizing clamav-daemon /etc/clamav/clamd.conf entries
+  ansible.builtin.lineinfile:
+    path: /etc/clamav/clamd.conf
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    firstmatch: true
+    state: present
+  with_items:
+    - { regexp: '^LocalSocket', line: 'LocalSocket /var/run/clamav/clamd.ctl' }
+    - { regexp: '^DetectPUA', line: 'DetectPUA true' } 
+    - { regexp: '^MaxThreads', line: 'MaxThreads 2' }
+    - { regexp: '^MaxRecursion', line: 'MaxRecursion 8' }
+    - { regexp: '^MaxFiles', line: 'MaxFiles 10000' }
+    - { regexp: '^MaxScanSize', line: 'MaxScanSize 200M' }
+    - { regexp: '^StreamMaxLength', line: 'StreamMaxLength 100M' }
+    - { regexp: '^FollowFileSymlinks', line: 'FollowFileSymlinks true' }
+    - { regexp: '^FollowDirectorySymlinks', line: 'FollowDirectorySymlinks true' }
+    - { regexp: '^LogFile', line: 'LogFile /var/log/clamav/clamav.log' }
+    - { regexp: '^LogTime', line: 'LogTime true' }
+
+- name: Software | clamav | add lines in clamav-daemon /etc/clamav/clamd.conf
+  ansible.builtin.lineinfile:
+    dest: /etc/clamav/clamd.conf
+    line: "{{ item }}"
+  with_items:
+    - 'ExcludePath ^/proc'
+    - 'ExcludePath ^/sys'
+    - 'ExcludePath ^/dev'
+    - 'ExcludePath ^/run'
+    - 'ExcludePath ^/tmp'
+    - 'ExcludePath ^/snap'
+    - 'ExcludePath ^/var/tmp'
+    - 'ExcludePath ^/var/cache'
+    - 'ExcludePath ^/home/{{ user_name }}/snap'
+    - 'ExcludePath ^/home/{{ user_name }}/.cache/ibus'
+
+- name: Software | clamav | create clamav-daemon cpulimit
   ansible.builtin.copy:
-    src: file/systemd/{{ item }}
-    dest: /etc/systemd/system/{{ item }}
+    dest: /etc/systemd/system/clamav-daemon.service.d/limits.conf
+    content: |
+      [Service]
+      CPUQuota=30%
     owner: root
     group: root
     mode: "0644"
-  with_items:
-    - clamscan.service
-    - clamscan.timer
-    - clamscan-cpulimit.slice
 
-- name: Software | clamav | systemd clam service, timer and slice and installed clamav-freshclam.service
+- name: Software | clamav | create clamdscan target service
+  ansible.builtin.copy:
+    content: |
+      [Unit]
+      Description=Run clamdscan on given TARGETS 
+      After=clamav-daemon.service
+      Requires=clamav-daemon.service
+
+      [Service]
+      Type=oneshot
+      Environment=TARGETS="/home"
+      ExecStart=/usr/bin/clamdscan --fdpass --infected ${TARGETS}
+      StandardOutput=append:/var/log/clamav/clamav.log
+
+      # Treat exit codes 0 and 1 as success
+      # (0 = no detections, 1 = detections found, 2+ = error)
+      SuccessExitStatus=0 1
+    dest: /etc/systemd/system/clamdscan-target.service
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Software | clamav | create clamdscan weekday and target directory service
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/clamdscan-{{ item.day }}.service
+    content: |
+      [Unit]
+      Description=clamdscan service for weekday {{ item.day }}
+
+      [Service]
+      Type=oneshot
+      Environment=TARGETS="{{ targets }}"
+      ExecStart=/usr/bin/systemctl start clamdscan-target.service
+      StandardOutput=append:/var/log/clamav/clamav.log
+    with_items:
+      - { day: 'mon', targets: '/home /root' }
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Software | clamav | create clamdscan weekday and target directory timer
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/clamdscan-{{ item.day }}.timer
+    content: |
+      [Unit]
+      Description=clamdscan timer for weekday {{ item.day }}
+
+      [Timer]
+      OnCalendar={{ item.day }} {{ item.time }}
+      Persistent=true
+      Unit=clamdscan-{{ item.day }}.service
+
+      [Install]
+      WantedBy=timers.target
+    with_items:
+      - { day: 'mon', time: '12:00' } 
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Software | clamav | Restarting clamav-daemon and daemon-reload
+  ansible.builtin.systemd_service:
+    name: clamav-daemon
+    state: restarted
+    daemon_reload: true
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ ansible_user_uid }}"
+
+- name: Software | clamav | systemd clamdscan timer (clamav-freshclam.service already enabled)
   ansible.builtin.systemd_service:
     name: "{{ item }}"
     state: started
     enabled: true
     scope: system
     daemon_reload: true
-#  environment:
-#    XDG_RUNTIME_DIR: "/run/user/{{ ansible_user_uid }}"
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ ansible_user_uid }}"
   with_items:
-    - clamscan.timer
-    - clamscan-cpulimit.slice
-    - clamav-freshclam.service
+    - clamsdcan-mon.timer
+    - clamsdcan-tue.timer
+    - clamsdcan-wed.timer
+    - clamsdcan-thu.timer
+    - clamsdcan-fri.timer
+    - clamsdcan-sat.timer
 ...
