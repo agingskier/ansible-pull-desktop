@@ -137,7 +137,12 @@
       ExecStart=/usr/bin/systemctl start clamdscan-target.service
       StandardOutput=append:/var/log/clamav/clamav.log
     with_items:
-      - { day: 'mon', targets: '/home /root' }
+      - { day: 'mon', targets: '"/home /root"' }
+      - { day: 'tue', targets: '"/var/www /opt"' }
+      - { day: 'wed', targets: '"/usr/local /etc"' }
+      - { day: 'thu', targets: '"/"' }
+      - { day: 'fri', targets: '"/srv /mnt /media"' }
+      - { day: 'sat', targets: '"/home"' }
     owner: root
     group: root
     mode: "0644"
@@ -157,7 +162,12 @@
       [Install]
       WantedBy=timers.target
     with_items:
-      - { day: 'mon', time: '12:00' } 
+      - { day: 'mon', time: '12:00' }
+      - { day: 'tue', time: '12:00' }
+      - { day: 'wed', time: '12:00' }
+      - { day: 'thu', time: '12:00' }
+      - { day: 'fri', time: '12:00' }
+      - { day: 'sat', time: '12:00' }
     owner: root
     group: root
     mode: "0644"
