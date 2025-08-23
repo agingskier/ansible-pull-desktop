@@ -150,6 +150,14 @@
         regexp: '^ConfigurationDirectoryMode=0700"'
         replace: 'ConfigurationDirectoryMode=0755"'
 
+    - name: System_setup | bluetooth | Turn off bluetooth completely
+      become: true
+      become_user: root
+      ansible.builtin.replace:
+        path: /etc/bluetooth/maim.conf
+        regexp: '^AutoEnable=true'
+        replace: 'AutoEnable=false'
+
     #
     # fix: Error message: During shutdown - ] usb 2-8: Failed to set U1 timout to 0x0, error code -113 
     #
