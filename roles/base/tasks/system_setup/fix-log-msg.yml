@@ -154,7 +154,7 @@
       become: true
       become_user: root
       ansible.builtin.replace:
-        path: /etc/bluetooth/maim.conf
+        path: /etc/bluetooth/main.conf
         regexp: '^AutoEnable=true'
         replace: 'AutoEnable=false'
 
