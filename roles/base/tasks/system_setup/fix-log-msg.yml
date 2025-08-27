@@ -3,31 +3,6 @@
   become: true
   become_method: ansible.builtin.sudo
   block:
-    - name: System-setup | journald | create journald.conf.d directory
-      become: true
-      become_user: root
-      ansible.builtin.file:
-        path: /etc/systemd/journald.conf.d
-        state: directory
-        owner: root
-        group: root
-        mode: "0755"
-    #
-    # fix: Make journal log persistent to /var/log/journal - default is to /run/log/journal which is volatile
-    # Use 'systemd-analyze cat-config systemd/journald.conf' to display the full config.
-    #
-    - name: System-setup | fix-journallog | create 10-journal-log-destination.conf
-      ansible.builtin.copy:
-        dest: /etc/systemd/journald.conf.d/10-journal-log-destination.conf
-        content: |
-          [Journal]
-          Storage=persistent
-          MaxFileSec=1day
-        owner: root
-        group: root
-        mode: "0644"
-      notify: Restart journald
-  
     #
     # fix: Error message: systemd-udevd[447]: sdb3: Process '/usr/bin/unshare -m /usr/bin/snap auto-import 
     #                     --mount=/dev/sdb3' failed with exit code 1.
@@ -70,53 +45,6 @@
         owner: root
         group: root
         mode: "0644"
-    #
-    # fix: Shutdown too slow, reduce stop timeout value - Reboot required
-    # Use 'systemd-analyze cat-config systemd/system.conf' to display the full config.
-    #
-    - name: System-setup | shutdown times | create system.conf.d directory
-      become: true
-      become_user: root
-      ansible.builtin.file:
-        path: /etc/systemd/system.conf.d
-        state: directory
-        owner: root
-        group: root
-        mode: "0755"
-
-    - name: System-setup | fix-shutdown-time | create 75-faster-shutdown.conf file
-      ansible.builtin.copy:
-        dest: /etc/systemd/system.conf.d/75-faster-shutdown.conf
-        content: |
-          [Manager]
-          DefaultTimeoutStartSec=10s
-          DefaultTimeoutStopSec=10s
-          DefaultTimeoutAbortSec=10s
-          DefaultRestartSec=15s
-        owner: root
-        group: root
-        mode: "0644"
-
-    - name: System-setup | sssd | create sssd directory
-      become: true
-      become_user: root
-      ansible.builtin.file:
-        path: /var/log/sssd
-        state: directory
-        owner: root
-        group: root
-        mode: "0755"
-
-    #
-    # fix: Error message: systemd[1]: Dependency failed for sssd-ssh.socket - SSSD SSH Service responder socket. Mode 0600 is important.
-    #
-    - name: System-setup | fix-log-msg | copy sssd.conf to /etc/sssd directory
-      ansible.builtin.copy:
-        src: /usr/lib/x86_64-linux-gnu/sssd/conf/sssd.conf
-        dest: /etc/sssd/sssd.conf
-        owner: root
-        group: root
-        mode: "0600"
 
     #
     # fix: Error message: bluetoothd[1674]: profiles/sap/server.c:sap_server_register() Sap driver initialization failed.

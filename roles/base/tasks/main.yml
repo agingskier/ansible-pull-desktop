@@ -96,12 +96,13 @@
         file: system_setup/clock.yml
     - name: Set cron jobs
       ansible.builtin.import_tasks: 
-        file: system_setup/cron.yml
+        file: system_setup/system-fixes.yml
 
     # Fix some problems shown in journalctl
     - name: Fix error messages in journalctl
       ansible.builtin.import_tasks: 
         file: system_setup/fix-log-msg.yml
+      tags: [ never, fix_log ]
     - name: Fix for microcode
       ansible.builtin.import_tasks: 
         file: system_setup/microcode.yml
