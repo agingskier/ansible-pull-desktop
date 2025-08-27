@@ -1,0 +1,86 @@
+---
+- name: System setup | sssd | remove sssd packages and files
+  ansible.builtin.apt:
+    name:
+      - sssd*
+    autoremove: true
+    state: absent
+
+- name: System-setup | sssd | remove leftover directories
+  ansible.builtin.file:
+    path: /usr/lib/sss
+    state: absent
+
+- name: System setup | systemd | systemd logfile reduction service and timer for root
+  ansible.builtin.copy:
+    src: file/systemd/{{ item }}
+    dest: /etc/systemd/system/{{ item }}
+    owner: root
+    group: root
+    mode: "0644"
+  with_items:
+    - logfile-reduction.service
+    - logfile-reduction.timer
+
+- name: System_setup | systemd units | systemd logfile reduction service and timer
+  ansible.builtin.systemd_service:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+    scope: system
+    daemon_reload: true
+  with_items:
+    - logfile-reduction.timer
+
+- name: System-setup | journald | create journald.conf.d directory
+  become: true
+  become_user: root
+  ansible.builtin.file:
+    path: /etc/systemd/journald.conf.d
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+#
+# fix: Make journal log persistent to /var/log/journal - default is to /run/log/journal which is volatile
+# Use 'systemd-analyze cat-config systemd/journald.conf' to display the full config.
+#
+- name: System-setup | fix-journallog | create 10-journal-log-destination.conf
+  ansible.builtin.copy:
+    dest: /etc/systemd/journald.conf.d/10-journal-log-destination.conf
+    content: |
+      [Journal]
+      Storage=persistent
+      MaxFileSec=1day
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Restart journald
+
+#
+# fix: Shutdown too slow, reduce stop timeout value - Reboot required
+# Use 'systemd-analyze cat-config systemd/system.conf' to display the full config.
+#
+- name: System-setup | shutdown times | create system.conf.d directory
+  become: true
+  become_user: root
+  ansible.builtin.file:
+    path: /etc/systemd/system.conf.d
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: System-setup | fix-shutdown-time | create 75-faster-shutdown.conf file
+  ansible.builtin.copy:
+    dest: /etc/systemd/system.conf.d/75-faster-shutdown.conf
+    content: |
+      [Manager]
+      DefaultTimeoutStartSec=10s
+      DefaultTimeoutStopSec=10s
+      DefaultTimeoutAbortSec=10s
+      DefaultRestartSec=15s
+    owner: root
+    group: root
+    mode: "0644"
+...
