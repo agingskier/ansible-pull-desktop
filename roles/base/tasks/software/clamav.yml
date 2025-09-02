@@ -137,12 +137,12 @@
       ExecStart=/usr/bin/systemctl start clamdscan-target.service
       StandardOutput=append:/var/log/clamav/clamav.log
     with_items:
-      - { day: 'mon', targets: '/home /root' }
+      - { day: 'mon', targets: '/home/{{ user_name }}' }
       - { day: 'tue', targets: '/mnt/Data /opt' }
       - { day: 'wed', targets: '/usr/local /etc' }
       - { day: 'thu', targets: '/mnt/NAS/media' }
       - { day: 'fri', targets: '/srv /mnt/NAS/documents /mnt/NAS/rechnungen' }
-      - { day: 'sat', targets: '/home' }
+      - { day: 'sat', targets: '/home/{{ user_name }}' }
     owner: root
     group: root
     mode: "0644"

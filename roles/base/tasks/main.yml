@@ -1,11 +1,11 @@
 ---
 - name: Run all tasks for base role
   when:
-    - task_failed is not defined 
+    - task_failed is not defined
   block:
     # install packages used everywhere
     - name: Install several utilities
-      ansible.builtin.import_tasks: 
+      ansible.builtin.import_tasks:
         file: software/utilities.yml
 
     # install software nvm/npm/node and utility for bare dotfile repository
@@ -23,33 +23,33 @@
       ansible.builtin.import_tasks:
         file: software/lsd.yml
     - name: Configure tmux for xfce4
-      ansible.builtin.import_tasks:     
+      ansible.builtin.import_tasks:
         file: software/tmux.yml
     - name: Install zellij Multiplexer
-      ansible.builtin.import_tasks:     
+      ansible.builtin.import_tasks:
         file: software/zellij.yml
     - name: Install and configure zsh shell
-      ansible.builtin.import_tasks:     
+      ansible.builtin.import_tasks:
         file: software/zsh.yml
     - name: Install and configure oh-my-posh prompt for zsh shell
-      ansible.builtin.import_tasks:     
+      ansible.builtin.import_tasks:
         file: software/ohmyposh.yml
     - name: Install gedit themes
-      ansible.builtin.import_tasks:     
+      ansible.builtin.import_tasks:
         file: software/gedit.yml
 
     # Make sure users exist on the system
     - name: Configure user root
-      ansible.builtin.import_tasks:    
+      ansible.builtin.import_tasks:
         file: users/root.yml
     - name: Configure user bernhard
-      ansible.builtin.import_tasks:    
+      ansible.builtin.import_tasks:
         file: users/bernhard.yml
     - name: Configure user marlies
-      ansible.builtin.import_tasks:    
+      ansible.builtin.import_tasks:
         file: users/marlies.yml
     - name: Create user ubuntu
-      ansible.builtin.import_tasks:    
+      ansible.builtin.import_tasks:
         file: users/ubuntu.yml
 
     ## system setup
@@ -75,13 +75,13 @@
       ansible.builtin.import_tasks:
         file: software/keepassxc.yml
     - name: Install brave-browser
-      ansible.builtin.import_tasks: 
+      ansible.builtin.import_tasks:
         file: software/brave.yml
     - name: Install clamav virus scanner
-      ansible.builtin.import_tasks: 
+      ansible.builtin.import_tasks:
         file: software/clamav.yml
     - name: Install lynis audit software
-      ansible.builtin.import_tasks: 
+      ansible.builtin.import_tasks:
         file: software/lynis.yml
     - name: Import protonvpn tasks
       ansible.builtin.import_tasks:
@@ -89,32 +89,31 @@
 
     # Perform remaining tasks
     - name: Configure grub
-      ansible.builtin.import_tasks: 
+      ansible.builtin.import_tasks:
         file: system_setup/grub.yml
     - name: Configure clock
-      ansible.builtin.import_tasks: 
+      ansible.builtin.import_tasks:
         file: system_setup/clock.yml
     - name: Set cron jobs
-      ansible.builtin.import_tasks: 
+      ansible.builtin.import_tasks:
         file: system_setup/system-fixes.yml
 
     # Fix some problems shown in journalctl
     - name: Fix error messages in journalctl
-      ansible.builtin.import_tasks: 
+      ansible.builtin.import_tasks:
         file: system_setup/fix-log-msg.yml
-      tags: [ never, fix_log ]
+      tags: [never, fix_log]
     - name: Fix for microcode
-      ansible.builtin.import_tasks: 
+      ansible.builtin.import_tasks:
         file: system_setup/microcode.yml
-#    - name: Modprobe modules for lxc
-#      ansible.builtin.import_tasks:
-#        file: system_setup/lxc.yml    
-    
-#  - import_tasks: system_setup/openssh.yml
+    - name: Modprobe modules for lxc
+      ansible.builtin.import_tasks:
+        file: system_setup/lxc.yml
+      tags: [never, lxc]
+
+  #  - import_tasks: system_setup/openssh.yml
 
   rescue:
     - name: Set fact to true if tasks failed
       ansible.builtin.set_fact:
         task_failed: true
-      
- 
