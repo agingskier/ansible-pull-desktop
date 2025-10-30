@@ -49,7 +49,7 @@
         force: true
         version: master
       with_items:
-        - { repo: 'tpm.git', plug: 'tmp' }
+        - { repo: 'tpm.git', plug: 'tpm' }
         - { repo: 'tmux-sensible.git', plug: 'tmux-sensible' }
 
     - name: Software | tmux | recursively chown all tmux plugins files
