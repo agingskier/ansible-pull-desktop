@@ -16,16 +16,16 @@
 
     - name: Software | nodejs | replace NODE_OPTIONS variable with empty value (is active only after terminal restart or reload)
       ansible.builtin.replace: 
-        path: /home/bernhard/{{ item }} 
+        path: /home/{{ user_name }}/{{ item }} 
         regexp: "export NODE_OPTIONS='--disable-warning=ExperimentalWarning'"
         replace: "export NODE_OPTIONS="
       with_items:
         - .bashrc
         - .zshenv
 
-    - name: Software | nodejs | Verify nvm installation.
+    - name: Software | nodejs | Verify node installation.
       become: true 
-      become_user: bernhard
+      become_user: {{ user_name }}
       ansible.builtin.shell: |
         set -o pipefail
         export NODE_OPTIONS=
