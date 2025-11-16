@@ -68,3 +68,27 @@
         path: /home/{{ user_name }}/.config/autostart/variety.desktop
         regexp: '^Actions='
         replace: '#Actions='
+
+    - name: Insert line for budgie desktop in set_wallpaper script
+      ansible.builtin.lineinfile:
+        path: /home/{{ user_name }}/.config/variety/scripts/set_wallpaper
+        regexp: '^case'
+        insertafter: 'case'
+        line: '        *"Budgie"*) echo "budgie" ;;'
+
+    - name: Insert line for budgie desktop in set_wallpaper script
+      ansible.builtin.lineinfile:
+        path: /home/{{ user_name }}/.config/variety/scripts/set_wallpaper
+        search_string: 'elif [ "$DE" == "gnome" ]'
+        line: 'elif [ "$DE" == "gnome" ] || [ "$DE" == "unity" ] || [ "$DE" == "budgie" ]; then'
+        state: present
+        firstmatch: true
+
+    - name: Change permission on scripts in .config/variety/scripts
+      ansible.builtin.file:
+      path: /home/{{ user_name }}/.config/variety/scripts
+        state: directory
+        recurse: true
+        owner: "{{ user_name }}"
+        group: "{{ group_name }}"
+        mode: "0755"
