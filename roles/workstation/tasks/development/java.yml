@@ -12,7 +12,11 @@
       ansible.builtin.apt:
         pkg:
           - default-jdk
-          - "{{ openjdk_version }}"
+          - "{{ openjdk_version }}-jdk"
+          - "{{ openjdk_version }}-demo"
+          - "{{ openjdk_version }}-doc"
+          - "{{ openjdk_version }}-jre-headless"
+          - "{{ openjdk_version }}-source"
           - libreoffice-script-provider-python
           - libreoffice-java-common
 
