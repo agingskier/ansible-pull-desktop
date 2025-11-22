@@ -7,7 +7,7 @@
 
 - name: Software | lynis | systemd service and timer for root
   ansible.builtin.copy:
-    src: file/systemd/{{ item }}
+    src: files/systemd/{{ item }}
     dest: /etc/systemd/system/{{ item }}
     owner: root
     group: root
