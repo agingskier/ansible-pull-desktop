@@ -86,7 +86,7 @@
 
     - name: Change permission on scripts in .config/variety/scripts
       ansible.builtin.file:
-      path: /home/{{ user_name }}/.config/variety/scripts/{{ item }}
+        path: /home/{{ user_name }}/.config/variety/scripts/{{ item }}
         owner: "{{ user_name }}"
         group: "{{ group_name }}"
         mode: "0755"
