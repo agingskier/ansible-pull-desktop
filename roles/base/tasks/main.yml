@@ -91,9 +91,6 @@
     - name: Configure grub
       ansible.builtin.import_tasks:
         file: system_setup/grub.yml
-    - name: Configure clock
-      ansible.builtin.import_tasks:
-        file: system_setup/clock.yml
     - name: Set cron jobs
       ansible.builtin.import_tasks:
         file: system_setup/system-fixes.yml
