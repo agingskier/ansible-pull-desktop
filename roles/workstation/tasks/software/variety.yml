@@ -86,9 +86,11 @@
 
     - name: Change permission on scripts in .config/variety/scripts
       ansible.builtin.file:
-      path: /home/{{ user_name }}/.config/variety/scripts
-        state: directory
-        recurse: true
+      path: /home/{{ user_name }}/.config/variety/scripts/{{ item }}
         owner: "{{ user_name }}"
         group: "{{ group_name }}"
         mode: "0755"
+      with_items:
+        - get_wallpaper
+        - set_wallpaper  
+        
