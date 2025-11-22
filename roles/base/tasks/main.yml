@@ -77,9 +77,9 @@
     - name: Install brave-browser
       ansible.builtin.import_tasks:
         file: software/brave.yml
-    - name: Install clamav virus scanner
-      ansible.builtin.import_tasks:
-        file: software/clamav.yml
+#    - name: Install clamav virus scanner
+#      ansible.builtin.import_tasks:
+#        file: software/clamav.yml
     - name: Install lynis audit software
       ansible.builtin.import_tasks:
         file: software/lynis.yml
