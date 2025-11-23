@@ -42,5 +42,4 @@ media: no
 multipass: no
 protonvpn: yes
 steam: no
-variety: yes
 vlc: no

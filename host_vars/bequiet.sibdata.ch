@@ -42,5 +42,4 @@ media: true
 multipass: true 
 protonvpn: true 
 steam: true 
-variety: true 
 vlc: true

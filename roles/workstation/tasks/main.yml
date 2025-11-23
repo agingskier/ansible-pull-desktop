@@ -20,9 +20,6 @@
     - name: Import calibre tasks
       ansible.builtin.import_tasks:
         file: software/calibre.yml
-#    - name: Import variety tasks
-#      ansible.builtin.import_tasks:
-#        file: software/variety.yml
 #    - name: Import fsearch tasks
 #      ansible.builtin.import_tasks:
 #        file: software/fsearch.yml
