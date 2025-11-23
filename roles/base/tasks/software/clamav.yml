@@ -133,7 +133,7 @@
 
       [Service]
       Type=oneshot
-      Environment="TARGETS={{ targets }}"
+      Environment="TARGETS={{ item.targets }}"
       ExecStart=/usr/bin/systemctl start clamdscan-target.service
       StandardOutput=append:/var/log/clamav/clamav.log
     with_items:
@@ -190,10 +190,10 @@
   environment:
     XDG_RUNTIME_DIR: "/run/user/{{ ansible_user_uid }}"
   with_items:
-    - clamsdcan-mon.timer
-    - clamsdcan-tue.timer
-    - clamsdcan-wed.timer
-    - clamsdcan-thu.timer
-    - clamsdcan-fri.timer
-    - clamsdcan-sat.timer
+    - clamdscan-mon.timer
+    - clamdscan-tue.timer
+    - clamdscan-wed.timer
+    - clamdscan-thu.timer
+    - clamdscan-fri.timer
+    - clamdscan-sat.timer
 ...
