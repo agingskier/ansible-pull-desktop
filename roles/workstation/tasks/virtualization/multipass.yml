@@ -81,11 +81,4 @@
         executable: /bin/bash
       register: start_multipass
       changed_when: start_multipass.rc == 0
-
-    - name: Softeare | multipass | Recursively remove original data directories
-      ansible.builtin.file:
-        path: /var/snap/multipass/common/{{ item.dir }}
-        state: absent
-      with_items:
-        - { dir: data/multipassd }
-        - { dir: cache/multipassd }
+...
