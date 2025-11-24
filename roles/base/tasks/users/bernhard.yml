@@ -13,13 +13,5 @@
         group: "{{ group_name }}"
         mode: "0644"
 
-    - name: Users | bernhard | add sudoers file
-      ansible.builtin.copy:
-        src: users/sudoers_bernhard
-        dest: /etc/sudoers.d/bernhard
-        owner: root
-        group: root
-        mode: "0440"
-
     - name: Users | bernhard | import tasks for vim
       ansible.builtin.import_tasks: ../software/vim.yml

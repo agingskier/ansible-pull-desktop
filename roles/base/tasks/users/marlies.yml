@@ -10,10 +10,3 @@
 #        user_name: 'marlies'
 #        group_name: 'users'
 
-    - name: Users | marlies | add sudoers file
-      ansible.builtin.copy:
-        src: users/sudoers_marlies
-        dest: /etc/sudoers.d/marlies
-        owner: root
-        group: root
-        mode: "0440"
