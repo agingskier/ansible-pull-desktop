@@ -2,6 +2,8 @@
 - name: System-setup | fix-log-msg block
   become: true
   become_method: ansible.builtin.sudo
+  
+  tags: [ never, fix-log ]
   block:
     #
     # fix: Error message: systemd-udevd[447]: sdb3: Process '/usr/bin/unshare -m /usr/bin/snap auto-import 
