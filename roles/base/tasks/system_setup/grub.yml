@@ -123,7 +123,7 @@
       with_items:
         - { regex: '^GRUB_TIMEOUT_STYLE=hidden', repl: 'GRUB_TIMEOUT_STYLE=menu' }
         - { regex: '^GRUB_TIMEOUT=0', repl: 'GRUB_TIMEOUT=10' }
-        - { regex: 'quiet splash', repl: ' ' }
+#        - { regex: 'quiet splash', repl: ' ' }
         - { regex: 'OS_PROBER=true', repl: 'OS_PROBER=false' }
 
     - name: System_setup | grub | add lines for BACKGROUND, THEME, GFXPAYLOAD_LINUX and DISABLE_OS_PROBER
