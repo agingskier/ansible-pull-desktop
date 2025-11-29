@@ -9,26 +9,26 @@
       - fontconfig
       - lsd
 
-- name: Software | eza | add eza apt key to keyring file (executable must be zsh shell, if not - error)
-  ansible.builtin.shell: |
-    set -o pipefail
-    curl -fsSL https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | \
-    sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
-  args:
-    executable: /bin/zsh
-  register: eza_gpgkey
-  changed_when: eza_gpgkey.rc == 0
+#- name: Software | eza | add eza apt key to keyring file (executable must be zsh shell, if not - error)
+#  ansible.builtin.shell: 
+#    set -o pipefail
+#    curl -fsSL https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | \
+#    sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
+#  args:
+#    executable: /bin/zsh
+#  register: eza_gpgkey
+#  changed_when: eza_gpgkey.rc == 0
 
-- name: Software | eza | add eza apt repository
-  ansible.builtin.apt_repository:
-    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/gierens.gpg] https://deb.gierens.de stable main"
-    state: present
-    update_cache: true
+#- name: Software | eza | add eza apt repository
+#  ansible.builtin.apt_repository:
+#    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/gierens.gpg] https://deb.gierens.de stable main"
+#    state: present
+#    update_cache: true
 
-- name: Software | eza | install eza
-  ansible.builtin.apt:
-    pkg:
-      - eza
+#- name: Software | eza | install eza
+#  ansible.builtin.apt:
+#    pkg:
+#      - eza
 
 - name: Software | Fonts | check if /usr/local/share/fonts/nerd exists
   ansible.builtin.stat:
