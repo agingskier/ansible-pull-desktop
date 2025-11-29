@@ -15,9 +15,9 @@
     - { dir: '.vim' }
     - { dir: '.vim/colors' }
 
-- name: Users | root | copy dotfiles from user bernhard
+- name: Users | root | copy dotfiles from user {{ user_name }}
   ansible.builtin.copy:
-    src: /home/bernhard/{{ item.src }}
+    src: /home/{{ user_name }}/{{ item.src }}
     dest: /root/{{ item.dest }}
     owner: root
     group: root
