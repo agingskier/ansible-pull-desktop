@@ -99,14 +99,14 @@
     - name: Fix error messages in journalctl
       ansible.builtin.import_tasks:
         file: system_setup/fix-log-msg.yml
-      tags: [never, fix_log]
+      tags: [ never, fix-log ]
     - name: Fix for microcode
       ansible.builtin.import_tasks:
         file: system_setup/microcode.yml
     - name: Modprobe modules for lxc
       ansible.builtin.import_tasks:
         file: system_setup/lxc.yml
-      tags: [never, lxc]
+      tags: [ never, lxc ]
 
   #  - import_tasks: system_setup/openssh.yml
 

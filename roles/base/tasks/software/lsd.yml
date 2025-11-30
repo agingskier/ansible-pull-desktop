@@ -9,6 +9,11 @@
       - fontconfig
       - lsd
 
+- name: Software | eza | delete gierens.gpg file
+  ansible.builtin.file:
+    path: /etc/apt/keyrings/gierens.gpg
+    state: absent
+
 - name: Software | eza | add eza apt key to keyring file (executable must be zsh shell, if not - error)
   ansible.builtin.shell: |
     set -o pipefail
@@ -73,6 +78,8 @@
       with_items:
         - UbuntuMono.zip
         - VictorMono.zip
+        - JetBrainsMono.zip
+        - FiraCode.zip
 
     - name: Software | lsd | create cache for new fonts
       ansible.builtin.command: fc-cache -v -f
