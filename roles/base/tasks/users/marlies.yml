@@ -9,4 +9,6 @@
 #      ansible.builtin.set_fact:
 #        user_name: 'marlies'
 #        group_name: 'users'
-
+     - name: Users | marlies | message
+       ansible.builtin.debug:
+         msg: "Marlies block has been executed"

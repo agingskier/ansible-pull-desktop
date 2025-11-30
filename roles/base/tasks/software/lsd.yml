@@ -24,6 +24,7 @@
   register: eza_gpgkey
   changed_when: eza_gpgkey.rc == 0
 
+
 - name: Software | eza | add eza apt repository
   ansible.builtin.apt_repository:
     repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/gierens.gpg] https://deb.gierens.de stable main"

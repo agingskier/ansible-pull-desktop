@@ -21,11 +21,11 @@ marlies: yes
 ubuntu: no
 
 #
-# development (required for ipscan)
+# development (required for ipscan, dotfiles and others)
 #
-nodejs: false
-zsh: false
-tmux: false
+nodejs: true
+zsh: true
+tmux: true
 java: yes
 
 #
