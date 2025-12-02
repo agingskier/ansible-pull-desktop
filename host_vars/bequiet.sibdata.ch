@@ -5,7 +5,8 @@
 #
 user_name: bernhard
 group_name: users
-ssh_users: "bernhard"
+ssh_users: 'bernhard'
+clam_tue: '/mnt/Data /opt'
 
 #
 # platform-specific

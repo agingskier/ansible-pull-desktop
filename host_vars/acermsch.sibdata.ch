@@ -5,7 +5,8 @@
 #
 user_name: marlies
 group_name: users
-ssh_users: "marlies"
+ssh_users: 'marlies'
+clam_tue: '/opt'
 
 #
 # platform-specific

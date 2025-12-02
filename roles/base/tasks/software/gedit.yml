@@ -27,7 +27,7 @@
     - name: Gnome | gedit | copy gedit colorschemes to .local/share/gedit/styles
       ansible.builtin.copy:
         src: "{{ item }}"
-        dest: /home/bernhard/.local/share/gedit/styles/
+        dest: /home/{{ user_name }}/.local/share/gedit/styles/
         owner: "{{ user_name }}"
         group: "{{ group_name }}"
         mode: "0644"

@@ -104,6 +104,7 @@
 
 - name: Software | clamav | create clamdscan target service
   ansible.builtin.copy:
+    dest: /etc/systemd/system/clamdscan-target.service
     content: |
       [Unit]
       Description=Run clamdscan on given TARGETS 
@@ -119,7 +120,6 @@
       # Treat exit codes 0 and 1 as success
       # (0 = no detections, 1 = detections found, 2+ = error)
       SuccessExitStatus=0 1
-    dest: /etc/systemd/system/clamdscan-target.service
     owner: root
     group: root
     mode: "0644"
@@ -136,16 +136,16 @@
       Environment="TARGETS={{ item.targets }}"
       ExecStart=/usr/bin/systemctl start clamdscan-target.service
       StandardOutput=append:/var/log/clamav/clamav.log
-    with_items:
-      - { day: 'mon', targets: '/home/{{ user_name }}' }
-      - { day: 'tue', targets: '/mnt/Data /opt' }
-      - { day: 'wed', targets: '/usr/local /etc' }
-      - { day: 'thu', targets: '/mnt/NAS/media' }
-      - { day: 'fri', targets: '/srv /mnt/NAS/documents /mnt/NAS/rechnungen' }
-      - { day: 'sat', targets: '/home/{{ user_name }}' }
     owner: root
     group: root
     mode: "0644"
+  with_items:
+    - { day: 'mon', targets: '/home/{{ user_name }}' }
+    - { day: 'tue', targets: '{{ clam_tue }}' }
+    - { day: 'wed', targets: '/usr/local /etc' }
+    - { day: 'thu', targets: '/mnt/NAS/media' }
+    - { day: 'fri', targets: '/srv /mnt/NAS/documents /mnt/NAS/rechnungen' }
+    - { day: 'sat', targets: '/home/{{ user_name }}' }
 
 - name: Software | clamav | create clamdscan weekday and target directory timer
   ansible.builtin.copy:
@@ -161,16 +161,16 @@
 
       [Install]
       WantedBy=timers.target
-    with_items:
-      - { day: 'mon', time: '12:00' }
-      - { day: 'tue', time: '12:00' }
-      - { day: 'wed', time: '12:00' }
-      - { day: 'thu', time: '12:00' }
-      - { day: 'fri', time: '12:00' }
-      - { day: 'sat', time: '12:00' }
     owner: root
     group: root
     mode: "0644"
+  with_items:
+    - { day: 'mon', time: '12:00' }
+    - { day: 'tue', time: '12:00' }
+    - { day: 'wed', time: '12:00' }
+    - { day: 'thu', time: '12:00' }
+    - { day: 'fri', time: '12:00' }
+    - { day: 'sat', time: '12:00' }
 
 - name: Software | clamav | Restarting clamav-daemon and daemon-reload
   ansible.builtin.systemd_service:
