@@ -8,6 +8,11 @@
       ansible.builtin.import_tasks:
         file: software/utilities.yml
 
+    # install gedit early and use dconf to change values
+    - name: Install gedit themes
+      ansible.builtin.import_tasks:
+        file: software/gedit.yml
+
     # install zsh before fzf, lsd, eza
     - name: Install and configure zsh shell
       ansible.builtin.import_tasks:
@@ -15,11 +20,6 @@
     - name: Install and configure oh-my-posh prompt for zsh shell
       ansible.builtin.import_tasks:
         file: software/ohmyposh.yml
-
-    # install software nvm/npm/node and utility for bare dotfile repository
-    - name: Install node-js software
-      ansible.builtin.import_tasks:
-        file: software/nodejs.yml
 
     # install software fzf
     - name: Install fzf software
@@ -36,9 +36,6 @@
     - name: Install zellij Multiplexer
       ansible.builtin.import_tasks:
         file: software/zellij.yml
-    - name: Install gedit themes
-      ansible.builtin.import_tasks:
-        file: software/gedit.yml
 
     # Make sure users exist on the system
     - name: Configure user root
@@ -79,9 +76,9 @@
     - name: Install brave-browser
       ansible.builtin.import_tasks:
         file: software/brave.yml
-#    - name: Install clamav virus scanner
-#      ansible.builtin.import_tasks:
-#        file: software/clamav.yml
+    - name: Install clamav virus scanner
+      ansible.builtin.import_tasks:
+        file: software/clamav.yml
     - name: Install lynis audit software
       ansible.builtin.import_tasks:
         file: software/lynis.yml
