@@ -4,9 +4,11 @@
   become_method: ansible.builtin.sudo
   block:
 
-    - name: Gnome | gedit | Add plugin draw-spaces (activate in preferences)
+    - name: Gnome | gedit | Add gedit-plugins and draw-spaces (activate in preferences)
       ansible.builtin.apt:
-        name: gedit-plugin-draw-spaces
+        pkg: 
+          - gedit-plugin-draw-spaces
+          - gedit-plugins
         state: present
 
     - name: Gnome | gedit | create gedit/styles directories
@@ -32,3 +34,19 @@
         group: "{{ group_name }}"
         mode: "0644"
       with_fileglob: "/tmp/gedit-themes/*.xml"
+
+    - name: Users | gedit | set active plugins
+      community.general.dconf:
+        key: "/org/gnome/gedit/plugins/active-plugins"
+        value: "['drawspaces', 'textsize', 'spell', 'sort', 'quickhighlight', 'filebrowser']"
+      
+    - name: Users | gedit | set editor values
+      community.general.dconf:
+        key: "/org/gnome/gedit/preferences/editor/{{ item.key }}"
+        value: "{{ item.value }}"
+      with_items:
+        - { key: 'insert-spaces', value: 'true' }
+        - { key: 'tabs-size', value: 'uint32 2' }
+        - { key: 'style-scheme-for-dark-theme-variant', value: "'cobalt'" }
+        - { key: 'wrap-last-split-mode', value: "'word'" }
+...
