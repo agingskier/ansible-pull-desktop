@@ -24,7 +24,9 @@
       ansible.builtin.git:
         repo: "https://github.com/mig/gedit-themes.git"
         dest: "/tmp/gedit-themes"
-        version: master
+        clone: true
+        depth: 1
+        version: master          # this will not cause a linting error
 
     - name: Gnome | gedit | copy gedit colorschemes to .local/share/gedit/styles
       ansible.builtin.copy:
@@ -33,17 +35,38 @@
         owner: "{{ user_name }}"
         group: "{{ group_name }}"
         mode: "0644"
+        force: false             # copy only if file does not exist
       with_fileglob: "/tmp/gedit-themes/*.xml"
+
+    - name: Users | download gedit colorschemes from github gmate
+      ansible.builtin.git:
+        repo: "https://github.com/gmate/gmate.git"
+        dest: "/tmp/gedit-gmate"
+        clone: true
+        depth: 1
+        version: master          # this will not cause a linting error
+
+    - name: Users | bernhard | copy gedit gmate colorschemes to .local/share/gedit/styles
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: /home/{{ user_name }}/.local/share/gedit/styles/
+        owner: "{{ user_name }}"
+        group: "{{ group_name }}"
+        mode: "0644"
+        force: false             # copy only if file does not exist
+      with_fileglob: "/tmp/gedit-gmate/styles/*.xml"
 
     - name: Users | gedit | set active plugins
       community.general.dconf:
         key: "/org/gnome/gedit/plugins/active-plugins"
         value: "['drawspaces', 'textsize', 'spell', 'sort', 'quickhighlight', 'filebrowser']"
+        state: present
       
     - name: Users | gedit | set editor values
       community.general.dconf:
         key: "/org/gnome/gedit/preferences/editor/{{ item.key }}"
         value: "{{ item.value }}"
+        state: present
       with_items:
         - { key: 'insert-spaces', value: 'true' }
         - { key: 'tabs-size', value: 'uint32 2' }

@@ -39,6 +39,7 @@
         owner: root
         group: root
         mode: "0644"
+        force: false             # copy only if file does not exist
       with_items:
         - { src: "black-hole-blue.tga", dest: "black-hole-blue.tga" }
         - { src: "saturn-wallpaper.png", dest: "saturn-wallpaper.png" }
@@ -88,6 +89,7 @@
         owner: root
         group: root
         mode: "0644"
+        force: false             # copy only if file does not exist
 
     - name: System_setup | grub | Themes | copy all ubuntu Griffin png files to lordshenron
       ansible.builtin.copy:
@@ -96,6 +98,7 @@
         owner: root
         group: root
         mode: "0644"
+        force: false             # copy only if file does not exist
 
     - name: System_setup | grub | Themes Darkmatter | copy png file ubuntu to background
       ansible.builtin.copy:
@@ -225,7 +228,7 @@
       ansible.builtin.lineinfile:
         path: /etc/default/grub
         regexp: "^GRUB_CMDLINE_LINUX_DEFAULT="
-        line: 'GRUB_CMDLINE_LINUX_DEFAULT="quiet splash pci=noaer acpi=off"'
+        line: 'GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"'
         backrefs: true
 
     - name: System_setup | grub | Insert GFXMODE line

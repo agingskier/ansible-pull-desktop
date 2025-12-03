@@ -41,6 +41,7 @@
     owner: "{{ user_name }}"
     group: "{{ group_name }}"
     mode: "0644"
+    force: false             # copy only if file does not exist
 
 - name: Software | geany | Replace identifier=identifier with types in filetypes.yaml
   ansible.builtin.replace:
