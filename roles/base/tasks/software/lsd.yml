@@ -53,9 +53,6 @@
         group: root
         mode: "0775"
 
-    # Get latest release from Github api
-    # get tag line
-    # pluck JSON value 
     - name: Software | lsd | download latest release info for lsd nerd fonts
       ansible.builtin.shell: |
         set -o pipefail
@@ -66,24 +63,26 @@
       register: fonts_release
       changed_when: fonts_release.rc == 0
 
-    - name: Software | lsd | download and install UbuntuMono and VictorMono nerd fonts
+    - name: Software | lsd | idempotend unarchive nerd fonts with creates
       become: true
       become_method: ansible.builtin.sudo
       ansible.builtin.unarchive:
-        src: https://github.com/ryanoasis/nerd-fonts/releases/download/{{ fonts_release.stdout }}/{{ item }}
+        src: https://github.com/ryanoasis/nerd-fonts/releases/download/{{ fonts_release.stdout }}/{{ item.zip }}
         dest: /usr/local/share/fonts/nerd
         remote_src: true
         owner: root
         group: root
         mode: "0644"
+        creates: /usr/local/share/fonts/nerd/{{ item.file }}
       with_items:
-        - UbuntuMono.zip
-        - VictorMono.zip
-        - JetBrainsMono.zip
-        - FiraCode.zip
+        - { zip: "UbuntuMono.zip", file: "UbuntuMonoNerdFont-Bold.ttf" }
+        - { zip: "VictorMono.zip", file: "VictorMonoNerdFont-Bold.ttf" }
+        - { zip: "JetBrainsMono.zip", file: "JetBrainsMonoNerdFont-Bold.ttf" }
+        - { zip: "FiraCode.zip", file: "FiraCodeNerdFont-Bold.ttf" }
 
     - name: Software | lsd | create cache for new fonts
       ansible.builtin.command: fc-cache -v -f
       register: create_cache
       changed_when: create_cache.rc == 0
   # end block nerd directory does not exist
+...

@@ -11,7 +11,7 @@
     - name: Software | java | install java environment
       ansible.builtin.apt:
         pkg:
-          - default-jdk
+#          - default-jdk
           - "{{ openjdk_version }}-jdk"
           - "{{ openjdk_version }}-demo"
           - "{{ openjdk_version }}-doc"
@@ -21,14 +21,14 @@
           - libreoffice-java-common
 
 # Check: https://gluonhq.com/products/javafx/ for latest release
-    - name: Software | javafx | Unzip javafx
+    - name: Software | javafx | Unzip javafx (idempotent with creates file)
       ansible.builtin.unarchive:
         src: https://download2.gluonhq.com/openjfx/{{ javafx_version }}/openjfx-{{ javafx_version }}_linux-x64_bin-sdk.zip
         dest: /opt
-        remote_src: true
         owner: root
         group: root
         mode: "0755"
+        creates: /opt/javafx-sdk-{{ javafx_version }}/lib/javafx.base.jar
 
     - name: Software | java & javafx | Replace export statements in .bashrc
       ansible.builtin.lineinfile:
