@@ -61,6 +61,21 @@
         mode: "0755"
         recurse: true
 
+    - name: Software | tmux | Install plugins with script
+      ansible.legacy.shell: |
+        set -o pipefail
+        cd /home/{{ user_name }}/.config/tmux/plugins/tpm/scripts
+        ./install_plugins.sh
+      args:
+        executable: /bin/bash
+      register: plugins_install
+      changed_when: plugins_install.rc == 0
+
+    - name: Software | tmux | display install plugins messages
+      ansible.builtin.debug:
+        msg:
+          - "{{ plugins_install.stdout_lines }}"
+
     - name: Software | tmux | Download latest release gitmux info
       ansible.legacy.shell: |
         set -o pipefail

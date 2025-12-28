@@ -36,7 +36,6 @@
       - ripgrep
       - speedtest-cli
       - sshpass
-      - terminator
       - vim-nox
       - whois
 
