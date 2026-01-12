@@ -66,6 +66,7 @@
         set -o pipefail
         cd /home/{{ user_name }}/.config/tmux/plugins/tpm/scripts
         ./install_plugins.sh
+        tmux source-file /home/{{ user_name }}/.config/tmux/tmux.conf
       args:
         executable: /bin/bash
       register: plugins_install

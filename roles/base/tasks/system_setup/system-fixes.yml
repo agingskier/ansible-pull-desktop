@@ -83,4 +83,10 @@
     owner: root
     group: root
     mode: "0644"
+
+- name: Software-setup | apport | Disable automatic problem reports
+  ansible.builtin.replace:
+    path: /etc/default/apport
+    regexp: '^enabled=1'
+    replace: 'enabled=0'
 ...
